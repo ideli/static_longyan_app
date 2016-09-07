@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+  "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+  "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+  <package name="process_execute" extends="struts-default" namespace="/workflow">
+    <result-types>
+      <result-type name="json" class="org.apache.struts2.support.JSONResult"/>
+    </result-types>
+    <!--配置后台拦截器-->
+    <interceptors>
+      <interceptor name="authentication" class="com.greatbee.security.interceptor.AuthenticationInterceptor"/>
+      <interceptor-stack name="resource_authentication">
+        <interceptor-ref name="authentication"/>
+        <interceptor-ref name="defaultStack"/>
+      </interceptor-stack>
+    </interceptors>
+    <default-interceptor-ref name="resource_authentication"/>
+    <global-results>
+      <result name="json" type="json">
+        <param name="objectType">object</param>
+        <param name="objectName">response</param>
+        <param name="excludes">null</param>
+      </result>
+      <result name="error">error.jsp</result>
+      <result name="error_ajax">error_ajax.jsp</result>
+      <result name="error_runtime">error_runtime.jsp</result>
+      <result name="no_auth" type="redirectAction">
+        <param name="actionName">login</param>
+        <param name="namespace">/security</param>
+      </result>
+    </global-results>
+    <global-exception-mappings>
+      <exception-mapping exception="java.lang.RuntimeException" result="error_runtime"/>
+    </global-exception-mappings>
+
+    <!--读取流程执行结果-->
+    <action name="read_process_execute_results" class="processExecuteAction" method="readResults"/>
+
+    <!--添加流程执行-->
+    <action name="add_process_execute" class="processExecuteAction" method="addAction"/>
+  </package>
+</struts>

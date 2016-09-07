@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!--Hibernate Template-->
+    <bean id="commonBizHibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!--Abstract Manager-->
+    <bean id="commonBizAbstractManager" class="com.xiwa.base.manager.AbstractManager" abstract="true">
+        <property name="hibernateTemplate" ref="commonBizHibernateTemplate"/>
+    </bean>
+
+    <!--<bean id="smsMessageManager" class="com.lanchui.commonBiz.manager.ext.SimpleSMSMessageManager"-->
+    <!--parent="commonBizAbstractManager">-->
+    <!--<property name="SMSToggle">-->
+    <!--<value>${SMSToggle}</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+    <bean id="messageSMSQueueManager" class="com.lanchui.commonBiz.manager.ext.SimpleMessageSMSQueueManager"
+          parent="commonBizAbstractManager">
+    </bean>
+
+
+    <bean id="lanchuiMessageTemplateManager" class="com.lanchui.commonBiz.manager.ext.SimpleMessageTemplateManager"
+          parent="commonBizAbstractManager"></bean>
+
+    <!--dispatch-->
+
+    <bean id="dispatchWorkerManager" class="com.lanchui.commonBiz.manager.ext.SimpleDispatchWorkerManager"
+          parent="commonBizAbstractManager"/>
+    <bean id="dispatchUserManager" class="com.lanchui.commonBiz.manager.ext.SimpleDispatchUserManager"
+          parent="commonBizAbstractManager"/>
+    <bean id="dispatchCityManager" class="com.lanchui.commonBiz.manager.ext.SimpleDispatchCityManager"
+          parent="commonBizAbstractManager"/>
+    <!--province-->
+    <bean id="dispatchProvinceManager" class="com.lanchui.commonBiz.manager.ext.SimpleDispatchProvinceManager"
+          parent="commonBizAbstractManager"/>
+    <!--location-->
+    <bean id="dispatchLocationManager" class="com.lanchui.commonBiz.manager.ext.SimpleDispatchLocationManager"
+          parent="commonBizAbstractManager"/>
+    <!--DispatchMerchantAuthorized-->
+    <bean id="dispatchMerchantAuthorizedManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleDispatchMerchantAuthorizedManager"
+          parent="commonBizAbstractManager"/>
+    <!--MerchantManager-->
+    <bean id="dispatchMerchantManager" class="com.lanchui.commonBiz.manager.ext.SimpleDispatchMerchantManager"
+          parent="commonBizAbstractManager"/>
+    <!--SecurityResourceManager-->
+    <bean id="securityResourceManager" class="com.lanchui.commonBiz.manager.ext.SimpleSecurityResourceManager"
+          parent="commonBizAbstractManager"/>
+    <!--Employee-->
+    <bean id="dispatchEmployee" class="com.lanchui.commonBiz.manager.ext.SimpleDispatchEmployeeManager"
+          parent="commonBizAbstractManager"/>
+    <bean id="redstarCommunityManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarCommunityManager"
+          parent="commonBizAbstractManager"/>
+    <bean id="dispatchCommunityAuthorizedManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleDispatchCommunityAuthorizedManager"
+          parent="commonBizAbstractManager"/>
+    <bean id="dispatchLoginTokenManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleDispatchLoginTokenManager"
+          parent="commonBizAbstractManager"/>
+    <bean id="dispatchCommunityGardenManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleDispatchCommunityGardenManager"
+          parent="commonBizAbstractManager"/>
+    <bean id="dispatchCommunityBuildingManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleDispatchCommunityBuildingManager"
+          parent="commonBizAbstractManager"/>
+    <bean id="dispatchCommunityUnitManager" class="com.lanchui.commonBiz.manager.ext.SimpleDispatchCommunityUnitManager"
+          parent="commonBizAbstractManager"/>
+    <bean id="dispatchCommunityRoomManager" class="com.lanchui.commonBiz.manager.ext.SimpleDispatchCommunityRoomManager"
+          parent="commonBizAbstractManager"/>
+    <bean id="dispatchChartCommunityRoomStatusManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleDispatchCommunityRoomStatusManager"
+          parent="commonBizAbstractManager"/>
+    <bean id="dispatchUserRoomManager" class="com.lanchui.commonBiz.manager.ext.SimpleDispatchUserRoomManager"
+          parent="commonBizAbstractManager"/>
+    <bean id="dispatchShopManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleDispatchShopManager"
+          parent="commonBizAbstractManager"/>
+    <bean id="dispatchShopAuthorizedManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleDispatchShopAuthorizedManager"
+          parent="commonBizAbstractManager"/>
+    <bean id="dispatchShopCategoryManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleDispatchShopCategoryManager"
+          parent="commonBizAbstractManager"/>
+    <bean id="dispatchPushDeviceManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleDispatchPushDeviceManager"
+          parent="commonBizAbstractManager"/>
+    <bean id="optReleaseConfigManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleOptReleaseConfigManager"
+          parent="commonBizAbstractManager"/>
+    <bean id="optReleaseAppManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleOptReleaseAppManager"
+          parent="commonBizAbstractManager"/>
+
+    <!--<bean id="weixinStorageManager" class="com.lanchui.commonBiz.manager.ext.SimpleStorageManager"-->
+    <!--parent="commonBizAbstractManager">-->
+    <!--<property name="storagePath">-->
+    <!--<value>${storage_config_store_path}</value>-->
+    <!--</property>-->
+    <!--<property name="tempPath">-->
+    <!--<value>${storage_config_store_temp_path}</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--RED STAR-->
+
+    <bean id="redstarSessionManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarSessionManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="dispatchSecurityOperationLogManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleDispatchSecurityOperationLogManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarMemberManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarMemberManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarEmployeeManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedStarEmployeeManager"
+          parent="commonBizAbstractManager"/>
+    <bean id="redstarDepartmentManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarDepartmentManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarVerifyCodeManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarVerifyCodeManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarEmployeeMonthManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarEmployeeMonthManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarShoppingMallManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarShoppingMallManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarMallCommunityManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarMallCommunityManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarMallEmployeeManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarMallEmployeeManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarMallMonthManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarMallMonthManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarShopMallOrganizationManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarShopMallOrganizationManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarOrganizationMonthManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarOrganizationMonthManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarCommonManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarCommonManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarTaskLogManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarTaskLogManager"
+          parent="commonBizAbstractManager"/>
+
+    <!-- dian ping mdc start-->
+    <bean id="redstarReviewManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarReviewManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarReviewObjectManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarReviewObjectManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarReviewReplyManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarReviewReplyManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarReviewResultDescManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarReviewResultDescManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarReviewDetailManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarReviewDetailManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarReviewLabelManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarReviewLabelManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarUvManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedStarUvManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarPvManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedStarPvManager"
+          parent="commonBizAbstractManager"/>
+
+    <!-- dian ping mdc end-->
+    <bean id="redstarStoreManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarStoreManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarStoreFavoriteManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarStoreFavoriteManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarReviewLikedManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarReviewLikedManager"
+          parent="commonBizAbstractManager"/>
+    <bean id="redstarRestaurantDepartmentManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarRestaurantDepartmentManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarRestaurantMenuManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarRestaurantMenuManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarRestaurantOrderManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarRestaurantOrderManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarAttendanceRecordManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarAttendanceRecordManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarRestaurantInfoManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarRestaurantInfoManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarScoreLogManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarScoreLogManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarEmployeeDayInputManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarEmployeeDayInputManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarScoreRuleManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarScoreRuleManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="securityAuthorizedManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleSecurityAuthorizedManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarCommunityUnitManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarCommunityUnitManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarCommunityBuildingManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarCommunityBuildingManager"
+          parent="commonBizAbstractManager"/>
+
+    <bean id="redstarAttendanceLogManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarAttendanceLogManager"
+          parent="commonBizAbstractManager"/>
+
+
+    <bean id="redstarAppAdManager"
+          class="com.lanchui.commonBiz.manager.ext.SimpleRedstarAppAdManager"
+          parent="commonBizAbstractManager"/>
+
+
+
+</beans>

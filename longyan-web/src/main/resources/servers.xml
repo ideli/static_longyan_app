@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+    <!--Server Config-->
+    <import resource="classpath:server_config.xml"/>
+
+    <!--Common-->
+    <import resource="classpath:conf/base/server/common_server.xml"/>
+    <!--Security-->
+    <import resource="classpath:conf/security/server/security_server.xml"/>
+    <!--Zeus-->
+    <import resource="classpath:conf/zeus/server/zeus_server.xml"/>
+    <!--Task-->
+    <import resource="classpath:conf/task/server/task_server.xml"/>
+    <!--Message-->
+    <import resource="classpath:conf/message/server/message_server.xml"/>
+    <!--CRM-->
+    <import resource="classpath:conf/crm/server/crm_server.xml"/>
+    <!--SNS-->
+    <import resource="classpath:conf/sns/server/sns_server.xml"/>
+    <!--SNS_Task-->
+    <import resource="classpath:conf/sns/server/sns_task.xml"/>
+    <!-- Message Push Server -->
+    <import resource="classpath:conf/sns/server/sns_message.xml"/>
+
+    <import resource="classpath:conf/greatbee/server/dispatch_manager.xml"/>
+    <!-- <import resource="classpath:conf/greatbee/server/lanchui_event.xml"/>-->
+    <!--quartz-->
+    <!--  <import resource="classpath:conf/greatbee/server/lanchui_quartz.xml"/>-->
+    <!--Common Biz Server-->
+    <import resource="classpath:conf/lanchui/server/common_biz_server.xml"/>
+    <import resource="classpath:conf/lanchui/server/common_storage_manager.xml"/>
+    <import resource="classpath:conf/lanchui/server/common_wx_enterprise_manager.xml"/>
+    <import resource="classpath:conf/lanchui/server/common_biz_lg_manager.xml"/>
+    <import resource="classpath:conf/lanchui/server/common_jpush_message_manager.xml"/>
+
+    <!--dubbo配置-->
+    <import resource="classpath:applicationContext-dubbo.xml" />
+
+    <bean id="systemConfig" class="java.util.HashMap">
+        <constructor-arg>
+            <map>
+                <entry key="staticCommunityResourceUrl" value="${community_static_resource_url}"></entry>
+                <entry key="staticMerchantResourceUrl" value="${merchant_static_resource_url}"></entry>
+                <entry key="staticResourceUrl" value="${static_resource_url}"></entry>
+                <entry key="staticLongyanUrl" value="${longyan_app_static_resource_url}"></entry>
+                <entry key="staticPcLongyanUrl" value="${longyan_pc_static_resource_url}"></entry>
+
+                <entry key="userCenterUrl" value="${user.center.url}"></entry>
+                <entry key="sysUserUrl" value="${sys.user.url}"></entry>
+                <entry key="appId" value="${user.center.appid}"></entry>
+                <entry key="appSecret" value="${user.center.appsecret}"></entry>
+                <entry key="roles" value="${roles}"></entry>
+                <entry key="staticLongyanVersion" value="${longyan_app_static_version}"></entry>
+            </map>
+        </constructor-arg>
+    </bean>
+    <bean id="serviceConfig" class="com.greatbee.bean.ServiceConfig">
+        <property name="messageServiceAppUrl" value="${service.message.app.url}"/>
+    </bean>
+
+    <!-- 使用annotation 自动注册bean,并保证@Required,@Autowired的属性被注入 -->
+    <context:component-scan base-package="com.xiwa"/>
+    <context:component-scan base-package="com.greatbee"/>
+    <context:component-scan base-package="com.lanchui"/>
+    <context:annotation-config/>
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+
+    <!--  <bean id="taskExecutor"
+
+            class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+
+        &lt;!&ndash; 核心线程数 &ndash;&gt;
+        <property name="corePoolSize" value="5" />
+        &lt;!&ndash; 最大线程数 &ndash;&gt;
+        <property name="maxPoolSize" value="100" />
+        &lt;!&ndash; 缓冲队列最大长度 &ndash;&gt;
+        <property name="queueCapacity" value="5" />
+        &lt;!&ndash; 线程池维护线程所允许的空闲时间，默认为60s &ndash;&gt;
+        <property name="keepAliveSeconds" value="1000" />
+        <property name="WaitForTasksToCompleteOnShutdown" value="true" />
+
+      </bean>-->
+
+
+    <task:scheduled-tasks>
+        <!--列出商场周边小区Task-->
+        <task:scheduled ref="shopCommunityTask" method="getCommunity" cron="${mall_community_report}"/>
+
+        <!--员工录入月报-->
+        <task:scheduled ref="employeeInputTask" method="employeeMonthInput" cron="${employee_input_report}"/>
+
+        <!--员工排名计算-->
+        <task:scheduled ref="employeeRankTask" method="employeeRank" cron="${task_employee_rank_timer}"/>
+
+        <!--商场排名-->
+        <task:scheduled ref="mallRankTask" method="mallRank" cron="${task_mall_rank_timer}"/>
+
+        <!--大区数据统计-->
+        <task:scheduled ref="organizationInputTask" method="OrganizationInput" cron="${area_input_report}"/>
+
+        <!--集团录入情况-->
+        <task:scheduled ref="shoppingMallOrganizationTask" method="shoppingMallOrganization"
+                        cron="${task_shopping_mall_organization_timer}"/>
+
+        <!--商场录入月报-->
+        <task:scheduled ref="shoppingMonthInputTask" method="mallMonthInput" cron="${mall_input_report}"/>
+
+        <!--员工总数统计-->
+        <task:scheduled ref="employeeCountTask" method="countTask" cron="${task_employee_count_timer}"/>
+
+        <!--省数据-->
+        <task:scheduled ref="provinceInputTask" method="provinceInput" cron="${task_province_count_timer}"/>
+        <!--天数据-->
+        <task:scheduled ref="countryTask" method="countryTask" cron="${task_contry_daily_timer}"/>
+
+        <!--员工录入日报-->
+        <task:scheduled ref="employeeInputDailyTask" method="excute" cron="${task_employee_input_daily_report_timer}"/>
+        <!--商场录入日报-->
+        <task:scheduled ref="shoppingMallInputDailyTask" method="excute" cron="${task_mall_input_daily_report_timer}"/>
+        <!--组织录入日报-->
+        <task:scheduled ref="organizationInputDailyTask" method="excute"
+                        cron="${task_organization_input_daily_report_timer}"/>
+
+        <!--计算龙榜排名-->
+        <task:scheduled ref="scoreLogTask" method="execute" cron="${task_score_log}"/>
+
+        <task:scheduled ref="attendanceRecordStatusTask" method="execute" cron="${attendance_record_status_timer}"/>
+
+        <task:scheduled ref="departmentEmployeeTask" method="execute" cron="${department_employee_task}"/>
+
+        <task:scheduled ref="storeInfoSync" method="execute" cron="${store_info_sync}"/>
+
+        <task:scheduled ref="departmentPeopleNumberTask" method="execute" cron="${people_number}"/>
+
+
+    </task:scheduled-tasks>
+
+</beans>

@@ -1,0 +1,6 @@
+target/
+*.iml
+.idea/
+
+
+src/main/webapp/static_longyan_app/index2.html

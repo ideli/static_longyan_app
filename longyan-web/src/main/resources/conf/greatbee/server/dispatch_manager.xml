@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+    <!--config-->
+    <bean id="storageConfig" class="com.greatbee.bean.StorageConfig" >
+        <property name="storage_config_store_path" value="${storage_config_store_path}"></property>
+        <property name="storage_config_store_temp_path" value="${storage_config_store_temp_path}"></property>
+    </bean>
+    <bean id="appConfig" class="com.greatbee.bean.AppConfig" >
+        <property name="longyanVersion" value="${longyan_app_static_version}"></property>
+        <property name="mainDomain" value="${main_domain}"></property>
+    </bean>
+    <bean id="releaseConfig" class="com.greatbee.bean.ReleaseConfig" >
+        <property name="mysql_path" value="${storage_config_store_path}"></property>
+        <property name="backup_path" value="${storage_config_store_temp_path}"></property>
+        <property name="release_download_path" value="${storage_config_store_path}"></property>
+        <!--<property name="shellCMD" value="mkdir ${backup_path}/${yyyy_mm_dd_MM_HH_SS} cd ${backup_path}/${yyyy_mm_dd_MM_HH_SS}-->
+                                         <!--${mysql_path}/bin/mysqldump -uroot xiwa_lanchui &#45;&#45;table xiwa_base_oi > ${yyyy_mm_dd_MM_HH_SS}_oi.sql-->
+                                         <!--${mysql_path}/bin/mysqldump -uroot xiwa_lanchui &#45;&#45;table xiwa_base_object_identified > ${yyyy_mm_dd_MM_HH_SS}_oi.sql-->
+                                         <!--${mysql_path}/bin/mysqldump -uroot xiwa_lanchui &#45;&#45;table xiwa_base_module_config > ${yyyy_mm_dd_MM_HH_SS}_mc.sql-->
+                                         <!--${mysql_path}/bin/mysqldump -uroot xiwa_lanchui &#45;&#45;table xiwa_base_resource > ${yyyy_mm_dd_MM_HH_SS}_resource.sql-->
+                                         <!--${mysql_path}/bin/mysqldump -uroot xiwa_lanchui &#45;&#45;table xiwa_security_resource > ${yyyy_mm_dd_MM_HH_SS}_resource.sql-->
+                                         <!--cat ${yyyy_mm_dd_MM_HH_SS}_db_field.sql > ${yyyy_mm_dd_MM_HH_SS}.sql-->
+                                         <!--cat ${yyyy_mm_dd_MM_HH_SS}_oi.sql >> ${yyyy_mm_dd_MM_HH_SS}.sql-->
+                                         <!--cat ${yyyy_mm_dd_MM_HH_SS}_mc.sql >> ${yyyy_mm_dd_MM_HH_SS}.sql-->
+                                         <!--cat ${yyyy_mm_dd_MM_HH_SS}_resource.sql >> ${yyyy_mm_dd_MM_HH_SS}.sql-->
+                                         <!--cd ${backup_path}-->
+                                         <!--tar -zxvf $-->
+                                         <!--{yyyy_mm_dd_MM_HH_SS}.tar.gz ${yyyy_mm_dd_MM_HH_SS}"></property>-->
+        <property name="shellCMD">
+            <list>
+                <value>mkdir ${backup_path}/${yyyy_mm_dd_MM_HH_SS}</value>
+                <value>cd ${backup_path}/${yyyy_mm_dd_MM_HH_SS}</value>
+                <value>${mysql_path}/bin/mysqldump -uroot xiwa_lanchui --table xiwa_base_oi > ${yyyy_mm_dd_MM_HH_SS}_oi.sql</value>
+                <value>${mysql_path}/bin/mysqldump -uroot xiwa_lanchui --table xiwa_base_object_identified > ${yyyy_mm_dd_MM_HH_SS}_oi.sql</value>
+                <value>${mysql_path}/bin/mysqldump -uroot xiwa_lanchui --table xiwa_base_module_config > ${yyyy_mm_dd_MM_HH_SS}_mc.sql</value>
+                <value>${mysql_path}/bin/mysqldump -uroot xiwa_lanchui --table xiwa_base_resource > ${yyyy_mm_dd_MM_HH_SS}_resource.sql</value>
+                <value>${mysql_path}/bin/mysqldump -uroot xiwa_lanchui --table xiwa_security_resource > ${yyyy_mm_dd_MM_HH_SS}_resource.sql</value>
+                <value>cat ${yyyy_mm_dd_MM_HH_SS}_db_field.sql > ${yyyy_mm_dd_MM_HH_SS}.sql</value>
+                <value>cat ${yyyy_mm_dd_MM_HH_SS}_oi.sql >> ${yyyy_mm_dd_MM_HH_SS}.sql</value>
+                <value>cat ${yyyy_mm_dd_MM_HH_SS}_mc.sql >> ${yyyy_mm_dd_MM_HH_SS}.sql</value>
+                <value>cat ${yyyy_mm_dd_MM_HH_SS}_resource.sql >> ${yyyy_mm_dd_MM_HH_SS}.sql</value>
+                <value>cd ${backup_path}</value>
+                <value>tar -zxvf ${yyyy_mm_dd_MM_HH_SS}.tar.gz ${yyyy_mm_dd_MM_HH_SS}</value>
+            </list>
+        </property>
+    </bean>
+
+
+</beans>
+

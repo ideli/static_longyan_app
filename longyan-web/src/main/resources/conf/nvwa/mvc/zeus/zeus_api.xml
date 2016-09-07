@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+  "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+  "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+  <package name="zeus-api" extends="struts-default" namespace="/zeus-api">
+    <result-types>
+      <result-type name="json" class="org.apache.struts2.support.JSONResult"/>
+    </result-types>
+    <!--配置后台拦截器-->
+    <interceptors>
+      <interceptor name="authentication" class="com.greatbee.security.interceptor.AuthenticationInterceptor"/>
+      <interceptor-stack name="resource_authentication">
+        <interceptor-ref name="authentication"/>
+        <interceptor-ref name="defaultStack"/>
+      </interceptor-stack>
+    </interceptors>
+    <default-interceptor-ref name="resource_authentication"/>
+    <global-results>
+      <result name="json" type="json">
+        <param name="objectType">object</param>
+        <param name="objectName">response</param>
+        <param name="excludes">null</param>
+      </result>
+      <result name="error">error.jsp</result>
+      <result name="error_ajax">error_ajax.jsp</result>
+      <result name="error_runtime">error_runtime.jsp</result>
+
+      <result name="no_auth" type="json">
+        <param name="objectType">object</param>
+        <param name="objectName">response</param>
+        <param name="excludes">null</param>
+      </result>
+    </global-results>
+    <global-exception-mappings>
+      <exception-mapping exception="java.lang.RuntimeException" result="error_runtime"/>
+    </global-exception-mappings>
+
+    <!--主要业务-->
+    <!--Columns 读取所有的配置字段-->
+    <action name="columns" class="zeusAction" method="columns"/>
+
+    <!--自定义列表-->
+    <action name="custom_columns" class="zeusAction" method="customColumns"/>
+
+    <!--读取连接器-->
+    <action name="connectors" class="zeusAction" method="connectors"/>
+
+    <!--读取OI&Fields的配置-->
+    <action name="fields" class="zeusAction" method="fields"/>
+
+    <!--Page Data-->
+    <action name="page_data" class="zeusAction" method="page"/>
+
+    <!--导出数据-->
+    <action name="export" class="zeusExportAction" method="export"/>
+
+    <!--Read-->
+    <action name="read" class="zeusAction" method="read"/>
+
+    <!--字段唯一判断-->
+    <action name="unique" class="zeusAction" method="unique"/>
+
+    <!--读取表单数据-->
+    <action name="form" class="zeusAction" method="form"/>
+
+    <!--保存数据-->
+    <action name="form_save" class="zeusAction" method="formSave"/>
+
+    <!--拷贝数据-->
+    <action name="copy" class="zeusAction" method="copy"/>
+
+    <!--删除-->
+    <action name="remove" class="zeusAction" method="remove"/>
+
+    <!--更新字段-->
+    <action name="update_field" class="zeusAction" method="updateField"/>
+
+    <!--批量更新字段-->
+    <action name="batch_update_field" class="zeusAction" method="batchUpdate"/>
+  </package>
+</struts>

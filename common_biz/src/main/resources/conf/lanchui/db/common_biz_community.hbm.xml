@@ -1,0 +1,366 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.lanchui.commonBiz.bean.DispatchCommunityAuthorized" table="xiwa_dispatch_community_authorized"
+           lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="account" type="string"/>
+        <property name="password" type="string"/>
+        <property name="communityId" type="int"/>
+        <property name="xingMing" type="string"/>
+        <property name="createDate" type="java.util.Date"/>
+        <property name="createEmployeeId" type="int"/>
+        <property name="createXingMing" type="string"/>
+        <property name="roles" type="string"/>
+        <property name="active" type="boolean"/>
+        <property name="haveSetPassword" type="boolean"/>
+    </class>
+    <class name="com.lanchui.commonBiz.bean.RedstarCommunity" table="xiwa_redstar_community" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="city" type="string"/>
+        <property name="province" type="string"/>
+        <property name="merchantId" type="int"/>
+        <property name="name" type="string"/>
+        <property name="area" type="string"/>
+        <property name="provinceCode" type="string"/>
+        <property name="cityCode" type="string"/>
+        <property name="areaCode" type="string"/>
+        <property name="address" type="string"/>
+        <property name="logo" type="string"/>
+        <property name="userOpen" type="boolean"/>
+        <property name="currentNo" type="int"/>
+        <property name="hotline" type="string"/>
+        <property name="pickupAddress" type="string"/>
+        <property name="distributionCharge" type="string"/>
+        <property name="freeDistribution" type="string"/>
+        <property name="shortName" type="string"/>
+        <property name="developers" type="string"/>
+        <property name="programFeatures" type="string"/>
+        <property name="areaMonut" type="int"/>
+        <property name="roomMount" type="int"/>
+        <property name="priceSection" type="int"/>
+        <property name="buildingDate" type="string"/>
+        <property name="alreadyCheckAmount" type="int"/>
+        <property name="buildingAmount" type="int"/>
+        <property name="createEmployeeId" type="int"/>
+        <property name="updateEmployeeId" type="int"/>
+        <property name="createXingMing" type="string"/>
+        <property name="updateEmployeeXingMing" type="string"/>
+        <property name="updateDate" type="java.util.Date"/>
+        <property name="createDate" type="java.util.Date"/>
+
+        <property name="ownerId" type="int"/>
+        <property name="ownerXingMing" type="string"/>
+        <property name="source" type="string"/>
+        <property name="alreadyInputAmount" type="int"/>
+        <property name="longitude" type="java.lang.Double"/>
+        <property name="latitude" type="java.lang.Double"/>
+
+        <property name="ownerMallId" type="integer"/>
+        <property name="ownerMallName" type="string"/>
+
+        <property name="constructionTypes" type="string"/>
+        <property name="renovations" type="string"/>
+        <property name="deliveryTime" type="string"/>
+        <property name="propertyName" type="string"/>
+
+       <!-- <property name="distance"  type="double" />-->
+    </class>
+
+    <class name="com.lanchui.commonBiz.bean.RecommendCommunityObject" table="xiwa_redstar_community" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="city" type="string"/>
+        <property name="province" type="string"/>
+        <property name="name" type="string"/>
+        <property name="area" type="string"/>
+        <property name="provinceCode" type="string"/>
+        <property name="cityCode" type="string"/>
+        <property name="areaCode" type="string"/>
+        <property name="address" type="string"/>
+        <property name="roomMount" type="java.lang.Integer"/>
+        <property name="alreadyInputAmount" type="java.lang.Integer"/>
+        <property name="longitude"  type="string" />
+        <property name="latitude"  type="string" />
+        <property name="distance"  type="string" />
+        <property name="createEmployeeId" type="java.lang.Integer"/>
+        <property name="createXingMing" type="string"/>
+    </class>
+
+    <class name="com.lanchui.commonBiz.bean.ExtEmployee" table="xiwa_redstar_community" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="city" type="string"/>
+        <property name="province" type="string"/>
+        <property name="merchantId" type="int"/>
+        <property name="name" type="string"/>
+        <property name="area" type="string"/>
+        <property name="provinceCode" type="string"/>
+        <property name="cityCode" type="string"/>
+        <property name="areaCode" type="string"/>
+        <property name="address" type="string"/>
+        <property name="logo" type="string"/>
+        <property name="userOpen" type="boolean"/>
+        <property name="currentNo" type="int"/>
+        <property name="hotline" type="string"/>
+        <property name="pickupAddress" type="string"/>
+        <property name="distributionCharge" type="string"/>
+        <property name="freeDistribution" type="string"/>
+
+        <property name="developers" type="string"/>
+        <property name="programFeatures" type="string"/>
+        <property name="areaMonut" type="int"/>
+        <property name="roomMount" type="int"/>
+        <property name="priceSection" type="int"/>
+        <property name="buildingDate" type="string"/>
+        <property name="alreadyCheckAmount" type="int"/>
+        <property name="buildingAmount" type="int"/>
+
+        <property name="createEmployeeId" type="int"/>
+        <property name="updateEmployeeId" type="int"/>
+        <property name="createXingMing" type="string"/>
+        <property name="updateEmployeeXingMing" type="string"/>
+        <property name="updateDate" type="java.util.Date"/>
+        <property name="createDate" type="java.util.Date"/>
+
+        <property name="ownerId" type="int"/>
+        <property name="ownerXingMing" type="string"/>
+        <property name="source" type="string"/>
+        <property name="alreadyInputAmount" type="int"/>
+        <property name="distance"  type="double" />
+
+    </class>
+
+
+    <class name="com.lanchui.commonBiz.bean.DispatchCommunityGarden" table="xiwa_dispatch_community_garden"
+           lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="createDate" type="java.util.Date"/>
+        <property name="createEmployeeId" type="string"/>
+        <property name="createXingMing" type="string"/>
+        <property name="merchantId" type="int"/>
+        <property name="merchantName" type="string"/>
+        <property name="createMerchantUserId" type="int"/>
+        <property name="createMerchantUserXingMing" type="string"/>
+        <property name="communityId" type="int"/>
+        <property name="communityName" type="string"/>
+        <property name="createCommunityUserId" type="string"/>
+        <property name="createCommunityUserXingMing" type="string"/>
+        <property name="garden" type="string"/>
+        <property name="remark" type="string"/>
+        <property name="empty" type="boolean"/>
+    </class>
+
+
+    <class name="com.lanchui.commonBiz.bean.DispatchCommunityBuilding" table="xiwa_dispatch_community_building"
+           lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="createDate" type="java.util.Date"/>
+        <property name="createEmployeeId" type="string"/>
+        <property name="createXingMing" type="string"/>
+        <property name="merchantId" type="int"/>
+        <property name="merchantName" type="string"/>
+        <property name="createMerchantUserId" type="int"/>
+        <property name="createMerchantUserXingMing" type="string"/>
+        <property name="communityId" type="int"/>
+        <property name="communityName" type="string"/>
+        <property name="createCommunityUserId" type="int"/>
+        <property name="createCommunityUserXingMing" type="string"/>
+        <property name="gardenId" type="int"/>
+        <property name="gardenName" type="string"/>
+        <property name="building" type="string"/>
+        <property name="remark" type="string"/>
+        <property name="empty" type="boolean"/>
+    </class>
+    <class name="com.lanchui.commonBiz.bean.DispatchCommunityUnit" table="xiwa_dispatch_community_unit" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="createDate" type="java.util.Date"/>
+        <property name="createEmployeeId" type="string"/>
+        <property name="createXingMing" type="string"/>
+        <property name="merchantId" type="int"/>
+        <property name="merchantName" type="string"/>
+        <property name="createMerchantUserId" type="int"/>
+        <property name="createMerchantUserXingMing" type="string"/>
+        <property name="communityId" type="int"/>
+        <property name="communityName" type="string"/>
+        <property name="createCommunityUserId" type="int"/>
+        <property name="createCommunityUserXingMing" type="string"/>
+        <property name="gardenId" type="int"/>
+        <property name="gardenName" type="string"/>
+        <property name="buildingId" type="int"/>
+        <property name="buildingName" type="string"/>
+        <property name="unit" type="string"/>
+        <property name="remark" type="string"/>
+        <property name="empty" type="boolean"/>
+    </class>
+    <class name="com.lanchui.commonBiz.bean.DispatchCommunityRoom" table="xiwa_dispatch_community_room" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="createDate" type="java.util.Date"/>
+        <property name="createEmployeeId" type="string"/>
+        <property name="createXingMing" type="string"/>
+        <property name="merchantId" type="int"/>
+        <property name="merchantName" type="string"/>
+        <property name="createMerchantUserId" type="int"/>
+        <property name="createMerchantUserXingMing" type="string"/>
+        <property name="communityId" type="int"/>
+        <property name="communityName" type="string"/>
+        <property name="createCommunityUserId" type="int"/>
+        <property name="createCommunityUserXingMing" type="string"/>
+        <property name="gardenId" type="int"/>
+        <property name="gardenName" type="string"/>
+        <property name="buildingId" type="int"/>
+        <property name="buildingName" type="string"/>
+        <property name="unitId" type="int"/>
+        <property name="unitName" type="string"/>
+        <property name="room" type="string"/>
+        <property name="status" type="string"/>
+        <property name="ownerXingMing" type="string"/>
+        <property name="ownerPhone" type="string"/>
+        <property name="remark" type="string"/>
+        <property name="floor" type="string"/>
+        <property name="contractSigningDate" type="java.util.Date"/>
+        <property name="bankName" type="string"/>
+        <property name="rentDate" type="java.util.Date"/>
+        <property name="purchaseContractNo" type="string"/>
+        <property name="banckAccount" type="string"/>
+        <property name="apartmentLayout" type="string"/>
+        <property name="repossessionDate" type="java.util.Date"/>
+        <property name="accountName" type="string"/>
+        <property name="orientation" type="string"/>
+        <property name="reportDecorationDate" type="java.util.Date"/>
+        <property name="landCertificateNo" type="string"/>
+        <property name="builtupArea" type="string"/>
+        <property name="propertyRightNo" type="string"/>
+        <property name="setArea" type="string"/>
+        <property name="haveKey" type="string"/>
+        <property name="publicArea" type="string"/>
+        <property name="monthlyManagementFee" type="string"/>
+        <property name="publicCoefficient" type="string"/>
+        <property name="payment" type="string"/>
+        <property name="application" type="string"/>
+        <property name="billingAddress" type="string"/>
+        <property name="ownerPlate" type="string"/>
+        <property name="monthlyCarCharge" type="string"/>
+        <property name="parkingSituation" type="string"/>
+        <property name="unitPersonnel" type="string"/>
+        <property name="pet" type="string"/>
+        <property name="housingResources" type="string"/>
+        <property name="finalEdit" type="string"/>
+        <property name="maintenanceList" type="string"/>
+        <property name="paidService" type="string"/>
+        <property name="idCardNumber" type="string"/>
+        <property name="idCardAddress" type="string"/>
+        <property name="paymentAmount" type="string"/>
+        <property name="paymentPeriod" type="string"/>
+        <property name="expiresdate" type="java.util.Date"/>
+        <property name="feeScale" type="string"/>
+        <property name="keyAddress" type="string"/>
+    </class>
+
+    <class name="com.lanchui.commonBiz.bean.DispatchCommunityRoomStatus" table="xiwa_dispatch_community_room_status"
+           lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="name" type="string"/>
+        <property name="alias" type="string"/>
+        <property name="backgroundColor" type="string"/>
+    </class>
+
+
+    <class name="com.lanchui.commonBiz.bean.DispatchRoomSelect" table="xiwa_dispatch_community_room" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="createDate" type="java.util.Date"/>
+        <property name="merchantId" type="int"/>
+        <property name="merchantName" type="string"/>
+        <property name="communityId" type="int"/>
+        <property name="communityName" type="string"/>
+        <property name="gardenId" type="int"/>
+        <property name="gardenName" type="string"/>
+        <property name="buildingId" type="int"/>
+        <property name="buildingName" type="string"/>
+        <property name="unitId" type="int"/>
+        <property name="unitName" type="string"/>
+        <property name="room" type="string"/>
+        <property name="status" type="string"/>
+    </class>
+    <class name="com.lanchui.commonBiz.bean.DispatchUserRoom" table="xiwa_dispatch_user_room" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="userId" type="int"/>
+        <property name="xingMing" type="string"/>
+        <property name="phone" type="string"/>
+        <property name="roomId" type="int"/>
+        <property name="merchantId" type="int"/>
+        <property name="merchantName" type="string"/>
+        <property name="createMerchantUserId" type="int"/>
+        <property name="createMerchantUserName" type="string"/>
+        <property name="communityId" type="int"/>
+        <property name="communityName" type="string"/>
+        <property name="createCommunityUserId" type="int"/>
+        <property name="createCommunityUserName" type="string"/>
+        <property name="createDate" type="java.util.Date"/>
+        <property name="ownerIdentity" type="string"/>
+        <property name="verify" type="string"/>
+        <property name="loginMark" type="boolean"/>
+    </class>
+
+    <class name="com.lanchui.commonBiz.bean.RedstarCommunityBuilding" table="xiwa_redstar_community_building" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="createDate" type="java.util.Date"/>
+        <property name="createEmployeeId" type="integer"/>
+        <property name="createXingMing" type="string"/>
+        <property name="communityId" type="integer"/>
+        <property name="communityName" type="java.lang.String"/>
+
+        <property name="buildingName" type="string"/>
+        <property name="roomAmount" type="integer"/>
+        <property name="remark" type="string"/>
+        <property name="unitAmount" type="integer"/>
+        <property name="floorAmount" type="integer"/>
+    </class>
+
+
+    <class name="com.lanchui.commonBiz.bean.RedstarCommunityUnit" table="xiwa_redstar_community_unit" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="createDate" type="java.util.Date"/>
+
+        <property name="createEmployeeId" type="integer"/>
+        <property name="communityId" type="integer"/>
+        <property name="roomAmount" type="integer"/>
+        <property name="buildingId" type="integer"/>
+
+        <property name="createXingMing" type="java.lang.String"/>
+        <property name="communityName" type="java.lang.String"/>
+        <property name="unitName" type="java.lang.String"/>
+        <property name="buildingName" type="string"/>
+        <property name="remark" type="string"/>
+
+    </class>
+
+
+
+</hibernate-mapping>

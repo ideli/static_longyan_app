@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:monitor protocol="registry"  />
+
+    <dubbo:reference interface="com.chinaredstar.lang.fastdfs.api.IFastdfsService" owner="mweb"  id="iFastdfsService" timeout="5000" retries="1" />
+
+    <!--通讯录-->
+   <dubbo:reference interface="com.chinaredstar.longyan.api.ContactService"
+             owner="longyan"  id="contactService" timeout="5000" retries="1" />
+   <!--砸蛋-->
+   <dubbo:reference interface="com.chinaredstar.longyan.api.LotteryService"
+             owner="longyan"  id="lotteryService" timeout="5000" retries="1"  />
+
+    <!--省市区-->
+    <dubbo:reference interface="com.chinaredstar.longyan.api.CommonService"
+                     owner="longyan"  id="commonService" timeout="5000" retries="1"  />
+
+    <!--小区住宅-->
+    <dubbo:reference interface="com.chinaredstar.longyan.api.CommunityService"
+                     owner="longyan"  id="communityService" timeout="5000" retries="1"  />
+
+
+    <dubbo:reference interface="com.redstar.sms.api.AppPushService"
+                     owner="longyan"  id="appPushService" timeout="5000" retries="1"  />
+
+
+
+</beans>

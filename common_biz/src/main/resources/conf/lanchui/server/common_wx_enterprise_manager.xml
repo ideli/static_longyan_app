@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="wxEnterpriseManager" class="com.lanchui.commonBiz.manager.ext.SimpleWxEnterpriseManager">
+        <property name="weixinOpenHost">
+            <value>${weixinOpenHost}</value>
+        </property>
+        <property name="weixinQyHost">
+            <value>${weixinQyHost}</value>
+        </property>
+        <property name="weixinCorpID">
+            <value>${weixinCorpID}</value>
+        </property>
+        <property name="weixinSecret">
+            <value>${weixinSecret}</value>
+        </property>
+        <property name="initSessionRedirectUri">
+            <value>${initSessionRedirectUri}</value>
+        </property>
+        <property name="appid">
+            <value>${appid}</value>
+        </property>
+        <property name="department">
+            <value>${department}</value>
+        </property>
+        <property name="employeeAppid">
+            <value>${employeeAppid}</value>
+        </property>
+        <property name="weixinToggle">
+            <value>${weixinToggle}</value>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+  <!--Properties Configuration-->
+  <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="location" value="classpath:test_common_biz_config.properties"/>
+  </bean>
+
+  <!--Proxool Data Source-->
+  <bean id="defaultDataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+    <property name="driver" value="${db.default.connection.driver_class}"/>
+    <property name="driverUrl" value="${db.default.proxool.connection.url}"/>
+    <property name="user" value="${db.default.connection.username}"/>
+    <property name="password" value="${db.default.connection.password}"/>
+
+    <property name="alias" value="${db.default.proxool.alias}"/>
+    <property name="houseKeepingSleepTime" value="${db.default.proxool.houseKeepingSleepTime}"/>
+    <property name="prototypeCount" value="${db.default.proxool.prototypeCount}"/>
+    <property name="maximumConnectionCount" value="${db.default.proxool.maximumConnectionCount}"/>
+    <property name="minimumConnectionCount" value="${db.default.proxool.minimumConnectionCount}"/>
+  </bean>
+
+  <!--JDBC Template-->
+  <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="defaultDataSource"/>
+  </bean>
+
+  <!--Hibernate Session Factory-->
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+    <property name="dataSource" ref="defaultDataSource"/>
+    <property name="mappingResources">
+      <list>
+        <!--Base-->
+        <!--<value>conf/base/db/Base.hbm.xml</value>-->
+
+        <!--&lt;!&ndash;Message&ndash;&gt;-->
+        <!--<value>conf/message/db/Message.hbm.xml</value>-->
+
+        <!--&lt;!&ndash;Security&ndash;&gt;-->
+        <!--<value>conf/security/db/Security.hbm.xml</value>-->
+
+        <!--&lt;!&ndash;Zeus&ndash;&gt;-->
+        <!--<value>conf/zeus/db/Zeus.hbm.xml</value>-->
+        <!--<value>conf/zeus/db/Trinity.hbm.xml</value>-->
+
+        <value>conf/lanchui/db/common_biz_base.hbm.xml</value>
+      </list>
+    </property>
+    <property name="hibernateProperties">
+      <props>
+        <prop key="hibernate.generate_statistics">${db.default.hibernate.generate_statistics}</prop>
+        <prop key="hibernate.dialect">${db.default.hibernate.dialect}</prop>
+        <prop key="hibernate.show_sql">${db.default.hibernate.show_sql}</prop>
+        <prop key="hibernate.cache.use_query_cache">${db.default.hibernate.cache.use_query_cache}</prop>
+        <prop key="hibernate.cache.use_second_level_cache">${db.default.hibernate.cache.use_second_level_cache}</prop>
+        <prop key="hibernate.cache.provider_class">${db.default.hibernate.cache.provider_class}</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="ldapContextSource" class="org.springframework.ldap.core.support.LdapContextSource">
+    <property name="referral" value="follow"/>
+    <property name="url" value="ldap://datayes.com:3268"/>
+    <property name="base" value="DC=datayes,DC=com"/>
+    <property name="userDn" value="CN=Adaccount,CN=Users,DC=datayes,DC=com"/>
+    <property name="password" value="G0f@r@w@y!"/>
+    <property name="baseEnvironmentProperties">
+      <map>
+        <entry key="java.naming.security.authentication" value="simple"/>
+      </map>
+    </property>
+  </bean>
+  <bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">
+    <property name="contextSource" ref="ldapContextSource"/>
+  </bean>
+
+  <!--Common-->
+  <import resource="classpath:conf/base/server/common_server.xml"/>
+  <!--Message-->
+  <import resource="classpath:conf/message/server/message_server.xml"/>
+  <!--Security-->
+  <import resource="classpath:conf/security/server/security_server.xml"/>
+  <!--Task Server-->
+  <import resource="classpath:conf/task/server/task_server.xml"/>
+  <!--Zeus-->
+  <import resource="classpath:conf/zeus/server/zeus_server.xml"/>
+
+  <!--Common Biz Server-->
+  <import resource="classpath:conf/lanchui/server/common_biz_server.xml"/>
+
+  <!-- 使用annotation 自动注册bean,并保证@Required,@Autowired的属性被注入 -->
+  <context:component-scan base-package="com.xiwa"/>
+  <context:component-scan base-package="com.lanchui"/>
+  <context:annotation-config/>
+  <aop:aspectj-autoproxy proxy-target-class="true"/>
+</beans>

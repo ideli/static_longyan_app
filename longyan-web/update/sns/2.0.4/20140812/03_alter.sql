@@ -1,0 +1,1 @@
+alter table xiwa_base_oem_config add column defaultEnterpriseLogo varchar(256) default null ;

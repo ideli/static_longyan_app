@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+  "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+  "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+  <package name="storage_folder" extends="struts-default" namespace="/storage">
+    <result-types>
+      <result-type name="json" class="org.apache.struts2.support.JSONResult"/>
+    </result-types>
+
+    <!--配置后台拦截器-->
+    <interceptors>
+      <interceptor name="authentication" class="com.greatbee.security.interceptor.AuthenticationInterceptor"/>
+      <interceptor-stack name="resource_authentication">
+        <interceptor-ref name="authentication"/>
+        <interceptor-ref name="defaultStack"/>
+      </interceptor-stack>
+    </interceptors>
+    <default-interceptor-ref name="resource_authentication"/>
+
+    <global-results>
+      <result name="json" type="json">
+        <param name="objectType">object</param>
+        <param name="objectName">response</param>
+        <param name="excludes">null</param>
+      </result>
+      <result name="error">error.jsp</result>
+      <result name="error_ajax">error_ajax.jsp</result>
+      <result name="error_runtime">error_runtime.jsp</result>
+      <result name="no_auth" type="json">
+        <param name="objectType">object</param>
+        <param name="objectName">response</param>
+        <param name="excludes">null</param>
+      </result>
+    </global-results>
+    <global-exception-mappings>
+      <exception-mapping exception="java.lang.RuntimeException" result="error_runtime"/>
+    </global-exception-mappings>
+
+    <!--Manager Action-->
+    <action name="storage_folder" class="storageFolderAction" method="manager">
+      <result>storage_folder.jsp</result>
+    </action>
+
+    <!--List By page-->
+    <action name="storage_folder_list" class="storageFolderAction" method="list">
+      <result>storage_folder_list.jsp</result>
+    </action>
+
+    <!--add form-->
+    <action name="storage_folder_add_form" class="storageFolderAction" method="addForm">
+      <result>storage_folder_form.jsp</result>
+    </action>
+
+    <!--modify form-->
+    <action name="storage_folder_modify_form_*" class="storageFolderAction" method="modifyForm">
+      <param name="operationId">{1}</param>
+      <result>storage_folder_form.jsp</result>
+    </action>
+
+    <!--Save-->
+    <action name="storage_folder_save" class="storageFolderAction" method="saveAction"/>
+
+    <!--hidden-->
+    <action name="storage_folder_hidden" class="storageFolderAction" method="hidden"/>
+
+    <!--delete-->
+    <action name="storage_folder_delete" class="storageFolderAction" method="delete"/>
+  </package>
+</struts>

@@ -1,0 +1,18 @@
+<VirtualHost *:80>
+        ServerAdmin [Server Admin]
+        DocumentRoot "[Server file system path]"
+        ServerName [Domain]
+        <Directory [Server auth path in file system]>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride None
+                Order allow,deny
+                allow from all
+                AuthName "[Auth Name]"
+        AuthType Basic
+        AuthUserFile [Auth file's path in file system]
+        Require valid-user
+        </Directory>
+</VirtualHost>
+
+Command for create auth user and password
+htpasswd -mb [Auth file's path in file system] [username] [password]

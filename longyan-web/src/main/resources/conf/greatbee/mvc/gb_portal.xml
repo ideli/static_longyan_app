@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+  "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+  "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+  <package name="portal" extends="struts-default" namespace="/crm">
+    <result-types>
+      <result-type name="json" class="org.apache.struts2.support.JSONResult"/>
+    </result-types>
+    <!--配置后台拦截器-->
+    <interceptors>
+      <interceptor name="authentication" class="com.greatbee.security.interceptor.AuthenticationInterceptor"/>
+      <interceptor-stack name="resource_authentication">
+        <interceptor-ref name="authentication"/>
+        <interceptor-ref name="defaultStack"/>
+      </interceptor-stack>
+    </interceptors>
+    <default-interceptor-ref name="resource_authentication"/>
+    <global-results>
+      <result name="json" type="json">
+        <param name="objectType">object</param>
+        <param name="objectName">response</param>
+        <param name="excludes">null</param>
+      </result>
+      <result name="error">error.jsp</result>
+      <result name="error_ajax">error_ajax.jsp</result>
+      <result name="error_runtime">error_runtime.jsp</result>
+      <result name="no_auth" type="redirectAction">
+        <param name="actionName">login</param>
+        <param name="namespace">/security</param>
+      </result>
+    </global-results>
+    <global-exception-mappings>
+      <exception-mapping exception="java.lang.RuntimeException" result="error_runtime"/>
+    </global-exception-mappings>
+
+    <!--Manager Action-->
+    <action name="index" class="GBPortalAction" method="index">
+      <!--<result>../portal.jsp</result>-->
+      <result>../gb.jsp</result>
+      <result name="sns">../sns.jsp</result>
+      <result name="gb">../gb.jsp</result>
+      <result name="time_out" type="redirectAction">
+        <param name="actionName">login</param>
+        <param name="namespace">/security</param>
+      </result>
+      <result name="weixin">../longyan.jsp?login=true</result>
+      <exception-mapping exception="com.xiwa.base.cmd.SessionTimeoutException" result="time_out"/>
+    </action>
+
+    <!--生成菜单-->
+    <action name="generate_menus" class="GBPortalAction" method="generateMenus"/>
+    <!--生成Employee菜单-->
+    <action name="generate_employee_menus" class="GBPortalAction" method="generateEmployeeMenus"/>
+    <!--Portlets-->
+    <action name="portlets" class="GBPortalAction" method="portlets"/>
+    <!--Add Portlet-->
+    <action name="add_portlet" class="GBPortalAction" method="addPortlet"/>
+  </package>
+</struts>

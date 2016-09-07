@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.lanchui.commonBiz.bean.DispatchUser" table="xiwa_dispatch_user" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="xingMing" type="string"/>
+        <property name="phone" type="string"/>
+        <property name="weixin" type="string"/>
+        <property name="createDate" type="java.util.Date"/>
+        <property name="sex" type="string"/>
+        <property name="nickName" type="string"/>
+        <property name="openId" type="string"/>
+        <property name="province" type="string"/>
+        <property name="city" type="string"/>
+        <property name="country" type="string"/>
+        <property name="headimgUrl" type="string"/>
+        <property name="privilege" type="string"/>
+        <property name="unionId" type="string"/>
+        <property name="password" type="string"/>
+        <property name="showData" type="boolean"/>
+        <property name="roomId" type="int"/>
+        <property name="merchantId" type="int"/>
+        <property name="merchantName" type="string"/>
+        <property name="createMerchantId" type="int"/>
+        <property name="createMerchantName" type="string"/>
+        <property name="communityId" type="int"/>
+        <property name="communityName" type="string"/>
+        <property name="createCommunityId" type="int"/>
+        <property name="createCommunityName" type="string"/>
+        <property name="ownerIdentity" type="string"/>
+        <property name="idCardNumber" type="string"/>
+        <property name="idCardAddress" type="string"/>
+        <property name="lanchuiBalance" type="double"/>
+        <property name="propertyBalance" type="double"/>
+        <property name="propertyUnpaid" type="double"/>
+        <property name="landouBalance" type="double"/>
+        <property name="job" type="string"/>
+        <property name="interest" type="string"/>
+        <property name="checkinTime" type="string"/>
+        <property name="userRemark" type="string"/>
+    </class>
+
+    <class name="com.lanchui.commonBiz.bean.DispatchUserAddress" table="xiwa_dispatch_user_address" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="province" type="string"/>
+        <property name="provinceCode" type="string"/>
+        <property name="city" type="string"/>
+        <property name="cityCode" type="string"/>
+        <property name="area" type="string"/>
+        <property name="areaCode" type="string"/>
+        <property name="address" type="string"/>
+        <property name="createDate" type="java.util.Date"/>
+        <property name="createUserId" type="int"/>
+        <property name="createUserXingMing" type="string"/>
+        <property name="defaultMark" type="boolean"/>
+        <property name="showData" type="boolean"/>
+        <property name="telephone" type="string"/>
+        <property name="mobilephone" type="string"/>
+        <property name="communityId" type="int"/>
+        <property name="building" type="string"/>
+        <property name="unit" type="string"/>
+        <property name="houseNumber" type="string"/>
+    </class>
+
+
+    <class name="com.lanchui.commonBiz.bean.constant.DispatchUserCard" table="xiwa_dispatch_user_card" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="serialNumber" type="string"/>
+        <property name="createDate" type="java.util.Date"/>
+        <property name="merchantId" type="int"/>
+        <property name="merchantName" type="string"/>
+        <property name="createMerchantUserId" type="int"/>
+        <property name="createMerchantUserXingMing" type="string"/>
+        <property name="communityId" type="int"/>
+        <property name="communityName" type="string"/>
+        <property name="createCommunityUserId" type="int"/>
+        <property name="createCommunityUserXingMing" type="string"/>
+        <property name="userId" type="int"/>
+        <property name="xingMing" type="string"/>
+        <property name="mobilePhone" type="string"/>
+        <property name="validDate" type="java.util.Date"/>
+        <property name="serviceNum" type="int"/>
+        <property name="serviceAmount" type="double"/>
+        <property name="valid" type="boolean"/>
+        <property name="name" type="string"/>
+        <property name="productId" type="int"/>
+        <property name="productName" type="string"/>
+    </class>
+
+</hibernate-mapping>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+  "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+  "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+  <package name="security_entrance" extends="struts-default" namespace="/security">
+    <result-types>
+      <result-type name="json" class="org.apache.struts2.support.JSONResult"/>
+    </result-types>
+    <global-results>
+      <result name="json" type="json">
+        <param name="objectType">object</param>
+        <param name="objectName">response</param>
+        <param name="excludes">null</param>
+      </result>
+      <result name="error">../error.jsp</result>
+      <result name="error_ajax">../error_ajax.jsp</result>
+      <result name="error_runtime">../error_runtime.jsp</result>
+    </global-results>
+    <global-exception-mappings>
+      <exception-mapping exception="java.lang.RuntimeException" result="error_runtime"/>
+    </global-exception-mappings>
+
+    <!--Login Action-->
+    <action name="login" class="securityEntranceAction" method="login">
+      <result>../login.jsp</result>
+      <result name="oem">../${oem}.jsp</result>
+      <result name="redirect" type="redirectAction">
+        <param name="actionName">index</param>
+        <param name="namespace">/crm</param>
+      </result>
+    </action>
+
+    <!--Logout-->
+    <action name="logout" class="securityEntranceAction" method="logout">
+      <!--<result>../login.jsp</result>-->
+      <result type="redirectAction">
+        <param name="actionName">login</param>
+        <param name="namespace">/security</param>
+      </result>
+    </action>
+
+    <!--根据帐号读取授权对象ID-->
+    <action name="read_auth_target_id_by_account" class="securityEntranceAction" method="readAuthTargetIdByAccount"/>
+
+    <!--APP Logout-->
+    <action name="app_logout" class="securityEntranceAction" method="appLogout"/>
+
+    <!--注册-->
+    <action name="register" class="securityEntranceAction" method="register"/>
+
+    <!--邀请注册-->
+    <action name="invite_register" class="securityEntranceAction" method="inviteRegister"/>
+
+    <!--读取子资源-->
+    <action name="read_child_resources" class="securityEntranceAction" method="readChildResources"/>
+
+    <!--读取Module资源-->
+    <action name="read_module_resource" class="securityEntranceAction" method="readModuleResource"/>
+
+    <!--更新密码-->
+    <action name="update_password" class="securityEntranceAction" method="updatePasswordAction"/>
+
+    <!--忘记密码-->
+    <action name="forget_password" class="securityEntranceAction" method="forgetPasswordAction"/>
+    <!--找回密码表单-->
+    <action name="find_password_form" class="securityEntranceAction" method="findPasswordForm">
+      <result>../find_password_form.jsp</result>
+    </action>
+    <!--找回密码-->
+    <action name="find_password" class="securityEntranceAction" method="findPasswordAction"/>
+
+    <!--Auth Action-->
+    <action name="auth" class="securityEntranceAction" method="auth"/>
+
+    <!--刷新授权-->
+    <action name="refresh_auth" class="securityEntranceAction" method="refreshAuth"/>
+  </package>
+</struts>

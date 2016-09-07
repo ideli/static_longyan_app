@@ -1,0 +1,54 @@
+配置mysql自动备份的job
+
+更改crontab任务配置
+vi /etc/crontab
+
+======================================显示以下内容=================================================================
+# /etc/crontab: system-wide crontab
+# Unlike any other crontab you don't have to run the `crontab'
+# command to install the new version when you edit this file
+# and files in /etc/cron.d. These files also have username fields,
+# that none of the other crontabs do.
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# m h dom mon dow user  command
+17 *    * * *   root    cd / && run-parts --report /etc/cron.hourly
+25 6    * * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+47 6    * * 7   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+52 6    1 * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
+0  6    * * *   root    /opt/project/dbBackup/backup.sh
+
+===================================================================================================================
+
+配置在最后一行的是定期执行backup脚本的job配置
+
+第一列表示在系统时间的分钟等于多少的时候执行
+
+第二列表示在系统时间的小时等于多少的时候执行
+
+第三列表示在系统时间的月等于多少的时候执行
+
+第四列表示在系统时间的日等于多少的时候执行
+
+第五列表示在系统时间等于星期几的时候执行
+
+以上是关于时间的配置,其中‘*’表示通配符,表示任意的数字
+如果是'*/5'表示*的数字是5的倍数的时候执行,比如如果第一列配置是*/5则表示每5分钟执行
+
+第六列表示用什么账号执行脚本
+
+第七列是脚本的路径
+
+比如最后一列的配置的含义是在每天6点0分的时候使用root账号执行脚本/opt/project/dbBackup/backup.sh
+
+
+配置保存之后别忘记重启cron服务让更改的配置生效
+
+service cron restart
+
+附上mysql备份的脚本
+
+filename=`date +%Y%m%d%H%M`
+mysqldump -uroot -pqazWSXedc xiwa_2013 > /opt/project/dbBackup/xiwa$filename.sql

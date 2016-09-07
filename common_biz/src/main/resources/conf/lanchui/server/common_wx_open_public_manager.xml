@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="wxOpenPublicManager" class="com.lanchui.commonBiz.manager.ext.SimpleWxOpenPublicManager">
+        <property name="weixinApiHost">
+            <value>${weixinApiHost}</value>
+        </property>
+        <property name="openAppId">
+            <value>${openAppId}</value>
+        </property>
+        <property name="openSecret">
+            <value>${openSecret}</value>
+        </property>
+        <property name="openIndex">
+            <value>${openIndex}</value>
+        </property>
+        <property name="openRegister">
+            <value>${openRegister}</value>
+        </property>
+        <property name="weixinMerchantHost">
+            <value>${weixinMerchantHost}</value>
+        </property>
+        <property name="openMerchantId">
+            <value>${openMerchantId}</value>
+        </property>
+        <property name="openRedirectUrl">
+            <value>${openRedirectUrl}</value>
+        </property>
+        <property name="weixinOpenHost">
+            <value>${weixinOpenHost}</value>
+        </property>
+        <property name="weixinApiSecret">
+            <value>${weixinApiSecret}</value>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:monitor protocol="registry" />
+
+    <!-- dubbo服务暴露端口 -->
+    <dubbo:protocol name="dubbo" port="${dubbo.port}" />
+
+    <!-- 声明需要暴露的服务接口 -->
+    <bean class="com.chinaredstar.longyan.service.CommonServiceImpl" id="commonService"/>
+    <dubbo:service interface="com.chinaredstar.longyan.api.CommonService" ref="commonService" timeout="0" retries="0"/>
+
+    <bean class="com.chinaredstar.longyan.service.CommunityServiceImpl" id="communityService"/>
+    <dubbo:service interface="com.chinaredstar.longyan.api.CommunityService" ref="communityService" timeout="0" retries="0"/>
+
+    <bean class="com.chinaredstar.longyan.service.ShoppingMallServiceImpl" id="shoppingMallService"/>
+    <dubbo:service interface="com.chinaredstar.longyan.api.ShoppingMallService" ref="shoppingMallService" timeout="0" retries="0"/>
+
+    <bean class="com.chinaredstar.longyan.service.StoreServiceImpl" id="storeService"/>
+    <dubbo:service interface="com.chinaredstar.longyan.api.StoreService" ref="storeService" timeout="0" retries="0"/>
+
+    <bean class="com.chinaredstar.longyan.service.ContactServiceImpl" id="contactService"/>
+    <dubbo:service interface="com.chinaredstar.longyan.api.ContactService" ref="contactService" timeout="0" retries="0"/>
+
+    <bean class="com.chinaredstar.longyan.service.LotteryServiceImpl" id="lotteryService"/>
+    <dubbo:service interface="com.chinaredstar.longyan.api.LotteryService" ref="lotteryService" timeout="0" retries="0"/>
+
+</beans>

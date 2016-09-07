@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.lanchui.commonBiz.bean.work.RedstarAttendanceRecord" table="xiwa_redstar_attendance_record" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="employeeXingMing" type="string"/>
+        <property name="userRemark" type="string"/>
+        <property name="userRemarkType" type="string"/>
+        <property name="hrRemark" type="string"/>
+
+        <property name="createDate"  type="java.util.Date"/>
+        <property name="checkinTime"  type="java.util.Date"/>
+        <property name="checkoutTime"  type="java.util.Date"/>
+        <property name="employeeId"   type="java.lang.Integer"/>
+
+        <property name="year"   type="java.lang.Integer"/>
+        <property name="month"   type="java.lang.Integer"/>
+        <property name="day"   type="java.lang.Integer"/>
+        <property name="status"   type="string"/>
+        <property name="province"   type="string"/>
+        <property name="city"   type="string"/>
+        <property name="area"   type="string"/>
+        <property name="address"   type="string"/>
+
+    </class>
+
+    <class name="com.lanchui.commonBiz.bean.work.RedstarAttendanceDepartment" table="xiwa_redstar_attendance_department" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="checkpointId" type="java.lang.Integer"/>
+        <property name="departmentId" type="java.lang.Integer"/>
+
+        <property name="departmentCode" type="string"/>
+        <property name="checkpointName" type="string"/>
+        <property name="departmentName"  type="string"/>
+        <property name="remark"  type="string"/>
+    </class>
+
+    <class name="com.lanchui.commonBiz.bean.work.RedstarAttendanceCheckpoint" table="xiwa_redstar_attendance_checkpoint" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+
+
+        <property name="createDate"  type="java.util.Date"/>
+        <property name="checkinTime"  type="java.lang.String"/>
+        <property name="checkoutTime"  type="java.lang.String"/>
+
+        <property name="name"   type="string"/>
+        <property name="remark"   type="string"/>
+        <property name="longitude"   type="java.lang.Double"/>
+        <property name="latitude"   type="java.lang.Double"/>
+        <property name="distance"   type="java.lang.Double"/>
+    </class>
+
+
+    <class name="com.lanchui.commonBiz.bean.work.RedstarAttendanceLog" table="xiwa_redstar_attendance_log" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="createDate"  type="java.util.Date"/>
+        <property name="employeeId"  type="integer"/>
+        <property name="employeeXingMing"  type="string"/>
+        <property name="month"   type="integer"/>
+        <property name="year"   type="integer"/>
+        <property name="day"   type="integer"/>
+        <property name="longitude"   type="java.lang.Double"/>
+        <property name="latitude"   type="java.lang.Double"/>
+        <property name="province"   type="string"/>
+        <property name="city"   type="string"/>
+        <property name="area"   type="string"/>
+        <property name="address"   type="string"/>
+    </class>
+
+
+    <class name="com.lanchui.commonBiz.bean.work.RedstarRestaurantDepartment" table="xiwa_redstar_restaurant_department" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="restaurantId"  type="int"/>
+        <property name="restaurantName"  type="string"/>
+        <property name="departmentId"  type="int"/>
+        <property name="departmentName"   type="string"/>
+        <property name="remark"   type="string"/>
+        <property name="departmentCode"   type="string"/>
+    </class>
+
+    <class name="com.lanchui.commonBiz.bean.work.RedstarRestaurantMenu" table="xiwa_redstar_restaurant_menu" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="createEmployeeId"  type="int"/>
+        <property name="createXingMing"  type="string"/>
+        <property name="type"  type="string"/>
+        <property name="content"   type="string"/>
+        <property name="remark"   type="string"/>
+        <property name="createDate"   type="java.util.Date"/>
+        <property name="restaurantId"  type="int"/>
+        <property name="restaurantName"   type="string"/>
+    </class>
+
+    <class name="com.lanchui.commonBiz.bean.work.RedstarRestaurantOrder" table="xiwa_redstar_restaurant_order" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="employeeId"  type="int"/>
+        <property name="employeeXingMing"  type="string"/>
+        <property name="restaurantId"  type="int"/>
+        <property name="restaurantName"   type="string"/>
+        <property name="status"   type="string"/>
+        <property name="year"   type="int"/>
+        <property name="month"   type="int"/>
+        <property name="day"   type="int"/>
+        <property name="createDate"   type="java.util.Date"/>
+        <property name="updateDate"   type="java.util.Date"/>
+    </class>
+
+    <class name="com.lanchui.commonBiz.bean.work.RedstarRestaurantInfo" table="xiwa_redstar_restaurant_info" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="name"  type="string"/>
+        <property name="remark"  type="string"/>
+        <property name="createDate"   type="java.util.Date"/>
+        <property name="checkinTime"   type="string"/>
+        <property name="checkoutTime"   type="string"/>
+        <property name="openDinnerTime"   type="string"/>
+        <property name="closeDinnerTime"   type="string"/>
+    </class>
+
+    <class name="com.lanchui.commonBiz.bean.work.RedstarAttendanceHoliday" table="xiwa_redstar_attendance_holiday" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="year"   type="integer"/>
+        <property name="month"   type="integer"/>
+        <property name="day"   type="integer"/>
+        <property name="remark"  type="string"/>
+    </class>
+
+</hibernate-mapping>

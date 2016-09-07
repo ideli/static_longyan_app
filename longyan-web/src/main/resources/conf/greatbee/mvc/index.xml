@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+  "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+  "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+  <package name="index" extends="struts-default" namespace="/">
+    <result-types>
+      <result-type name="json" class="org.apache.struts2.support.JSONResult"/>
+    </result-types>
+    <global-results>
+      <result name="json" type="json">
+        <param name="objectType">object</param>
+        <param name="objectName">response</param>
+        <param name="excludes">null</param>
+      </result>
+      <result name="error">../error.jsp</result>
+      <result name="error_ajax">../error_ajax.jsp</result>
+      <result name="error_runtime">../error_runtime.jsp</result>
+    </global-results>
+    <global-exception-mappings>
+      <exception-mapping exception="java.lang.RuntimeException" result="error_runtime"/>
+    </global-exception-mappings>
+
+    <!--Login Action-->
+    <action name="index" class="indexAction" method="index">
+      <result>index.jsp</result>
+      <result name="oem">${oem}.jsp</result>
+      <result name="redirect" type="redirectAction">
+        <param name="actionName">index</param>
+        <param name="namespace">/crm</param>
+      </result>
+    </action>
+    <!--<action name="authUrl" class="com.greatbee.web.action.WeixinAction" method="authUrl"/>-->
+    <action name="change_password" class="indexAction" method="changePassword"/>
+  </package>
+</struts>

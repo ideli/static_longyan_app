@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta name="description" content="">
+    <title>龙眼 1.0</title>
+    <meta name="HandheldFriendly" content="True">
+    
+          
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width,initial-scale=0.5, minimum-scale=0.5, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+
+    <SCRIPT LANGUAGE="javascript">
+        window.resource = {
+            image: './img',
+            upload:'/s'
+        }
+    </SCRIPT>
+    <!-- <link href="static_longyan_app/css/app.uncompressed.css" rel="stylesheet">-->
+
+    <!-- build:css static_longyan_app/build/css/longyan-1.0.0.min-->
+		<link rel="stylesheet" href="./css/longyan-1.0.0.min.css">
+ <!-- endbuild -->
+    <!-- build:js static_longyan_app/build/js/longyan-1.0.0.min -->
+		<script src="./nvwa-loader-1.7.0.js"
+		api = ""
+		baseUrl = "js"
+		skin = ""
+		debug = "true"
+		lang = "zh_CN"
+		jsonp = "true"
+		staticDomain = "null"
+        nvwa-api="${nvwa-api}"
+        isNative="true"
+		preload = "./js/longyan-1.0.0.min.js,bootstrap.min,jquery.ui.widget,fileUpload,lib/jQuery-Mask-Plugin/jquery.mask.min.js" > </script>
+ <!-- endbuild -->
+    <style type="text/css">
+        @font-face {font-family: "iconfont";
+            src: url('./fonts/iconfont.eot?t=1463673438'); /* IE9*/
+            src: url('./fonts/iconfont.eot?t=1463673438#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./fonts/iconfont.woff?t=1463673438') format('woff'), /* chrome, firefox */
+            url('./fonts/iconfont.ttf?t=1463673438') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+            url('./fonts/iconfont.svg?t=1463673438#iconfont') format('svg'); /* iOS 4.1- */
+        }
+        @font-face {
+            font-family: 'FontAwesome';
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: "Ionicons";
+            font-weight: normal;
+            font-style: normal;
+        }
+
+    </style>
+</head>
+
+<body class="wechat-client pageContainer">
+<div style="position: fixed;top: 0px;right: 0px;bottom: 0px;left: 0px;background-color: #FFFFFF;">
+    <span></span>
+</div>
+
+
+    
+    
+        
+        
+        
+        
+    
+
+<!-- 获取用户行为数据（js文件外部引用）-->
+<script type="text/javascript">
+    //页面类型，必填 ,（product|shop|active|normal|index，需要特殊关注的页面附加类型，可传入自定义类型定制开发报表）如无特需，默认请传入normal）
+    _pType = 'normal';
+    // 根据页面类型传入， product->商品id;shop->商户Id;active->活动id或者code或者名称;brand->品牌id或者名称
+    //    _sKey1 = '111111';
+    //title 如果不指定，默认从title标签中获取
+    //_title = '首页';
+    (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.charset='utf-8';
+        //ga.async = true 异步调用外部js文件，即不阻塞浏览器的解析
+        ga.async = true;
+        ga.src = 'http://stat.mklmall.com/js/stat.js?ver=0.1';
+        //取得第一个tag名为script的元素
+        var s = document.getElementsByTagName('script')[0];
+        //在s前添加元素ga
+        s.parentNode.insertBefore(ga, s);
+    })();
+</script>
+</body>
+
+</html>
