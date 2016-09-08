@@ -2,6 +2,7 @@ package com.chinaredstar.longyan.repository;
 
 import com.chinaredstar.longyan.model.DispatchLocation;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 

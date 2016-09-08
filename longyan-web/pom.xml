@@ -9,12 +9,39 @@
         <groupId>com.chinaredstar</groupId>
         <artifactId>parent</artifactId>
         <version>1.0.0.RELEASE</version>
-
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>greatbee</groupId>
     <artifactId>server_oa</artifactId>
     <version>7.4.6-SNAPSHOT</version>
+
+    <!--<profiles>-->
+        <!--&lt;!&ndash; dev &ndash;&gt;-->
+        <!--<profile>-->
+            <!--<id>dev</id>-->
+            <!--<properties>-->
+                <!--<env>dev</env>-->
+            <!--</properties>-->
+            <!--<activation>-->
+                <!--<activeByDefault>true</activeByDefault>-->
+            <!--</activation>-->
+        <!--</profile>-->
+        <!--&lt;!&ndash; uat &ndash;&gt;-->
+        <!--<profile>-->
+            <!--<id>uat</id>-->
+            <!--<properties>-->
+                <!--<env>uat</env>-->
+            <!--</properties>-->
+        <!--</profile>-->
+        <!--&lt;!&ndash; prd &ndash;&gt;-->
+        <!--<profile>-->
+            <!--<id>prd</id>-->
+            <!--<properties>-->
+                <!--<env>prd</env>-->
+            <!--</properties>-->
+        <!--</profile>-->
+    <!--</profiles>-->
     <build>
         <plugins>
             <plugin>
@@ -42,6 +69,7 @@
         </repository>
     </distributionManagement>
     <properties>
+        <!--<spring.version>4.2.5.RELEASE</spring.version>-->
         <spring.version>4.0.0.RELEASE</spring.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -98,6 +126,20 @@
                     <groupId>org.springframework</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mangofactory</groupId>
+            <artifactId>swagger-springmvc</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wordnik</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.3.11</version>
         </dependency>
         <dependency>
             <groupId>proxool-datayes</groupId>
@@ -361,10 +403,10 @@
             <groupId>com.alibaba</groupId>
             <artifactId>dubbo</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.httpcomponents</groupId>-->
+            <!--<artifactId>httpclient</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
@@ -395,6 +437,12 @@
             <artifactId>sms-api</artifactId>
             <version>1.0.1</version>
         </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>org.codehaus.castor</groupId>-->
+            <!--<artifactId>castor-core</artifactId>-->
+            <!--<version>1.3.3</version>-->
+        <!--</dependency>-->
 <!--        <dependency>
             <groupId>com.chinaredstar</groupId>
             <artifactId>lang-fastdfs-api</artifactId>
