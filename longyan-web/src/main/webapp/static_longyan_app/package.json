@@ -30,6 +30,6 @@
     "http-server": "^0.6.1"
   },
   "scripts": {
-    "start": "http-server -p10000 -d --cors -c-1"
+    "start": "http-server -p1000 -d --cors -c-1"
   }
 }
