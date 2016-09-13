@@ -9,7 +9,7 @@
         <groupId>com.chinaredstar</groupId>
         <artifactId>parent</artifactId>
         <version>1.0.0.RELEASE</version>
-        <relativePath>../pom.xml</relativePath>
+        <!--<relativePath>../pom.xml</relativePath>-->
     </parent>
 
     <groupId>greatbee</groupId>
