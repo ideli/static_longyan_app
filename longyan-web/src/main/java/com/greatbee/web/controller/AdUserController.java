@@ -23,7 +23,6 @@ import com.xiwa.base.util.CollectionUtil;
 import com.xiwa.base.util.DataUtil;
 import com.xiwa.base.util.RandomGUIDUtil;
 import com.xiwa.base.util.StringUtil;
-import com.xiwa.security.driver.SecurityDriver;
 import com.xiwa.zeus.trinity.bean.Employee;
 import net.sf.json.JSONObject;
 import org.joda.time.DateTime;
@@ -68,8 +67,6 @@ public class AdUserController  extends BaseController implements CommonBizConsta
     @Autowired
     private RedstarCommonManager redstarCommonManager;
 
-    @Autowired
-    protected SecurityDriver securityDriver;
 
     @Autowired
     private IFastdfsService iFastdfsService;

@@ -4,7 +4,6 @@ package com.greatbee.web.controller;
 import com.greatbee.security.util.SecurityTool;
 import com.greatbee.util.HttpClientUtil;
 import com.greatbee.util.SessionInitUtil;
-import com.greatbee.util.VerifyCommunitySession;
 import com.lanchui.commonBiz.bean.*;
 import com.lanchui.commonBiz.bean.constant.CommonBizConstant;
 import com.lanchui.commonBiz.manager.DispatchDriver;
@@ -57,8 +56,6 @@ public class AuthController extends BaseController implements CommonBizConstant 
 
     @Autowired
     private DispatchDriver dispatchDriver;
-    @Autowired
-    private VerifyCommunitySession verifyCommunitySession;
 
     @Autowired
     protected SecurityDriver securityDriver;

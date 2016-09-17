@@ -4,10 +4,6 @@ import com.greatbee.bean.constant.LanchuiConstant;
 import com.greatbee.exception.BusinessException;
 import com.greatbee.exception.constant.BasicExceptionType;
 import com.greatbee.exception.constant.CommonExceptionType;
-import com.greatbee.util.VerifyCommunitySession;
-import com.greatbee.util.VerifySession;
-import com.lanchui.commonBiz.bean.DispatchCommunityAuthorized;
-import com.lanchui.commonBiz.bean.DispatchMerchant;
 import com.lanchui.commonBiz.bean.RedstarCommunity;
 import com.lanchui.commonBiz.bean.constant.CommonBizConstant;
 import com.xiwa.base.bean.Response;
@@ -28,10 +24,7 @@ import java.util.Map;
  */
 public class BaseController extends AdvanceControllerSupport implements LanchuiConstant {
 
-    @Autowired
-    private VerifySession verifySession;
-    @Autowired
-    private VerifyCommunitySession verifyCommunitySession;
+
 
     protected void _error(String message, PipelineContext context) {
         this._error(new Exception(message), context);
@@ -115,57 +108,6 @@ public class BaseController extends AdvanceControllerSupport implements LanchuiC
 //        employee.setId(11722);
 //        employee.setXingMing("张学超");
         return employee;
-    }
-
-    /**
-     * 获取session 中的商户信息
-     *
-     * @return
-     * @throws ManagerException
-     */
-    protected DispatchMerchant getMerchantFromSession() throws ManagerException {
-        try {
-            verifySession.execute(this.buildPipelineContent());
-        } catch (PipelineException e) {
-            logger.error(e.getMessage());
-            return null;
-            //不做其他处理
-        }
-        return (DispatchMerchant) this.getObjectFromSession(Merchant_Session);
-    }
-
-    /**
-     * 获取session 中的社区信息
-     *
-     * @return
-     * @throws ManagerException
-     */
-    protected RedstarCommunity getCommunityFromSession() throws ManagerException {
-        try {
-            verifyCommunitySession.execute(this.buildPipelineContent());
-        } catch (PipelineException e) {
-            logger.error(e.getMessage());
-            return null;
-            //不做其他处理
-        }
-        return (RedstarCommunity) this.getObjectFromSession(Community_Session);
-    }
-
-    /**
-     * 获取session 中的社区用户信息
-     *
-     * @return
-     * @throws ManagerException
-     */
-    protected DispatchCommunityAuthorized getCommunityAuthorizedFromSession() throws ManagerException {
-        try {
-            verifyCommunitySession.execute(this.buildPipelineContent());
-        } catch (PipelineException e) {
-            logger.error(e.getMessage());
-            return null;
-            //不做其他处理
-        }
-        return (DispatchCommunityAuthorized) this.getObjectFromSession(Community_Auth_Session);
     }
 
     /**

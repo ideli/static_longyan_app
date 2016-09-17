@@ -1141,110 +1141,110 @@ public class CommunityController extends BaseController implements CommonBizCons
      * ****************分割线**********************************
      */
 
-    @RequestMapping(value = "/building/copy")
-    @ResponseBody
-    public Object buildingCopy(String ids) {
-
-        PipelineContext pipelineContext = this.buildPipelineContent();
-        Response res = pipelineContext.getResponse();
-        try {
-
-            Employee employee = getEmployeeromSession();
-
-            if (StringUtil.isInvalid(ids)) {
-                throw new BusinessException(CommonExceptionType.ParameterError);
-            }
-
-            String[] strArr = ids.split(",");
-
-            List<Object> idList = new ArrayList<Object>();
-
-            for (String str : strArr) {
-                idList.add(Integer.parseInt(str));
-            }
-
-            //栋信息
-            List<RedstarCommunityBuilding> buildingList = redstarCommonManager.getDataList(idList, RedstarCommunityBuilding.class, null, null, null);
-
-            if (!CollectionUtils.isEmpty(buildingList)) {
-                //单元信息
-                for (RedstarCommunityBuilding b : buildingList) {
-
-                    RedstarCommunityBuilding thisBuilding = new RedstarCommunityBuilding();
-
-                    thisBuilding.setBuildingName(b.getBuildingName() + "副本");
-                    thisBuilding.setCommunityId(b.getCommunityId());
-                    thisBuilding.setCommunityName(b.getCommunityName());
-                    thisBuilding.setCreateDate(new Date());
-                    thisBuilding.setCreateEmployeeId(employee.getId());
-                    thisBuilding.setCreateXingMing(employee.getXingMing());
-
-                    //复制栋信息
-                    Integer buildingId = dispatchDriver.getDispatchCommunityBuildingManager().addBean(thisBuilding);
-
-                    IntSearch intSearch = new IntSearch("buildingId");
-                    intSearch.setSearchValue(String.valueOf(b.getId()));
-                    //单元列表
-                    List<RedstarCommunityUnit> unitList = redstarCommonManager.getDataList(RedstarCommunityUnit.class, intSearch);
-
-                    if (!CollectionUtils.isEmpty(unitList)) {
-
-                        for (RedstarCommunityUnit unit : unitList) {
-                            //复制单元
-                            RedstarCommunityUnit thisUnit = new RedstarCommunityUnit();
-                            thisUnit.setBuildingId(buildingId);
-                            thisUnit.setBuildingName(unit.getBuildingName() + "副本");
-                            thisUnit.setUnitName(unit.getUnitName());
-                            thisUnit.setCommunityId(unit.getCommunityId());
-                            thisUnit.setCommunityName(unit.getCommunityName());
-                            thisUnit.setCreateXingMing(employee.getXingMing());
-                            thisUnit.setCreateEmployeeId(employee.getId());
-                            thisUnit.setCreateDate(new Date());
-                            Integer unitId = redstarCommunityUnitManager.addBean(thisUnit);
-
-                            //查找单元下的住户
-
-                            IntSearch unitIdSearch = new IntSearch("unitId");
-                            unitIdSearch.setSearchValue(String.valueOf(unit.getId()));
-
-                            List<RedStarMember> memberList = redstarCommonManager.getDataList(RedStarMember.class, unitIdSearch);
-
-                            if (!CollectionUtils.isEmpty(memberList)) {
-                                //复制住户
-                                for (RedStarMember member : memberList) {
-
-                                    RedStarMember redStarMember = new RedStarMember();
-
-                                    //上一步创建的unitId buildingId
-                                    redStarMember.setBuildingId(buildingId);
-                                    redStarMember.setUnitId(unitId);
-
-                                    redStarMember.setCommunityId(member.getCommunityId());
-                                    redStarMember.setCommunityName(member.getCommunityName());
-                                    redStarMember.setBuildingName(b.getBuildingName() + "副本");
-                                    redStarMember.setUnitName(unit.getUnitName());
-                                    redStarMember.setRoom(member.getRoom());
-
-                                    redstarCommonManager.addData(redStarMember);
-                                }
-                            }
-
-                        }
-
-                    }
-                }
-            }
-
-            setSuccessMsg(res, "信息复制成功");
-            return res;
-        } catch (BusinessException e) {
-            setBusinessException(e, res);
-        } catch (Exception e) {
-            setUnknowException(e, res);
-        }
-        return res;
-
-    }
+//    @RequestMapping(value = "/building/copy")
+//    @ResponseBody
+//    public Object buildingCopy(String ids) {
+//
+//        PipelineContext pipelineContext = this.buildPipelineContent();
+//        Response res = pipelineContext.getResponse();
+//        try {
+//
+//            Employee employee = getEmployeeromSession();
+//
+//            if (StringUtil.isInvalid(ids)) {
+//                throw new BusinessException(CommonExceptionType.ParameterError);
+//            }
+//
+//            String[] strArr = ids.split(",");
+//
+//            List<Object> idList = new ArrayList<Object>();
+//
+//            for (String str : strArr) {
+//                idList.add(Integer.parseInt(str));
+//            }
+//
+//            //栋信息
+//            List<RedstarCommunityBuilding> buildingList = redstarCommonManager.getDataList(idList, RedstarCommunityBuilding.class, null, null, null);
+//
+//            if (!CollectionUtils.isEmpty(buildingList)) {
+//                //单元信息
+//                for (RedstarCommunityBuilding b : buildingList) {
+//
+//                    RedstarCommunityBuilding thisBuilding = new RedstarCommunityBuilding();
+//
+//                    thisBuilding.setBuildingName(b.getBuildingName() + "副本");
+//                    thisBuilding.setCommunityId(b.getCommunityId());
+//                    thisBuilding.setCommunityName(b.getCommunityName());
+//                    thisBuilding.setCreateDate(new Date());
+//                    thisBuilding.setCreateEmployeeId(employee.getId());
+//                    thisBuilding.setCreateXingMing(employee.getXingMing());
+//
+//                    //复制栋信息
+//                    Integer buildingId = dispatchDriver.getDispatchCommunityBuildingManager().addBean(thisBuilding);
+//
+//                    IntSearch intSearch = new IntSearch("buildingId");
+//                    intSearch.setSearchValue(String.valueOf(b.getId()));
+//                    //单元列表
+//                    List<RedstarCommunityUnit> unitList = redstarCommonManager.getDataList(RedstarCommunityUnit.class, intSearch);
+//
+//                    if (!CollectionUtils.isEmpty(unitList)) {
+//
+//                        for (RedstarCommunityUnit unit : unitList) {
+//                            //复制单元
+//                            RedstarCommunityUnit thisUnit = new RedstarCommunityUnit();
+//                            thisUnit.setBuildingId(buildingId);
+//                            thisUnit.setBuildingName(unit.getBuildingName() + "副本");
+//                            thisUnit.setUnitName(unit.getUnitName());
+//                            thisUnit.setCommunityId(unit.getCommunityId());
+//                            thisUnit.setCommunityName(unit.getCommunityName());
+//                            thisUnit.setCreateXingMing(employee.getXingMing());
+//                            thisUnit.setCreateEmployeeId(employee.getId());
+//                            thisUnit.setCreateDate(new Date());
+//                            Integer unitId = redstarCommunityUnitManager.addBean(thisUnit);
+//
+//                            //查找单元下的住户
+//
+//                            IntSearch unitIdSearch = new IntSearch("unitId");
+//                            unitIdSearch.setSearchValue(String.valueOf(unit.getId()));
+//
+//                            List<RedStarMember> memberList = redstarCommonManager.getDataList(RedStarMember.class, unitIdSearch);
+//
+//                            if (!CollectionUtils.isEmpty(memberList)) {
+//                                //复制住户
+//                                for (RedStarMember member : memberList) {
+//
+//                                    RedStarMember redStarMember = new RedStarMember();
+//
+//                                    //上一步创建的unitId buildingId
+//                                    redStarMember.setBuildingId(buildingId);
+//                                    redStarMember.setUnitId(unitId);
+//
+//                                    redStarMember.setCommunityId(member.getCommunityId());
+//                                    redStarMember.setCommunityName(member.getCommunityName());
+//                                    redStarMember.setBuildingName(b.getBuildingName() + "副本");
+//                                    redStarMember.setUnitName(unit.getUnitName());
+//                                    redStarMember.setRoom(member.getRoom());
+//
+//                                    redstarCommonManager.addData(redStarMember);
+//                                }
+//                            }
+//
+//                        }
+//
+//                    }
+//                }
+//            }
+//
+//            setSuccessMsg(res, "信息复制成功");
+//            return res;
+//        } catch (BusinessException e) {
+//            setBusinessException(e, res);
+//        } catch (Exception e) {
+//            setUnknowException(e, res);
+//        }
+//        return res;
+//
+//    }
 
 
 }

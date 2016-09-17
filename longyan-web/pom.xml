@@ -60,14 +60,6 @@
             </plugin>
         </plugins>
     </build>
-    <distributionManagement>
-        <repository>
-            <id>lanchui</id>
-            <name>server_oa</name>
-            <url>http://121.40.82.56:8081/nexus/content/repositories/snapshots</url>
-            <!--<url>http://nexus.lanchui.com:8081/nexus/content/repositories/releases</url>-->
-        </repository>
-    </distributionManagement>
     <properties>
         <!--<spring.version>4.2.5.RELEASE</spring.version>-->
         <spring.version>4.0.0.RELEASE</spring.version>
@@ -354,13 +346,8 @@
         </dependency>
         <dependency>
             <groupId>greatbee</groupId>
-            <artifactId>longyan-sns-core</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>greatbee</groupId>
-            <artifactId>zeus-longyan</artifactId>
-            <version>7.4.26</version>
+            <artifactId>nvwa-core</artifactId>
+            <version>1.1.39</version>
         </dependency>
         <dependency>
             <groupId>org.quartz-scheduler</groupId>

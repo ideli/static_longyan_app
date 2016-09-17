@@ -5,16 +5,16 @@
        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <!--LG Hibernate Template-->
-    <bean id="lgCommonBizHibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
-        <property name="sessionFactory" ref="lgSessionFactory"/>
+    <bean id="nvwaCommonBizHibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory" ref="nvwaSessionFactory"/>
     </bean>
 
     <!--LG Abstract Manager-->
-    <bean id="lgCommonBizAbstractManager" class="com.lanchui.commonBiz.manager.lg.LgAbstractManager" abstract="true">
-        <property name="hibernateTemplate" ref="lgCommonBizHibernateTemplate"/>
+    <bean id="nvwaCommonBizAbstractManager" class="com.lanchui.commonBiz.manager.lg.LgAbstractManager" abstract="true">
+        <property name="hibernateTemplate" ref="nvwaCommonBizHibernateTemplate"/>
     </bean>
     <!--LG  Manager-->
     <bean id="shopInfoManager" class="com.lanchui.commonBiz.manager.lg.SimpleShopInfoManager"
-          parent="lgCommonBizAbstractManager">
+          parent="nvwaCommonBizAbstractManager">
     </bean>
   </beans>

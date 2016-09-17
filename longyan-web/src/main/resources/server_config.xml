@@ -46,34 +46,16 @@
       <list>
         <!--Base-->
         <value>conf/base/db/Base.hbm.xml</value>
-
-        <!--Message-->
-        <!--<value>conf/message/db/Message.hbm.xml</value>-->
-
         <!--Security-->
         <value>conf/security/db/Security.hbm.xml</value>
-
-        <!--Tak-->
-        <value>conf/task/db/Task.hbm.xml</value>
-
-        <!--Workflow-->
-        <value>conf/workflow/db/Workflow.hbm.xml</value>
-
         <!--Zeus-->
         <value>conf/zeus/db/Zeus.hbm.xml</value>
         <value>conf/zeus/db/Trinity.hbm.xml</value>
 
-        <!--SNS-->
-        <value>conf/crm/db/Employee.hbm.xml</value>
-        <value>conf/crm/db/Announcement.hbm.xml</value>
-        <value>conf/sns/db/SNS.hbm.xml</value>
-
         <value>conf/greatbee/db/Greatbee.hbm.xml</value>
 
         <value>conf/lanchui/db/common_biz_base.hbm.xml</value>
-        <!--<value>conf/lanchui/db/common_biz_order.hbm.xml</value>-->
         <value>conf/lanchui/db/common_biz_community.hbm.xml</value>
-        <value>conf/lanchui/db/common_biz_user.hbm.xml</value>
         <value>conf/lanchui/db/common_biz_work.hbm.xml</value>
         <!--<value>conf/lanchui/db/common_biz_report.hbm.xml</value>-->
       </list>
@@ -93,12 +75,12 @@
 
 
   <!--Lg Data Source-->
-  <bean id="lgDataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+  <bean id="nvwaDataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
     <property name="driver" value="${db.default.connection.driver_class}"/>
-    <property name="driverUrl" value="${db.lg.proxool.connection.url}"/>
-    <property name="user" value="${db.lg.connection.username}"/>
-    <property name="password" value="${db.lg.connection.password}"/>
-    <property name="alias" value="${db.lg.proxool.alias}"/>
+    <property name="driverUrl" value="${db.nvwa.proxool.connection.url}"/>
+    <property name="user" value="${db.nvwa.connection.username}"/>
+    <property name="password" value="${db.nvwa.connection.password}"/>
+    <property name="alias" value="${db.nvwa.proxool.alias}"/>
     <property name="houseKeepingSleepTime" value="${db.default.proxool.houseKeepingSleepTime}"/>
     <property name="prototypeCount" value="${db.default.proxool.prototypeCount}"/>
     <property name="maximumConnectionCount" value="${db.default.proxool.maximumConnectionCount}"/>
@@ -106,16 +88,16 @@
   </bean>
 
   <!--JDBC Template-->
-  <bean id="lgJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-    <property name="dataSource" ref="lgDataSource"/>
+  <bean id="nvwaJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="nvwaDataSource"/>
   </bean>
 
   <!--Hibernate Session Factory-->
-  <bean id="lgSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-    <property name="dataSource" ref="lgDataSource"/>
+  <bean id="nvwaSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+    <property name="dataSource" ref="nvwaDataSource"/>
     <property name="mappingResources">
       <list>
-        <value>conf/lanchui/db/common_biz_lg.hbm.xml</value>
+        <value>conf/lanchui/db/common_biz_nvwa.hbm.xml</value>
       </list>
     </property>
     <property name="hibernateProperties">

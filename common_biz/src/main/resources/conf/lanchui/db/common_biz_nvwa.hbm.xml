@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.lanchui.commonBiz.bean.SecurityResource" table="xiwa_security_resource" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="serialNumber" type="string"/>
+        <property name="name" type="string"/>
+        <property name="resourceUrl" type="string"/>
+        <property name="parentId" type="int"/>
+        <property name="description" type="string"/>
+        <property name="sortNum" type="int"/>
+        <property name="resourceTypeField" type="string"/>
+        <property name="alias" type="string"/>
+        <property name="showData" type="boolean"/>
+        <property name="pinYin" type="string"/>
+        <property name="workflowId" type="int"/>
+        <property name="actionName" type="string"/>
+        <property name="nextStatus" type="string"/>
+        <property name="start" type="boolean"/>
+        <property name="attributes" type="string"/>
+        <property name="leaf" type="boolean"/>
+        <property name="shelf" type="boolean"/>
+        <property name="authTarget" type="string"/>
+        <property name="authTargetId" column="authTargetId" type="int"/>
+        <property name="serviceIndustryCodes" type="string"/>
+    </class>
+
+
+    <class name="com.lanchui.commonBiz.bean.DispatchEmployee" table="xiwa_crm_employee" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="serialNumber" type="string"/>
+        <property name="belongedId" type="int"/>
+        <property name="showData" type="boolean"/>
+        <property name="createDate" type="java.util.Date"/>
+        <property name="xingMing" type="string"/>
+        <property name="photos" type="string"/>
+        <property name="employeeStatusField" type="string"/>
+        <property name="remark" type="string"/>
+        <property name="gender" type="string"/>
+        <property name="lastActiveTime" type="java.util.Date"/>
+        <property name="skin" type="string"/>
+        <property name="email" type="string"/>
+        <property name="head" type="string"/>
+        <property name="duty" type="string"/>
+        <property name="englishName" type="string"/>
+        <property name="mobilePhone" type="string"/>
+        <property name="fixedPhone" type="string"/>
+        <property name="birthday" type="java.util.Date"/>
+        <property name="tags" type="string"/>
+        <property name="lang" type="string"/>
+        <property name="integral" type="int"/>
+        <property name="sale" type="boolean"/>
+        <property name="zoneCode" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="backupEmployeeSerialNumber" type="string"/>
+        <property name="deviceType" type="string"/>
+        <property name="deviceToken" type="string"/>
+        <property name="updateDate" type="java.util.Date"/>
+        <property name="address" type="string"/>
+    </class>
+
+    <class name="com.lanchui.commonBiz.bean.SecurityOperationLog" table="xiwa_security_operation_log" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="operatorId" type="int"/>
+        <property name="belongedId" type="int"/>
+        <property name="operateResource" type="string"/>
+        <property name="operator" type="string"/>
+        <property name="content" type="string"/>
+        <property name="operateResourceId" type="string"/>
+        <property name="remark" type="string"/>
+        <property name="operationTypeField" type="string"/>
+        <property name="createDate" type="java.util.Date"/>
+    </class>
+
+    <class name="com.lanchui.commonBiz.bean.RedstarEmployee" table="xiwa_crm_employee" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+
+        <property name="departmentId" type="integer"/>
+        <property name="userName" type="string"/>
+        <property name="gongHao" type="string"/>
+        <property name="xingMing" type="string"/>
+        <property name="gender" type="string"/>
+        <property name="birthday" type="java.util.Date"/>
+        <property name="idNumber" type="string"/>
+        <property name="address" type="string"/>
+        <property name="youBian" type="string"/>
+        <property name="addressPhone" type="string"/>
+        <property name="mobilePhone" type="string"/>
+        <property name="email" type="string"/>
+        <property name="description" type="string"/>
+        <property name="remark" type="string"/>
+        <property name="photos" type="string"/>
+        <property name="head" type="string"/>
+        <property name="lastActiveTime" type="java.util.Date"/>
+        <property name="createDate" type="java.util.Date"/>
+        <property name="entryDate" type="java.util.Date"/>
+        <property name="englishName" type="string"/>
+        <property name="tags" type="string"/>
+        <property name="fixedPhone" type="string"/>
+        <property name="sign" type="string"/>
+        <property name="inputMemberAmount" type="integer"/>
+        <property name="inputCommunityAmount" type="integer"/>
+        <property name="inputCommunityRoomAmount" type="integer"/>
+        <property name="openId" type="string"/>
+        <property name="bankCardNo" type="string"/>
+        <property name="source" type="string"/>
+        <property name="showData" type="boolean"/>
+        <property name="belongedId" type="integer"/>
+        <property name="inputMemberAmountRank" type="integer"/>
+        <property name="inputCommunityAmountRank" type="integer"/>
+        <property name="employeeCode" type="string"/>
+        <property name="employeeRecord" type="integer"/>
+        <property name="hrStatus" type="string"/>
+        <property name="businessUnitCode" type="string"/>
+        <property name="businessUnitName" type="string"/>
+        <property name="departmentCode" type="string"/>
+        <property name="score" type="integer"/>
+
+    </class>
+
+
+
+    <class name="com.lanchui.commonBiz.bean.RedstarDepartment" table="xiwa_crm_department" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="name" type="string"/>
+        <property name="createDate" type="java.util.Date"/>
+        <property name="belongedId" type="java.lang.Integer"/>
+        <property name="parentId" type="java.lang.Integer"/>
+        <property name="showData" type="boolean"/>
+        <property name="departmentCode" type="string"/>
+        <property name="pinYin" type="string"/>
+        <property name="peopleNumber" type="java.lang.Integer"/>
+        <property name="departmentParentCode" type="string"/>
+        <property name="description" type="string"/>
+        <property name="alias" type="string"/>
+        <property name="leaf" type="boolean"/>
+        <property name="companyCode" type="string"/>
+        <property name="companyDescr" type="string"/>
+
+    </class>
+
+    <class name="com.lanchui.commonBiz.bean.RedstarRole" table="xiwa_security_role" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="name" type="string"/>
+        <property name="description" type="string"/>
+        <property name="alias" type="string"/>
+
+    </class>
+
+    <class name="com.lanchui.commonBiz.bean.SecurityAuthorized" table="xiwa_security_authorized" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="securityAnswer" type="string"/>
+        <property name="activeCode" type="string"/>
+        <property name="password" type="string"/>
+        <property name="objectDesc" type="string"/>
+        <property name="account" type="string"/>
+        <property name="objectId" type="int"/>
+        <property name="securityQuestion" type="string"/>
+        <property name="objectIdentified" type="string"/>
+        <property name="roles" type="string"/>
+        <property name="active"  type="boolean"/>
+        <property name="haveSetPassword"  type="boolean"/>
+    </class>
+
+
+</hibernate-mapping>

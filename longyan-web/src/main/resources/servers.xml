@@ -9,24 +9,6 @@
     <!--Server Config-->
     <import resource="classpath:server_config.xml"/>
 
-    <!--Common-->
-    <import resource="classpath:conf/base/server/common_server.xml"/>
-    <!--Security-->
-    <import resource="classpath:conf/security/server/security_server.xml"/>
-    <!--Zeus-->
-    <import resource="classpath:conf/zeus/server/zeus_server.xml"/>
-    <!--Task-->
-    <import resource="classpath:conf/task/server/task_server.xml"/>
-    <!--Message-->
-    <import resource="classpath:conf/message/server/message_server.xml"/>
-    <!--CRM-->
-    <import resource="classpath:conf/crm/server/crm_server.xml"/>
-    <!--SNS-->
-    <import resource="classpath:conf/sns/server/sns_server.xml"/>
-    <!--SNS_Task-->
-    <import resource="classpath:conf/sns/server/sns_task.xml"/>
-    <!-- Message Push Server -->
-    <import resource="classpath:conf/sns/server/sns_message.xml"/>
 
     <import resource="classpath:conf/greatbee/server/dispatch_manager.xml"/>
     <!-- <import resource="classpath:conf/greatbee/server/lanchui_event.xml"/>-->
@@ -35,9 +17,8 @@
     <!--Common Biz Server-->
     <import resource="classpath:conf/lanchui/server/common_biz_server.xml"/>
     <import resource="classpath:conf/lanchui/server/common_storage_manager.xml"/>
-    <import resource="classpath:conf/lanchui/server/common_wx_enterprise_manager.xml"/>
-    <import resource="classpath:conf/lanchui/server/common_biz_lg_manager.xml"/>
-    <import resource="classpath:conf/lanchui/server/common_jpush_message_manager.xml"/>
+    <import resource="classpath:conf/lanchui/server/common_biz_nvwa_manager.xml"/>
+
 
     <!--dubbo配置-->
     <import resource="classpath:applicationContext-dubbo.xml" />
@@ -65,7 +46,7 @@
     </bean>
 
     <!-- 使用annotation 自动注册bean,并保证@Required,@Autowired的属性被注入 -->
-    <context:component-scan base-package="com.xiwa"/>
+    <!--<context:component-scan base-package="com.xiwa"/>-->
     <context:component-scan base-package="com.greatbee"/>
     <context:component-scan base-package="com.lanchui"/>
     <context:annotation-config/>

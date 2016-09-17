@@ -294,8 +294,8 @@
         <!--greatbee-->
         <dependency>
             <groupId>greatbee</groupId>
-            <artifactId>zeus-longyan</artifactId>
-            <version>7.4.26</version>
+            <artifactId>nvwa-core</artifactId>
+            <version>1.1.39</version>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>

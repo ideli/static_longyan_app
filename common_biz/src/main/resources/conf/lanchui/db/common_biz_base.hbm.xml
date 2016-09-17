@@ -3,93 +3,6 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.lanchui.commonBiz.bean.MessageTemplate" table="xiwa_message_template" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="name" type="string"/>
-        <property name="description" type="string"/>
-        <property name="content" type="string"/>
-        <property name="title" type="string"/>
-        <property name="typeField" type="string"/>
-        <property name="active" type="boolean"/>
-        <property name="alias" type="string"/>
-        <property name="templateFileName" type="string"/>
-    </class>
-
-    <class name="com.lanchui.commonBiz.bean.SmsMessageLog" table="xiwa_message_sms_log" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="phone" type="string"/>
-        <property name="requestUrl" type="string"/>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="source" type="string"/>
-        <property name="message" type="string"/>
-        <property name="status" type="string"/>
-        <property name="serialNumber" type="string"/>
-        <property name="orderId" type="string"/>
-        <property name="orderSerialNumber" type="string"/>
-    </class>
-
-    <class name="com.lanchui.commonBiz.bean.MessageSMSQueue" table="xiwa_message_queue" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="phone" type="string"/>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="message" type="string"/>
-        <property name="status" type="string"/>
-    </class>
-
-    <class name="com.lanchui.commonBiz.bean.DispatchWorker" table="xiwa_dispatch_worker" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="xingming" type="string"/>
-        <property name="idCardNumber" type="string"/>
-        <property name="phone" type="string"/>
-        <property name="installCategory" type="string"/>
-        <property name="address" type="string"/>
-        <property name="insuranceEnable" type="boolean"/>
-        <property name="haveElectrical" type="boolean"/>
-        <property name="constructionRange" type="string"/>
-        <property name="transport" type="string"/>
-        <property name="haveSmartphone" type="boolean"/>
-        <property name="remark" type="string"/>
-        <property name="constructionEnable" type="boolean"/>
-        <property name="enable" type="boolean"/>
-        <property name="constructionCount" type="string"/>
-        <property name="hometown" type="string"/>
-        <property name="birthday" type="java.util.Date"/>
-        <property name="appraisal" type="string"/>
-        <property name="addingDate" type="java.util.Date"/>
-        <property name="bank" type="string"/>
-        <property name="branchName" type="string"/>
-        <property name="bankCardNumber" type="string"/>
-        <property name="neverHire" type="boolean"/>
-        <property name="belongedId" type="string"/>
-        <property name="createEmployeeId" type="string"/>
-        <property name="createXingMing" type="string"/>
-        <property name="serialNumber" type="string"/>
-        <property name="province" type="string"/>
-        <property name="city" type="string"/>
-        <property name="area" type="string"/>
-        <property name="provinceCode" type="string"/>
-        <property name="cityCode" type="string"/>
-        <property name="areaCode" type="string"/>
-        <property name="weixinId" type="string"/>
-        <property name="shopId" type="string"/>
-        <property name="shopName" type="string"/>
-        <property name="showData" type="boolean"/>
-        <property name="weixin" type="string"/>
-        <property name="status" type="string"/>
-        <property name="merchantId" type="int"/>
-        <property name="merchantName" type="string"/>
-        <property name="communityId" type="int"/>
-        <property name="communityName" type="string"/>
-    </class>
-
     <class name="com.lanchui.commonBiz.bean.DispatchCity" table="xiwa_dispatch_city" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
@@ -157,115 +70,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.DispatchMerchantAuthorized" table="xiwa_dispatch_merchant_authorized"
-           lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="account" type="string"/>
-        <property name="password" type="string"/>
-        <property name="merchantId" type="int"/>
-        <property name="xingMing" type="string"/>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="createEmployeeId" type="int"/>
-        <property name="createXingMing" type="string"/>
-        <property name="roles" type="string"/>
-        <property name="active" type="boolean"/>
-        <property name="haveSetPassword" type="boolean"/>
-        <property name="superAccount" type="boolean"/>
-        <property name="managedCommunityIds" type="string"/>
-    </class>
 
-    <class name="com.lanchui.commonBiz.bean.DispatchMerchant" table="xiwa_dispatch_merchant" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="serialNumber" type="string"/>
-        <property name="remark" type="string"/>
-        <property name="createEmployeeId" type="int"/>
-        <property name="createXingMing" type="string"/>
-        <property name="province" type="string"/>
-        <property name="city" type="string"/>
-        <property name="area" type="string"/>
-        <property name="name" type="string"/>
-        <property name="contacter" type="string"/>
-        <property name="address" type="string"/>
-        <property name="belongedId" type="int"/>
-        <property name="provinceCode" type="string"/>
-        <property name="cityCode" type="string"/>
-        <property name="areaCode" type="string"/>
-        <property name="cooperate" type="boolean"/>
-        <property name="email" type="string"/>
-        <property name="qq" type="string"/>
-        <property name="weixin" type="string"/>
-        <property name="phone" type="string"/>
-        <property name="website" type="string"/>
-        <property name="logo" type="string"/>
-        <property name="appName" type="string"/>
-        <property name="introduce" type="string"/>
-    </class>
-
-    <class name="com.lanchui.commonBiz.bean.SecurityResource" table="xiwa_security_resource" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="serialNumber" type="string"/>
-        <property name="name" type="string"/>
-        <property name="resourceUrl" type="string"/>
-        <property name="parentId" type="int"/>
-        <property name="description" type="string"/>
-        <property name="sortNum" type="int"/>
-        <property name="resourceTypeField" type="string"/>
-        <property name="alias" type="string"/>
-        <property name="showData" type="boolean"/>
-        <property name="pinYin" type="string"/>
-        <property name="workflowId" type="int"/>
-        <property name="actionName" type="string"/>
-        <property name="nextStatus" type="string"/>
-        <property name="start" type="boolean"/>
-        <property name="attributes" type="string"/>
-        <property name="leaf" type="boolean"/>
-        <property name="shelf" type="boolean"/>
-        <property name="authTarget" type="string"/>
-        <property name="authTargetId" column="authTargetId" type="int"/>
-        <property name="serviceIndustryCodes" type="string"/>
-    </class>
-
-
-    <class name="com.lanchui.commonBiz.bean.DispatchEmployee" table="xiwa_crm_employee" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="serialNumber" type="string"/>
-        <property name="belongedId" type="int"/>
-        <property name="showData" type="boolean"/>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="xingMing" type="string"/>
-        <property name="photos" type="string"/>
-        <property name="employeeStatusField" type="string"/>
-        <property name="remark" type="string"/>
-        <property name="gender" type="string"/>
-        <property name="lastActiveTime" type="java.util.Date"/>
-        <property name="skin" type="string"/>
-        <property name="email" type="string"/>
-        <property name="head" type="string"/>
-        <property name="duty" type="string"/>
-        <property name="englishName" type="string"/>
-        <property name="mobilePhone" type="string"/>
-        <property name="fixedPhone" type="string"/>
-        <property name="birthday" type="java.util.Date"/>
-        <property name="tags" type="string"/>
-        <property name="lang" type="string"/>
-        <property name="integral" type="int"/>
-        <property name="sale" type="boolean"/>
-        <property name="zoneCode" type="string"/>
-        <property name="zipCode" type="string"/>
-        <property name="backupEmployeeSerialNumber" type="string"/>
-        <property name="deviceType" type="string"/>
-        <property name="deviceToken" type="string"/>
-        <property name="updateDate" type="java.util.Date"/>
-        <property name="address" type="string"/>
-    </class>
 
 
     <class name="com.lanchui.commonBiz.bean.RedstarTaskLog" table="xiwa_redstar_task_log"
@@ -279,114 +84,9 @@
         <property name="remark" type="string"/>
         <property name="executeTime" type="long"/>
     </class>
-    <class name="com.lanchui.commonBiz.bean.DispatchLoginToken" table="xiwa_dispatch_login_token"
-           lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="target" type="string"/>
-        <property name="targetId" type="int"/>
-        <property name="loginToken" type="string"/>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="expiredTime" type="java.util.Date"/>
-    </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.DispatchShop" table="xiwa_dispatch_shop" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="address" type="string"/>
-        <property name="shopName" type="string"/>
-        <property name="shopOwner" type="string"/>
-        <property name="idCard" type="string"/>
-        <property name="fixedPhone" type="string"/>
-        <property name="phone" type="string"/>
-        <property name="province" type="string"/>
-        <property name="city" type="string"/>
-        <property name="area" type="string"/>
-        <property name="provinceCode" type="string"/>
-        <property name="cityCode" type="string"/>
-        <property name="areaCode" type="string"/>
-        <property name="installCategory" type="string"/>
-        <property name="weixin" type="string"/>
-        <property name="qq" type="string"/>
-        <property name="manageProjects" type="string"/>
-        <property name="status" type="string"/>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="saleCount" type="int"/>
-        <property name="shopCategoryId" type="int"/>
-        <property name="shopCategoryName" type="string"/>
-        <property name="merchantId" type="int"/>
-        <property name="merchantName" type="string"/>
-        <property name="createMerchantUserId" type="int"/>
-        <property name="createMerchantUserXingMing" type="string"/>
-        <property name="communityId" type="int"/>
-        <property name="communityName" type="string"/>
-        <property name="createCommunityUserId" type="int"/>
-        <property name="createCommunityUserXingMing" type="string"/>
-        <property name="shopIcon" type="string"/>
-    </class>
 
-    <class name="com.lanchui.commonBiz.bean.DispatchShopAuthorized" table="xiwa_dispatch_shop_authorized" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="account" type="string"/>
-        <property name="password" type="string"/>
-        <property name="xingMing" type="string"/>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="createEmployeeId" type="int"/>
-        <property name="createXingMing" type="string"/>
-        <property name="merchantId" type="int"/>
-        <property name="communityId" type="int"/>
-        <property name="active" type="boolean"/>
-        <property name="roles" type="string"/>
-        <property name="haveSetPassword" type="boolean"/>
-    </class>
-
-    <class name="com.lanchui.commonBiz.bean.DispatchShopCategory" table="xiwa_dispatch_shop_category" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="name" type="string"/>
-        <property name="alias" type="string"/>
-        <property name="sortNum" type="int"/>
-        <property name="createEmployeeId" type="int"/>
-        <property name="status" type="string"/>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="createXingming" type="string"/>
-    </class>
-
-    <class name="com.lanchui.commonBiz.bean.DispatchPushDevice" table="xiwa_dispatch_push_device" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="registrationId" type="string"/>
-        <property name="source" type="string"/>
-        <property name="platform" type="string"/>
-        <property name="loginUserId" type="int"/>
-    </class>
-
-    <class name="com.lanchui.commonBiz.bean.OptReleaseConfig" table="xiwa_opt_release_config" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="appVersion" type="string"/>
-        <property name="packageName" type="string"/>
-        <property name="comment" type="string"/>
-    </class>
-
-    <class name="com.lanchui.commonBiz.bean.OptReleaseApp" table="xiwa_opt_release_app" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="appName" type="string"/>
-        <property name="version" type="string"/>
-    </class>
 
     <class name="com.lanchui.commonBiz.bean.RedstarSession" table="xiwa_redstar_session" lazy="false">
         <id name="id" column="id">
@@ -405,20 +105,7 @@
         <property name="userTokenExpiredDate" type="java.util.Date"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.SecurityOperationLog" table="xiwa_security_operation_log" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="operatorId" type="int"/>
-        <property name="belongedId" type="int"/>
-        <property name="operateResource" type="string"/>
-        <property name="operator" type="string"/>
-        <property name="content" type="string"/>
-        <property name="operateResourceId" type="string"/>
-        <property name="remark" type="string"/>
-        <property name="operationTypeField" type="string"/>
-        <property name="createDate" type="java.util.Date"/>
-    </class>
+
 
     <class name="com.lanchui.commonBiz.bean.RedStarMember" table="xiwa_redstar_member" lazy="false">
         <id name="id" column="id">
@@ -510,83 +197,6 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarEmployee" table="xiwa_crm_employee" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-
-        <property name="departmentId" type="integer"/>
-        <property name="userName" type="string"/>
-        <property name="gongHao" type="string"/>
-        <property name="xingMing" type="string"/>
-        <property name="gender" type="string"/>
-        <property name="birthday" type="java.util.Date"/>
-        <property name="idNumber" type="string"/>
-        <property name="address" type="string"/>
-        <property name="youBian" type="string"/>
-        <property name="addressPhone" type="string"/>
-        <property name="mobilePhone" type="string"/>
-        <property name="email" type="string"/>
-        <property name="description" type="string"/>
-        <property name="remark" type="string"/>
-        <property name="photos" type="string"/>
-        <property name="head" type="string"/>
-        <property name="lastActiveTime" type="java.util.Date"/>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="entryDate" type="java.util.Date"/>
-        <property name="englishName" type="string"/>
-        <property name="tags" type="string"/>
-        <property name="fixedPhone" type="string"/>
-        <property name="sign" type="string"/>
-        <property name="inputMemberAmount" type="integer"/>
-        <property name="inputCommunityAmount" type="integer"/>
-        <property name="inputCommunityRoomAmount" type="integer"/>
-        <property name="openId" type="string"/>
-        <property name="bankCardNo" type="string"/>
-        <property name="source" type="string"/>
-        <property name="showData" type="boolean"/>
-        <property name="belongedId" type="integer"/>
-        <property name="inputMemberAmountRank" type="integer"/>
-        <property name="inputCommunityAmountRank" type="integer"/>
-        <property name="employeeCode" type="string"/>
-        <property name="employeeRecord" type="integer"/>
-        <property name="hrStatus" type="string"/>
-        <property name="businessUnitCode" type="string"/>
-        <property name="businessUnitName" type="string"/>
-        <property name="departmentCode" type="string"/>
-        <property name="score" type="integer"/>
-
-    </class>
-    <class name="com.lanchui.commonBiz.bean.RedstarDepartment" table="xiwa_crm_department" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="name" type="string"/>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="belongedId" type="java.lang.Integer"/>
-        <property name="parentId" type="java.lang.Integer"/>
-        <property name="showData" type="boolean"/>
-        <property name="departmentCode" type="string"/>
-        <property name="pinYin" type="string"/>
-        <property name="peopleNumber" type="java.lang.Integer"/>
-        <property name="departmentParentCode" type="string"/>
-        <property name="description" type="string"/>
-         <property name="alias" type="string"/>
-        <property name="leaf" type="boolean"/>
-        <property name="companyCode" type="string"/>
-        <property name="companyDescr" type="string"/>
-
-    </class>
-
-    <class name="com.lanchui.commonBiz.bean.RedstarRole" table="xiwa_security_role" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="name" type="string"/>
-        <property name="description" type="string"/>
-        <property name="alias" type="string"/>
-
-    </class>
     <class name="com.lanchui.commonBiz.bean.RedstarVerifyCode" table="xiwa_redstar_verify_code" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
@@ -892,101 +502,7 @@
     </class>
 
 
-    <!-- mdc dian pin Start-->
-    <class name="com.lanchui.commonBiz.bean.RedstarReview" table="xiwa_redstar_review" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="objectCode" type="string"/>
-        <property name="objectId" type="string"/>
-        <property name="objectName" type="string"/>
-        <property name="comment" type="string"/>
-        <property name="nickName" type="string"/>
-        <property name="userObject" type="string"/>
-        <property name="score" type="double"/>
-        <property name="userId" type="string"/>
-        <property name="showData" type="boolean"/>
-        <property name="picture" type="java.lang.String"/>
 
-        <!--RedstarReviewDetail的配置one  to many-->
-        <!--<bag name="redstarReviewDetails" lazy="false" cascade="all" table="xiwa_redstar_review_detail" inverse="true">-->
-            <!--<key>-->
-                <!--<column name="reviewId"/>-->
-            <!--</key>-->
-            <!--<one-to-many class="com.lanchui.commonBiz.bean.RedstarReviewDetail"/>-->
-        <!--</bag>-->
-
-        <!--RedstarReviewReply的配置one  to many-->
-        <!--<bag name="redstarReviewReplies" lazy="false" cascade="all" table="xiwa_redstar_review_reply" inverse="true">-->
-            <!--<key>-->
-
-                <!--<column name="reviewId"/>-->
-            <!--</key>-->
-            <!--<one-to-many class="com.lanchui.commonBiz.bean.RedstarReviewReply"/>-->
-        <!--</bag>-->
-        <!--<set name="redstarReviewReplies" inverse="true">-->
-        <!--<key column="reviewId"></key>-->
-        <!--<one-to-many class="com.lanchui.commonBiz.bean.RedstarReviewReply"/>-->
-        <!--</set>-->
-
-
-    </class>
-
-    <class name="com.lanchui.commonBiz.bean.RedstarReviewDetail" table="xiwa_redstar_review_detail" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="labelCode" type="string"/>
-        <property name="score" type="int"/>
-        <property name="reviewId" type="int"/>
-       <!--<many-to-one name="redstarReview" class="com.lanchui.commonBiz.bean.RedstarReview" insert="true"-->
-         <!--update="true"  outer-join="auto" column="reviewId" cascade="none" ></many-to-one>-->
-  </class>
-
-    <class name="com.lanchui.commonBiz.bean.RedstarReviewLabel" table="xiwa_redstar_review_label" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="name" type="string"/>
-        <property name="code" type="string"/>
-        <property name="objectCode" type="string"/>
-        <property name="description" type="string"/>
-    </class>
-
-    <class name="com.lanchui.commonBiz.bean.RedstarReviewObject" table="xiwa_redstar_review_object" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="name" type="string"/>
-        <property name="code" type="string"/>
-        <property name="description" type="string"/>
-    </class>
-
-    <class name="com.lanchui.commonBiz.bean.RedstarReviewReply" table="xiwa_redstar_review_reply" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="reviewId" type="int"/>
-        <property name="replyId" type="string"/>
-        <property name="replyXingMing" type="string"/>
-        <property name="content" type="string"/>
-    </class>
-
-    <class name="com.lanchui.commonBiz.bean.RedstarReviewResultDesc" table="xiwa_redstar_review_result_desc"
-           lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="name" type="string"/>
-        <property name="minScore" type="double"/>
-        <property name="maxScore" type="double"/>
-        <property name="code" type="string"/>
-    </class>
 
     <class name="com.lanchui.commonBiz.bean.RedstarVersion" table="xiwa_redstar_version" lazy="false">
         <id name="id" column="id">
@@ -1000,87 +516,6 @@
         <property name="downloadUrl" type="string"/>
         <property name="activity" type="integer"/>
         <property name="appCode" type="string"/>
-    </class>
-    <!-- mdc dian pin END-->
-    <class name="com.lanchui.commonBiz.bean.RedstarStore" table="xiwa_redstar_store" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="storeName" type="string"/>
-        <property name="storeType" type="string"/>
-        <property name="cityCode" type="string"/>
-        <property name="city" type="string"/>
-        <property name="belongMarketId" type="int"/>
-        <property name="belongMarketCode" type="string"/>
-        <property name="belongMarket" type="string"/>
-        <property name="belongMarketAddress" type="string"/>
-        <property name="openTime" type="java.util.Date"/>
-        <property name="closeTime" type="java.util.Date"/>
-        <property name="openingTime" type="string"/>
-        <property name="rootCategory" type="string"/>
-        <property name="specialService" type="string"/>
-        <property name="salesSupport" type="string"/>
-        <property name="storeImg" type="string"/>
-        <property name="honors" type="string"/>
-        <property name="fixedPrices" type="boolean"/>
-        <property name="genuineQuery" type="boolean"/>
-        <property name="greenLead" type="boolean"/>
-        <property name="categorySales" type="boolean"/>
-        <property name="brandLogo" type="string"/>
-        <property name="brandName" type="string"/>
-        <property name="introduction" type="string"/>
-        <property name="brandCreateDate" type="java.util.Date"/>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="qrCode" type="string"/>
-        <property name="type" type="string"/>
-        <property name="storeCode" type="string"/>
-        <property name="complaintTel" type="string"></property>
-    </class>
-
-    <class name="com.lanchui.commonBiz.bean.ExtRedstarStore" table="xiwa_redstar_store" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-    </class>
-
-    <class name="com.lanchui.commonBiz.bean.RedstarStoreFavorite" table="xiwa_redstar_store_favorite" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="storeId" type="integer"/>
-        <property name="storeName" type="string"/>
-        <property name="brandLogo" type="string"/>
-        <property name="userId" type="string"/>
-    </class>
-
-    <class  name="com.lanchui.commonBiz.bean.RedstarStoreUV" table="xiwa_redstar_store_uv" lazy="false">
-        <id name="id" column="id" >
-            <generator class="identity"/>
-        </id>
-        <property name="dataSK" type="java.lang.String"/>
-        <property name="action" type="java.lang.String"/>
-        <property name="userId" type="java.lang.Integer"/>
-        <property name="userObject" type="java.lang.String"/>
-        <property name="createDate" type="java.util.Date"/>
-    </class>
-    <class name="com.lanchui.commonBiz.bean.RedstarStorePV" table="xiwa_redstar_store_pv" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="dataSK" type="java.lang.String"/>
-        <property name="action" type="java.lang.String"/>
-        <property name="createDate" type="java.util.Date"/>
-    </class>
-
-    <class name="com.lanchui.commonBiz.bean.WxUserInfo" table="xiwa_redstar_wx_info" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="openId" type="string"/>
-        <property name="unionId" type="string"/>
-        <property name="wxInfo" type="string"/>
     </class>
 
 
@@ -1119,33 +554,6 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.SecurityAuthorized" table="xiwa_security_authorized" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="securityAnswer" type="string"/>
-        <property name="activeCode" type="string"/>
-        <property name="password" type="string"/>
-        <property name="objectDesc" type="string"/>
-        <property name="account" type="string"/>
-        <property name="objectId" type="int"/>
-        <property name="securityQuestion" type="string"/>
-        <property name="objectIdentified" type="string"/>
-        <property name="roles" type="string"/>
-        <property name="active"  type="boolean"/>
-        <property name="haveSetPassword"  type="boolean"/>
-    </class>
-
-    <class name="com.lanchui.commonBiz.bean.RedstarReviewLiked" table="xiwa_redstar_review_liked" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="reviewId" type="integer"/>
-        <property name="userObject" type="string"/>
-        <property name="userId" type="string"/>
-    </class>
-
     <class name="com.lanchui.commonBiz.bean.RedstarAppAd" table="xiwa_redstar_app_ad" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
@@ -1167,10 +575,4 @@
         <property name="activity" type="integer"/>
     </class>
 
-
-
-
-
-
-    <!--  -->
 </hibernate-mapping>
