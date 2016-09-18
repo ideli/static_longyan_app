@@ -48,7 +48,7 @@
     <!-- 使用annotation 自动注册bean,并保证@Required,@Autowired的属性被注入 -->
     <!--<context:component-scan base-package="com.xiwa"/>-->
     <context:component-scan base-package="com.greatbee"/>
-    <context:component-scan base-package="com.lanchui"/>
+    <!--<context:component-scan base-package="com.lanchui"/>-->
     <context:annotation-config/>
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
@@ -117,7 +117,7 @@
 
         <task:scheduled ref="departmentEmployeeTask" method="execute" cron="${department_employee_task}"/>
 
-        <task:scheduled ref="storeInfoSync" method="execute" cron="${store_info_sync}"/>
+        <!--<task:scheduled ref="storeInfoSync" method="execute" cron="${store_info_sync}"/>-->
 
         <task:scheduled ref="departmentPeopleNumberTask" method="execute" cron="${people_number}"/>
 

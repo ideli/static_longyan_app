@@ -6,16 +6,16 @@
     <display-name>Zeus Product</display-name>
 
 
-    <!--跨域访问过滤器-->
-    <filter>
-        <filter-name>cors</filter-name>
-        <filter-class>com.greatbee.security.interceptor.SimpleCORSFilter</filter-class>
-    </filter>
+    <!--&lt;!&ndash;跨域访问过滤器&ndash;&gt;-->
+    <!--<filter>-->
+        <!--<filter-name>cors</filter-name>-->
+        <!--<filter-class>com.greatbee.security.interceptor.SimpleCORSFilter</filter-class>-->
+    <!--</filter>-->
 
-    <filter-mapping>
-        <filter-name>cors</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    <!--<filter-mapping>-->
+        <!--<filter-name>cors</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
 
     <!-- 配置编码过滤器 -->
     <filter>

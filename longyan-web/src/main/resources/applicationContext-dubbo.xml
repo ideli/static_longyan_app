@@ -25,7 +25,7 @@
     <dubbo:reference interface="com.chinaredstar.longyan.api.CommunityService"
                      owner="longyan"  id="communityService" timeout="5000" retries="1"  />
 
-
+    <!--消息系统-->
     <dubbo:reference interface="com.redstar.sms.api.AppPushService"
                      owner="longyan"  id="appPushService" timeout="5000" retries="1"  />
 

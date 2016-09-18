@@ -53,39 +53,39 @@
     </bean>
 
 
-    <mvc:interceptors>
-        <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
-        <!--<bean class="com.greatbee.security.interceptor.SpringSessionInterceptor"/>-->
-        <mvc:interceptor>
-            <!--登出-->
-            <mvc:mapping path="/auth/logout"/>
-            <!--获取用户信息 长传头像-->
-            <mvc:mapping path="/user/user-info"/>
-            <mvc:mapping path="/user/user-info-app"/>
-            <mvc:mapping path="/user/setting-avatar"/>
-            <mvc:mapping path="/user/change-login-password"/>
+    <!--<mvc:interceptors>-->
+        <!--&lt;!&ndash; 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 &ndash;&gt;-->
+        <!--&lt;!&ndash;<bean class="com.greatbee.security.interceptor.SpringSessionInterceptor"/>&ndash;&gt;-->
+        <!--<mvc:interceptor>-->
+            <!--&lt;!&ndash;登出&ndash;&gt;-->
+            <!--<mvc:mapping path="/auth/logout"/>-->
+            <!--&lt;!&ndash;获取用户信息 长传头像&ndash;&gt;-->
+            <!--<mvc:mapping path="/user/user-info"/>-->
+            <!--<mvc:mapping path="/user/user-info-app"/>-->
+            <!--<mvc:mapping path="/user/setting-avatar"/>-->
+            <!--<mvc:mapping path="/user/change-login-password"/>-->
 
 
-            <!--小区-->
-            <mvc:mapping path="/community/*/**"/>
-            <!--住户-->
-            <mvc:mapping path="/member/*/**"/>
-            <!--反馈-->
-            <mvc:mapping path="/feedback/*/**"/>
-            <!--报表-->
-            <mvc:mapping path="/report/*/**"/>
+            <!--&lt;!&ndash;小区&ndash;&gt;-->
+            <!--<mvc:mapping path="/community/*/**"/>-->
+            <!--&lt;!&ndash;住户&ndash;&gt;-->
+            <!--<mvc:mapping path="/member/*/**"/>-->
+            <!--&lt;!&ndash;反馈&ndash;&gt;-->
+            <!--<mvc:mapping path="/feedback/*/**"/>-->
+            <!--&lt;!&ndash;报表&ndash;&gt;-->
+            <!--<mvc:mapping path="/report/*/**"/>-->
 
-            <!--message-->
-            <mvc:mapping path="/message/*/**"/>
+            <!--&lt;!&ndash;message&ndash;&gt;-->
+            <!--<mvc:mapping path="/message/*/**"/>-->
 
-            <mvc:mapping path="/score/rank"/>
-            <mvc:mapping path="/score/my-score-history"/>
-            <mvc:mapping path="/work/*/**"/>
-            <mvc:mapping path="/lottery/*/**"/>
-            <!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->
-            <bean class="com.greatbee.security.interceptor.SpringSessionInterceptor" />
+            <!--<mvc:mapping path="/score/rank"/>-->
+            <!--<mvc:mapping path="/score/my-score-history"/>-->
+            <!--<mvc:mapping path="/work/*/**"/>-->
+            <!--<mvc:mapping path="/lottery/*/**"/>-->
+            <!--&lt;!&ndash; 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 &ndash;&gt;-->
+            <!--<bean class="com.greatbee.security.interceptor.SpringSessionInterceptor" />-->
 
-        </mvc:interceptor>
-    </mvc:interceptors>
+        <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
 
 </beans>

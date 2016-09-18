@@ -1,6 +1,6 @@
 package com.lanchui.commonBiz.manager;
 
-import com.lanchui.commonBiz.bean.ExtEmployee;
+//import com.lanchui.commonBiz.bean.ExtEmployee;
 import com.lanchui.commonBiz.bean.RedstarCommunity;
 import com.xiwa.base.bean.SimplePaginationDescribe;
 import com.xiwa.base.manager.BasicManager;

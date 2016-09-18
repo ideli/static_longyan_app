@@ -8,13 +8,13 @@
     <parent>
         <groupId>com.chinaredstar</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0.0.RELEASE</version>
+        <version>1.1.5.RELEASE</version>
         <!--<relativePath>../pom.xml</relativePath>-->
     </parent>
 
-    <groupId>greatbee</groupId>
-    <artifactId>server_oa</artifactId>
-    <version>7.4.6-SNAPSHOT</version>
+    <groupId>com.chinaredstar</groupId>
+    <artifactId>p-longyan-web</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
 
     <!--<profiles>-->
         <!--&lt;!&ndash; dev &ndash;&gt;-->
@@ -276,11 +276,6 @@
             <artifactId>commons-fileupload</artifactId>
             <version>1.2</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.datayes.search</groupId>-->
-            <!--<artifactId>search-client-sns</artifactId>-->
-            <!--<version>1.5.0</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.apache.struts</groupId>
             <artifactId>struts2-junit-plugin</artifactId>
@@ -406,7 +401,7 @@
             <groupId>info.yangguo</groupId>
             <artifactId>dragon-client</artifactId>
         </dependency>
-
+        <!--service api-->
         <dependency>
             <groupId>com.chinaredstar.longyan</groupId>
             <artifactId>longyan-api</artifactId>
