@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.lanchui.commonBiz.bean.DispatchCity" table="xiwa_dispatch_city" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.DispatchCity" table="xiwa_dispatch_city" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -15,7 +15,7 @@
         <property name="open" type="boolean"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.Storage" table="xiwa_base_storage" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.Storage" table="xiwa_base_storage" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -37,7 +37,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.DispatchValidateCode" table="xiwa_dispatch_validate_code" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.DispatchValidateCode" table="xiwa_dispatch_validate_code" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -49,7 +49,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.DispatchProvince" table="xiwa_dispatch_province" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.DispatchProvince" table="xiwa_dispatch_province" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -57,7 +57,7 @@
         <property name="provinceCode" type="string"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.DispatchLocation" table="xiwa_dispatch_location" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.DispatchLocation" table="xiwa_dispatch_location" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -73,7 +73,7 @@
 
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarTaskLog" table="xiwa_redstar_task_log"
+    <class name="com.chinaredstar.commonBiz.bean.RedstarTaskLog" table="xiwa_redstar_task_log"
            lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
@@ -88,7 +88,7 @@
 
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarSession" table="xiwa_redstar_session" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarSession" table="xiwa_redstar_session" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -107,7 +107,7 @@
 
 
 
-    <class name="com.lanchui.commonBiz.bean.RedStarMember" table="xiwa_redstar_member" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedStarMember" table="xiwa_redstar_member" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -155,7 +155,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.ExtRedstarMember" table="xiwa_redstar_member" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.ExtRedstarMember" table="xiwa_redstar_member" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -197,7 +197,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarVerifyCode" table="xiwa_redstar_verify_code" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarVerifyCode" table="xiwa_redstar_verify_code" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -208,7 +208,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarEmployeeMonth" table="xiwa_redstar_report_employee_input_month"
+    <class name="com.chinaredstar.commonBiz.bean.RedstarEmployeeMonth" table="xiwa_redstar_report_employee_input_month"
            lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
@@ -223,7 +223,7 @@
         <property name="scoreRank" type="integer"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.ExtRedstarEmployeeMonth" table="xiwa_redstar_report_employee_input_month"
+    <class name="com.chinaredstar.commonBiz.bean.ExtRedstarEmployeeMonth" table="xiwa_redstar_report_employee_input_month"
            lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
@@ -243,7 +243,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarShoppingMall" table="xiwa_redstar_shopping_mall" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarShoppingMall" table="xiwa_redstar_shopping_mall" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -281,7 +281,7 @@
 
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.RedstarMallCommunity" table="xiwa_redstar_mall_community" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarMallCommunity" table="xiwa_redstar_mall_community" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -294,7 +294,7 @@
         <property name="memberAmount" type="int"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.RedstarMallEmployee" table="xiwa_redstar_mall_employee" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarMallEmployee" table="xiwa_redstar_mall_employee" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -304,7 +304,7 @@
         <property name="shoppingMallName" type="string"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.RedstarMallMonth" table="xiwa_redstar_report_mall_input_month" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarMallMonth" table="xiwa_redstar_report_mall_input_month" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -317,7 +317,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarShopMallOrganization" table="xiwa_redstar_shopping_mall_organization"
+    <class name="com.chinaredstar.commonBiz.bean.RedstarShopMallOrganization" table="xiwa_redstar_shopping_mall_organization"
            lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
@@ -332,7 +332,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarOrganizationMonth"
+    <class name="com.chinaredstar.commonBiz.bean.RedstarOrganizationMonth"
            table="xiwa_redstar_report_organization_input_month" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
@@ -345,7 +345,7 @@
         <property name="inputMemberAmount" type="int"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.RedstarDevelopers" table="xiwa_redstar_developers" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarDevelopers" table="xiwa_redstar_developers" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -353,7 +353,7 @@
         <property name="name" type="string"/>
         <property name="remark" type="string"/>
     </class>
-    <class name="com.lanchui.commonBiz.bean.RedstarProperty" table="xiwa_redstar_property" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarProperty" table="xiwa_redstar_property" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -362,7 +362,7 @@
         <property name="remark" type="string"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.RedstarRoomType" table="xiwa_redstar_room_type" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarRoomType" table="xiwa_redstar_room_type" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -372,7 +372,7 @@
         <property name="sortNum" type="integer"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.RedstarRoomLayout" table="xiwa_redstar_room_layout" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarRoomLayout" table="xiwa_redstar_room_layout" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -381,7 +381,7 @@
         <property name="name" type="string"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.RedstarRoomArea" table="xiwa_redstar_room_area" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarRoomArea" table="xiwa_redstar_room_area" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -390,7 +390,7 @@
         <property name="name" type="string"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.RedstarRenovationStatus" table="xiwa_redstar_renovation_status"
+    <class name="com.chinaredstar.commonBiz.bean.RedstarRenovationStatus" table="xiwa_redstar_renovation_status"
            lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
@@ -400,7 +400,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarReportProvinceInput" table="xiwa_redstar_report_province_input"
+    <class name="com.chinaredstar.commonBiz.bean.RedstarReportProvinceInput" table="xiwa_redstar_report_province_input"
            lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
@@ -418,7 +418,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarReportCountrywideDaily" table="xiwa_redstar_report_countrywide_daily"
+    <class name="com.chinaredstar.commonBiz.bean.RedstarReportCountrywideDaily" table="xiwa_redstar_report_countrywide_daily"
            lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
@@ -434,7 +434,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarFeedbackType" table="xiwa_redstar_feedback_type" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarFeedbackType" table="xiwa_redstar_feedback_type" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -443,7 +443,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarFeedback" table="xiwa_redstar_feedback" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarFeedback" table="xiwa_redstar_feedback" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -455,7 +455,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarEmployeeDayInput" table="xiwa_redstar_report_employee_input_daily"
+    <class name="com.chinaredstar.commonBiz.bean.RedstarEmployeeDayInput" table="xiwa_redstar_report_employee_input_daily"
            lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
@@ -471,7 +471,7 @@
         <property name="scoreRank" type="integer"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.RedstarShoppingMallDayInput" table="xiwa_redstar_report_mall_input_daily"
+    <class name="com.chinaredstar.commonBiz.bean.RedstarShoppingMallDayInput" table="xiwa_redstar_report_mall_input_daily"
            lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
@@ -487,7 +487,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarOrganizationDayInput"
+    <class name="com.chinaredstar.commonBiz.bean.RedstarOrganizationDayInput"
            table="xiwa_redstar_report_organization_input_daily" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
@@ -504,7 +504,7 @@
 
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarVersion" table="xiwa_redstar_version" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarVersion" table="xiwa_redstar_version" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -519,7 +519,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarScoreLog" table="xiwa_redstar_score_log" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarScoreLog" table="xiwa_redstar_score_log" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -536,7 +536,7 @@
 
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.RedstarScoreRule" table="xiwa_redstar_score_rule" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarScoreRule" table="xiwa_redstar_score_rule" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -554,7 +554,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarAppAd" table="xiwa_redstar_app_ad" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarAppAd" table="xiwa_redstar_app_ad" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>

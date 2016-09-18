@@ -2,17 +2,13 @@ package com.greatbee.web.controller;
 
 import com.greatbee.bean.constant.LanchuiConstant;
 import com.greatbee.exception.BusinessException;
-import com.greatbee.exception.constant.BasicExceptionType;
 import com.greatbee.exception.constant.CommonExceptionType;
-import com.lanchui.commonBiz.bean.RedstarCommunity;
-import com.lanchui.commonBiz.bean.constant.CommonBizConstant;
+import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.manager.ManagerException;
 import com.xiwa.base.pipeline.PipelineContext;
-import com.xiwa.base.pipeline.PipelineException;
 import com.xiwa.base.util.DataUtil;
 import com.xiwa.zeus.trinity.bean.Employee;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.support.AdvanceControllerSupport;
 
 import javax.servlet.http.HttpServletRequest;

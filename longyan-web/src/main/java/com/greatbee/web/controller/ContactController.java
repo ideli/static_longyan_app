@@ -1,8 +1,8 @@
 package com.greatbee.web.controller;
 
 import com.chinaredstar.longyan.api.ContactService;
-import com.lanchui.commonBiz.bean.ContactVo;
-import com.lanchui.commonBiz.bean.constant.CommonBizConstant;
+import com.chinaredstar.commonBiz.bean.ContactVo;
+import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;

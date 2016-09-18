@@ -1,9 +1,10 @@
 package com.greatbee.util;
 
+import com.chinaredstar.commonBiz.util.*;
+import com.chinaredstar.commonBiz.util.HttpClientUtil;
 import com.greatbee.bean.constant.LanchuiConstant;
-import com.lanchui.commonBiz.bean.RedstarSession;
-import com.lanchui.commonBiz.manager.RedstarCommonManager;
-import com.lanchui.commonBiz.util.*;
+import com.chinaredstar.commonBiz.bean.RedstarSession;
+import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
 import com.xiwa.base.bean.search.ext.TextSearch;
 import com.xiwa.base.util.StringUtil;
 import net.sf.json.JSONObject;
@@ -45,7 +46,7 @@ public class UserUtil {
             tokenParams.put("appId", appId);
             tokenParams.put("appSecret", appSecret);
 
-            JSONObject tokenObj = com.lanchui.commonBiz.util.HttpClientUtil.post(userCenterUrl + "/employee/getTokenByClient", tokenParams);
+            JSONObject tokenObj = com.chinaredstar.commonBiz.util.HttpClientUtil.post(userCenterUrl + "/employee/getTokenByClient", tokenParams);
 
             String accessToken=tokenObj.getJSONObject("data").get("accessToken").toString();
             //获取accessToken
@@ -53,7 +54,7 @@ public class UserUtil {
             meParams.put("accessToken", accessToken);
             meParams.put("openid",openId);
 
-            JSONObject userObj = com.lanchui.commonBiz.util.HttpClientUtil.post(userCenterUrl + "/employee/getBasicInfo", meParams);
+            JSONObject userObj = HttpClientUtil.post(userCenterUrl + "/employee/getBasicInfo", meParams);
             return  userObj;
         }catch (Exception e){
             e.printStackTrace();

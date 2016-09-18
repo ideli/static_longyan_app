@@ -1,10 +1,10 @@
 package com.greatbee.util;
 
 import com.greatbee.bean.constant.LanchuiConstant;
-import com.lanchui.commonBiz.bean.RedstarCommunity;
-import com.lanchui.commonBiz.bean.RedstarMallEmployee;
-import com.lanchui.commonBiz.bean.RedstarShoppingMall;
-import com.lanchui.commonBiz.manager.RedstarCommonManager;
+import com.chinaredstar.commonBiz.bean.RedstarCommunity;
+import com.chinaredstar.commonBiz.bean.RedstarMallEmployee;
+import com.chinaredstar.commonBiz.bean.RedstarShoppingMall;
+import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
 import com.xiwa.base.bean.search.ext.IntSearch;
 import com.xiwa.base.bean.search.ext.MultiSearchBean;
 import com.xiwa.base.bean.search.ext.TextSearch;

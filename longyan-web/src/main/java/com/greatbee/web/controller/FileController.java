@@ -1,34 +1,16 @@
 package com.greatbee.web.controller;
 
-import com.greatbee.bean.constant.FileStorageType;
 import com.greatbee.bean.constant.LanchuiConstant;
-import com.greatbee.util.BusinessUtil;
-import com.lanchui.commonBiz.bean.Storage;
-import com.lanchui.commonBiz.manager.StorageManager;
-import com.lanchui.commonBiz.util.StorageUtil;
 import com.xiwa.base.bean.Response;
-import com.xiwa.base.manager.ManagerException;
-import com.xiwa.base.pipeline.Pipeline;
 import com.xiwa.base.pipeline.PipelineContext;
-import com.xiwa.base.util.DataUtil;
-import com.xiwa.base.util.StringUtil;
-import net.sf.json.JSONObject;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by wangj on 2015/4/16.

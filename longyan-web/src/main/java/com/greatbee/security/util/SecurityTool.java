@@ -1,9 +1,9 @@
 package com.greatbee.security.util;
 
 import com.greatbee.base.util.HTTPTool;
-import com.lanchui.commonBiz.bean.RedstarSession;
-import com.lanchui.commonBiz.manager.RedstarSessionManager;
-import com.lanchui.commonBiz.util.CookieUtil;
+import com.chinaredstar.commonBiz.bean.RedstarSession;
+import com.chinaredstar.commonBiz.manager.RedstarSessionManager;
+import com.chinaredstar.commonBiz.util.CookieUtil;
 import com.xiwa.base.bean.Identified;
 import com.xiwa.base.cmd.SessionTimeoutException;
 import com.xiwa.base.components.bean.Node;

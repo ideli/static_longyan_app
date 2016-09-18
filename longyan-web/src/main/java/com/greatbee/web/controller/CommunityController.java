@@ -1,19 +1,18 @@
 package com.greatbee.web.controller;
 
+import com.chinaredstar.commonBiz.bean.*;
 import com.greatbee.bean.bo.RecommendCommunityExtObject;
 import com.greatbee.exception.BusinessException;
 import com.greatbee.exception.FormException;
 import com.greatbee.exception.constant.CommonExceptionType;
 import com.greatbee.exception.constant.CommunityExceptionType;
-import com.lanchui.commonBiz.bean.RecommendCommunityObject;
 import com.greatbee.bean.constant.LanchuiConstant;
 import com.greatbee.util.*;
-import com.lanchui.commonBiz.bean.*;
-import com.lanchui.commonBiz.bean.constant.CommonBizConstant;
-import com.lanchui.commonBiz.manager.DispatchDriver;
-import com.lanchui.commonBiz.manager.RedstarCommonManager;
-import com.lanchui.commonBiz.manager.RedstarCommunityUnitManager;
-import com.lanchui.commonBiz.util.DoubleUtil;
+import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
+import com.chinaredstar.commonBiz.manager.DispatchDriver;
+import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
+import com.chinaredstar.commonBiz.manager.RedstarCommunityUnitManager;
+import com.chinaredstar.commonBiz.util.DoubleUtil;
 import com.xiwa.base.bean.PaginationDescribe;
 import com.xiwa.base.bean.Request;
 import com.xiwa.base.bean.Response;
@@ -25,7 +24,6 @@ import com.xiwa.base.manager.ManagerException;
 import com.xiwa.base.pipeline.PipelineContext;
 import com.xiwa.base.util.DataUtil;
 import com.xiwa.base.util.StringUtil;
-import com.xiwa.security.driver.SecurityDriver;
 import com.xiwa.zeus.trinity.bean.Employee;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +50,8 @@ public class CommunityController extends BaseController implements CommonBizCons
 
     @Autowired
     private DispatchDriver dispatchDriver;
-    @Autowired
-    protected SecurityDriver securityDriver;
+//    @Autowired
+//    protected SecurityDriver securityDriver;
 
     @Autowired
     private RedstarCommonManager redstarCommonManager;

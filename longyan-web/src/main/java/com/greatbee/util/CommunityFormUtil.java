@@ -1,11 +1,11 @@
 package com.greatbee.util;
 
+import com.chinaredstar.commonBiz.bean.*;
 import com.greatbee.exception.BusinessException;
 import com.greatbee.exception.FormException;
 import com.greatbee.exception.constant.CommunityExceptionType;
-import com.lanchui.commonBiz.bean.*;
-import com.lanchui.commonBiz.manager.DispatchDriver;
-import com.lanchui.commonBiz.manager.RedstarCommonManager;
+import com.chinaredstar.commonBiz.manager.DispatchDriver;
+import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
 import com.xiwa.base.bean.Request;
 import com.xiwa.base.bean.search.ext.MultiSearchBean;
 import com.xiwa.base.bean.search.ext.TextSearch;

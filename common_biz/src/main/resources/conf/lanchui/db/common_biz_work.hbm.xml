@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.lanchui.commonBiz.bean.work.RedstarAttendanceRecord" table="xiwa_redstar_attendance_record" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.work.RedstarAttendanceRecord" table="xiwa_redstar_attendance_record" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -28,7 +28,7 @@
 
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.work.RedstarAttendanceDepartment" table="xiwa_redstar_attendance_department" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.work.RedstarAttendanceDepartment" table="xiwa_redstar_attendance_department" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -41,7 +41,7 @@
         <property name="remark"  type="string"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.work.RedstarAttendanceCheckpoint" table="xiwa_redstar_attendance_checkpoint" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.work.RedstarAttendanceCheckpoint" table="xiwa_redstar_attendance_checkpoint" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -59,7 +59,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.work.RedstarAttendanceLog" table="xiwa_redstar_attendance_log" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.work.RedstarAttendanceLog" table="xiwa_redstar_attendance_log" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -78,7 +78,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.work.RedstarRestaurantDepartment" table="xiwa_redstar_restaurant_department" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.work.RedstarRestaurantDepartment" table="xiwa_redstar_restaurant_department" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -90,7 +90,7 @@
         <property name="departmentCode"   type="string"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.work.RedstarRestaurantMenu" table="xiwa_redstar_restaurant_menu" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.work.RedstarRestaurantMenu" table="xiwa_redstar_restaurant_menu" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -104,7 +104,7 @@
         <property name="restaurantName"   type="string"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.work.RedstarRestaurantOrder" table="xiwa_redstar_restaurant_order" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.work.RedstarRestaurantOrder" table="xiwa_redstar_restaurant_order" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -120,7 +120,7 @@
         <property name="updateDate"   type="java.util.Date"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.work.RedstarRestaurantInfo" table="xiwa_redstar_restaurant_info" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.work.RedstarRestaurantInfo" table="xiwa_redstar_restaurant_info" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -133,7 +133,7 @@
         <property name="closeDinnerTime"   type="string"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.work.RedstarAttendanceHoliday" table="xiwa_redstar_attendance_holiday" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.work.RedstarAttendanceHoliday" table="xiwa_redstar_attendance_holiday" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>

@@ -1,20 +1,17 @@
 package com.greatbee.security.interceptor;
 
 import com.greatbee.bean.constant.LanchuiConstant;
-import com.greatbee.util.ReFreshTokenUtil;
 import com.greatbee.util.SessionInitUtil;
 import com.greatbee.util.SpringUtil;
-import com.lanchui.commonBiz.bean.RedstarSession;
-import com.lanchui.commonBiz.manager.DispatchDriver;
-import com.lanchui.commonBiz.manager.RedstarSessionManager;
-import com.lanchui.commonBiz.util.CookieUtil;
+import com.chinaredstar.commonBiz.bean.RedstarSession;
+import com.chinaredstar.commonBiz.manager.DispatchDriver;
+import com.chinaredstar.commonBiz.manager.RedstarSessionManager;
+import com.chinaredstar.commonBiz.util.CookieUtil;
 import com.xiwa.base.bean.Constants;
 import com.xiwa.base.bean.ext.SimpleResponse;
 import com.xiwa.base.cmd.SessionTimeoutException;
 import com.xiwa.base.util.StringUtil;
-import com.xiwa.security.driver.SecurityDriver;
 import com.xiwa.security.web.common.SecurityTool;
-import com.xiwa.zeus.trinity.manager.TrinityDriver;
 import net.sf.json.JSONObject;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -61,10 +58,13 @@ public class SpringSessionInterceptor implements HandlerInterceptor {
                     //有token
                     RedstarSession session = ((RedstarSessionManager) context.getBean("redstarSessionManager")).getActivatedSession(token);
                     if (session != null) {
-                        SecurityDriver securityDriver = (SecurityDriver) context.getBean("securityDriver");
-                        TrinityDriver trinityDriver = (TrinityDriver) context.getBean("trinityDriver");
-                        DispatchDriver dispatchDriver = (DispatchDriver) context.getBean("dispatchDriver");
-                        SessionInitUtil.sessionInit(securityDriver, trinityDriver, dispatchDriver, session, response);
+//                        SecurityDriver securityDriver = (SecurityDriver) context.getBean("securityDriver");
+//                        TrinityDriver trinityDriver = (TrinityDriver) context.getBean("trinityDriver");
+//                        DispatchDriver dispatchDriver = (DispatchDriver) context.getBean("dispatchDriver");
+//                        SessionInitUtil.sessionInit( dispatchDriver, session, response);
+
+                        //TODO 初始化SESSION 流程
+
                         return true;
                     }
                 }

@@ -1,10 +1,10 @@
 package com.greatbee.util;
 
 import com.greatbee.bean.constant.LanchuiConstant;
-import com.lanchui.commonBiz.bean.RedstarSession;
-import com.lanchui.commonBiz.manager.DispatchDriver;
-import com.lanchui.commonBiz.manager.RedstarSessionManager;
-import com.lanchui.commonBiz.util.CookieUtil;
+import com.chinaredstar.commonBiz.bean.RedstarSession;
+import com.chinaredstar.commonBiz.manager.DispatchDriver;
+import com.chinaredstar.commonBiz.manager.RedstarSessionManager;
+import com.chinaredstar.commonBiz.util.CookieUtil;
 import com.xiwa.base.cmd.SessionTimeoutException;
 import com.xiwa.base.manager.ManagerException;
 import com.xiwa.base.util.StringUtil;

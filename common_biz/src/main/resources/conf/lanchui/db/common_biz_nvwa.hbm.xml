@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.lanchui.commonBiz.bean.SecurityResource" table="xiwa_security_resource" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.SecurityResource" table="xiwa_security_resource" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -30,7 +30,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.DispatchEmployee" table="xiwa_crm_employee" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.DispatchEmployee" table="xiwa_crm_employee" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -65,7 +65,7 @@
         <property name="address" type="string"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.SecurityOperationLog" table="xiwa_security_operation_log" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.SecurityOperationLog" table="xiwa_security_operation_log" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -80,7 +80,7 @@
         <property name="createDate" type="java.util.Date"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.RedstarEmployee" table="xiwa_crm_employee" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarEmployee" table="xiwa_crm_employee" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -130,7 +130,7 @@
 
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarDepartment" table="xiwa_crm_department" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarDepartment" table="xiwa_crm_department" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -151,7 +151,7 @@
 
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.RedstarRole" table="xiwa_security_role" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarRole" table="xiwa_security_role" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -161,7 +161,7 @@
 
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.SecurityAuthorized" table="xiwa_security_authorized" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.SecurityAuthorized" table="xiwa_security_authorized" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>

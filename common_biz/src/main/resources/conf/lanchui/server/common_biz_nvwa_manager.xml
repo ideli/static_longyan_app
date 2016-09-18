@@ -10,11 +10,11 @@
     </bean>
 
     <!--LG Abstract Manager-->
-    <bean id="nvwaCommonBizAbstractManager" class="com.lanchui.commonBiz.manager.lg.LgAbstractManager" abstract="true">
-        <property name="hibernateTemplate" ref="nvwaCommonBizHibernateTemplate"/>
-    </bean>
-    <!--LG  Manager-->
-    <bean id="shopInfoManager" class="com.lanchui.commonBiz.manager.lg.SimpleShopInfoManager"
-          parent="nvwaCommonBizAbstractManager">
-    </bean>
+    <!--<bean id="nvwaCommonBizAbstractManager" class="com.lanchui.commonBiz.manager.lg.LgAbstractManager" abstract="true">-->
+        <!--<property name="hibernateTemplate" ref="nvwaCommonBizHibernateTemplate"/>-->
+    <!--</bean>-->
+    <!--&lt;!&ndash;LG  Manager&ndash;&gt;-->
+    <!--<bean id="shopInfoManager" class="com.lanchui.commonBiz.manager.lg.SimpleShopInfoManager"-->
+          <!--parent="nvwaCommonBizAbstractManager">-->
+    <!--</bean>-->
   </beans>

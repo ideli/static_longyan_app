@@ -1,17 +1,7 @@
 package com.greatbee.util;
 
-import com.greatbee.bean.constant.FileStorageType;
-import com.lanchui.commonBiz.bean.Storage;
-import com.lanchui.commonBiz.manager.StorageManager;
-import com.xiwa.base.manager.ManagerException;
 import com.xiwa.base.pipeline.PipelineContext;
 import com.xiwa.base.pipeline.PipelineException;
-import com.xiwa.base.util.CollectionUtil;
-import com.xiwa.base.util.StringUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2015/4/19.

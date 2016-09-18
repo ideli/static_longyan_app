@@ -1,9 +1,9 @@
 package com.greatbee.util;
 
+import com.chinaredstar.commonBiz.bean.*;
 import com.greatbee.bean.constant.LanchuiConstant;
-import com.lanchui.commonBiz.bean.*;
-import com.lanchui.commonBiz.manager.DispatchDriver;
-import com.lanchui.commonBiz.manager.RedstarCommonManager;
+import com.chinaredstar.commonBiz.manager.DispatchDriver;
+import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
 import com.xiwa.base.bean.search.ext.IntSearch;
 import com.xiwa.base.bean.search.ext.MultiSearchBean;
 import com.xiwa.base.manager.ManagerException;

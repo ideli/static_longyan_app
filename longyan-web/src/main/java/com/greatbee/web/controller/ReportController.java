@@ -1,32 +1,10 @@
 package com.greatbee.web.controller;
 
-import com.greatbee.exception.constant.CommonExceptionType;
-import com.greatbee.util.ReportUtil;
-import com.lanchui.commonBiz.bean.*;
-import com.lanchui.commonBiz.bean.constant.CommonBizConstant;
-import com.lanchui.commonBiz.manager.*;
-import com.xiwa.base.bean.PaginationDescribe;
-import com.xiwa.base.bean.Request;
-import com.xiwa.base.bean.Response;
-import com.xiwa.base.bean.SimplePaginationDescribe;
-import com.xiwa.base.bean.search.ext.IntSearch;
-import com.xiwa.base.bean.search.ext.MultiSearchBean;
-import com.xiwa.base.bean.search.ext.TextSearch;
-import com.xiwa.base.manager.ManagerException;
-import com.xiwa.base.pipeline.PipelineContext;
-import com.xiwa.base.util.CollectionUtil;
-import com.xiwa.base.util.DataUtil;
-import com.xiwa.base.util.StringUtil;
-import com.xiwa.zeus.trinity.bean.Employee;
+import com.chinaredstar.commonBiz.manager.*;
+import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 /**
  * Created by lenovo on 2016/4/26.

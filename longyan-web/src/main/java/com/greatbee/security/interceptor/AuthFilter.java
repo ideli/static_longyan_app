@@ -1,8 +1,8 @@
 package com.greatbee.security.interceptor;
 
-import com.lanchui.commonBiz.bean.RedstarSession;
-import com.lanchui.commonBiz.manager.DispatchDriver;
-import com.lanchui.commonBiz.util.CookieUtil;
+import com.chinaredstar.commonBiz.bean.RedstarSession;
+import com.chinaredstar.commonBiz.manager.DispatchDriver;
+import com.chinaredstar.commonBiz.util.CookieUtil;
 import com.xiwa.base.bean.Constants;
 import com.xiwa.base.manager.ManagerException;
 import com.xiwa.base.util.StringUtil;

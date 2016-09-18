@@ -1,6 +1,6 @@
 package com.greatbee.bean.bo;
 
-import com.lanchui.commonBiz.bean.RecommendCommunityObject;
+import com.chinaredstar.commonBiz.bean.RecommendCommunityObject;
 
 /**
  * Created by usagizhang on 16-7-14.

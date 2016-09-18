@@ -1,13 +1,13 @@
 package com.greatbee.web.controller;
 
 
+import com.chinaredstar.commonBiz.bean.*;
 import com.greatbee.security.util.SecurityTool;
 import com.greatbee.util.HttpClientUtil;
 import com.greatbee.util.SessionInitUtil;
-import com.lanchui.commonBiz.bean.*;
-import com.lanchui.commonBiz.bean.constant.CommonBizConstant;
-import com.lanchui.commonBiz.manager.DispatchDriver;
-import com.lanchui.commonBiz.util.CookieUtil;
+import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
+import com.chinaredstar.commonBiz.manager.DispatchDriver;
+import com.chinaredstar.commonBiz.util.CookieUtil;
 import com.xiwa.base.bean.Request;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.bean.search.ext.IntSearch;
@@ -19,17 +19,8 @@ import com.xiwa.base.util.ArrayUtil;
 import com.xiwa.base.util.CollectionUtil;
 import com.xiwa.base.util.MD5Util;
 import com.xiwa.base.util.StringUtil;
-import com.xiwa.security.bean.Authorized;
-import com.xiwa.security.bean.Resource;
-import com.xiwa.security.bean.Role;
 import com.xiwa.security.bean.constant.AuthTarget;
 import com.xiwa.security.bean.ext.SimpleAuthorized;
-import com.xiwa.security.driver.SecurityDriver;
-import com.xiwa.zeus.manager.ZeusBusinessDriver;
-import com.xiwa.zeus.trinity.bean.Department;
-import com.xiwa.zeus.trinity.bean.Employee;
-import com.xiwa.zeus.trinity.bean.EnterpriseUser;
-import com.xiwa.zeus.trinity.manager.TrinityDriver;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,14 +48,14 @@ public class AuthController extends BaseController implements CommonBizConstant 
     @Autowired
     private DispatchDriver dispatchDriver;
 
-    @Autowired
-    protected SecurityDriver securityDriver;
-    @Autowired
-    protected ZeusBusinessDriver zeusBusinessDriver;
-    @Autowired
-    protected TrinityDriver trinityDriver;
+//    @Autowired
+//    protected SecurityDriver securityDriver;
+//    @Autowired
+//    protected ZeusBusinessDriver zeusBusinessDriver;
+//    @Autowired
+//    protected TrinityDriver trinityDriver;
 
-    protected String userOAuthUrl = "http://172.16.3.212:8080/oauth2_server";
+//    protected String userOAuthUrl = "http://172.16.3.212:8080/oauth2_server";
 
 
 //    ID:e82dd477
@@ -84,7 +75,7 @@ public class AuthController extends BaseController implements CommonBizConstant 
                 session = dispatchDriver.getRedstarSessionManager().getActivatedSession(token);
                 if (session != null) {
                     //token//获取Authorized对象//调用初始化session的工具类函数
-                    SessionInitUtil.sessionInit(securityDriver, trinityDriver, dispatchDriver, session, httpServletResponse);
+                    SessionInitUtil.sessionInit( dispatchDriver, session, httpServletResponse);
                     //跳转到首页
                     httpServletResponse.sendRedirect("/longyan.jsp#index");
                     return pipelineContext.getResponse();
@@ -275,36 +266,37 @@ public class AuthController extends BaseController implements CommonBizConstant 
                 authorized.setHaveSetPassword(true);
                 dispatchDriver.getRedstarEmployeeManager().addAuthorized(authorized);
             }
-            Authorized authorized = this.securityDriver.getAuthorizedManager().getAuthorized(10944,redstarEmployee.getId(),"employee");
-            if (authorized != null) {
-                if (authorized.isActive()) {
-                    Employee loginEmployee = (Employee) this.trinityDriver.getBasicEmployeeManager().getBean(authorized.getObjectId());
-                    this._auth2(authorized.getBelongedId(), authorized.getRoles(), loginEmployee, resp,emplId);
-                    loginEmployee.setDepartment(null);
-                    pipelineContext.getResponse().addKey("my_info", loginEmployee);
-                    //pipelineContext.getResponse().addKey("accessToken",userToken);
-                    //pipelineContext.getResponse().addKey("openid",openid);
-                } else {
-                    pipelineContext.getResponse().setOk(false);
-                    pipelineContext.getResponse().setMessage("登陆失败");
-                }
-            } else {
-                String roles = systemConfig.get("roles").toString();//需要在config.properties里配置
-                SimpleAuthorized authoriz = new SimpleAuthorized();
-                authoriz.setBelongedId(10944);
-                authoriz.setObjectId(redstarEmployee.getId());
-                authoriz.setObjectIdentified("employee");
-                authoriz.setObjectDesc("员工登录时新增");
-                authoriz.setAccount(moblie);
-                authoriz.setActive(true);
-                authoriz.setRoles(roles);
-                authoriz.setPassword("");
-                authoriz.setHaveSetPassword(true);
-                //添加员工授权表
-                dispatchDriver.getRedstarEmployeeManager().addAuthorized(authoriz);
-                Employee loginEmployee = (Employee) this.trinityDriver.getBasicEmployeeManager().getBean(redstarEmployee.getId());
-                this._auth2(authoriz.getBelongedId(), authoriz.getRoles(), loginEmployee, resp,emplId);
-            }
+
+//            Authorized authorized = this.securityDriver.getAuthorizedManager().getAuthorized(10944,redstarEmployee.getId(),"employee");
+//            if (authorized != null) {
+//                if (authorized.isActive()) {
+//                    Employee loginEmployee = (Employee) this.trinityDriver.getBasicEmployeeManager().getBean(authorized.getObjectId());
+//                    this._auth2(authorized.getBelongedId(), authorized.getRoles(), loginEmployee, resp,emplId);
+//                    loginEmployee.setDepartment(null);
+//                    pipelineContext.getResponse().addKey("my_info", loginEmployee);
+//                    //pipelineContext.getResponse().addKey("accessToken",userToken);
+//                    //pipelineContext.getResponse().addKey("openid",openid);
+//                } else {
+//                    pipelineContext.getResponse().setOk(false);
+//                    pipelineContext.getResponse().setMessage("登陆失败");
+//                }
+//            } else {
+//                String roles = systemConfig.get("roles").toString();//需要在config.properties里配置
+//                SimpleAuthorized authoriz = new SimpleAuthorized();
+//                authoriz.setBelongedId(10944);
+//                authoriz.setObjectId(redstarEmployee.getId());
+//                authoriz.setObjectIdentified("employee");
+//                authoriz.setObjectDesc("员工登录时新增");
+//                authoriz.setAccount(moblie);
+//                authoriz.setActive(true);
+//                authoriz.setRoles(roles);
+//                authoriz.setPassword("");
+//                authoriz.setHaveSetPassword(true);
+//                //添加员工授权表
+//                dispatchDriver.getRedstarEmployeeManager().addAuthorized(authoriz);
+//                Employee loginEmployee = (Employee) this.trinityDriver.getBasicEmployeeManager().getBean(redstarEmployee.getId());
+//                this._auth2(authoriz.getBelongedId(), authoriz.getRoles(), loginEmployee, resp,emplId);
+//            }
 
             //String ua = pipelineContext.getRequest().getHttpServletRequest().getHeader("User-Agent");
 
@@ -528,36 +520,36 @@ public class AuthController extends BaseController implements CommonBizConstant 
                 authorized.setHaveSetPassword(true);
                 dispatchDriver.getRedstarEmployeeManager().addAuthorized(authorized);
             }
-            Authorized authorized = this.securityDriver.getAuthorizedManager().getAuthorized(10944,redstarEmployee.getId(),"employee");
-            if (authorized != null) {
-                if (authorized.isActive()) {
-                    Employee loginEmployee = (Employee) this.trinityDriver.getBasicEmployeeManager().getBean(authorized.getObjectId());
-                    this._auth(authorized.getBelongedId(), authorized.getRoles(), loginEmployee,openid,userToken,refreshToken,resp);
-                    loginEmployee.setDepartment((Department) null);
-                    pipelineContext.getResponse().addKey("my_info", loginEmployee);
-                    pipelineContext.getResponse().addKey("accessToken",userToken);
-                    pipelineContext.getResponse().addKey("openid",openid);
-                } else {
-                    pipelineContext.getResponse().setOk(false);
-                    pipelineContext.getResponse().setMessage("登陆失败");
-                }
-            } else {
-                String roles = systemConfig.get("roles").toString();//需要在config.properties里配置
-                SimpleAuthorized authoriz = new SimpleAuthorized();
-                authoriz.setBelongedId(10944);
-                authoriz.setObjectId(redstarEmployee.getId());
-                authoriz.setObjectIdentified("employee");
-                authoriz.setObjectDesc("员工登录时新增");
-                authoriz.setAccount(moblie);
-                authoriz.setActive(true);
-                authoriz.setRoles(roles);
-                authoriz.setPassword("");
-                authoriz.setHaveSetPassword(true);
-                //添加员工授权表
-                dispatchDriver.getRedstarEmployeeManager().addAuthorized(authoriz);
-                Employee loginEmployee = (Employee) this.trinityDriver.getBasicEmployeeManager().getBean(redstarEmployee.getId());
-                this._auth(authoriz.getBelongedId(), authoriz.getRoles(), loginEmployee,openid,userToken,refreshToken,resp);
-            }
+//            Authorized authorized = this.securityDriver.getAuthorizedManager().getAuthorized(10944,redstarEmployee.getId(),"employee");
+//            if (authorized != null) {
+//                if (authorized.isActive()) {
+//                    Employee loginEmployee = (Employee) this.trinityDriver.getBasicEmployeeManager().getBean(authorized.getObjectId());
+//                    this._auth(authorized.getBelongedId(), authorized.getRoles(), loginEmployee,openid,userToken,refreshToken,resp);
+//                    loginEmployee.setDepartment((Department) null);
+//                    pipelineContext.getResponse().addKey("my_info", loginEmployee);
+//                    pipelineContext.getResponse().addKey("accessToken",userToken);
+//                    pipelineContext.getResponse().addKey("openid",openid);
+//                } else {
+//                    pipelineContext.getResponse().setOk(false);
+//                    pipelineContext.getResponse().setMessage("登陆失败");
+//                }
+//            } else {
+//                String roles = systemConfig.get("roles").toString();//需要在config.properties里配置
+//                SimpleAuthorized authoriz = new SimpleAuthorized();
+//                authoriz.setBelongedId(10944);
+//                authoriz.setObjectId(redstarEmployee.getId());
+//                authoriz.setObjectIdentified("employee");
+//                authoriz.setObjectDesc("员工登录时新增");
+//                authoriz.setAccount(moblie);
+//                authoriz.setActive(true);
+//                authoriz.setRoles(roles);
+//                authoriz.setPassword("");
+//                authoriz.setHaveSetPassword(true);
+//                //添加员工授权表
+//                dispatchDriver.getRedstarEmployeeManager().addAuthorized(authoriz);
+//                Employee loginEmployee = (Employee) this.trinityDriver.getBasicEmployeeManager().getBean(redstarEmployee.getId());
+//                this._auth(authoriz.getBelongedId(), authoriz.getRoles(), loginEmployee,openid,userToken,refreshToken,resp);
+//            }
 
             String ua = pipelineContext.getRequest().getHttpServletRequest().getHeader("User-Agent");
 
@@ -647,36 +639,36 @@ public class AuthController extends BaseController implements CommonBizConstant 
             //根据employeeCode查询员工id
             RedstarEmployee redstarEmployee = dispatchDriver.getRedstarEmployeeManager().getEmployeeByCode(emplId);
 
-            Authorized authorized = this.securityDriver.getAuthorizedManager().getAuthorized(10944,redstarEmployee.getId(),"employee");
-            if (authorized != null) {
-                if (authorized.isActive()) {
-                    Employee loginEmployee = (Employee) this.trinityDriver.getBasicEmployeeManager().getBean(authorized.getObjectId());
-                    this._auth(authorized.getBelongedId(), authorized.getRoles(), loginEmployee,openid,userToken,refreshToken,resp);
-                    loginEmployee.setDepartment((Department) null);
-                    pipelineContext.getResponse().addKey("my_info", loginEmployee);
-                    pipelineContext.getResponse().addKey("accessToken",userToken);
-                    pipelineContext.getResponse().addKey("openid",openid);
-                } else {
-                    pipelineContext.getResponse().setOk(false);
-                    pipelineContext.getResponse().setMessage("登陆失败");
-                }
-            } else {
-                String roles = systemConfig.get("roles").toString();//需要在config.properties里配置
-                SimpleAuthorized authoriz = new SimpleAuthorized();
-                authoriz.setBelongedId(10944);
-                authoriz.setObjectId(redstarEmployee.getId());
-                authoriz.setObjectIdentified("employee");
-                authoriz.setObjectDesc("员工登录时新增");
-                authoriz.setAccount(moblie);
-                authoriz.setActive(true);
-                authoriz.setRoles(roles);
-                authoriz.setPassword("");
-                authoriz.setHaveSetPassword(true);
-                //添加员工授权表
-                dispatchDriver.getRedstarEmployeeManager().addAuthorized(authoriz);
-                Employee loginEmployee = (Employee) this.trinityDriver.getBasicEmployeeManager().getBean(redstarEmployee.getId());
-                this._auth(authoriz.getBelongedId(), authoriz.getRoles(), loginEmployee,openid,userToken,refreshToken,resp);
-            }
+//            Authorized authorized = this.securityDriver.getAuthorizedManager().getAuthorized(10944,redstarEmployee.getId(),"employee");
+//            if (authorized != null) {
+//                if (authorized.isActive()) {
+//                    Employee loginEmployee = (Employee) this.trinityDriver.getBasicEmployeeManager().getBean(authorized.getObjectId());
+//                    this._auth(authorized.getBelongedId(), authorized.getRoles(), loginEmployee,openid,userToken,refreshToken,resp);
+//                    loginEmployee.setDepartment((Department) null);
+//                    pipelineContext.getResponse().addKey("my_info", loginEmployee);
+//                    pipelineContext.getResponse().addKey("accessToken",userToken);
+//                    pipelineContext.getResponse().addKey("openid",openid);
+//                } else {
+//                    pipelineContext.getResponse().setOk(false);
+//                    pipelineContext.getResponse().setMessage("登陆失败");
+//                }
+//            } else {
+//                String roles = systemConfig.get("roles").toString();//需要在config.properties里配置
+//                SimpleAuthorized authoriz = new SimpleAuthorized();
+//                authoriz.setBelongedId(10944);
+//                authoriz.setObjectId(redstarEmployee.getId());
+//                authoriz.setObjectIdentified("employee");
+//                authoriz.setObjectDesc("员工登录时新增");
+//                authoriz.setAccount(moblie);
+//                authoriz.setActive(true);
+//                authoriz.setRoles(roles);
+//                authoriz.setPassword("");
+//                authoriz.setHaveSetPassword(true);
+//                //添加员工授权表
+//                dispatchDriver.getRedstarEmployeeManager().addAuthorized(authoriz);
+//                Employee loginEmployee = (Employee) this.trinityDriver.getBasicEmployeeManager().getBean(redstarEmployee.getId());
+//                this._auth(authoriz.getBelongedId(), authoriz.getRoles(), loginEmployee,openid,userToken,refreshToken,resp);
+//            }
 
             String ua = pipelineContext.getRequest().getHttpServletRequest().getHeader("User-Agent");
 
@@ -752,131 +744,131 @@ public class AuthController extends BaseController implements CommonBizConstant 
     }
 
 
-    protected void _auth(int belongedId, String rolesStr,Employee employee,String openId,String userToken,String refreshToken, HttpServletResponse resp) throws ManagerException {
-        if (!StringUtil.isValid(rolesStr)) {
-            throw new ManagerException("没有对应的角色");
-        } else {
-            int[] roleIds = StringUtil.toIntArray(rolesStr, ',');
-            List roles = this.securityDriver.getRoleManager().getBeanList(roleIds);
-            boolean isSuper = false;
-            Iterator resources = roles.iterator();
-
-            while (resources.hasNext()) {
-                Role ent = (Role) resources.next();
-                if (ent.isSupperRole()) {
-                    isSuper = true;
-                    break;
-                }
-            }
-
-            new ArrayList();
-            List reources;
-            if (isSuper) {
-                reources = this.securityDriver.getResourceManager().getAllResources(AuthTarget.Employee);
-            } else {
-                ArrayList var18 = new ArrayList();
-                Iterator entIC = roles.iterator();
-
-                while (entIC.hasNext()) {
-                    Role isEntIC = (Role) entIC.next();
-                    int[] shelfResources = StringUtil.toIntArray(isEntIC.getResources(), ',');
-                    if (ArrayUtil.isValid(shelfResources)) {
-                        int[] i$ = shelfResources;
-                        int r = shelfResources.length;
-
-                        for (int i$1 = 0; i$1 < r; ++i$1) {
-                            int rId = i$[i$1];
-                            if (!var18.contains(Integer.valueOf(rId))) {
-                                var18.add(Integer.valueOf(rId));
-                            }
-                        }
-                    }
-                }
-
-                reources = this.securityDriver.getResourceManager().getResourceList(ArrayUtil.toArray(var18));
-            }
-
-            EnterpriseUser enterpriseUser = (EnterpriseUser) this.trinityDriver.getEnterpriseUserManager().getBean(belongedId);
-            String industryCode = enterpriseUser.getIndustryCode();
-            boolean valid = StringUtil.isValid(industryCode);
-            ArrayList loginResources = new ArrayList();
-            Iterator var22 = reources.iterator();
-
-            while (var22.hasNext()) {
-                Resource resource = (Resource) var22.next();
-                if (resource.isShelf() && AuthTarget.Employee.getTarget().equalsIgnoreCase(resource.getAuthTarget())) {
-                    loginResources.add(resource);
-                }
-            }
-
-            SecurityTool.initSecuritySession(AuthTarget.Employee,belongedId, loginResources, employee, employee.getId(),openId,userToken,refreshToken,dispatchDriver.getRedstarSessionManager(), resp);
-//            LogUtil.log("login", (String) null, "用户登陆", (OperationType) null, this.securityDriver.getOperationLogManager());
-            this.trinityDriver.getBasicEmployeeManager().updateEmployeeActiveTime(employee.getId());
-        }
-    }
-
-    protected void _auth2(int belongedId, String rolesStr,Employee employee,HttpServletResponse resp,String userId) throws ManagerException {
-        if (!StringUtil.isValid(rolesStr)) {
-            throw new ManagerException("没有对应的角色");
-        } else {
-            int[] roleIds = StringUtil.toIntArray(rolesStr, ',');
-            List roles = this.securityDriver.getRoleManager().getBeanList(roleIds);
-            boolean isSuper = false;
-            Iterator resources = roles.iterator();
-
-            while (resources.hasNext()) {
-                Role ent = (Role) resources.next();
-                if (ent.isSupperRole()) {
-                    isSuper = true;
-                    break;
-                }
-            }
-
-            new ArrayList();
-            List reources;
-            if (isSuper) {
-                reources = this.securityDriver.getResourceManager().getAllResources(AuthTarget.Employee);
-            } else {
-                ArrayList var18 = new ArrayList();
-                Iterator entIC = roles.iterator();
-
-                while (entIC.hasNext()) {
-                    Role isEntIC = (Role) entIC.next();
-                    int[] shelfResources = StringUtil.toIntArray(isEntIC.getResources(), ',');
-                    if (ArrayUtil.isValid(shelfResources)) {
-                        int[] i$ = shelfResources;
-                        int r = shelfResources.length;
-
-                        for (int i$1 = 0; i$1 < r; ++i$1) {
-                            int rId = i$[i$1];
-                            if (!var18.contains(Integer.valueOf(rId))) {
-                                var18.add(Integer.valueOf(rId));
-                            }
-                        }
-                    }
-                }
-
-                reources = this.securityDriver.getResourceManager().getResourceList(ArrayUtil.toArray(var18));
-            }
-
-            EnterpriseUser enterpriseUser = (EnterpriseUser) this.trinityDriver.getEnterpriseUserManager().getBean(belongedId);
-            String industryCode = enterpriseUser.getIndustryCode();
-            boolean valid = StringUtil.isValid(industryCode);
-            ArrayList loginResources = new ArrayList();
-            Iterator var22 = reources.iterator();
-
-            while (var22.hasNext()) {
-                Resource resource = (Resource) var22.next();
-                if (resource.isShelf() && AuthTarget.Employee.getTarget().equalsIgnoreCase(resource.getAuthTarget())) {
-                    loginResources.add(resource);
-                }
-            }
-
-            SecurityTool.initSecuritySession2(AuthTarget.Employee, belongedId, loginResources, employee, employee.getId(), dispatchDriver.getRedstarSessionManager(), resp,userId);
-//            LogUtil.log("login", (String) null, "用户登陆", (OperationType) null, this.securityDriver.getOperationLogManager());
-            this.trinityDriver.getBasicEmployeeManager().updateEmployeeActiveTime(employee.getId());
-        }
-    }
+//    protected void _auth(int belongedId, String rolesStr,Employee employee,String openId,String userToken,String refreshToken, HttpServletResponse resp) throws ManagerException {
+//        if (!StringUtil.isValid(rolesStr)) {
+//            throw new ManagerException("没有对应的角色");
+//        } else {
+//            int[] roleIds = StringUtil.toIntArray(rolesStr, ',');
+//            List roles = this.securityDriver.getRoleManager().getBeanList(roleIds);
+//            boolean isSuper = false;
+//            Iterator resources = roles.iterator();
+//
+//            while (resources.hasNext()) {
+//                Role ent = (Role) resources.next();
+//                if (ent.isSupperRole()) {
+//                    isSuper = true;
+//                    break;
+//                }
+//            }
+//
+//            new ArrayList();
+//            List reources;
+//            if (isSuper) {
+//                reources = this.securityDriver.getResourceManager().getAllResources(AuthTarget.Employee);
+//            } else {
+//                ArrayList var18 = new ArrayList();
+//                Iterator entIC = roles.iterator();
+//
+//                while (entIC.hasNext()) {
+//                    Role isEntIC = (Role) entIC.next();
+//                    int[] shelfResources = StringUtil.toIntArray(isEntIC.getResources(), ',');
+//                    if (ArrayUtil.isValid(shelfResources)) {
+//                        int[] i$ = shelfResources;
+//                        int r = shelfResources.length;
+//
+//                        for (int i$1 = 0; i$1 < r; ++i$1) {
+//                            int rId = i$[i$1];
+//                            if (!var18.contains(Integer.valueOf(rId))) {
+//                                var18.add(Integer.valueOf(rId));
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                reources = this.securityDriver.getResourceManager().getResourceList(ArrayUtil.toArray(var18));
+//            }
+//
+//            EnterpriseUser enterpriseUser = (EnterpriseUser) this.trinityDriver.getEnterpriseUserManager().getBean(belongedId);
+//            String industryCode = enterpriseUser.getIndustryCode();
+//            boolean valid = StringUtil.isValid(industryCode);
+//            ArrayList loginResources = new ArrayList();
+//            Iterator var22 = reources.iterator();
+//
+//            while (var22.hasNext()) {
+//                Resource resource = (Resource) var22.next();
+//                if (resource.isShelf() && AuthTarget.Employee.getTarget().equalsIgnoreCase(resource.getAuthTarget())) {
+//                    loginResources.add(resource);
+//                }
+//            }
+//
+//            SecurityTool.initSecuritySession(AuthTarget.Employee,belongedId, loginResources, employee, employee.getId(),openId,userToken,refreshToken,dispatchDriver.getRedstarSessionManager(), resp);
+////            LogUtil.log("login", (String) null, "用户登陆", (OperationType) null, this.securityDriver.getOperationLogManager());
+//            this.trinityDriver.getBasicEmployeeManager().updateEmployeeActiveTime(employee.getId());
+//        }
+//    }
+//
+//    protected void _auth2(int belongedId, String rolesStr,Employee employee,HttpServletResponse resp,String userId) throws ManagerException {
+//        if (!StringUtil.isValid(rolesStr)) {
+//            throw new ManagerException("没有对应的角色");
+//        } else {
+//            int[] roleIds = StringUtil.toIntArray(rolesStr, ',');
+//            List roles = this.securityDriver.getRoleManager().getBeanList(roleIds);
+//            boolean isSuper = false;
+//            Iterator resources = roles.iterator();
+//
+//            while (resources.hasNext()) {
+//                Role ent = (Role) resources.next();
+//                if (ent.isSupperRole()) {
+//                    isSuper = true;
+//                    break;
+//                }
+//            }
+//
+//            new ArrayList();
+//            List reources;
+//            if (isSuper) {
+//                reources = this.securityDriver.getResourceManager().getAllResources(AuthTarget.Employee);
+//            } else {
+//                ArrayList var18 = new ArrayList();
+//                Iterator entIC = roles.iterator();
+//
+//                while (entIC.hasNext()) {
+//                    Role isEntIC = (Role) entIC.next();
+//                    int[] shelfResources = StringUtil.toIntArray(isEntIC.getResources(), ',');
+//                    if (ArrayUtil.isValid(shelfResources)) {
+//                        int[] i$ = shelfResources;
+//                        int r = shelfResources.length;
+//
+//                        for (int i$1 = 0; i$1 < r; ++i$1) {
+//                            int rId = i$[i$1];
+//                            if (!var18.contains(Integer.valueOf(rId))) {
+//                                var18.add(Integer.valueOf(rId));
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                reources = this.securityDriver.getResourceManager().getResourceList(ArrayUtil.toArray(var18));
+//            }
+//
+//            EnterpriseUser enterpriseUser = (EnterpriseUser) this.trinityDriver.getEnterpriseUserManager().getBean(belongedId);
+//            String industryCode = enterpriseUser.getIndustryCode();
+//            boolean valid = StringUtil.isValid(industryCode);
+//            ArrayList loginResources = new ArrayList();
+//            Iterator var22 = reources.iterator();
+//
+//            while (var22.hasNext()) {
+//                Resource resource = (Resource) var22.next();
+//                if (resource.isShelf() && AuthTarget.Employee.getTarget().equalsIgnoreCase(resource.getAuthTarget())) {
+//                    loginResources.add(resource);
+//                }
+//            }
+//
+//            SecurityTool.initSecuritySession2(AuthTarget.Employee, belongedId, loginResources, employee, employee.getId(), dispatchDriver.getRedstarSessionManager(), resp,userId);
+////            LogUtil.log("login", (String) null, "用户登陆", (OperationType) null, this.securityDriver.getOperationLogManager());
+//            this.trinityDriver.getBasicEmployeeManager().updateEmployeeActiveTime(employee.getId());
+//        }
+//    }
 
     private void _checkPhone(String phone) throws ManagerException {
         String regExp = "^[0-9]*$";

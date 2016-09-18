@@ -4,7 +4,7 @@
 <hibernate-mapping>
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarCommunity" table="xiwa_redstar_community" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarCommunity" table="xiwa_redstar_community" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -58,7 +58,7 @@
        <!-- <property name="distance"  type="double" />-->
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.RecommendCommunityObject" table="xiwa_redstar_community" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RecommendCommunityObject" table="xiwa_redstar_community" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -79,7 +79,7 @@
         <property name="createXingMing" type="string"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.DispatchRoomSelect" table="xiwa_dispatch_community_room" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.DispatchRoomSelect" table="xiwa_dispatch_community_room" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -98,7 +98,7 @@
         <property name="status" type="string"/>
     </class>
 
-    <class name="com.lanchui.commonBiz.bean.RedstarCommunityBuilding" table="xiwa_redstar_community_building" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarCommunityBuilding" table="xiwa_redstar_community_building" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -116,7 +116,7 @@
     </class>
 
 
-    <class name="com.lanchui.commonBiz.bean.RedstarCommunityUnit" table="xiwa_redstar_community_unit" lazy="false">
+    <class name="com.chinaredstar.commonBiz.bean.RedstarCommunityUnit" table="xiwa_redstar_community_unit" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>

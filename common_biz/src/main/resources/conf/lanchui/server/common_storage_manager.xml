@@ -15,7 +15,7 @@
     <!--</bean>-->
 
     <!--weixin storage manager-->
-    <bean id="cacheManager" class="com.lanchui.commonBiz.manager.ext.SimpleLocalCacheManager">
+    <bean id="cacheManager" class="com.chinaredstar.commonBiz.manager.ext.SimpleLocalCacheManager">
 
     </bean>
 </beans>

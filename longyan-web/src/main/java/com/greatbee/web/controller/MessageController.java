@@ -1,24 +1,19 @@
 package com.greatbee.web.controller;
 
 
-import com.greatbee.bean.ServiceConfig;
-import com.greatbee.util.HttpClientUtil;
-import com.lanchui.commonBiz.bean.RedstarEmployee;
-import com.lanchui.commonBiz.bean.constant.CommonBizConstant;
-import com.lanchui.commonBiz.manager.DispatchDriver;
+import com.chinaredstar.commonBiz.bean.RedstarEmployee;
+import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
+import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.redstar.sms.api.AppPushService;
-import com.xiwa.base.bean.Request;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.pipeline.PipelineContext;
 import com.xiwa.base.util.StringUtil;
 import com.xiwa.zeus.trinity.bean.Employee;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
