@@ -20,9 +20,6 @@
     <bean class="com.chinaredstar.longyan.service.ShoppingMallServiceImpl" id="shoppingMallService"/>
     <dubbo:service interface="com.chinaredstar.longyan.api.ShoppingMallService" ref="shoppingMallService" timeout="0" retries="0"/>
 
-    <bean class="com.chinaredstar.longyan.service.StoreServiceImpl" id="storeService"/>
-    <dubbo:service interface="com.chinaredstar.longyan.api.StoreService" ref="storeService" timeout="0" retries="0"/>
-
     <bean class="com.chinaredstar.longyan.service.ContactServiceImpl" id="contactService"/>
     <dubbo:service interface="com.chinaredstar.longyan.api.ContactService" ref="contactService" timeout="0" retries="0"/>
 
