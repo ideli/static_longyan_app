@@ -44,20 +44,10 @@
     <property name="dataSource" ref="defaultDataSource"/>
     <property name="mappingResources">
       <list>
-        <!--Base-->
-        <value>conf/base/db/Base.hbm.xml</value>
-        <!--Security-->
-        <value>conf/security/db/Security.hbm.xml</value>
-        <!--Zeus-->
-        <value>conf/zeus/db/Zeus.hbm.xml</value>
         <value>conf/zeus/db/Trinity.hbm.xml</value>
-
-        <value>conf/greatbee/db/Greatbee.hbm.xml</value>
-
         <value>conf/lanchui/db/common_biz_base.hbm.xml</value>
         <value>conf/lanchui/db/common_biz_community.hbm.xml</value>
         <value>conf/lanchui/db/common_biz_work.hbm.xml</value>
-        <!--<value>conf/lanchui/db/common_biz_report.hbm.xml</value>-->
       </list>
     </property>
     <property name="hibernateProperties">
