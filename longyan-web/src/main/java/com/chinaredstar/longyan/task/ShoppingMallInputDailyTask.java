@@ -3,7 +3,7 @@ package com.chinaredstar.longyan.task;
 import com.chinaredstar.commonBiz.bean.RedstarShoppingMall;
 import com.chinaredstar.commonBiz.bean.RedstarShoppingMallDayInput;
 import com.chinaredstar.commonBiz.bean.RedstarTaskLog;
-import com.greatbee.bean.constant.LanchuiConstant;
+import com.chinaredstar.longyan.bean.constant.LanchuiConstant;
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
 import com.chinaredstar.commonBiz.manager.RedstarTaskLogManager;

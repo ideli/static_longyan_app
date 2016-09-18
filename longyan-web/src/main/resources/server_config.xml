@@ -44,10 +44,9 @@
     <property name="dataSource" ref="defaultDataSource"/>
     <property name="mappingResources">
       <list>
-        <value>conf/zeus/db/Trinity.hbm.xml</value>
-        <value>conf/lanchui/db/common_biz_base.hbm.xml</value>
-        <value>conf/lanchui/db/common_biz_community.hbm.xml</value>
-        <value>conf/lanchui/db/common_biz_work.hbm.xml</value>
+        <value>conf/longyan/db/common_biz_base.hbm.xml</value>
+        <value>conf/longyan/db/common_biz_community.hbm.xml</value>
+        <value>conf/longyan/db/common_biz_work.hbm.xml</value>
       </list>
     </property>
     <property name="hibernateProperties">
@@ -87,7 +86,7 @@
     <property name="dataSource" ref="nvwaDataSource"/>
     <property name="mappingResources">
       <list>
-        <value>conf/lanchui/db/common_biz_nvwa.hbm.xml</value>
+        <value>conf/longyan/db/common_biz_nvwa.hbm.xml</value>
       </list>
     </property>
     <property name="hibernateProperties">

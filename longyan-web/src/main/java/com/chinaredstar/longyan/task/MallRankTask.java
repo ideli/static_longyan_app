@@ -2,7 +2,7 @@ package com.chinaredstar.longyan.task;
 
 import com.chinaredstar.commonBiz.bean.RedstarEmployee;
 import com.chinaredstar.commonBiz.bean.RedstarMallEmployee;
-import com.greatbee.bean.constant.LanchuiConstant;
+import com.chinaredstar.longyan.bean.constant.LanchuiConstant;
 import com.chinaredstar.commonBiz.bean.RedstarShoppingMall;
 import com.chinaredstar.commonBiz.bean.RedstarTaskLog;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;

@@ -1,6 +1,6 @@
 package com.chinaredstar.longyan.task;
 
-import com.greatbee.bean.constant.LanchuiConstant;
+import com.chinaredstar.longyan.bean.constant.LanchuiConstant;
 import com.chinaredstar.commonBiz.bean.RedstarCommunity;
 import com.chinaredstar.commonBiz.bean.RedstarMallCommunity;
 import com.chinaredstar.commonBiz.bean.RedstarShoppingMall;

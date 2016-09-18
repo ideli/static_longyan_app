@@ -10,14 +10,14 @@
     <import resource="classpath:server_config.xml"/>
 
 
-    <import resource="classpath:conf/greatbee/server/dispatch_manager.xml"/>
+    <import resource="classpath:conf/longyan/server/dispatch_manager.xml"/>
     <!-- <import resource="classpath:conf/greatbee/server/lanchui_event.xml"/>-->
     <!--quartz-->
     <!--  <import resource="classpath:conf/greatbee/server/lanchui_quartz.xml"/>-->
     <!--Common Biz Server-->
-    <import resource="classpath:conf/lanchui/server/common_biz_server.xml"/>
-    <import resource="classpath:conf/lanchui/server/common_storage_manager.xml"/>
-    <import resource="classpath:conf/lanchui/server/common_biz_nvwa_manager.xml"/>
+    <import resource="classpath:conf/longyan/server/common_biz_server.xml"/>
+    <import resource="classpath:conf/longyan/server/common_storage_manager.xml"/>
+    <import resource="classpath:conf/longyan/server/common_biz_nvwa_manager.xml"/>
 
 
     <!--dubbo配置-->
@@ -41,14 +41,10 @@
             </map>
         </constructor-arg>
     </bean>
-    <!--<bean id="serviceConfig" class="com.greatbee.bean.ServiceConfig">-->
-        <!--<property name="messageServiceAppUrl" value="${service.message.app.url}"/>-->
-    <!--</bean>-->
 
     <!-- 使用annotation 自动注册bean,并保证@Required,@Autowired的属性被注入 -->
-    <!--<context:component-scan base-package="com.xiwa"/>-->
     <context:component-scan base-package="com.chinaredstar"/>
-    <!--<context:component-scan base-package="com.lanchui"/>-->
+
     <context:annotation-config/>
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
@@ -71,57 +67,57 @@
       </bean>-->
 
 
-    <task:scheduled-tasks>
-        <!--列出商场周边小区Task-->
-        <task:scheduled ref="shopCommunityTask" method="getCommunity" cron="${mall_community_report}"/>
+    <!--<task:scheduled-tasks>-->
+        <!--&lt;!&ndash;列出商场周边小区Task&ndash;&gt;-->
+        <!--<task:scheduled ref="shopCommunityTask" method="getCommunity" cron="${mall_community_report}"/>-->
 
-        <!--员工录入月报-->
-        <task:scheduled ref="employeeInputTask" method="employeeMonthInput" cron="${employee_input_report}"/>
+        <!--&lt;!&ndash;员工录入月报&ndash;&gt;-->
+        <!--<task:scheduled ref="employeeInputTask" method="employeeMonthInput" cron="${employee_input_report}"/>-->
 
-        <!--员工排名计算-->
-        <task:scheduled ref="employeeRankTask" method="employeeRank" cron="${task_employee_rank_timer}"/>
+        <!--&lt;!&ndash;员工排名计算&ndash;&gt;-->
+        <!--<task:scheduled ref="employeeRankTask" method="employeeRank" cron="${task_employee_rank_timer}"/>-->
 
-        <!--商场排名-->
-        <task:scheduled ref="mallRankTask" method="mallRank" cron="${task_mall_rank_timer}"/>
+        <!--&lt;!&ndash;商场排名&ndash;&gt;-->
+        <!--<task:scheduled ref="mallRankTask" method="mallRank" cron="${task_mall_rank_timer}"/>-->
 
-        <!--大区数据统计-->
-        <task:scheduled ref="organizationInputTask" method="OrganizationInput" cron="${area_input_report}"/>
+        <!--&lt;!&ndash;大区数据统计&ndash;&gt;-->
+        <!--<task:scheduled ref="organizationInputTask" method="OrganizationInput" cron="${area_input_report}"/>-->
 
-        <!--集团录入情况-->
-        <task:scheduled ref="shoppingMallOrganizationTask" method="shoppingMallOrganization"
-                        cron="${task_shopping_mall_organization_timer}"/>
+        <!--&lt;!&ndash;集团录入情况&ndash;&gt;-->
+        <!--<task:scheduled ref="shoppingMallOrganizationTask" method="shoppingMallOrganization"-->
+                        <!--cron="${task_shopping_mall_organization_timer}"/>-->
 
-        <!--商场录入月报-->
-        <task:scheduled ref="shoppingMonthInputTask" method="mallMonthInput" cron="${mall_input_report}"/>
+        <!--&lt;!&ndash;商场录入月报&ndash;&gt;-->
+        <!--<task:scheduled ref="shoppingMonthInputTask" method="mallMonthInput" cron="${mall_input_report}"/>-->
 
-        <!--员工总数统计-->
-        <task:scheduled ref="employeeCountTask" method="countTask" cron="${task_employee_count_timer}"/>
+        <!--&lt;!&ndash;员工总数统计&ndash;&gt;-->
+        <!--<task:scheduled ref="employeeCountTask" method="countTask" cron="${task_employee_count_timer}"/>-->
 
-        <!--省数据-->
-        <task:scheduled ref="provinceInputTask" method="provinceInput" cron="${task_province_count_timer}"/>
-        <!--天数据-->
-        <task:scheduled ref="countryTask" method="countryTask" cron="${task_contry_daily_timer}"/>
+        <!--&lt;!&ndash;省数据&ndash;&gt;-->
+        <!--<task:scheduled ref="provinceInputTask" method="provinceInput" cron="${task_province_count_timer}"/>-->
+        <!--&lt;!&ndash;天数据&ndash;&gt;-->
+        <!--<task:scheduled ref="countryTask" method="countryTask" cron="${task_contry_daily_timer}"/>-->
 
-        <!--员工录入日报-->
-        <task:scheduled ref="employeeInputDailyTask" method="excute" cron="${task_employee_input_daily_report_timer}"/>
-        <!--商场录入日报-->
-        <task:scheduled ref="shoppingMallInputDailyTask" method="excute" cron="${task_mall_input_daily_report_timer}"/>
-        <!--组织录入日报-->
-        <task:scheduled ref="organizationInputDailyTask" method="excute"
-                        cron="${task_organization_input_daily_report_timer}"/>
+        <!--&lt;!&ndash;员工录入日报&ndash;&gt;-->
+        <!--<task:scheduled ref="employeeInputDailyTask" method="excute" cron="${task_employee_input_daily_report_timer}"/>-->
+        <!--&lt;!&ndash;商场录入日报&ndash;&gt;-->
+        <!--<task:scheduled ref="shoppingMallInputDailyTask" method="excute" cron="${task_mall_input_daily_report_timer}"/>-->
+        <!--&lt;!&ndash;组织录入日报&ndash;&gt;-->
+        <!--<task:scheduled ref="organizationInputDailyTask" method="excute"-->
+                        <!--cron="${task_organization_input_daily_report_timer}"/>-->
 
-        <!--计算龙榜排名-->
-        <task:scheduled ref="scoreLogTask" method="execute" cron="${task_score_log}"/>
+        <!--&lt;!&ndash;计算龙榜排名&ndash;&gt;-->
+        <!--<task:scheduled ref="scoreLogTask" method="execute" cron="${task_score_log}"/>-->
 
-        <task:scheduled ref="attendanceRecordStatusTask" method="execute" cron="${attendance_record_status_timer}"/>
+        <!--<task:scheduled ref="attendanceRecordStatusTask" method="execute" cron="${attendance_record_status_timer}"/>-->
 
-        <task:scheduled ref="departmentEmployeeTask" method="execute" cron="${department_employee_task}"/>
+        <!--<task:scheduled ref="departmentEmployeeTask" method="execute" cron="${department_employee_task}"/>-->
 
-        <!--<task:scheduled ref="storeInfoSync" method="execute" cron="${store_info_sync}"/>-->
+        <!--&lt;!&ndash;<task:scheduled ref="storeInfoSync" method="execute" cron="${store_info_sync}"/>&ndash;&gt;-->
 
-        <task:scheduled ref="departmentPeopleNumberTask" method="execute" cron="${people_number}"/>
+        <!--<task:scheduled ref="departmentPeopleNumberTask" method="execute" cron="${people_number}"/>-->
 
 
-    </task:scheduled-tasks>
+    <!--</task:scheduled-tasks>-->
 
 </beans>

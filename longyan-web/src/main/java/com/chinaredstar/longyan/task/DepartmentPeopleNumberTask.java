@@ -1,7 +1,7 @@
 package com.chinaredstar.longyan.task;
 
 import com.alibaba.dubbo.common.utils.StringUtils;
-import com.greatbee.bean.constant.LanchuiConstant;
+import com.chinaredstar.longyan.bean.constant.LanchuiConstant;
 import com.chinaredstar.commonBiz.bean.RedstarDepartment;
 import com.chinaredstar.commonBiz.bean.RedstarEmployee;
 import com.chinaredstar.commonBiz.bean.RedstarTaskLog;

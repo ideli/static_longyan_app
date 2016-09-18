@@ -1,8 +1,8 @@
 package com.chinaredstar.longyan.task;
 
-import com.greatbee.bean.constant.LanchuiConstant;
-import com.greatbee.util.HttpClientUtil;
-import com.greatbee.util.SpringUtil;
+import com.chinaredstar.longyan.bean.constant.LanchuiConstant;
+import com.chinaredstar.longyan.util.HttpClientUtil;
+import com.chinaredstar.longyan.util.SpringUtil;
 import com.chinaredstar.commonBiz.bean.RedstarDepartment;
 import com.chinaredstar.commonBiz.bean.RedstarEmployee;
 import com.chinaredstar.commonBiz.bean.RedstarTaskLog;

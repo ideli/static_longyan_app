@@ -1,7 +1,7 @@
 package com.chinaredstar.longyan.task;
 
 import com.chinaredstar.commonBiz.manager.*;
-import com.greatbee.bean.constant.LanchuiConstant;
+import com.chinaredstar.longyan.bean.constant.LanchuiConstant;
 import com.chinaredstar.commonBiz.bean.RedstarEmployeeDayInput;
 import com.chinaredstar.commonBiz.bean.RedstarEmployeeMonth;
 import com.chinaredstar.commonBiz.bean.RedstarTaskLog;
