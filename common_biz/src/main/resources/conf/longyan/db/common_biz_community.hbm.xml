@@ -79,24 +79,6 @@
         <property name="createXingMing" type="string"/>
     </class>
 
-    <class name="com.chinaredstar.commonBiz.bean.DispatchRoomSelect" table="xiwa_dispatch_community_room" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="merchantId" type="int"/>
-        <property name="merchantName" type="string"/>
-        <property name="communityId" type="int"/>
-        <property name="communityName" type="string"/>
-        <property name="gardenId" type="int"/>
-        <property name="gardenName" type="string"/>
-        <property name="buildingId" type="int"/>
-        <property name="buildingName" type="string"/>
-        <property name="unitId" type="int"/>
-        <property name="unitName" type="string"/>
-        <property name="room" type="string"/>
-        <property name="status" type="string"/>
-    </class>
 
     <class name="com.chinaredstar.commonBiz.bean.RedstarCommunityBuilding" table="xiwa_redstar_community_building" lazy="false">
         <id name="id" column="id">

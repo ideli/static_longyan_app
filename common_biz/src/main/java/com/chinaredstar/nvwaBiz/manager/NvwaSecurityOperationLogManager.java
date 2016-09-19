@@ -1,4 +1,4 @@
-package com.chinaredstar.commonBiz.manager;
+package com.chinaredstar.nvwaBiz.manager;
 
 import com.xiwa.base.bean.search.SearchBean;
 import com.xiwa.base.manager.BasicManager;
@@ -6,7 +6,7 @@ import com.xiwa.base.manager.BasicManager;
 /**
  * Created by lenovo on 2016/4/21.
  */
-public interface DispatchSecurityOperationLogManager extends BasicManager {
+public interface NvwaSecurityOperationLogManager extends BasicManager {
 
     public  Integer getCount(Class c,String _today,String compareColumn,SearchBean searchBean);
 

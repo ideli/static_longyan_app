@@ -1,9 +1,10 @@
 package com.chinaredstar.longyan.web.controller;
 
 
-import com.chinaredstar.commonBiz.bean.RedstarEmployee;
+import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;
+import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
 import com.redstar.sms.api.AppPushService;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.pipeline.PipelineContext;
@@ -25,6 +26,8 @@ public class MessageController extends BaseController implements CommonBizConsta
 
     @Autowired
     private DispatchDriver dispatchDriver;
+    @Autowired
+    private NvwaDriver nvwaDriver;
 
 
     @Autowired
@@ -51,7 +54,7 @@ public class MessageController extends BaseController implements CommonBizConsta
         }
         try {
             Employee employee = getEmployeeromSession();
-            RedstarEmployee extEmployee = (RedstarEmployee) dispatchDriver.getRedstarEmployeeManager().getBean(employee.getId());
+            NvwaEmployee extEmployee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());
             String employeeCode = extEmployee.getEmployeeCode();
 
 
@@ -90,7 +93,7 @@ public class MessageController extends BaseController implements CommonBizConsta
         }
         try {
             Employee employee = getEmployeeromSession();
-            RedstarEmployee extEmployee = (RedstarEmployee) dispatchDriver.getRedstarEmployeeManager().getBean(employee.getId());
+            NvwaEmployee extEmployee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());
             String employeeCode = extEmployee.getEmployeeCode();
 
             Map<String, Object> result = appPushService.destroyPush(AppCode, employeeCode, platformType);

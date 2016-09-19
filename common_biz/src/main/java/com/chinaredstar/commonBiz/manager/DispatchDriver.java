@@ -1,11 +1,13 @@
 package com.chinaredstar.commonBiz.manager;
 
+import com.chinaredstar.nvwaBiz.manager.NvwaSecurityOperationLogManager;
+import com.chinaredstar.nvwaBiz.manager.NvwaDepartmentManager;
+import com.chinaredstar.nvwaBiz.manager.NvwaEmployeeManager;
+
 /**
  * Created by usagizhang on 15-4-15.
  */
 public interface DispatchDriver {
-
-
 
     public DispatchCityManager getDispatchCityManager();
 
@@ -17,15 +19,7 @@ public interface DispatchDriver {
 
     public RedstarSessionManager getRedstarSessionManager();
 
-    public DispatchSecurityOperationLogManager getSecurityOperationLogManager();
-
     public RedstarMemberManager getRedStarMemberManager();
-
-    public RedstarEmployeeManager getRedstarEmployeeManager();
-
-    public RedstarDepartmentManager getRedstarDepartmentManager();
-
-    public RedstarVerifyCodeManager getRedstarVerifyCodeManager();
 
     public RedstarEmployeeMonthManager getRedstarEmployeeMonthManager();
 

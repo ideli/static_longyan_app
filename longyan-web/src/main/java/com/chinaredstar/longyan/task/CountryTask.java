@@ -6,6 +6,8 @@ import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
 import com.chinaredstar.commonBiz.manager.RedstarTaskLogManager;
+import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
+import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
 import com.xiwa.base.bean.search.ext.IntSearch;
 import com.xiwa.base.bean.search.ext.MultiSearchBean;
 import com.xiwa.base.manager.ManagerException;
@@ -33,6 +35,8 @@ public class CountryTask implements LanchuiConstant,CommonBizConstant {
 
     @Autowired
     private DispatchDriver dispatchDriver;
+    @Autowired
+    private NvwaDriver nvwaDriver;
 
     @Autowired
     private RedstarTaskLogManager redstarTaskLogManager;
@@ -82,7 +86,7 @@ public class CountryTask implements LanchuiConstant,CommonBizConstant {
         textSearch2.setSearchValue(ADD_OPERATION);
         communityCountSearch.addSearchBean(textSearch2);*/
 
-        Integer communityCount = dispatchDriver.getSecurityOperationLogManager().getCountryCount(RedstarCommunity.class, today, compareDate, null);
+        Integer communityCount = nvwaDriver.getNvwaSecurityOperationLogManager().getCountryCount(RedstarCommunity.class, today, compareDate, null);
 
 /*
         MultiSearchBean memberCountSearch = new MultiSearchBean();
@@ -92,18 +96,18 @@ public class CountryTask implements LanchuiConstant,CommonBizConstant {
         memberCountSearch.addSearchBean(belongedId);
         memberCountSearch.addSearchBean(textSearch2);*/
 
-        Integer memberCount = dispatchDriver.getSecurityOperationLogManager().getCountryCount(RedStarMember.class, today, compareDate, null);
+        Integer memberCount = nvwaDriver.getNvwaSecurityOperationLogManager().getCountryCount(RedStarMember.class, today, compareDate, null);
 
 
         // lastActiveTime
-        Integer activeUserCount = dispatchDriver.getSecurityOperationLogManager().getCount(RedstarEmployee.class, today, "lastActiveTime", belongedId);
+        Integer activeUserCount = nvwaDriver.getNvwaSecurityOperationLogManager().getCount(NvwaEmployee.class, today, "lastActiveTime", belongedId);
 
         //userCount  2015 05 23 add
-        Integer userCount = dispatchDriver.getSecurityOperationLogManager().getAllCount(SimpleAuthorized.class, belongedId);
+        Integer userCount = nvwaDriver.getNvwaSecurityOperationLogManager().getAllCount(SimpleAuthorized.class, belongedId);
 
         //查询昨天的统计结果
         //thisCalendar.add(Calendar.DATE, -1);
-        Integer beforeCount = dispatchDriver.getSecurityOperationLogManager().getLtSum(RedstarReportCountrywideDaily.class,today,compareDate,null);
+        Integer beforeCount = nvwaDriver.getNvwaSecurityOperationLogManager().getLtSum(RedstarReportCountrywideDaily.class,today,compareDate,null);
         //减去昨天的统计结果
         userCount -= beforeCount;
 

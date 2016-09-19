@@ -1,12 +1,13 @@
 package com.chinaredstar.longyan.task;
 
-import com.chinaredstar.commonBiz.bean.RedstarEmployee;
+import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.chinaredstar.commonBiz.bean.RedstarMallEmployee;
 import com.chinaredstar.longyan.bean.constant.LanchuiConstant;
 import com.chinaredstar.commonBiz.bean.RedstarShoppingMall;
 import com.chinaredstar.commonBiz.bean.RedstarTaskLog;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.commonBiz.manager.RedstarTaskLogManager;
+import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
 import com.xiwa.base.manager.ManagerException;
 import com.xiwa.base.util.CollectionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class MallRankTask implements LanchuiConstant {
 
     @Autowired
     private DispatchDriver dispatchDriver;
+    @Autowired
+    private NvwaDriver nvwaDriver;
 
     @Autowired
     private RedstarTaskLogManager redstarTaskLogManager;
@@ -62,7 +65,7 @@ public class MallRankTask implements LanchuiConstant {
                             for (RedstarMallEmployee mallEmployee : mallEmployeeList) {
                                 try {
                                     //列出该员工信息
-                                    RedstarEmployee employee = (RedstarEmployee) dispatchDriver.getRedstarEmployeeManager().getBean(mallEmployee.getEmployeeId());
+                                    NvwaEmployee employee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(mallEmployee.getEmployeeId());
                                     if (employee != null) {
                                         inputMemberAmount = inputMemberAmount + employee.getInputMemberAmount();
                                         inputCommunityAmount = inputCommunityAmount + employee.getInputCommunityAmount();

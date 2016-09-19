@@ -25,7 +25,7 @@
     <!--DispatchMerchantAuthorized-->
 
     <!--SecurityResourceManager-->
-    <bean id="securityResourceManager" class="com.chinaredstar.commonBiz.manager.ext.SimpleSecurityResourceManager"
+    <bean id="securityResourceManager" class="com.chinaredstar.nvwaBiz.manager.ext.SimpleNvwaSecurityResourceManager"
           parent="commonBizAbstractManager"/>
     <!--Employee-->
     <bean id="redstarCommunityManager"
@@ -39,7 +39,7 @@
           parent="commonBizAbstractManager"/>
 
     <bean id="dispatchSecurityOperationLogManager"
-          class="com.chinaredstar.commonBiz.manager.ext.SimpleDispatchSecurityOperationLogManager"
+          class="com.chinaredstar.nvwaBiz.manager.ext.SimpleNvwaSecurityOperationLogManager"
           parent="commonBizAbstractManager"/>
 
     <bean id="redstarMemberManager"
@@ -47,10 +47,10 @@
           parent="commonBizAbstractManager"/>
 
     <bean id="redstarEmployeeManager"
-          class="com.chinaredstar.commonBiz.manager.ext.SimpleRedStarEmployeeManager"
+          class="com.chinaredstar.nvwaBiz.manager.ext.SimpleNvwaEmployeeManager"
           parent="commonBizAbstractManager"/>
     <bean id="redstarDepartmentManager"
-          class="com.chinaredstar.commonBiz.manager.ext.SimpleRedstarDepartmentManager"
+          class="com.chinaredstar.nvwaBiz.manager.ext.SimpleNvwaDepartmentManager"
           parent="commonBizAbstractManager"/>
 
     <bean id="redstarVerifyCodeManager"
@@ -125,7 +125,7 @@
           parent="commonBizAbstractManager"/>
 
     <bean id="securityAuthorizedManager"
-          class="com.chinaredstar.commonBiz.manager.ext.SimpleSecurityAuthorizedManager"
+          class="com.chinaredstar.nvwaBiz.manager.ext.SimpleNvwaSecurityAuthorizedManager"
           parent="commonBizAbstractManager"/>
 
     <bean id="redstarCommunityUnitManager"

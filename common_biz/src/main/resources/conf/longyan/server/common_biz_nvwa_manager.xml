@@ -10,11 +10,23 @@
     </bean>
 
     <!--LG Abstract Manager-->
-    <!--<bean id="nvwaCommonBizAbstractManager" class="com.lanchui.commonBiz.manager.lg.LgAbstractManager" abstract="true">-->
-        <!--<property name="hibernateTemplate" ref="nvwaCommonBizHibernateTemplate"/>-->
-    <!--</bean>-->
+    <bean id="nvwaCommonBizAbstractManager" class="com.chinaredstar.nvwaBiz.manager.NvwaAbstractManager" abstract="true">
+        <property name="hibernateTemplate" ref="nvwaCommonBizHibernateTemplate"/>
+    </bean>
     <!--&lt;!&ndash;LG  Manager&ndash;&gt;-->
-    <!--<bean id="shopInfoManager" class="com.lanchui.commonBiz.manager.lg.SimpleShopInfoManager"-->
-          <!--parent="nvwaCommonBizAbstractManager">-->
-    <!--</bean>-->
+    <bean id="nvwaSecurityOperationLogManager" class="com.chinaredstar.nvwaBiz.manager.ext.SimpleNvwaSecurityOperationLogManager"
+          parent="nvwaCommonBizAbstractManager">
+    </bean>
+    <bean id="nvwaDepartmentManager" class="com.chinaredstar.nvwaBiz.manager.ext.SimpleNvwaDepartmentManager"
+          parent="nvwaCommonBizAbstractManager">
+    </bean>
+    <bean id="nvwaEmployeeManager" class="com.chinaredstar.nvwaBiz.manager.ext.SimpleNvwaEmployeeManager"
+          parent="nvwaCommonBizAbstractManager">
+    </bean>
+    <bean id="nvwaSecurityAuthorizedManager" class="com.chinaredstar.nvwaBiz.manager.ext.SimpleNvwaSecurityAuthorizedManager"
+          parent="nvwaCommonBizAbstractManager">
+    </bean>
+    <bean id="nvwaSecurityResourceManager" class="com.chinaredstar.nvwaBiz.manager.ext.SimpleNvwaSecurityResourceManager"
+          parent="nvwaCommonBizAbstractManager">
+    </bean>
   </beans>

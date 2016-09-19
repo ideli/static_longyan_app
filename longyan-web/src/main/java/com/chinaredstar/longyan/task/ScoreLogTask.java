@@ -5,6 +5,7 @@ import com.chinaredstar.longyan.bean.constant.LanchuiConstant;
 import com.chinaredstar.commonBiz.bean.RedstarEmployeeDayInput;
 import com.chinaredstar.commonBiz.bean.RedstarEmployeeMonth;
 import com.chinaredstar.commonBiz.bean.RedstarTaskLog;
+import com.chinaredstar.commonBiz.manager.RedstarEmployeeDayInputManager;
 import com.xiwa.base.manager.ManagerException;
 import com.xiwa.base.util.DataUtil;
 import org.joda.time.DateTime;

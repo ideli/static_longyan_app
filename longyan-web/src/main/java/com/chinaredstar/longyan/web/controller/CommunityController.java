@@ -15,6 +15,8 @@ import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
 import com.chinaredstar.commonBiz.manager.RedstarCommunityUnitManager;
 import com.chinaredstar.commonBiz.util.DoubleUtil;
+import com.chinaredstar.nvwaBiz.bean.NvwaSecurityOperationLog;
+import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
 import com.xiwa.base.bean.PaginationDescribe;
 import com.xiwa.base.bean.Request;
 import com.xiwa.base.bean.Response;
@@ -54,6 +56,8 @@ public class CommunityController extends BaseController implements CommonBizCons
     private DispatchDriver dispatchDriver;
 //    @Autowired
 //    protected SecurityDriver securityDriver;
+@Autowired
+private NvwaDriver nvwaDriver;
 
     @Autowired
     private RedstarCommonManager redstarCommonManager;
@@ -187,7 +191,7 @@ public class CommunityController extends BaseController implements CommonBizCons
             CommunityFormUtil.setHotline(request, community);
 
 
-            SecurityOperationLog securityOperationLog = new SecurityOperationLog();
+            NvwaSecurityOperationLog securityOperationLog = new NvwaSecurityOperationLog();
 
             if (employee != null) {
                 community.setCreateEmployeeId(employee.getId());
@@ -220,7 +224,7 @@ public class CommunityController extends BaseController implements CommonBizCons
             securityOperationLog.setOperationTypeField(ADD_OPERATION);
             securityOperationLog.setOperateResourceId(String.valueOf(dataId));
             securityOperationLog.setContent("添加小区");
-            dispatchDriver.getSecurityOperationLogManager().addBean(securityOperationLog);
+            nvwaDriver.getNvwaSecurityOperationLogManager().addBean(securityOperationLog);
             //添加积分
 
 
@@ -284,7 +288,7 @@ public class CommunityController extends BaseController implements CommonBizCons
             //物业电话
             CommunityFormUtil.setHotline(request, community);
 
-            SecurityOperationLog securityOperationLog = new SecurityOperationLog();
+            NvwaSecurityOperationLog securityOperationLog = new NvwaSecurityOperationLog();
             if (employee != null) {
                 securityOperationLog.setOperatorId(employee.getId());
                 securityOperationLog.setOperator(employee.getXingMing());
@@ -306,13 +310,13 @@ public class CommunityController extends BaseController implements CommonBizCons
                     community.setCreateDate(new Date());
                     securityOperationLog.setOperationTypeField(ADD_OPERATION);
                     securityOperationLog.setContent("添加小区");
-                    dispatchDriver.getSecurityOperationLogManager().addBean(securityOperationLog);
+                    nvwaDriver.getNvwaSecurityOperationLogManager().addBean(securityOperationLog);
                     //TODO:添加小区积分规则
 
                 } else {
                     securityOperationLog.setOperationTypeField(UPDATE_OPERATION);
                     securityOperationLog.setContent("更新小区");
-                    dispatchDriver.getSecurityOperationLogManager().addBean(securityOperationLog);
+                    nvwaDriver.getNvwaSecurityOperationLogManager().addBean(securityOperationLog);
                 }
                 community.setUpdateEmployeeId(employee.getId());
                 community.setUpdateEmployeeXingMing(employee.getXingMing());
@@ -690,7 +694,7 @@ public class CommunityController extends BaseController implements CommonBizCons
             }
 
             //记录日志
-            SecurityOperationLog securityOperationLog = new SecurityOperationLog();
+            NvwaSecurityOperationLog securityOperationLog = new NvwaSecurityOperationLog();
             securityOperationLog.setOperatorId(employee.getId());
             securityOperationLog.setOperator(employee.getXingMing());
             securityOperationLog.setOperateResource(Community_Operate_Resource);
@@ -700,7 +704,7 @@ public class CommunityController extends BaseController implements CommonBizCons
             //删除小区的id
             securityOperationLog.setOperateResourceId(String.valueOf(id));
             securityOperationLog.setContent("删除小区");
-            dispatchDriver.getSecurityOperationLogManager().addBean(securityOperationLog);
+            nvwaDriver.getNvwaSecurityOperationLogManager().addBean(securityOperationLog);
 
             res.setMessage("操作成功");
             res.setCode(HTTP_SUCCESS_CODE);

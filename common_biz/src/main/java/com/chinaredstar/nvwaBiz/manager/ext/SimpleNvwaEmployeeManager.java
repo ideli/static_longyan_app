@@ -1,8 +1,8 @@
-package com.chinaredstar.commonBiz.manager.ext;
+package com.chinaredstar.nvwaBiz.manager.ext;
 
-import com.chinaredstar.commonBiz.bean.RedstarRole;
-import com.chinaredstar.commonBiz.manager.RedstarEmployeeManager;
-import com.chinaredstar.commonBiz.bean.RedstarEmployee;
+import com.chinaredstar.nvwaBiz.bean.NvwaRole;
+import com.chinaredstar.nvwaBiz.manager.NvwaEmployeeManager;
+import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.xiwa.base.bean.search.SearchBean;
 import com.xiwa.base.bean.search.ext.TextSearch;
 import com.xiwa.base.manager.AbstractBasicManager;
@@ -27,17 +27,17 @@ import java.util.Map;
 /**
  * Created by lenovo on 2016/4/22.
  */
-public class SimpleRedStarEmployeeManager extends AbstractBasicManager implements RedstarEmployeeManager {
+public class SimpleNvwaEmployeeManager extends AbstractBasicManager implements NvwaEmployeeManager {
 
-    public SimpleRedStarEmployeeManager() {
-        super(RedstarEmployee.class);
+    public SimpleNvwaEmployeeManager() {
+        super(NvwaEmployee.class);
     }
 
     @Override
-    public RedstarEmployee getEmployeeByPhone(String phone) throws ManagerException {
+    public NvwaEmployee getEmployeeByPhone(String phone) throws ManagerException {
         TextSearch phoneSearch = new TextSearch("mobilePhone");
         phoneSearch.setSearchValue(phone);
-        List<RedstarEmployee> list = this.searchIdentify(phoneSearch);
+        List<NvwaEmployee> list = this.searchIdentify(phoneSearch);
         if (CollectionUtil.isValid(list)) {
             return list.get(0);
         }
@@ -46,7 +46,7 @@ public class SimpleRedStarEmployeeManager extends AbstractBasicManager implement
 
     @Override
     public boolean isRegister(String phone) throws ManagerException {
-        RedstarEmployee employee = this.getEmployeeByPhone(phone);
+        NvwaEmployee employee = this.getEmployeeByPhone(phone);
         if (employee != null) {
             //验证是否有账号
             TextSearch phoneSearch = new TextSearch("account");
@@ -117,8 +117,8 @@ public class SimpleRedStarEmployeeManager extends AbstractBasicManager implement
      * @return
      * @throws ManagerException
      */
-    public RedstarEmployee getEmployeeByCode(String code) throws ManagerException {
-        List<RedstarEmployee> list = this.getBeanListByColumn("employeeCode", code);
+    public NvwaEmployee getEmployeeByCode(String code) throws ManagerException {
+        List<NvwaEmployee> list = this.getBeanListByColumn("employeeCode", code);
         if (CollectionUtil.isValid(list)) {
             return list.get(0);
         }
@@ -126,7 +126,7 @@ public class SimpleRedStarEmployeeManager extends AbstractBasicManager implement
     }
 
     @Override
-    public List<RedstarRole> getRoleByEmployeeId(int employeeId) throws ManagerException {
+    public List<NvwaRole> getRoleByEmployeeId(int employeeId) throws ManagerException {
         //获取权限
         List<SimpleAuthorized> authorizedList = this.getIdentifyByColumn("objectId", employeeId, SimpleAuthorized.class);
         SimpleAuthorized authorized = null;
@@ -141,7 +141,7 @@ public class SimpleRedStarEmployeeManager extends AbstractBasicManager implement
 //            throw new ManagerException("没有角色权限");
             return null;
         }
-        List<RedstarRole> roleList = this.getIdentifyList(DataUtil.getIntArray(authorized.getRoles()), RedstarRole.class);
+        List<NvwaRole> roleList = this.getIdentifyList(DataUtil.getIntArray(authorized.getRoles()), NvwaRole.class);
 
 
 

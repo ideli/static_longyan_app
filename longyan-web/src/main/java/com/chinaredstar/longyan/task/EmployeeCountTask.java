@@ -4,6 +4,7 @@ import com.chinaredstar.longyan.bean.constant.LanchuiConstant;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
 import com.chinaredstar.commonBiz.manager.RedstarTaskLogManager;
+import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.xiwa.base.bean.search.ext.BooleanSearch;
 import com.xiwa.base.bean.search.ext.IntSearch;
 import com.xiwa.base.bean.search.ext.MultiSearchBean;
@@ -119,7 +120,7 @@ public class EmployeeCountTask implements LanchuiConstant {
         showDataSearch.setValue("1");
         multiSearchBean.addSearchBean(showDataSearch);
         //List<RedstarEmployee> empList = dispatchDriver.getRedstarEmployeeManager().searchIdentify(belongIdSearch);
-        List<RedstarEmployee> empList = redstarCommonManager.getDataList(RedstarEmployee.class,multiSearchBean);
+        List<NvwaEmployee> empList = redstarCommonManager.getDataList(NvwaEmployee.class,multiSearchBean);
         if(CollectionUtils.isEmpty(empList)){
             totalData.setEmployeeCount(0);
         }else{

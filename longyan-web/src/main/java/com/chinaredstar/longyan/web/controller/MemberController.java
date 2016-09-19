@@ -9,6 +9,8 @@ import com.chinaredstar.longyan.util.PageUtil;
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
+import com.chinaredstar.nvwaBiz.bean.NvwaSecurityOperationLog;
+import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
 import com.xiwa.base.bean.Request;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.bean.search.ext.IntSearch;
@@ -40,6 +42,8 @@ public class MemberController extends BaseController implements CommonBizConstan
 
     @Autowired
     private DispatchDriver dispatchDriver;
+    @Autowired
+    private NvwaDriver nvwaDriver;
     @Autowired
     private StorageConfig storageConfig;
     @Autowired
@@ -359,7 +363,7 @@ public class MemberController extends BaseController implements CommonBizConstan
 
 
             Employee employee = getEmployeeromSession();
-            SecurityOperationLog securityOperationLog = new SecurityOperationLog();
+            NvwaSecurityOperationLog securityOperationLog = new NvwaSecurityOperationLog();
             if (employee != null) {
                 member.setOwnerId(employee.getId());
                 member.setOwnerXingMing(employee.getXingMing());
@@ -385,7 +389,7 @@ public class MemberController extends BaseController implements CommonBizConstan
 
             community.setAlreadyInputAmount(community.getAlreadyInputAmount() == null ? 1 : community.getAlreadyInputAmount() + 1);
             dispatchDriver.getRedstarCommunityManager().updateBean(community);
-            dispatchDriver.getSecurityOperationLogManager().addBean(securityOperationLog);
+            nvwaDriver.getNvwaSecurityOperationLogManager().addBean(securityOperationLog);
             res.addKey("id", dataId);
             res.setMessage("操作成功");
             res.setCode(HTTP_SUCCESS_CODE);
@@ -511,7 +515,7 @@ public class MemberController extends BaseController implements CommonBizConstan
 
 
             Employee employee = getEmployeeromSession();
-            SecurityOperationLog securityOperationLog = new SecurityOperationLog();
+            NvwaSecurityOperationLog securityOperationLog = new NvwaSecurityOperationLog();
             if (employee != null) {
                 member.setUpdateEmployeeId(employee.getId());
                 member.setUpdateEmployeeXingMing(employee.getXingMing());
@@ -529,7 +533,7 @@ public class MemberController extends BaseController implements CommonBizConstan
             securityOperationLog.setOperationTypeField(UPDATE_OPERATION);
             securityOperationLog.setOperateResourceId(String.valueOf(dataId));
             securityOperationLog.setContent("更新住户");
-            dispatchDriver.getSecurityOperationLogManager().addBean(securityOperationLog);
+            nvwaDriver.getNvwaSecurityOperationLogManager().addBean(securityOperationLog);
             res.setMessage("操作成功");
             res.setCode(HTTP_SUCCESS_CODE);
         } catch (Exception e) {
@@ -639,7 +643,7 @@ public class MemberController extends BaseController implements CommonBizConstan
             }
 
             //记录日志
-            SecurityOperationLog securityOperationLog = new SecurityOperationLog();
+            NvwaSecurityOperationLog securityOperationLog = new NvwaSecurityOperationLog();
             securityOperationLog.setOperatorId(employee.getId());
             securityOperationLog.setOperator(employee.getXingMing());
             securityOperationLog.setOperateResource(Member_Operate_Resource);
@@ -649,7 +653,7 @@ public class MemberController extends BaseController implements CommonBizConstan
             //删除住户的id
             securityOperationLog.setOperateResourceId(String.valueOf(id));
             securityOperationLog.setContent("删除住户");
-            dispatchDriver.getSecurityOperationLogManager().addBean(securityOperationLog);
+            nvwaDriver.getNvwaSecurityOperationLogManager().addBean(securityOperationLog);
             res.setMessage("操作成功");
             res.setCode(HTTP_SUCCESS_CODE);
         } catch (Exception e) {

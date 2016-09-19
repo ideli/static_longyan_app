@@ -1,4 +1,4 @@
-package com.chinaredstar.commonBiz.bean;
+package com.chinaredstar.nvwaBiz.bean;
 
 import com.xiwa.base.bean.Identified;
 
@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by lenovo on 2016/4/22.
  */
-public class RedstarEmployee implements Identified {
+public class NvwaEmployee implements Identified {
 
     private int id;
 

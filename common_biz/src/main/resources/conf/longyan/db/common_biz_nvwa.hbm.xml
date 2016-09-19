@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.chinaredstar.commonBiz.bean.SecurityResource" table="xiwa_security_resource" lazy="false">
+    <class name="com.chinaredstar.nvwaBiz.bean.NvwaSecurityResource" table="xiwa_security_resource" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -30,42 +30,9 @@
     </class>
 
 
-    <class name="com.chinaredstar.commonBiz.bean.DispatchEmployee" table="xiwa_crm_employee" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="serialNumber" type="string"/>
-        <property name="belongedId" type="int"/>
-        <property name="showData" type="boolean"/>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="xingMing" type="string"/>
-        <property name="photos" type="string"/>
-        <property name="employeeStatusField" type="string"/>
-        <property name="remark" type="string"/>
-        <property name="gender" type="string"/>
-        <property name="lastActiveTime" type="java.util.Date"/>
-        <property name="skin" type="string"/>
-        <property name="email" type="string"/>
-        <property name="head" type="string"/>
-        <property name="duty" type="string"/>
-        <property name="englishName" type="string"/>
-        <property name="mobilePhone" type="string"/>
-        <property name="fixedPhone" type="string"/>
-        <property name="birthday" type="java.util.Date"/>
-        <property name="tags" type="string"/>
-        <property name="lang" type="string"/>
-        <property name="integral" type="int"/>
-        <property name="sale" type="boolean"/>
-        <property name="zoneCode" type="string"/>
-        <property name="zipCode" type="string"/>
-        <property name="backupEmployeeSerialNumber" type="string"/>
-        <property name="deviceType" type="string"/>
-        <property name="deviceToken" type="string"/>
-        <property name="updateDate" type="java.util.Date"/>
-        <property name="address" type="string"/>
-    </class>
 
-    <class name="com.chinaredstar.commonBiz.bean.SecurityOperationLog" table="xiwa_security_operation_log" lazy="false">
+
+    <class name="com.chinaredstar.nvwaBiz.bean.NvwaSecurityOperationLog" table="xiwa_security_operation_log" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -80,7 +47,7 @@
         <property name="createDate" type="java.util.Date"/>
     </class>
 
-    <class name="com.chinaredstar.commonBiz.bean.RedstarEmployee" table="xiwa_crm_employee" lazy="false">
+    <class name="com.chinaredstar.nvwaBiz.bean.NvwaEmployee" table="xiwa_crm_employee" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -130,7 +97,7 @@
 
 
 
-    <class name="com.chinaredstar.commonBiz.bean.RedstarDepartment" table="xiwa_crm_department" lazy="false">
+    <class name="com.chinaredstar.nvwaBiz.bean.NvwaDepartment" table="xiwa_crm_department" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -151,7 +118,7 @@
 
     </class>
 
-    <class name="com.chinaredstar.commonBiz.bean.RedstarRole" table="xiwa_security_role" lazy="false">
+    <class name="com.chinaredstar.nvwaBiz.bean.NvwaRole" table="xiwa_security_role" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>
@@ -161,7 +128,7 @@
 
     </class>
 
-    <class name="com.chinaredstar.commonBiz.bean.SecurityAuthorized" table="xiwa_security_authorized" lazy="false">
+    <class name="com.chinaredstar.nvwaBiz.bean.NvwaSecurityAuthorized" table="xiwa_security_authorized" lazy="false">
         <id name="id" column="id">
             <generator class="identity"/>
         </id>

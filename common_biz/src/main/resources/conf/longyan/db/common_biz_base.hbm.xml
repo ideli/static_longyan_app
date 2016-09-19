@@ -37,17 +37,6 @@
     </class>
 
 
-    <class name="com.chinaredstar.commonBiz.bean.DispatchValidateCode" table="xiwa_dispatch_validate_code" lazy="false">
-        <id name="id" column="id">
-            <generator class="identity"/>
-        </id>
-        <property name="phone" type="string"/>
-        <property name="validateCode" type="string"/>
-        <property name="valideDate" type="java.util.Date"/>
-        <property name="createDate" type="java.util.Date"/>
-        <property name="expired" type="boolean"/>
-    </class>
-
 
     <class name="com.chinaredstar.commonBiz.bean.DispatchProvince" table="xiwa_dispatch_province" lazy="false">
         <id name="id" column="id">

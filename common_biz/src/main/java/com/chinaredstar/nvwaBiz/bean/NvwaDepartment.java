@@ -1,4 +1,4 @@
-package com.chinaredstar.commonBiz.bean;
+package com.chinaredstar.nvwaBiz.bean;
 
 import com.xiwa.base.bean.Identified;
 
@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by usagizhang on 16-5-2.
  */
-public class RedstarDepartment implements Identified {
+public class NvwaDepartment implements Identified {
     private int id;
 
     private String name;//  名称

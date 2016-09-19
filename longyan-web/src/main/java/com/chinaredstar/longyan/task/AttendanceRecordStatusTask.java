@@ -2,7 +2,7 @@ package com.chinaredstar.longyan.task;
 
 import com.chinaredstar.longyan.bean.constant.LanchuiConstant;
 import com.chinaredstar.longyan.util.DayDataSearchUtil;
-import com.chinaredstar.commonBiz.bean.RedstarEmployee;
+import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.chinaredstar.commonBiz.bean.RedstarTaskLog;
 import com.chinaredstar.commonBiz.bean.work.RedstarAttendanceCheckpoint;
 import com.chinaredstar.commonBiz.bean.work.RedstarAttendanceDepartment;
@@ -81,9 +81,9 @@ public class AttendanceRecordStatusTask  implements LanchuiConstant{
                 userSearch.addSearchBean(belongSearch);
                 userSearch.addSearchBean(booleanSearch);
 
-                List<RedstarEmployee> employeeList = redstarCommonManager.getDataList(RedstarEmployee.class,userSearch);
+                List<NvwaEmployee> employeeList = redstarCommonManager.getDataList(NvwaEmployee.class,userSearch);
                 //所有用户
-                for (RedstarEmployee redstarEmployee :employeeList){
+                for (NvwaEmployee redstarEmployee :employeeList){
 
                     String departmentCode =redstarEmployee.getDepartmentCode();
 

@@ -1,7 +1,7 @@
-package com.chinaredstar.commonBiz.manager.ext;
+package com.chinaredstar.nvwaBiz.manager.ext;
 
-import com.chinaredstar.commonBiz.bean.SecurityAuthorized;
-import com.chinaredstar.commonBiz.manager.SecurityAuthorizedManager;
+import com.chinaredstar.nvwaBiz.bean.NvwaSecurityAuthorized;
+import com.chinaredstar.nvwaBiz.manager.NvwaSecurityAuthorizedManager;
 import com.xiwa.base.manager.AbstractBasicManager;
 import com.xiwa.base.util.StringUtil;
 import org.hibernate.Query;
@@ -10,9 +10,9 @@ import org.hibernate.Session;
 /**
  * Created by mdc on 2016/7/13.
  */
-public class SimpleSecurityAuthorizedManager extends AbstractBasicManager implements SecurityAuthorizedManager {
-    public SimpleSecurityAuthorizedManager() {
-        super(SecurityAuthorized.class);
+public class SimpleNvwaSecurityAuthorizedManager extends AbstractBasicManager implements NvwaSecurityAuthorizedManager {
+    public SimpleNvwaSecurityAuthorizedManager() {
+        super(NvwaSecurityAuthorized.class);
     }
 
     @Override

@@ -2,12 +2,12 @@ package com.chinaredstar.longyan.task;
 
 import com.alibaba.dubbo.common.utils.StringUtils;
 import com.chinaredstar.longyan.bean.constant.LanchuiConstant;
-import com.chinaredstar.commonBiz.bean.RedstarDepartment;
-import com.chinaredstar.commonBiz.bean.RedstarEmployee;
+import com.chinaredstar.nvwaBiz.bean.NvwaDepartment;
+import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.chinaredstar.commonBiz.bean.RedstarTaskLog;
 import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
-import com.chinaredstar.commonBiz.manager.RedstarDepartmentManager;
-import com.chinaredstar.commonBiz.manager.RedstarEmployeeManager;
+import com.chinaredstar.nvwaBiz.manager.NvwaDepartmentManager;
+import com.chinaredstar.nvwaBiz.manager.NvwaEmployeeManager;
 import com.chinaredstar.commonBiz.manager.RedstarTaskLogManager;
 import com.xiwa.base.bean.search.ext.MultiSearchBean;
 import com.xiwa.base.bean.search.ext.TextSearch;
@@ -27,10 +27,10 @@ import java.util.List;
 public class DepartmentPeopleNumberTask implements LanchuiConstant {
 
     @Autowired
-    private RedstarDepartmentManager redstarDepartmentManager;
+    private NvwaDepartmentManager redstarDepartmentManager;
 
     @Autowired
-    private RedstarEmployeeManager redstarEmployeeManager;
+    private NvwaEmployeeManager redstarEmployeeManager;
 
 
     @Autowired
@@ -49,8 +49,8 @@ public class DepartmentPeopleNumberTask implements LanchuiConstant {
 
         try {
             HashMap<String, Integer> empMap = new HashMap<String, Integer>();
-            List<RedstarDepartment> departments = redstarDepartmentManager.getBeanList();
-            for (RedstarDepartment department : departments) {
+            List<NvwaDepartment> departments = redstarDepartmentManager.getBeanList();
+            for (NvwaDepartment department : departments) {
                 if (!StringUtils.isEmpty(department.getDepartmentCode())) {
                     MultiSearchBean multiSearchBean = new MultiSearchBean();
                     TextSearch codeSearch = new TextSearch("departmentCode");
@@ -59,7 +59,7 @@ public class DepartmentPeopleNumberTask implements LanchuiConstant {
                     hrStatus.setSearchValue("A");
                     multiSearchBean.addSearchBean(codeSearch);
                     multiSearchBean.addSearchBean(hrStatus);
-                    List<RedstarEmployee> employees = redstarEmployeeManager.searchIdentify(multiSearchBean);
+                    List<NvwaEmployee> employees = redstarEmployeeManager.searchIdentify(multiSearchBean);
                     if (empMap.containsKey(department.getDepartmentCode())) {
                         Integer count = empMap.get(department.getDepartmentCode());
                         empMap.put(department.getDepartmentCode(), employees.size() + count);
@@ -77,41 +77,41 @@ public class DepartmentPeopleNumberTask implements LanchuiConstant {
                 }
             }
             List<Object> updateDepts = new ArrayList<Object>();
-            for (RedstarDepartment updateDept : departments) {
+            for (NvwaDepartment updateDept : departments) {
                 if (empMap.containsKey(updateDept.getDepartmentCode())) {
                     updateDept.setPeopleNumber(empMap.get(updateDept.getDepartmentCode()));
                 }
                 updateDepts.add(updateDept);
             }
-            redstarCommonManager.batchUpdateIdentified(RedstarDepartment.class, updateDepts);
+            redstarCommonManager.batchUpdateIdentified(NvwaDepartment.class, updateDepts);
             updateDepts = new ArrayList<Object>();
-            List<RedstarDepartment> zeroDepts = redstarDepartmentManager.getBeanListByColumn("peopleNumber",0);
-            List<RedstarDepartment> suDepts = redstarDepartmentManager.getBeanListByColumn("departmentParentCode","");
-            for (RedstarDepartment zeroDept : zeroDepts){
+            List<NvwaDepartment> zeroDepts = redstarDepartmentManager.getBeanListByColumn("peopleNumber",0);
+            List<NvwaDepartment> suDepts = redstarDepartmentManager.getBeanListByColumn("departmentParentCode","");
+            for (NvwaDepartment zeroDept : zeroDepts){
                 if(!StringUtils.isEmpty(zeroDept.getDepartmentCode())) {
-                    List<RedstarDepartment> suns = redstarDepartmentManager.getBeanListByColumn("departmentParentCode", zeroDept.getDepartmentCode());
+                    List<NvwaDepartment> suns = redstarDepartmentManager.getBeanListByColumn("departmentParentCode", zeroDept.getDepartmentCode());
                     int sum = zeroDept.getPeopleNumber();
-                    for (RedstarDepartment sun : suns) {
+                    for (NvwaDepartment sun : suns) {
                         sum += sun.getPeopleNumber();
                     }
                     zeroDept.setPeopleNumber(sum);
                     updateDepts.add(zeroDept);
                 }
             }
-            redstarCommonManager.batchUpdateIdentified(RedstarDepartment.class, updateDepts);
+            redstarCommonManager.batchUpdateIdentified(NvwaDepartment.class, updateDepts);
             updateDepts = new ArrayList<Object>();
-            for (RedstarDepartment zeroDept : suDepts){
+            for (NvwaDepartment zeroDept : suDepts){
                 if(!StringUtils.isEmpty(zeroDept.getDepartmentCode())) {
-                    List<RedstarDepartment> suns = redstarDepartmentManager.getBeanListByColumn("departmentParentCode", zeroDept.getDepartmentCode());
+                    List<NvwaDepartment> suns = redstarDepartmentManager.getBeanListByColumn("departmentParentCode", zeroDept.getDepartmentCode());
                     int sum = 0;
-                    for (RedstarDepartment sun : suns) {
+                    for (NvwaDepartment sun : suns) {
                         sum += sun.getPeopleNumber();
                     }
                     zeroDept.setPeopleNumber(sum);
                     updateDepts.add(zeroDept);
                 }
             }
-            redstarCommonManager.batchUpdateIdentified(RedstarDepartment.class, updateDepts);
+            redstarCommonManager.batchUpdateIdentified(NvwaDepartment.class, updateDepts);
         } catch (ManagerException e) {
             e.printStackTrace();
         }

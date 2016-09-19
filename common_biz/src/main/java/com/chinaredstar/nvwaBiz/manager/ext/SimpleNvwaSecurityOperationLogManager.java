@@ -1,8 +1,8 @@
-package com.chinaredstar.commonBiz.manager.ext;
+package com.chinaredstar.nvwaBiz.manager.ext;
 
 
-import com.chinaredstar.commonBiz.manager.DispatchSecurityOperationLogManager;
-import com.chinaredstar.commonBiz.bean.SecurityOperationLog;
+import com.chinaredstar.nvwaBiz.manager.NvwaSecurityOperationLogManager;
+import com.chinaredstar.nvwaBiz.bean.NvwaSecurityOperationLog;
 import com.xiwa.base.bean.search.SearchBean;
 import com.xiwa.base.manager.AbstractBasicManager;
 import org.hibernate.Criteria;
@@ -15,9 +15,9 @@ import java.text.SimpleDateFormat;
 /**
  * Created by lenovo on 2016/4/21.
  */
-public class SimpleDispatchSecurityOperationLogManager extends AbstractBasicManager implements DispatchSecurityOperationLogManager {
-    public SimpleDispatchSecurityOperationLogManager() {
-        super(SecurityOperationLog.class);
+public class SimpleNvwaSecurityOperationLogManager extends AbstractBasicManager implements NvwaSecurityOperationLogManager {
+    public SimpleNvwaSecurityOperationLogManager() {
+        super(NvwaSecurityOperationLog.class);
     }
 
     @Override

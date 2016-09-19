@@ -7,6 +7,9 @@ import com.chinaredstar.longyan.util.ReadExcelUtil;
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
+import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
+import com.chinaredstar.nvwaBiz.bean.NvwaSecurityOperationLog;
+import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
 import com.xiwa.base.bean.Request;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.bean.search.ext.IntSearch;
@@ -36,6 +39,8 @@ public class ImportController extends BaseController implements CommonBizConstan
     @Autowired
     DispatchDriver dispatchDriver;
     @Autowired
+    NvwaDriver nvwaDriver;
+    @Autowired
     RedstarCommonManager redstarCommonManager;
 
     @Autowired
@@ -50,10 +55,10 @@ public class ImportController extends BaseController implements CommonBizConstan
         Response res = context.getResponse();
 
         Employee employee = null;
-        RedstarEmployee currentEmployee = null;
+        NvwaEmployee currentEmployee = null;
         try {
             employee = getEmployeeromSession();
-            currentEmployee = (RedstarEmployee) dispatchDriver.getRedstarEmployeeManager().getBean(employee.getId());
+            currentEmployee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());
         } catch (ManagerException e) {
             e.printStackTrace();
         }
@@ -146,7 +151,7 @@ public class ImportController extends BaseController implements CommonBizConstan
             TextSearch areaCodeSearch;
             TextSearch nameSearch;
             TextSearch userCodeSearch;
-            SecurityOperationLog securityOperationLog;
+            NvwaSecurityOperationLog securityOperationLog;
             //List<RedstarCommunity> valDataList = new LinkedList<RedstarCommunity>();
 
             for (int index = 1; index < _thisDataList.size(); index++) {
@@ -366,14 +371,14 @@ public class ImportController extends BaseController implements CommonBizConstan
                     userCodeSearch = new TextSearch("employeeCode");
                     userCodeSearch.setSearchValue(userCode.replace(".0", "").trim());
 
-                    List<RedstarEmployee> employeeList = dispatchDriver.getRedstarEmployeeManager().searchIdentify(userCodeSearch);
+                    List<NvwaEmployee> employeeList = nvwaDriver.getNvwaEmployeeManager().searchIdentify(userCodeSearch);
                     //验证用户是否存在
                     if (CollectionUtils.isEmpty(employeeList)) {
                         errorList.add("第" + tipIndex + "行 员工编号不存在");
                         continue;
                     }
 
-                    RedstarEmployee redstarEmployee = employeeList.get(0);
+                    NvwaEmployee redstarEmployee = employeeList.get(0);
                     redstarCommunity.setOwnerXingMing(redstarEmployee.getXingMing());
                     redstarCommunity.setOwnerId(redstarEmployee.getId());
 
@@ -402,7 +407,7 @@ public class ImportController extends BaseController implements CommonBizConstan
                     }
                     successCount += 1;
                     //操作日志
-                    securityOperationLog = new SecurityOperationLog();
+                    securityOperationLog = new NvwaSecurityOperationLog();
                     securityOperationLog.setOperatorId(employee.getId());
                     securityOperationLog.setOperator(employee.getXingMing());
                     securityOperationLog.setOperateResource(Community_Operate_Resource);
@@ -411,7 +416,7 @@ public class ImportController extends BaseController implements CommonBizConstan
                     securityOperationLog.setOperationTypeField(ADD_OPERATION);
                     securityOperationLog.setOperateResourceId(String.valueOf(dataId));
                     securityOperationLog.setContent("添加小区");
-                    dispatchDriver.getSecurityOperationLogManager().addBean(securityOperationLog);
+                    nvwaDriver.getNvwaSecurityOperationLogManager().addBean(securityOperationLog);
                 }
             }
 
@@ -440,7 +445,7 @@ public class ImportController extends BaseController implements CommonBizConstan
         Response res = context.getResponse();
 
         Employee employee = getEmployeeromSession();
-        RedstarEmployee currentEmployee = (RedstarEmployee) dispatchDriver.getRedstarEmployeeManager().getBean(employee.getId());
+        NvwaEmployee currentEmployee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());
 
         if (null == currentEmployee) {
             setErrMsg(res, "当前不存在登录用户");
@@ -522,7 +527,7 @@ public class ImportController extends BaseController implements CommonBizConstan
             TextSearch roomSearch;
             TextSearch unitSearch;
 
-            SecurityOperationLog securityOperationLog;
+            NvwaSecurityOperationLog securityOperationLog;
 
             //住宅缓存
             Map<String, Integer> memberCacheMap = null;
@@ -826,7 +831,7 @@ public class ImportController extends BaseController implements CommonBizConstan
 
 
                     //操作日志
-                    securityOperationLog = new SecurityOperationLog();
+                    securityOperationLog = new NvwaSecurityOperationLog();
                     securityOperationLog.setOperatorId(employee.getId());
                     securityOperationLog.setOperator(employee.getXingMing());
                     securityOperationLog.setOperateResource(Member_Operate_Resource);
@@ -835,7 +840,7 @@ public class ImportController extends BaseController implements CommonBizConstan
                     securityOperationLog.setOperationTypeField(ADD_OPERATION);
                     securityOperationLog.setOperateResourceId(String.valueOf(dataId));
                     securityOperationLog.setContent("添加住户");
-                    dispatchDriver.getSecurityOperationLogManager().addBean(securityOperationLog);
+                    nvwaDriver.getNvwaSecurityOperationLogManager().addBean(securityOperationLog);
                 }
 
             }
@@ -847,7 +852,7 @@ public class ImportController extends BaseController implements CommonBizConstan
                 idSearch.setSearchValue(String.valueOf(community.getId()));
                 //List<RedStarMember> memberList = dispatchDriver.getRedStarMemberManager().searchIdentify(idSearch);
                 //根据小区id查询录入户数总数
-                Integer currentMemberCount = dispatchDriver.getSecurityOperationLogManager().getAllCount(RedStarMember.class, idSearch);
+                Integer currentMemberCount = nvwaDriver.getNvwaSecurityOperationLogManager().getAllCount(RedStarMember.class, idSearch);
                 community.setAlreadyInputAmount(currentMemberCount);
                 //已录入户数大于总户数时更新总户数
                 if (currentMemberCount > (community.getRoomMount() == null ? 0 : community.getRoomMount())) {

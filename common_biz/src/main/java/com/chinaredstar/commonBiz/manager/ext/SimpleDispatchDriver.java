@@ -1,6 +1,9 @@
 package com.chinaredstar.commonBiz.manager.ext;
 
 import com.chinaredstar.commonBiz.manager.*;
+import com.chinaredstar.nvwaBiz.manager.NvwaSecurityOperationLogManager;
+import com.chinaredstar.nvwaBiz.manager.NvwaDepartmentManager;
+import com.chinaredstar.nvwaBiz.manager.NvwaEmployeeManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,14 +25,6 @@ public class SimpleDispatchDriver implements DispatchDriver {
 
     @Autowired
     private RedstarMemberManager redstarMemberManager;
-
-    @Autowired
-    private DispatchSecurityOperationLogManager dispatchSecurityOperationLogManager;
-
-    @Autowired
-    private RedstarEmployeeManager redstarEmployeeManager;
-    @Autowired
-    private RedstarDepartmentManager redstarDepartmentManager;
 
     @Autowired
     private RedstarVerifyCodeManager redstarVerifyCodeManager;
@@ -87,30 +82,21 @@ public class SimpleDispatchDriver implements DispatchDriver {
         return redstarSessionManager;
     }
 
-    @Override
-    public DispatchSecurityOperationLogManager getSecurityOperationLogManager() {
-        return dispatchSecurityOperationLogManager;
-    }
+
 
     @Override
     public RedstarMemberManager getRedStarMemberManager() {
         return redstarMemberManager;
     }
 
-    @Override
-    public RedstarEmployeeManager getRedstarEmployeeManager() {
-        return redstarEmployeeManager;
-    }
+
 
     @Override
     public RedstarCommunityManager getRedstarCommunityManager() {
         return redstarCommunityManager;
     }
 
-    @Override
-    public RedstarVerifyCodeManager getRedstarVerifyCodeManager() {
-        return redstarVerifyCodeManager;
-    }
+
 
     @Override
     public RedstarEmployeeMonthManager getRedstarEmployeeMonthManager() {
@@ -130,11 +116,6 @@ public class SimpleDispatchDriver implements DispatchDriver {
     @Override
     public RedstarShopMallOrganizationManager getRedstarShopMallOrganizationManager() {
         return redstarShopMallOrganizationManager;
-    }
-
-    @Override
-    public RedstarDepartmentManager getRedstarDepartmentManager() {
-        return redstarDepartmentManager;
     }
 
     @Override

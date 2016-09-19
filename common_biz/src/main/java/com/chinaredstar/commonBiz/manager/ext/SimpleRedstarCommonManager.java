@@ -1,6 +1,6 @@
 package com.chinaredstar.commonBiz.manager.ext;
 
-import com.chinaredstar.commonBiz.bean.RedstarEmployee;
+import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.chinaredstar.commonBiz.bean.RedstarReportCountrywideDaily;
 import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
 import com.xiwa.base.bean.Identified;
@@ -175,7 +175,7 @@ public class SimpleRedstarCommonManager extends AbstractBasicManager implements 
         int result = 0;
         Session session = getSession();
         try {
-            Criteria criteria = session.createCriteria(RedstarEmployee.class);
+            Criteria criteria = session.createCriteria(NvwaEmployee.class);
 
             String column = "lastActiveTime";
 

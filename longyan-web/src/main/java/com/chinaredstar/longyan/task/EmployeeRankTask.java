@@ -1,10 +1,11 @@
 package com.chinaredstar.longyan.task;
 
 import com.chinaredstar.longyan.bean.constant.LanchuiConstant;
-import com.chinaredstar.commonBiz.bean.RedstarEmployee;
+import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.chinaredstar.commonBiz.bean.RedstarTaskLog;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.commonBiz.manager.RedstarTaskLogManager;
+import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +27,8 @@ public class EmployeeRankTask implements LanchuiConstant {
 
     @Autowired
     private DispatchDriver dispatchDriver;
-
+    @Autowired
+    private NvwaDriver nvwaDriver;
 
 
 
@@ -45,14 +47,14 @@ public class EmployeeRankTask implements LanchuiConstant {
             redstarTaskLogManager.addBean(redstarTaskLog);
 
             //查询所有员工根据录入住户总数倒序
-            List<RedstarEmployee> employeeMemberList = dispatchDriver.getRedstarEmployeeManager().getBeanList("inputMemberAmount", false);
+            List<NvwaEmployee> employeeMemberList = nvwaDriver.getNvwaEmployeeManager().getBeanList("inputMemberAmount", false);
             //排名结果插入到表中
             int i = 0;
             if (employeeMemberList.size() > 0) {
-                for (RedstarEmployee employee : employeeMemberList) {
+                for (NvwaEmployee employee : employeeMemberList) {
                     try {
                         employee.setInputMemberAmountRank(i);
-                        dispatchDriver.getRedstarEmployeeManager().updateBean(employee);
+                        nvwaDriver.getNvwaEmployeeManager().updateBean(employee);
                     } catch (Exception e) {
                         e.printStackTrace();
                     } finally {
@@ -61,14 +63,14 @@ public class EmployeeRankTask implements LanchuiConstant {
                 }
             }
             //查询所有员工根据录入小区总数倒序
-            List<RedstarEmployee> employeeCommunityList = dispatchDriver.getRedstarEmployeeManager().getBeanList("inputCommunityAmount", false);
+            List<NvwaEmployee> employeeCommunityList = nvwaDriver.getNvwaEmployeeManager().getBeanList("inputCommunityAmount", false);
             //排名结果插入到表中
             int a = 0;
             if (employeeCommunityList.size() > 0) {
-                for (RedstarEmployee employe : employeeCommunityList) {
+                for (NvwaEmployee employe : employeeCommunityList) {
                     try {
                         employe.setInputCommunityAmountRank(a);
-                        dispatchDriver.getRedstarEmployeeManager().updateBean(employe);
+                        nvwaDriver.getNvwaEmployeeManager().updateBean(employe);
                     } catch (Exception e) {
                         e.printStackTrace();
                     } finally {

@@ -1,4 +1,4 @@
-package com.chinaredstar.commonBiz.bean;
+package com.chinaredstar.nvwaBiz.bean;
 
 import com.xiwa.base.bean.Identified;
 
@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by lenovo on 2016/4/21.
  */
-public class SecurityOperationLog implements Identified {
+public class NvwaSecurityOperationLog implements Identified {
 
 /*
     `id` int(11) NOT NULL AUTO_INCREMENT,

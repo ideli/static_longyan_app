@@ -1,11 +1,11 @@
-package com.chinaredstar.commonBiz.bean;
+package com.chinaredstar.nvwaBiz.bean;
 
 import com.xiwa.base.bean.Identified;
 
 /**
  * Created by usagizhang on 16-5-3.
  */
-public class RedstarRole implements Identified{
+public class NvwaRole implements Identified{
     private int id;
 
     private String name;//    姓名

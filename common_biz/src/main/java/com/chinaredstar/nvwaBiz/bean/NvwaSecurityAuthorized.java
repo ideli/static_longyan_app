@@ -1,11 +1,11 @@
-package com.chinaredstar.commonBiz.bean;
+package com.chinaredstar.nvwaBiz.bean;
 
 import com.xiwa.base.bean.Identified;
 
 /**
  * Created by mdc on 2016/7/13.
  */
-public class SecurityAuthorized implements Identified {
+public class NvwaSecurityAuthorized implements Identified {
 
     private int id;
 

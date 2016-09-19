@@ -1,12 +1,13 @@
 package com.chinaredstar.longyan.task;
 
-import com.chinaredstar.commonBiz.bean.RedstarEmployee;
+import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.chinaredstar.commonBiz.bean.RedstarEmployeeMonth;
 import com.chinaredstar.commonBiz.bean.RedstarTaskLog;
 import com.chinaredstar.longyan.bean.constant.LanchuiConstant;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
 import com.chinaredstar.commonBiz.manager.RedstarTaskLogManager;
+import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
 import com.xiwa.base.bean.search.ext.IntSearch;
 import com.xiwa.base.bean.search.ext.MultiSearchBean;
 import com.xiwa.base.manager.ManagerException;
@@ -33,6 +34,8 @@ public class EmployeeInputTask implements LanchuiConstant {
 
     @Autowired
     private DispatchDriver dispatchDriver;
+    @Autowired
+    NvwaDriver nvwaDriver;
     @Autowired
     private RedstarCommonManager redstarCommonManager;
 
@@ -338,7 +341,7 @@ public class EmployeeInputTask implements LanchuiConstant {
         //员工列表
         IntSearch belongedSearch = new IntSearch("belongedId");
         belongedSearch.setSearchValue(String.valueOf(LOG_BELONG_ID));
-        List<RedstarEmployee> employeeList = redstarCommonManager.getDataList(RedstarEmployee.class, belongedSearch);
+        List<NvwaEmployee> employeeList = redstarCommonManager.getDataList(NvwaEmployee.class, belongedSearch);
 
         MultiSearchBean extDataSearch = new MultiSearchBean();
         extDataSearch.addSearchBean(yearSearch);
@@ -352,7 +355,7 @@ public class EmployeeInputTask implements LanchuiConstant {
         List<RedstarEmployeeMonth> lastEmployeeMonthList = redstarCommonManager.getDataList(RedstarEmployeeMonth.class, extDataSearch);
 
 
-        for (RedstarEmployee redstarEmployee : employeeList) {
+        for (NvwaEmployee redstarEmployee : employeeList) {
             //录入月报数字
             Integer communityMonthCount = 0;
             Integer memberMonthCount = 0;
@@ -497,7 +500,7 @@ public class EmployeeInputTask implements LanchuiConstant {
                 redstarEmployee.setInputCommunityAmount(communityCount);
                 redstarEmployee.setInputCommunityRoomAmount(communityMemberCount);
                 redstarEmployee.setInputMemberAmount(memberCount);
-                dispatchDriver.getRedstarEmployeeManager().updateBean(redstarEmployee);
+                nvwaDriver.getNvwaEmployeeManager().updateBean(redstarEmployee);
             }
         }
 
@@ -511,8 +514,8 @@ public class EmployeeInputTask implements LanchuiConstant {
         redstarTaskLogManager.addBean(redstarTaskLog);
     }
 
-    private  void saveOrUpdateData(RedstarEmployeeMonth employeeMonthData,RedstarEmployee redstarEmployee,Integer communityMonthCount,
-                                   Integer memberMonthCount,Integer year,Integer month) throws ManagerException {
+    private  void saveOrUpdateData(RedstarEmployeeMonth employeeMonthData, NvwaEmployee redstarEmployee, Integer communityMonthCount,
+                                   Integer memberMonthCount, Integer year, Integer month) throws ManagerException {
 
         if (employeeMonthData == null) {
             employeeMonthData = new RedstarEmployeeMonth();

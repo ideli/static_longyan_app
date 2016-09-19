@@ -1,6 +1,6 @@
 package com.chinaredstar.longyan.task;
 
-import com.chinaredstar.commonBiz.bean.RedstarEmployee;
+import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.chinaredstar.commonBiz.bean.RedstarEmployeeDayInput;
 import com.chinaredstar.commonBiz.bean.RedstarTaskLog;
 import com.chinaredstar.longyan.bean.constant.LanchuiConstant;
@@ -77,7 +77,7 @@ public class EmployeeInputDailyTask implements LanchuiConstant, CommonBizConstan
         try {
             IntSearch belongedSearch = new IntSearch("belongedId");
             belongedSearch.setSearchValue(String.valueOf(LOG_BELONG_ID));
-            List<RedstarEmployee> employeeList = redstarCommonManager.getDataList(RedstarEmployee.class, belongedSearch);
+            List<NvwaEmployee> employeeList = redstarCommonManager.getDataList(NvwaEmployee.class, belongedSearch);
 
             IntSearch yearSearch = new IntSearch("year");
             yearSearch.setSearchValue(String.valueOf(year));
@@ -137,7 +137,7 @@ public class EmployeeInputDailyTask implements LanchuiConstant, CommonBizConstan
             List<RedstarEmployeeDayInput> _dayList = redstarCommonManager.getDataList(RedstarEmployeeDayInput.class, _multiSearchBean);
 
 
-            for (RedstarEmployee r : employeeList) {
+            for (NvwaEmployee r : employeeList) {
                 Integer communityCount = 0;
                 Integer memberCount = 0;
                 RedstarEmployeeDayInput employeeDayInput = null;
@@ -299,8 +299,8 @@ public class EmployeeInputDailyTask implements LanchuiConstant, CommonBizConstan
 
 
     private void saveOrUpdateData(RedstarEmployeeDayInput employeeDayInput,
-                                  RedstarEmployee r,Integer communityCount,Integer memberCount,
-     Integer year,Integer month,Integer day) throws ManagerException {
+                                  NvwaEmployee r, Integer communityCount, Integer memberCount,
+                                  Integer year, Integer month, Integer day) throws ManagerException {
 
 
         if (employeeDayInput == null) {

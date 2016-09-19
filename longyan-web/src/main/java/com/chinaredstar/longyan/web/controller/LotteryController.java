@@ -1,9 +1,10 @@
 package com.chinaredstar.longyan.web.controller;
 
 import com.chinaredstar.longyan.api.LotteryService;
-import com.chinaredstar.commonBiz.bean.RedstarEmployee;
+import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;
+import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.manager.ManagerException;
 import com.xiwa.zeus.trinity.bean.Employee;
@@ -25,6 +26,8 @@ public class LotteryController extends BaseController implements CommonBizConsta
 
     @Autowired
     private DispatchDriver dispatchDriver;
+    @Autowired
+    NvwaDriver nvwaDriver;
 
     //砸蛋
     @RequestMapping(value = "/drawLottery",method = RequestMethod.POST)
@@ -93,14 +96,14 @@ public class LotteryController extends BaseController implements CommonBizConsta
     }
 
 
-    private  RedstarEmployee getCurrentEmployee() throws ManagerException {
+    private NvwaEmployee getCurrentEmployee() throws ManagerException {
 
 /*        RedstarEmployee redstarEmployee = new RedstarEmployee();
         redstarEmployee.setEmployeeCode("51004893");
         return  redstarEmployee;*/
 
         Employee employee = getEmployeeromSession();
-        return (RedstarEmployee) dispatchDriver.getRedstarEmployeeManager().getBean(employee.getId());
+        return (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());
     }
 
 }

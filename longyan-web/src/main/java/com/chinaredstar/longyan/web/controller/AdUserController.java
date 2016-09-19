@@ -10,6 +10,10 @@ import com.chinaredstar.longyan.util.SpringUtil;
 import com.chinaredstar.longyan.util.UploadFileUtil;
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.commonBiz.util.CookieUtil;
+import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
+import com.chinaredstar.nvwaBiz.bean.NvwaRole;
+import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
+import com.chinaredstar.nvwaBiz.manager.NvwaSecurityAuthorizedManager;
 import com.xiwa.base.bean.Identified;
 import com.xiwa.base.bean.Request;
 import com.xiwa.base.bean.Response;
@@ -58,7 +62,7 @@ public class AdUserController  extends BaseController implements CommonBizConsta
     private RedstarMallEmployeeManager redstarMallEmployeeManager;
 
     @Autowired
-    private SecurityAuthorizedManager securityAuthorizedManager;
+    private NvwaDriver nvwaDriver;
 
     @Autowired
     private RedstarCommonManager redstarCommonManager;
@@ -262,7 +266,7 @@ public class AdUserController  extends BaseController implements CommonBizConsta
         Response res = context.getResponse();
         try {
             Employee employee = getEmployeeromSession(); //从session中获取登陆员工的ID
-            RedstarEmployee redstarEmployee = (RedstarEmployee) dispatchDriver.getRedstarEmployeeManager().getBean(employee.getId());//从 xiwa_crm_employee 获取员工信息
+            NvwaEmployee redstarEmployee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());//从 xiwa_crm_employee 获取员工信息
             //从 xiwa_redstar_mall_employee 获取商场所属员工信息
             List<RedstarMallEmployee> redstarMallEmployees = dispatchDriver.getRedstarMallEmployeeManager().getBeanListByColumn("employeeId", redstarEmployee.getId());
             RedstarMallEmployee redstarMallEmployee;
@@ -361,7 +365,7 @@ public class AdUserController  extends BaseController implements CommonBizConsta
                 return res;
             }
 
-            RedstarEmployee employeeObject = (RedstarEmployee) dispatchDriver.getRedstarEmployeeManager().getBean(employee.getId());
+            NvwaEmployee employeeObject = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());
 
             IntSearch dataIdSearch = new IntSearch("employeeId");
             dataIdSearch.setSearchValue(String.valueOf(employeeObject.getId()));
@@ -375,7 +379,7 @@ public class AdUserController  extends BaseController implements CommonBizConsta
             }
 
 
-            List<RedstarRole> redstarRole = dispatchDriver.getRedstarEmployeeManager().getRoleByEmployeeId(employee.getId());
+            List<NvwaRole> redstarRole = nvwaDriver.getNvwaEmployeeManager().getRoleByEmployeeId(employee.getId());
             if (CollectionUtil.isValid(redstarRole)) {
                 employeeObject.setRole(redstarRole.get(0).getName());
             }
@@ -407,7 +411,7 @@ public class AdUserController  extends BaseController implements CommonBizConsta
 
             Employee employee = getEmployeeromSession();
 
-            RedstarEmployee redstarEmployee = (RedstarEmployee) dispatchDriver.getRedstarEmployeeManager().getBean(employee.getId());
+            NvwaEmployee redstarEmployee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());
 
             redstarEmployee.setPhotos(fileUrl);
             redstarEmployee.setHead(fileUrl);

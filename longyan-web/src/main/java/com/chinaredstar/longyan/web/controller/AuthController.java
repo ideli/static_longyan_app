@@ -3,12 +3,13 @@ package com.chinaredstar.longyan.web.controller;
 
 import com.chinaredstar.commonBiz.bean.*;
 import com.chinaredstar.longyan.security.util.SecurityTool;
-import com.chinaredstar.longyan.util.Encryption;
 import com.chinaredstar.longyan.util.HttpClientUtil;
-import com.chinaredstar.longyan.util.SessionInitUtil;
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.commonBiz.util.CookieUtil;
+import com.chinaredstar.nvwaBiz.bean.NvwaDepartment;
+import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
+import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
 import com.xiwa.base.bean.Request;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.bean.search.ext.IntSearch;
@@ -47,6 +48,8 @@ public class AuthController extends BaseController implements CommonBizConstant 
 
     @Autowired
     private DispatchDriver dispatchDriver;
+    @Autowired
+    private NvwaDriver nvwaDriver;
 
     /**
      * 用户中心新接口 调用ad登录
@@ -144,11 +147,11 @@ public class AuthController extends BaseController implements CommonBizConstant 
             String moblie = employee.get("phone");
 
             //根据employeeCode查询员工id
-            RedstarEmployee redstarEmployee = dispatchDriver.getRedstarEmployeeManager().getEmployeeByCode(emplId);
+            NvwaEmployee redstarEmployee = nvwaDriver.getNvwaEmployeeManager().getEmployeeByCode(emplId);
             //如果不存在添加员工信息
             if (redstarEmployee == null) {
                 //添加员工信息
-                redstarEmployee = new RedstarEmployee();
+                redstarEmployee = new NvwaEmployee();
                 redstarEmployee.setEmployeeCode(emplId);
                 redstarEmployee.setXingMing(name);
                 redstarEmployee.setBelongedId(10944);
@@ -162,9 +165,9 @@ public class AuthController extends BaseController implements CommonBizConstant 
                 }
                 redstarEmployee.setHrStatus(hr_status);
                 if (StringUtil.isValid(deptid)) {
-                    List<RedstarDepartment> departments = dispatchDriver.getRedstarDepartmentManager().getBeanListByColumn("departmentCode", deptid);
+                    List<NvwaDepartment> departments = nvwaDriver.getNvwaDepartmentManager().getBeanListByColumn("departmentCode", deptid);
                     if (CollectionUtil.isValid(departments)) {
-                        RedstarDepartment department = departments.get(0);
+                        NvwaDepartment department = departments.get(0);
                         redstarEmployee.setDepartmentId(department.getId());
                     } else {
                         //没有部门,添加部门数据
@@ -173,7 +176,7 @@ public class AuthController extends BaseController implements CommonBizConstant 
                     }
                 }
                 redstarEmployee.setOpenId(emplId);
-                Integer objectId = dispatchDriver.getRedstarEmployeeManager().addBean(redstarEmployee);
+                Integer objectId = nvwaDriver.getNvwaEmployeeManager().addBean(redstarEmployee);
 
                 if (StringUtil.isValid(market_id)) {
                     //商场是否存在
@@ -224,7 +227,7 @@ public class AuthController extends BaseController implements CommonBizConstant 
                 authorized.setRoles(roles);
                 authorized.setPassword("");
                 authorized.setHaveSetPassword(true);
-                dispatchDriver.getRedstarEmployeeManager().addAuthorized(authorized);
+                nvwaDriver.getNvwaEmployeeManager().addAuthorized(authorized);
             }
 
 
@@ -304,7 +307,7 @@ public class AuthController extends BaseController implements CommonBizConstant 
             String moblie = "18523295297";
 
             //根据employeeCode查询员工id
-            RedstarEmployee redstarEmployee = dispatchDriver.getRedstarEmployeeManager().getEmployeeByCode(emplId);
+            NvwaEmployee redstarEmployee = nvwaDriver.getNvwaEmployeeManager().getEmployeeByCode(emplId);
 
 //            Authorized authorized = this.securityDriver.getAuthorizedManager().getAuthorized(10944,redstarEmployee.getId(),"employee");
 //            if (authorized != null) {

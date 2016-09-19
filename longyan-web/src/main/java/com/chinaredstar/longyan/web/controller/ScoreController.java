@@ -3,7 +3,7 @@ package com.chinaredstar.longyan.web.controller;
 
 import com.chinaredstar.commonBiz.bean.ExtRedstarEmployeeMonth;
 import com.chinaredstar.longyan.exception.BusinessException;
-import com.chinaredstar.commonBiz.bean.RedstarEmployee;
+import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.chinaredstar.commonBiz.bean.RedstarEmployeeMonth;
 import com.chinaredstar.commonBiz.bean.RedstarScoreRule;
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
@@ -11,6 +11,7 @@ import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
 import com.chinaredstar.commonBiz.manager.RedstarEmployeeMonthManager;
 import com.chinaredstar.commonBiz.manager.RedstarScoreRuleManager;
+import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
 import com.xiwa.base.bean.PaginationDescribe;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.bean.search.ext.IntSearch;
@@ -43,6 +44,8 @@ public class ScoreController extends BaseController implements CommonBizConstant
 
     @Autowired
     private DispatchDriver dispatchDriver;
+    @Autowired
+    NvwaDriver nvwaDriver;
 
     @Autowired
     private RedstarScoreRuleManager redstarScoreRuleManager;
@@ -120,7 +123,7 @@ public class ScoreController extends BaseController implements CommonBizConstant
             }
 
             //=====获取个人信息=======
-            RedstarEmployee employee = (RedstarEmployee) dispatchDriver.getRedstarEmployeeManager().getBean(loginEmployee.getId());
+            NvwaEmployee employee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(loginEmployee.getId());
 
             //=====获取个人当月获得积分=====
             Date date = new Date();
