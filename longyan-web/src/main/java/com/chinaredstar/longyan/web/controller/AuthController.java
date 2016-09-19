@@ -22,7 +22,9 @@ import com.xiwa.base.util.MD5Util;
 import com.xiwa.base.util.StringUtil;
 import com.xiwa.security.bean.constant.AuthTarget;
 import com.xiwa.security.bean.ext.SimpleAuthorized;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.http.Header;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -73,7 +75,7 @@ public class AuthController extends BaseController implements CommonBizConstant 
         String password = request.getString("password");
 
         //调用授权接口
-        this._auth(username, password, pipelineContext);
+        this._auth(username, password, pipelineContext,resp);
 
         return pipelineContext.getResponse();
     }
@@ -85,7 +87,7 @@ public class AuthController extends BaseController implements CommonBizConstant 
      * @param password
      * @param pipelineContext
      */
-    private void _auth(String username, String password, PipelineContext pipelineContext) {
+    private void _auth(String username, String password, PipelineContext pipelineContext,HttpServletResponse resp) {
         try {
             //校验电话号码格式
             Pattern pattern = Pattern.compile(Reg_Phone);
@@ -113,9 +115,14 @@ public class AuthController extends BaseController implements CommonBizConstant 
             params.put("loginIP", pipelineContext.getRequest().getHttpServletRequest().getRemoteAddr());
 
             //调用新接口
-            JSONObject jsonObje = HttpClientUtil.post(userCenterUrl + "/employee/login/ad", params);
+            JSONObject jsonObje = HttpClientUtil.post(userCenterUrl + "/employee/login/ad", params, true);
             logger.info("----->结束调用用户中心接口时间--" + System.currentTimeMillis());
             logger.info(jsonObje.toString());
+
+//            if(jsonObje.containsKey(HttpClientUtil.KEY_BODY)){
+//                jsonObje=jsonObje.getJSONObject(HttpClientUtil.KEY_BODY);
+//            }
+
 
             if (jsonObje.getInt(UserCenter_Res_ErrorCode) != 0) {
                 //用户中心返回的错误信息
@@ -230,6 +237,19 @@ public class AuthController extends BaseController implements CommonBizConstant 
                 nvwaDriver.getNvwaEmployeeManager().addAuthorized(authorized);
             }
 
+            if (jsonObje.containsKey(HttpClientUtil.KEY_HEADER)) {
+                JSONArray headers = jsonObje.getJSONArray(HttpClientUtil.KEY_HEADER);
+                if (headers.size() > 0) {
+                    for (int i = 0; i < headers.size(); i++) {
+                        JSONObject item=headers.getJSONObject(i);
+                        if(StringUtil.isValid(item.getString("name"))&&item.getString("name").equalsIgnoreCase("x-auth-token")){
+                            //返回cookie并且初始化session
+                            CookieUtil.setCookie("_token", item.getString("value"), 30 * 24 * 60 * 60, "/", resp);
+                        }
+                    }
+                }
+            }
+
 
         } catch (ManagerException e) {
             _error(e, pipelineContext);
@@ -341,6 +361,19 @@ public class AuthController extends BaseController implements CommonBizConstant 
 //            }
 
             String ua = pipelineContext.getRequest().getHttpServletRequest().getHeader("User-Agent");
+            if (jsonObje.containsKey(HttpClientUtil.KEY_HEADER)) {
+                JSONArray headers = jsonObje.getJSONArray(HttpClientUtil.KEY_HEADER);
+                if (headers.size() > 0) {
+                    for (int i = 0; i < headers.size(); i++) {
+                        JSONObject item=headers.getJSONObject(i);
+                        if(StringUtil.isValid(item.getString("name"))&&item.getString("name").equalsIgnoreCase("x-auth-token")){
+                            //返回cookie并且初始化session
+                            CookieUtil.setCookie("_token", item.getString("value"), 30 * 24 * 60 * 60, "/", resp);
+                        }
+                    }
+                }
+            }
+
 
         } catch (ManagerException e) {
             _error(e, pipelineContext);

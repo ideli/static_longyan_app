@@ -6,10 +6,7 @@ import com.xiwa.base.util.StringUtil;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.ParseException;
+import org.apache.http.*;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -36,6 +33,9 @@ import java.util.*;
  * Created by lufaxdev on 2014/11/25.
  */
 public class HttpClientUtil {
+    public static String KEY_HEADER="header";
+    public static String KEY_BODY="body";
+
     /**
      * Invoke
      *
@@ -44,7 +44,7 @@ public class HttpClientUtil {
      * @return
      */
     private static String invoke(HttpClient httpclient,
-                                 HttpUriRequest httpost) {
+                                 HttpUriRequest httpost,Map<String,Object> responseMap) {
         HttpResponse response = null;
 
         try {
@@ -59,8 +59,13 @@ public class HttpClientUtil {
         HttpEntity entity = response.getEntity();
         String charset = EntityUtils.getContentCharSet(entity);
         String body = null;
+        Header[] headers = response.getAllHeaders();
         try {
             body = EntityUtils.toString(entity);
+            if(responseMap!=null){
+                responseMap.put(KEY_HEADER,headers);
+                responseMap.put("body",body);
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -78,7 +83,7 @@ public class HttpClientUtil {
      */
     public static String get(String url) throws ManagerException {
         DefaultHttpClient httpClient = new DefaultHttpClient();
-        String response = invoke(httpClient, new HttpGet(url));
+        String response = invoke(httpClient, new HttpGet(url),null);
         httpClient.getConnectionManager().shutdown();
         if (StringUtil.isInvalid(response)) {
             throw new ManagerException("response is null");
@@ -88,12 +93,22 @@ public class HttpClientUtil {
 
     /**
      * POST
-     *
      * @param url
      * @param params
      * @return
      */
     public static JSONObject post(String url, Map<String, String> params) {
+        return post(url,params,false);
+    }
+
+    /**
+     * POST
+     *
+     * @param url
+     * @param params
+     * @return
+     */
+    public static JSONObject post(String url, Map<String, String> params,boolean haveResponseHeader) {
         System.out.println(url);
         DefaultHttpClient httpClient = new DefaultHttpClient();
         HttpPost httpost = new HttpPost(url);
@@ -107,15 +122,29 @@ public class HttpClientUtil {
             sb.append(key + "=" + params.get(key) + "&");
         }
         String getUrl = url + "?" + sb.toString();
-        System.out.println(DateUtils.formatDate(new Date(),"yyyy-MM-dd hh:mm:ss")+getUrl);
+        System.out.println(DateUtils.formatDate(new Date(), "yyyy-MM-dd hh:mm:ss") + getUrl);
         try {
             httpost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        String response = invoke(httpClient, httpost);
+
+        String response="";
         try {
-            return JSONObject.fromObject(response);
+
+            if(!haveResponseHeader){
+                response = invoke(httpClient, httpost,null);
+                return JSONObject.fromObject(response);
+            }else{
+                Map<String,Object> responseMap=new HashMap<String, Object>();
+                response = invoke(httpClient, httpost,responseMap);
+                JSONObject responseObject=JSONObject.fromObject(response);
+                if(responseMap.containsKey(KEY_HEADER)){
+                    responseObject.put(KEY_HEADER,responseMap.get(KEY_HEADER));
+                }
+                return responseObject;
+            }
+
         } catch (JSONException e) {
             System.out.println(e.getMessage());
             System.out.println("[response][" + response.getBytes().length / 1000 + "KB]" + response);
@@ -130,7 +159,7 @@ public class HttpClientUtil {
 
         HttpGet httpGet = new HttpGet(url);
 
-        String response = invoke(httpClient, httpGet);
+        String response = invoke(httpClient, httpGet,null);
         try {
             return JSONObject.fromObject(response);
         } catch (JSONException e) {
