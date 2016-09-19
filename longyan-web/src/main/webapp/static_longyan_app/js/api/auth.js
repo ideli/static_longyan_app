@@ -45,6 +45,17 @@ define('js/api/auth', ['js/util/http', 'js/api/auth_mock'], function(http, MockD
 				t._executeResponse(response, success, error);
 			}, false, 'POST', false, $nvwa.header.getHeaders());
 		},
+		//非加密的接口
+		login_without_encryption: function(data, success, error) {
+			var t = this;
+			var url = _basePath + '/login_without_encryption';
+			var data = data;
+			//发送http psot请求
+			t._executeRequest(url, data, function(response) {
+				//返回的http请求数据
+				t._executeResponse(response, success, error);
+			}, false, 'POST', false, $nvwa.header.getHeaders());
+		},
 		loginOld: function(data, success, error) {
 			var t = this;
 			var url = '/security/auth.action';

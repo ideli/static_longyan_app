@@ -2,8 +2,10 @@ package com.chinaredstar.longyan.web.controller;
 
 
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
+import com.chinaredstar.longyan.util.Encryption;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.pipeline.PipelineContext;
+import com.xiwa.base.util.StringUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,12 +25,23 @@ public class TestController extends BaseController implements CommonBizConstant 
     @RequestMapping(value = "/index")
     public
     @ResponseBody
-    Response areaInput() {
+    Response index() {
         PipelineContext pipelineContext = buildPipelineContent();
         return pipelineContext.getResponse();
     }
 
-
+    @RequestMapping(value = "/password")
+    public
+    @ResponseBody
+    Response password() {
+        PipelineContext pipelineContext = buildPipelineContent();
+        String password = pipelineContext.getRequest().getString("password");
+        if (StringUtil.isValid(password)) {
+            password = Encryption.Encrypt(password);
+            pipelineContext.getResponse().addKey("password", password);
+        }
+        return pipelineContext.getResponse();
+    }
 
 //    @Autowired
 //    private DispatchDriver dispatchDriver;
