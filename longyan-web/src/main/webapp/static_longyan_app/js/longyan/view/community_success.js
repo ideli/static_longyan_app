@@ -41,7 +41,7 @@ define('js/longyan/view/community_success', [
                             Backbone.history.history.back();
                         } else {
                             //我的小区列表
-                            hybrid.backToHybrid("HomePage","direct");
+                            hybrid.backToHybrid("HomePage", "direct");
                         }
                     }
                 });
@@ -61,7 +61,7 @@ define('js/longyan/view/community_success', [
                     el: $('#skipPage-btn')
                 }, {
                     fieldName: 'get-into-community',
-                    text: '进入小区'
+                    text: '小区主页'
                 }, {
                     Click: function(e) {
                         var dataId = Cache.get('community-data-id');
@@ -70,9 +70,9 @@ define('js/longyan/view/community_success', [
                         });
                     }
                 });
-                 var header_view = parseInt($(window).height()-$('#header-container').height());
+                var header_view = parseInt($(window).height() - $('#header-container').height());
                 $('#community-success-list-view').height(header_view);
-           },
+            },
             //初始化监听器
             initEvents: function() {
                 var t = this;

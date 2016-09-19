@@ -65,7 +65,8 @@ module.exports = function(grunt) {
           compress: false
         },
         files: {
-          "css/app.uncompressed.css": "less/app.less"
+          "css/element.uncompressed.css": "less/element/*.less",
+          "css/main.uncompressed.css": "less/main/*.less"
         }
       },
       production: {
@@ -75,21 +76,24 @@ module.exports = function(grunt) {
           cleancss: true
         },
         files: {
-          "css/app.css": "less/app.less"
+          // "css/app.css": "less/app.less"
         }
       }
     },
-    sass: {                              // Task
-      dist: {                            // Target
-        files: {                         // Dictionary of files
-          'sass/contackBook.css': 'sass/contactBook.scss'
+    sass: { // Task
+      dist: { // Target
+        files: { // Dictionary of files
+          'css/style-element.css': 'sass/element/*.scss'
+        },
+        options: {
+          sourcemap: 'true'
         }
       }
     },
     watch: {
       styles: {
-        files: ['less/*.less'],
-        tasks: ['less', 'concat'],
+        files: ['less/element/*.less', 'less/main/*.less'],
+        tasks: ['less'],
         options: {
           nospawn: true
         }
@@ -378,7 +382,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-usemin');
   // grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-contrib-less');
-  //grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-autoprefixer');
 
 
@@ -387,12 +391,12 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [1]);
 
   //执行less, concat, uglify
-  grunt.registerTask('ui', ['less', 'concat:uijs', 'uglify:uijs']);
+  grunt.registerTask('ui', ['less']);
 
   //执行js合并压缩任务
   grunt.registerTask('js', ['jst', 'concat:js', 'uglify']);
   //执行css合并压缩任务
-  grunt.registerTask('css', ['concat:css', 'cssmin']);
+  grunt.registerTask('css', ['sass', 'concat:css', 'cssmin']);
   //执行任务
   grunt.registerTask('app', ['clean', 'js', 'css', 'filerev', 'copy', 'usemin', 'compress']);
 };

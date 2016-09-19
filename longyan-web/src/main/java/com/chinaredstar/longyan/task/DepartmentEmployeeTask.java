@@ -54,7 +54,7 @@ public class DepartmentEmployeeTask implements LanchuiConstant {
         Map<String, String> params = new HashMap<String, String>();
         params.put("appId", "c3");
         params.put("appSecret", "s333");
-        String userCenterUrl = systemConfig.get("sysUserUrl").toString();
+        String userCenterUrl = systemConfig.get("userCenterUrl").toString();
         JSONObject jsonObjectDept = HttpClientUtil.post(userCenterUrl + "/employee/getPsSyncDepartmentListByDeptId", params);
         try {
             // sync dept start

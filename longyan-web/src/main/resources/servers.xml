@@ -33,7 +33,6 @@
                 <entry key="staticPcLongyanUrl" value="${longyan_pc_static_resource_url}"></entry>
 
                 <entry key="userCenterUrl" value="${user.center.url}"></entry>
-                <entry key="sysUserUrl" value="${sys.user.url}"></entry>
                 <entry key="appId" value="${user.center.appid}"></entry>
                 <entry key="appSecret" value="${user.center.appsecret}"></entry>
                 <entry key="roles" value="${roles}"></entry>
