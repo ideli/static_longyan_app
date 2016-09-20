@@ -28,6 +28,10 @@ public class SimpleDispatchDriver implements DispatchDriver {
 
     @Autowired
     private RedstarVerifyCodeManager redstarVerifyCodeManager;
+
+    @Autowired
+    private RedstarEmployeeDayInputManager redstarEmployeeDayInputManager;
+
     @Autowired
     private RedstarEmployeeMonthManager redstarEmployeeMonthManager;
 
@@ -96,7 +100,10 @@ public class SimpleDispatchDriver implements DispatchDriver {
         return redstarCommunityManager;
     }
 
-
+    @Override
+    public RedstarEmployeeDayInputManager getRedstarEmployeeDayInputManager() {
+        return redstarEmployeeDayInputManager;
+    }
 
     @Override
     public RedstarEmployeeMonthManager getRedstarEmployeeMonthManager() {
