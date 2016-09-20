@@ -38,6 +38,9 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             //积分说明
             "integral_rule": "integral_rule",
 
+            //消息中心
+            "message_list": "message_list"
+
         },
 
         //初始化布局
@@ -205,6 +208,10 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
         integral_rule: function() {
             var t = this;
             t.changePage('integral_rule');
+        },
+        message_list: function() {
+            var t = this;
+            t.changePage('message_list');
         },
 
 

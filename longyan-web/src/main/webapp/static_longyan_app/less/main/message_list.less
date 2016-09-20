@@ -1,0 +1,51 @@
+@import "../public/variables";
+
+#message-list-view{
+	#message-list-box{
+		.message-item{
+			margin-left:@size-30;
+			height:@size-166;
+			border-bottom: 1px solid #e1e1e1;
+
+			.message-item-title{
+				padding-top:@size-40;
+				line-height:@size-32;
+				height:@size-32;
+				font-size:@size-32;
+				.message-item-title-readmark{
+					float:left;
+					padding-left:@size-10;
+					color:@color-alert-red;
+					font-size:@size-12;
+				}
+				.message-item-title-text{
+					float:left;
+					color:@color-menu-font;
+					padding-left:@size-10;
+				}
+			}
+
+			.message-item-datetime{
+				padding-top:@size-30;
+				padding-left:@size-44;
+				line-height:@size-32;
+				height:@size-32;
+				font-size:@size-24;
+				color:@color-comment-font;
+				.message-item-datetime-date{
+					float:left;					
+				}
+				.message-item-datetime-time{
+					float:left;
+					padding-left:@size-20;
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+

@@ -2701,3 +2701,41 @@ body {
 .contact_detail .contact_detail_info_list li.label_handle .label_txt a {
   color: #666666;
 }
+
+#message-list-view #message-list-box .message-item {
+  margin-left: 1.27659574rem;
+  height: 7.06382979rem;
+  border-bottom: 1px solid #e1e1e1;
+}
+#message-list-view #message-list-box .message-item .message-item-title {
+  padding-top: 1.70212766rem;
+  line-height: 1.36170213rem;
+  height: 1.36170213rem;
+  font-size: 1.36170213rem;
+}
+#message-list-view #message-list-box .message-item .message-item-title .message-item-title-readmark {
+  float: left;
+  padding-left: 0.42553191rem;
+  color: #e85043;
+  font-size: 0.5106383rem;
+}
+#message-list-view #message-list-box .message-item .message-item-title .message-item-title-text {
+  float: left;
+  color: #333333;
+  padding-left: 0.42553191rem;
+}
+#message-list-view #message-list-box .message-item .message-item-datetime {
+  padding-top: 1.27659574rem;
+  padding-left: 1.87234043rem;
+  line-height: 1.36170213rem;
+  height: 1.36170213rem;
+  font-size: 1.0212766rem;
+  color: #999999;
+}
+#message-list-view #message-list-box .message-item .message-item-datetime .message-item-datetime-date {
+  float: left;
+}
+#message-list-view #message-list-box .message-item .message-item-datetime .message-item-datetime-time {
+  float: left;
+  padding-left: 0.85106383rem;
+}
