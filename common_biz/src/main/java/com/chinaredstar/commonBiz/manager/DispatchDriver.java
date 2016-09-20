@@ -21,6 +21,8 @@ public interface DispatchDriver {
 
     public RedstarMemberManager getRedStarMemberManager();
 
+    public RedstarEmployeeDayInputManager getRedstarEmployeeDayInputManager();
+
     public RedstarEmployeeMonthManager getRedstarEmployeeMonthManager();
 
     public RedstarShoppingMallManager getRedstarShoppingMallManager();
