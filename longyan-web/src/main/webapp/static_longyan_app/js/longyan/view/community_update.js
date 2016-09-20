@@ -284,7 +284,7 @@ define('js/longyan/view/community_update', [
                 }, {
                     fieldName: 'community-building-renovation-input',
                     text: '交房装修',
-                    // multipleSelect: true,
+                    multipleSelect: true,
                     placeholder: '',
                     // type: "number"
                     selections: [{
@@ -383,12 +383,8 @@ define('js/longyan/view/community_update', [
                     var roomMount = t.community_room_amount_input.getValue();
                     var buildingAmount = t.community_building_amount_input.getValue();
                     var checkMemberRate = t.community_occupancy_rate_input.getValue();
-                    if (checkMemberRate) {
-                        checkMemberRate = checkMemberRate.replace(/%/, "");
-                    }
 
                     var priceSection = t.community_price_section_input.getValue();
-                    //var buildingDate = t.community_building_age_input.getValue()['col1Key'];
                     var constructionTypes = t.community_building_type_input.getValue();
                     var renovations = t.community_building_renovation_input.getValue();
                     var deliveryTime = t.community_building_age_input.getValue()['col1Key'];
@@ -399,7 +395,6 @@ define('js/longyan/view/community_update', [
                     tipsAlert.openLoading({
                         content: '加载中...'
                     });
-
 
                     CommunityApi.createCommunity(
                         city,

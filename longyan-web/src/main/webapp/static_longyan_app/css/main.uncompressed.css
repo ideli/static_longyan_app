@@ -724,11 +724,6 @@ img {
   font-size: 1.2rem;
   color: #666;
 }
-.picker-container .bar .button {
-  color: #0091ea;
-  font-size: 1.24rem;
-  margin-top: 0.76rem;
-}
 .picker-container .picker-modal.modal-in {
   height: 22.89rem;
 }

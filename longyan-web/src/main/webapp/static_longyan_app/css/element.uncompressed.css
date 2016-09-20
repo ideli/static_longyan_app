@@ -402,8 +402,8 @@
   /*padding: 15px 0.5rem;*/
   padding: 1.5rem 1rem;
   /*font-size: 14px;*/
-  font-size: 1.4rem;
-  color: #333333;
+  font-size: 1.19148936rem;
+  color: #666666;
   text-align: center;
 }
 .alert_ui_v2 .ui-alert-fund591-body {
@@ -446,8 +446,8 @@
 .ui-alert-fund591-foot {
   height: 3.74468085rem;
   line-height: 3.74468085rem;
-  font-size: 1.8rem;
-  color: #55acee;
+  font-size: 1.36170213rem;
+  color: #0091ea;
   text-align: center;
   display: -webkit-box;
   overflow: hidden;
@@ -1682,7 +1682,7 @@ input {
   -webkit-mask-box-image: linear-gradient(to top, transparent, transparent 5%, #ffffff 20%, #ffffff 80%, transparent 95%, transparent);
 }
 .picker-container .bar + .picker-items {
-  height: 10.8rem;
+  height: 17.0212766rem;
 }
 .picker-container .picker-items-col {
   position: relative;
@@ -1863,7 +1863,7 @@ input {
 .picker-container .picker-modal .bar {
   position: relative;
   top: 0;
-  height: 88px;
+  height: 3.74468085rem;
   background-color: #f5f5f5;
 }
 .picker-container .picker-modal .bar:before {
@@ -2074,20 +2074,20 @@ input {
   position: relative;
   z-index: 20;
   margin-top: 0;
-  font-size: 0.7rem;
-  line-height: 2rem;
-  color: #55acee;
+  font-size: 1.19148936rem;
+  line-height: 3.74468085rem;
+  color: #0091ea;
 }
 .picker-container .bar .pull-left {
-  margin-left: 0.75rem;
+  margin-left: 1.27659574rem;
   float: left;
-  height: 2rem;
+  height: 3.74468085rem;
   padding: 0;
 }
 .picker-container .bar .button.pull-right {
-  margin-right: 0.75rem;
+  margin-right: 1.27659574rem;
   float: right;
-  height: 2rem;
+  height: 3.74468085rem;
   padding: 0;
 }
 .picker-container .bar .button-link:active,
