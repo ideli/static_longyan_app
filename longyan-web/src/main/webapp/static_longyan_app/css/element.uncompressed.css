@@ -735,6 +735,38 @@ a:active {
   color: #1daafb;
 }
 
+.card-select-box {
+  margin: 0 0 0 1.5rem;
+  padding-right: 1.27659574rem;
+  padding-bottom: 1.70212766rem;
+  line-height: 4.25531915rem;
+  font-size: 1.36170213rem;
+  border-bottom: 1px solid #e4e4e4;
+  background-color: #ffffff;
+}
+.card-select-box .selection {
+  float: left;
+  margin-right: 1.27659574rem;
+  width: 8.08510638rem;
+  height: 2.72340426rem;
+  line-height: 2.72340426rem;
+  text-align: center;
+  border: 1px solid #999999;
+  border-radius: 2px;
+  font-size: 1.36170213rem;
+  color: #666666;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  /* Firefox */
+  -webkit-box-sizing: border-box;
+  /* Safari */
+}
+.card-select-box .activity {
+  background-color: #0091ea;
+  border: none;
+  color: #ffffff;
+}
+
 * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }

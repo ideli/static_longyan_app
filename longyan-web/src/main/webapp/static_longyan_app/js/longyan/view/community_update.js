@@ -16,6 +16,7 @@ define('js/longyan/view/community_update', [
         'js/element/view/button-box',
         'js/element/view/link-box',
         'js/element/view/radio-box',
+        'js/element/view/card-select-box',
         'js/element/view/tips-bar',
         'js/element/view/picker-box',
         'js/api/community',
@@ -23,7 +24,7 @@ define('js/longyan/view/community_update', [
         'js/util/hybrid',
         'js/util/baiduMap'
     ],
-    function(CommunityListTpl, CommunitySearchItemTpl, Cache, AlertUI, HeaderView, PickerBox, InputBox, ThinkInputBox, SearchInputBox, InputPercentageBox, locationCurrentCityBox, ButtonBox, LinkBox, radioBox, TipsBar, PickerSelectBox, CommunityApi, CommonApi, hybrid, baiduMap) {
+    function(CommunityListTpl, CommunitySearchItemTpl, Cache, AlertUI, HeaderView, PickerBox, InputBox, ThinkInputBox, SearchInputBox, InputPercentageBox, locationCurrentCityBox, ButtonBox, LinkBox, radioBox, CardSelectBox, TipsBar, PickerSelectBox, CommunityApi, CommonApi, hybrid, baiduMap) {
 
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#community-info-view';
@@ -259,11 +260,12 @@ define('js/longyan/view/community_update', [
                 });
 
 
-                t.community_building_type_input = new radioBox({
+                t.community_building_type_input = new CardSelectBox({
                     el: $(form_id)
                 }, {
                     fieldName: 'community-building-type-input',
                     text: '建筑类型',
+                    multipleSelect: true,
                     selections: [{
                         'value': '0',
                         'text': '商住'
@@ -277,11 +279,12 @@ define('js/longyan/view/community_update', [
                     // type: "number"
                     data: []
                 });
-                t.community_building_renovation_input = new radioBox({
+                t.community_building_renovation_input = new CardSelectBox({
                     el: $(form_id)
                 }, {
                     fieldName: 'community-building-renovation-input',
                     text: '交房装修',
+                    // multipleSelect: true,
                     placeholder: '',
                     // type: "number"
                     selections: [{
