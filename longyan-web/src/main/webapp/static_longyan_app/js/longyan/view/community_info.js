@@ -17,7 +17,7 @@ define('js/longyan/view/community_info', [
         'js/element/view/tips-bar',
         'js/api/community'
     ],
-    function(CommunityListTpl, Cache, AlertUI, HeaderView,LocationView, PickerBox, InputBox, ThinkInputBox, LocationBox, InputPercentageBox, ButtonBox, LinkBox, TipsBar, CommunityApi) {
+    function(CommunityListTpl, Cache, AlertUI, HeaderView, LocationView, PickerBox, InputBox, ThinkInputBox, LocationBox, InputPercentageBox, ButtonBox, LinkBox, TipsBar, CommunityApi) {
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#community-info-view';
         var form_id = '#community-info-form';
@@ -72,56 +72,16 @@ define('js/longyan/view/community_info', [
                 if (!t.config.report_detail) {
                     //非社区报表详情状态
                     if (right_button_text && right_button_text.length > 0) {
-                        t.$el.find('#header-container').find('.right-box').html(right_button_text);
-                        t.$el.find('.right-box').on('click', {
-                            t: t
-                        }, function(e) {
-                            /*var t = e.data.t;
-                            if (t.config.id) {
-                                var community = Cache.get('community-manager-object');
-                                if (community) {
-                                    router.navigate('community_update/' + t.config.id, {
-                                        trigger: true
-                                    });
-                                    return;
-                                }
-                            }
-                            tipsAlert.openAlert({
-                                content: '系统数据异常'
-                            });*/
-                            //取出表单上显示的社区信息
-                        /*var community = Cache.get('community-manager-object');
-                        if (community) {
-                            //将小区信息和地理位置信息写入到缓存
-                            community.communityId = community.id;
-                            community.communityName = community.name;
-                            Cache.set('member-manager-object', community);
-                            // {
-                            //     provinceCode: community.provinceCode,
-                            //     cityCode: community.cityCode,
-                            //     areaCode: community.areaCode,
-                            //     province: community.province,
-                            //     city: community.city,
-                            //     area: community.area,
-                            //     communityId: community.id,
-                            //     communityName: community.name
-                            // });
-                            //跳转
-                            router.navigate('member_create_by_commonity', {
-                                trigger: true
-                            });
-                        } else {
-                            //没有社区信息
-                            tipsAlert.openAlert({
-                                content: '系统异常'
-                            });
-                        }*/
-                        if (t.config.id) {
-                            router.navigate('community_update/' + t.config.id, {
-                                trigger: true
-                            });
-                        }
-                        });
+                        // t.$el.find('#header-container').find('.right-box').html(right_button_text);
+                        // t.$el.find('.right-box').on('click', {
+                        //     t: t
+                        // }, function(e) {                            
+                        //     if (t.config.id) {
+                        //         router.navigate('community_update/' + t.config.id, {
+                        //             trigger: true
+                        //         });
+                        //     }
+                        // });
                     }
                 } else {
                     $('#community-info-button-container').hide();
@@ -221,7 +181,7 @@ define('js/longyan/view/community_info', [
                     text: '房价:',
                     readonly: t.config.readonly,
                     placeholder: '元/㎡'
-                });     
+                });
                 $('<div class="gap basic-gap owner-gap"></div>').appendTo($(form_id));
                 t.community_developer_info_input = new TipsBar({
                     el: $(form_id)
@@ -230,7 +190,7 @@ define('js/longyan/view/community_info', [
                     text: '开发商信息',
                 });
                 //$('<hr>').appendTo($(form_id));
-               t.community_developer_input = new InputBox({
+                t.community_developer_input = new InputBox({
                     el: $(form_id)
                 }, {
                     fieldName: 'community-developer-input',
@@ -238,7 +198,7 @@ define('js/longyan/view/community_info', [
                     readonly: t.config.readonly
                 });
 
-                 t.community_building_age_input = new InputBox({
+                t.community_building_age_input = new InputBox({
                     el: $(form_id)
                 }, {
                     fieldName: 'community-building-age-input',
@@ -248,7 +208,7 @@ define('js/longyan/view/community_info', [
 
                 });
 
-               t.community_hotline_input = new InputBox({
+                t.community_hotline_input = new InputBox({
                     el: $(form_id)
                 }, {
                     fieldName: 'community-hotline-input',
@@ -257,20 +217,20 @@ define('js/longyan/view/community_info', [
                     readonly: t.config.readonly
                 });
                 $('<div class="gap basic-gap owner-gap"></div>').appendTo($(form_id));
-                 t.community_base_info_input = new TipsBar({
+                t.community_base_info_input = new TipsBar({
                     el: $(form_id)
                 }, {
                     fieldName: 'community-base-info-tipsbar',
                     text: '管理信息',
                 });
-               /*t.ownerXingMing_input = new InputBox({
-                    el: $(form_id)
-                }, {
-                    fieldName: 'ownerXingMing-input',
-                    text: '负责人',
-                    readonly: t.config.readonly
+                /*t.ownerXingMing_input = new InputBox({
+                     el: $(form_id)
+                 }, {
+                     fieldName: 'ownerXingMing-input',
+                     text: '负责人',
+                     readonly: t.config.readonly
 
-                });*/
+                 });*/
                 t.creator_input = new InputBox({
                     el: $(form_id)
                 }, {
@@ -300,7 +260,7 @@ define('js/longyan/view/community_info', [
                     readonly: t.config.readonly
                 });
 
-               if (t.config.report_detail) {
+                if (t.config.report_detail) {
                     //社区报表详情状态,隐藏负责人和创建时间
                     t.$el.find('.ownerXingMing-input').hide();
                     t.$el.find('.createDate-input').hide();
@@ -322,11 +282,11 @@ define('js/longyan/view/community_info', [
                     }
                 });*/
                 // 按钮
-              t.edit_community_button = new ButtonBox({
+                t.edit_community_button = new ButtonBox({
                     el: $(form_id)
                 }, {
                     fieldName: 'edit-community-button',
-                    text: '完善小区信息'
+                    text: '楼栋信息'
                 }, {
                     Click: function(e) {
                         //取出表单上显示的社区信息
@@ -488,7 +448,7 @@ define('js/longyan/view/community_info', [
                             //总面积
                             t.community_area_covered_input.setValue(community.areaMonut + '㎡');
                             //总户数
-                           // t.community_room_amount_input.setValue(community.roomMount + '户');
+                            // t.community_room_amount_input.setValue(community.roomMount + '户');
                             if (community.buildingAmount) {
                                 t.community_building_amount_input.setValue(community.buildingAmount + '幢');
                             } else {
@@ -507,7 +467,7 @@ define('js/longyan/view/community_info', [
                                 t.community_building_age_input.setValue(community.deliveryTime + '年');
                             } else {
                                 t.community_building_age_input.setValue('暂无');
-                            } 
+                            }
                             t.community_developer_input.setValue(community.developers);
                             t.community_hotline_input.setValue(community.hotline);
 
@@ -518,11 +478,11 @@ define('js/longyan/view/community_info', [
                                 t.createNumber_input.setValue(community.alreadyInputAmount);
                             } else {
                                 t.createNumber_input.setValue(0);
-                            } 
+                            }
                             /*if (community.createXingMing == null) {
                                $('.create-auth').find('span').html('');
                                //t.location_view.setValue({createAuth: null});
-                            }*/ 
+                            }*/
                             //t.ownerXingMing_input.setValue(community.ownerXingMing);
                             /*var createDate = community.createDate;
                             if (createDate && createDate.length > 9) {

@@ -74,9 +74,24 @@ header {
     background-color: @color-main-blue;
     border-bottom: 0.04rem solid #999;
 
+    height: 6.6rem;
+    border-bottom:1px solid #e2e2e2;    
+    background-color: @color-main-blue;
+
+
     .goback-button {
         width: auto;
         padding-right: 0;
+
+        //width: 6.2rem;
+        //height: 4.4rem;
+        //margin-top: 2.2rem;
+        //line-height: 4.4rem;    
+        //font-size: 1.8rem;
+        //color: #566b96;
+        //float: left;
+        //padding-right: 3rem;
+
 
         i {
             font-size: 1.5rem;
@@ -84,6 +99,11 @@ header {
             margin-left: 0.8rem;
             color: @color-white;
             padding: 0;
+
+            //line-height: 4.4rem;    
+            //font-size: 1.8rem;
+            //color: #323232;    
+            //padding-left: 1.5rem;
         }
     }
 
@@ -94,12 +114,39 @@ header {
         color: #0091ea;
         pointer-events: all;
 
+        //width: 6.2rem;
+        //height: 4.4rem;
+        //margin-top: 2.2rem;
+        //line-height: 4.4rem;    
+        //font-size: 1.6rem;
+        //color: #1680fa;
+        //float: left;
+        //padding: 0 1.5rem;
+
+
         i{
             padding: 0;
             font-size: 3.4rem;
             line-height: 4rem;
             color: @color-white;
         }
+    }
+
+    .u-full span{
+        height: 4.4rem;
+        display:-moz-inline-box; 
+        display: inline-block;
+        color: #323232;
+    }
+
+    .text{
+        height: 4.4rem;
+        margin-top: 2.2rem;
+        line-height: 4.4rem;
+        text-align: center;
+        font-size: 1.8rem;
+        color: #323232;
+        float: left;
     }
 
     .text.title {
@@ -128,65 +175,6 @@ header {
         }
     }    
 }
-
-
-
-
-.header-box{
-    height: 6.6rem;
-    border-bottom:1px solid #e2e2e2;    
-    background-color: #fff;
-}
-.header-box .text{
-    height: 4.4rem;
-    margin-top: 2.2rem;
-    line-height: 4.4rem;
-    text-align: center;
-    font-size: 1.8rem;
-    color: #323232;
-    float: left;
-}
-
-.header-box .goback-button{
-    width: 6.2rem;
-    height: 4.4rem;
-    margin-top: 2.2rem;
-    line-height: 4.4rem;    
-    font-size: 1.8rem;
-    color: #566b96;
-    float: left;
-    padding-right: 3rem;
-}
-
-.header-box .goback-button i{        
-    line-height: 4.4rem;    
-    font-size: 1.8rem;
-    color: #323232;    
-    padding-left: 1.5rem;
-}
-
-.header-box .right-box{
-    width: 6.2rem;
-    height: 4.4rem;
-    margin-top: 2.2rem;
-    line-height: 4.4rem;    
-    font-size: 1.6rem;
-    color: #1680fa;
-    float: left;
-    padding: 0 1.5rem;
-}
-.header-box .u-full span{
-    height: 4.4rem;
-    display:-moz-inline-box; 
-    display: inline-block;
-    color: #323232;
-}
-/*.header-box .u-full .bar-activate{
-    border-bottom:1px solid #1680fa;    
-    color: #1680fa;
-}*/
-
-
 
 .header-box a:link{
     text-decoration:none;
