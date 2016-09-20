@@ -1,0 +1,61 @@
+
+@import "../public/variables";
+//input 组件
+
+/*移除HTML5 input在type="number"时的上下小箭头*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{
+    -webkit-appearance: none !important;
+    margin: 0; 
+}
+input[type="number"]{-moz-appearance:textfield;}
+
+
+input::input-placeholder { 
+	text-align: right; 
+	color: @color-comment-font;
+}
+input::-ms-input-placeholder{
+	text-align: right;
+	color: @color-comment-font;
+
+} 
+input::-webkit-input-placeholder{
+	text-align: right;
+	color: @color-comment-font;
+    
+} 
+input{ 
+	outline: none;
+}
+
+.input-box{
+    margin: 0 0 0 1.5rem;
+    padding-right: 1.5rem;
+	height: 4.2rem;
+	line-height: 4.2rem;
+	font-size: @font-size-32;
+	border-bottom:1px solid #e2e2e2;
+	padding-bottom: 1px;
+    background-color: #fff;
+}
+
+.input-box .label{
+	float: left;
+	z_index:999;
+    color: @color-menu-font;
+    font-size:@font-size-32;
+}
+.input-box input{
+	z_index:1;
+	padding: 0px 0px 0px 1.5rem;
+	border:0px;
+	font-size: @font-size-28;
+	height: 4.2rem;
+	float: left;
+    box-sizing:border-box;
+    display: block;
+    -webkit-appearance: none;
+    background: transparent;
+    text-align : right;
+}

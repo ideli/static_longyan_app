@@ -1,0 +1,44 @@
+@import "../public/variables";
+
+
+
+.tab-box{
+    text-align: center;
+    height: 6rem;
+    padding-top: 1.5rem;
+}
+
+.tab-box .tab-container-box{
+    margin: 0 auto;
+    width: 15.75rem;
+}
+
+.tab-box .tab-container-box .tab-item-box{
+    float: left;
+    width: 50%;
+    height: 3rem;
+    line-height: 3rem;
+    font-size: 1.4rem;
+    background-color: #fff;
+    color: #21c393;
+    border: 0.1rem solid #21c393;
+}
+
+
+
+.tab-box .tab-container-box .tab-item-box:first-child{
+    -moz-border-radius: 0.5rem 0px 0px 0.5rem;      /* Gecko browsers */
+    -webkit-border-radius: 0.5rem 0px 0px 0.5rem;   /* Webkit browsers */
+    border-radius:0.5rem 0px 0px 0.5rem;            /* W3C syntax */
+}
+
+.tab-box .tab-container-box .tab-item-box:last-child{
+    -moz-border-radius: 0rem 0.5rem 0.5rem 0rem;      /* Gecko browsers */
+    -webkit-border-radius: 0rem 0.5rem 0.5rem 0rem;   /* Webkit browsers */
+    border-radius:0rem 0.5rem 0.5rem 0rem;            /* W3C syntax */
+}
+
+.tab-box .tab-container-box .tab-item-box[selected]{
+    background-color: #21c393;
+    color: #fff;
+}

@@ -10,18 +10,18 @@ textarea{resize:none; outline: none;}
     height: 1.5rem;
     background-color:#efeff4;
 }
-.input-box input {
-    font-size: 1.4rem;
-}
-input::-ms-input-placeholder {
-    font-size: 1.4rem;
-}
-input::-webkit-input-placeholder {
-    font-size: 1.4rem;
-}
-input::input-placeholder {
-    font-size: 1.4rem;
-}
+//.input-box input {
+//    font-size: 1.4rem;
+//}
+//input::-ms-input-placeholder {
+//   font-size: 1.4rem;
+//}
+//input::-webkit-input-placeholder {
+//    font-size: 1.4rem;
+//}
+//input::input-placeholder {
+//    font-size: 1.4rem;
+//}
 img  {vertical-align: middle;}
 .think-input-box {
     border-bottom: none;
@@ -90,16 +90,16 @@ img  {vertical-align: middle;}
 #login-view .reg-button .text{
     color: #1680fa;
 }
-.button-box .text {
-    height: 4.4rem;
-    line-height: 4.4rem;
-}
+//.button-box .text {
+//    height: 4.4rem;
+//    line-height: 4.4rem;
+//}
 .ui-alert-fund591-mask {
     background: rgba(0, 0, 0, .4);
 }
 /*重置密码页*/
 #reset-view{
-    margin-top: 1.5rem;
+    //margin-top: 1.5rem;
     background-color: #efeff4;
     width: 100%;
 }
@@ -110,8 +110,7 @@ img  {vertical-align: middle;}
 }
 
 #reset-view .submit-button{
-    margin-top: 3.5rem;
-    height: 4.4rem;
+    margin-top: @font-size-80;    
 }
 
 #reset-view .confirm-password-input input{
@@ -201,19 +200,6 @@ img  {vertical-align: middle;}
 }
 #reset-view .forgetPassword .otp-box .button.disable {
     color: #787878;
-}
-
-#reset-form input::input-placeholder {
-    text-align: left;
-    color: #b7b7b7
-}
-#reset-form input::-ms-input-placeholder {
-    text-align: left;
-    color: #b7b7b7
-}
-#reset-form input::-webkit-input-placeholder {
-    text-align: left;
-    color: #b7b7b7
 }
 .success-info {
     display: inline-block;
@@ -2053,6 +2039,14 @@ img  {vertical-align: middle;}
 #reset-view.feedback #reset-form {
     padding: 0 0 0 1.5rem;
     height: 100%;
+
+    #textarea-form{
+        margin-top: 0.85rem;
+
+        .submit-button{
+            margin-left:0;
+        }
+    }
 }
 #reset-view.feedback #reset-form #feedback-form {
     display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
@@ -2069,38 +2063,49 @@ img  {vertical-align: middle;}
     font-size: 1.5rem;
     background: #fff;
 }
-#reset-view.feedback #reset-form .button-box {
-    margin: 0 1rem 1.5rem 0;
-    width: 8.8rem;
-    height: 3.3rem;
-    line-height: 3.3rem;
-    border: 1px solid #e2e2e2;
-    background-color: transparent;
-    -moz-border-radius: 0.16rem;
-    -webkit-border-radius: 0.16rem;
-    border-radius: 0.16rem;
-    color: #323232;
+#reset-view.feedback #reset-form{
+    #feedback-form{
+        .button-box {
+            margin: 0 1.7rem 1.28rem 0;
+            width: 8rem;
+            height: 2.72rem;
+            line-height: 2.72rem;
+            border: 1px solid #e2e2e2;
+            background-color: transparent;
+            -moz-border-radius: 0.16rem;
+            -webkit-border-radius: 0.16rem;
+            border-radius: 0.17rem;
+            color: @color-text-font;
+            .text{
+                height: 2.72rem;
+                line-height: 2.72rem;
+                font-size:1.2rem;
+            }
 
-}
+        }
+    }
+} 
 #reset-view.feedback #reset-form .active {
     border: 1px solid #1680fa;
     background-color: #1680fa;
 }
 #reset-view.feedback #reset-form .button-box .text {
-    height: 3.3rem;
-    line-height: 3.3rem;
-    font-size: 1.4rem;
-    color: #323232;
+  
 }
-#reset-view.feedback #reset-form .active .text {
+#reset-view.feedback #reset-form #feedback-form .active .text {
     color: #fff;
+    background-color: @color-main-blue;
+}
+#reset-view.feedback #reset-form #feedback-form  .text {
+    color: @color-text-font;
+    background-color: @color-white;
 }
 #reset-view.feedback #reset-form .tips-bar.title-tips {
-    height: 2rem;
-    line-height: 2rem;
+    height: 1.2rem;
+    line-height: 1.2rem;
     width: 100%;
     padding: 0;
-    margin: 2rem 0;
+    margin: 2.13rem 0 1.7rem 0;
 }
 
 #reset-view.feedback #reset-form .textarea-box {
@@ -2109,28 +2114,46 @@ img  {vertical-align: middle;}
     border-top: 1px solid #e2e2e2;
     border-bottom: 1px solid #e2e2e2;
     position: relative;
+
+    textarea {
+        width: 96%;
+        height: 12.5rem;
+        line-height: 2.5rem;
+        color: #323232;
+        border: 0;
+        -moz-border-radius: 0.2rem;
+        -webkit-border-radius: 0.2rem;
+        border-radius: 0.2rem;
+        font-size: 1.4rem;
+        //padding: 1rem;
+        padding-top:1.27rem;
+    }
+    textarea::input-placeholder {       
+        color: @color-comment-font;
+        font-size:@font-size-28;
+        line-height: @font-size-28;
+    }
+    textarea::-ms-input-placeholder{      
+        color: @color-comment-font;
+        font-size:@font-size-28;
+        line-height: @font-size-28;
+    } 
+    textarea::-webkit-input-placeholder{      
+        color: @color-comment-font;
+        font-size:@font-size-28;
+        line-height: @font-size-28;
+    } 
 }
-#reset-view.feedback #reset-form .textarea-box  textarea {
-    width: 96%;
-    height: 12.5rem;
-    line-height: 2.5rem;
-    color: #323232;
-    border: 0;
-    -moz-border-radius: 0.2rem;
-    -webkit-border-radius: 0.2rem;
-    border-radius: 0.2rem;
-    font-size: 1.4rem;
-    padding: 1rem;
-}
+
 #reset-view.feedback #reset-form .textarea-box  textarea:focus {
     border: 0;
 }
 #reset-view.feedback #reset-form .input-box {
     margin: 0;
-    font-size: 1.4rem;
+    //font-size: 1.4rem;
 }
 #reset-view.feedback #reset-form .input-box input {
-    font-size: 1.4rem;
+    
 }
 #reset-view.feedback-success #reset-form {
     width: 100%;

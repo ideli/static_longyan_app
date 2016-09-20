@@ -31,7 +31,7 @@
 define('js/components/alert_ui_v2', function(require) {
     var defaultOptions = {
         // whether show close button
-        closeable: true,
+        closeable: false,
 
         // whether need mask
         needMask: true,
@@ -45,7 +45,7 @@ define('js/components/alert_ui_v2', function(require) {
         loadingText: '',
 
         // whether show title
-        titleText: '',
+        titleText: '提示',
         // alert content
         content: '',
 

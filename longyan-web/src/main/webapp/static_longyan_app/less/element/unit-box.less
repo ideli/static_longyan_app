@@ -1,0 +1,93 @@
+@import "../public/variables";
+
+/* unit-box 组件*/
+.unit-box{
+    font-size: 1.3rem;
+    background-color: #fff;
+    padding: 30px 24px;
+}
+.unit-box-title{
+    width: 100%;
+    height: 3.8rem;
+    /*line-height: 3.8rem;*/
+}
+.unit-box-content{
+width: 100%;
+}
+.unit-item-block{
+    width: 20px;
+    height: 3.4rem;
+}
+.unit-box-content .unit-item{
+        height: 3.4rem;
+        line-height: 3.4rem;
+        position: relative;
+        padding: 0 20px;
+        border: 1px solid #e1e1e1;
+        margin-left: 18px;
+        width: 23%;
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+}
+.unit-box-content .unit-item input{
+    border: 0;
+    width: 100%;
+    text-align: left;
+}
+.unit-box-content .unit-item input.readonly{
+    text-align: center;
+}
+.unit-box-content .unit-item input::-webkit-input-placeholder{
+     font-size: 1.1rem;
+}
+@media screen and (max-width: 640px){
+    .unit-box-content .unit-item{
+        margin-left: 22px;
+        width: 22%;
+    }
+}
+.unit-box-content .unit-item:nth-child(4n+1){
+    margin-left: 0;
+}
+.unit-box-content .unit-item.add-input,.unit-box-content.edit .unit-item.add-input{
+    text-align: center;
+}
+.unit-box-content .unit-item.add-btn,.unit-box-content.edit .unit-item.add-btn{
+    text-align: center;
+    cursor: pointer;
+    color: #0091ea;
+}
+.unit-box-content.edit .unit-item.add-input,.unit-box-content.edit .unit-item.add-btn,.unit-box-content.edit .unit-item.pre-add{
+    display:none;
+}
+.unit-box-content.edit .unit-item input{
+    text-align:left;
+}
+.unit-item .add-input:placeholder {
+    color: red;
+}
+.unit-box-content .unit-item.add-btn i{
+        font-size: 1.6rem;
+    vertical-align: middle;
+    padding-right: 5px;
+    font-weight: 700;
+}
+.unit-box-content .unit-item.pre-add i{
+    font-size:2.4rem;
+    right: 0px;
+    position: absolute;
+    color:#ccc;
+}
+.unit-box-content .unit-item.pre-add input{
+    width:70%;
+}
+.unit-box-content .unit-item.delete-select i{
+    font-size:2.4rem;
+    right: 0px;
+    position: absolute;
+    color:#34c47e;
+}
+.unit-box-content .unit-item.delete-select input{
+    width:70%;
+}
+/* unit-box 组件 end */

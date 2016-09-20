@@ -1,0 +1,193 @@
+
+/*html {
+ height: 100%;
+ font-size: 5rem;
+}*/
+/*@media  screen and(min-width: 640px){ 
+
+    html {
+         height: 100%;
+         font-size: 100px;
+    }   
+}
+@media  screen and(min-width: 750px){
+    
+    html {
+         height: 100%;
+         font-size: 117px;
+    }
+
+}
+@media (min-width: 1200){
+    
+
+}*/
+
+html{
+    font-size:10px;
+    /*height: 100%;*/
+}
+@media screen and (min-width:321px) and (max-width:375px){html{font-size:11px}}
+@media screen and (min-width:376px) and (max-width:414px){html{font-size:12px}}
+@media screen and (min-width:415px) and (max-width:639px){html{font-size:15px}}
+@media screen and (min-width:640px) and (max-width:719px){html{font-size:20px}}
+@media screen and (min-width:720px) and (max-width:749px){html{font-size:22.5px}}
+@media screen and (min-width:750px) and (max-width:799px){html{font-size:23.5px}}
+@media screen and (min-width:800px){html{font-size:25px}}
+
+body {
+ height: 100%;
+ background-color: #efeff4;
+}
+
+.clearfix:after {
+    content: "";
+    display: block;
+    clear: both;
+    height: 0;
+    line-height: 0;
+    visibility: hidden; 
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.textr{
+  text-align: right;
+}
+.pr{
+    position: relative;
+}
+.nowrap_ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+}
+.nowrap_ellipsis2{
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.unselect-view{
+   -moz-user-select: none; /*火狐*/
+-webkit-user-select: none; /*webkit浏览器*/
+-ms-user-select: none; /*IE10*/
+-khtml-user-select: none; /*早期浏览器*/
+user-select: none;
+overflow:hidden;
+}
+
+.g-hrz > .u-full{
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    width: 0;
+    -webkit-flex-basis: 0;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    max-width: 100%;
+    display: block;
+    /*padding: 0!important;*/
+    position: relative;
+}
+ .u-full{
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    display: block;
+}
+.u-wrap{
+    -webkit-box-flex: initial;
+    -webkit-flex: initial;
+    flex: initial;
+    /*width: 0;*/
+   /*  -webkit-flex-basis: 0;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;*/
+    max-width: 100%;
+    display: block;
+     position: relative;
+     box-flex-group:0;
+     box-flex:0;
+}
+.g-hrz{
+
+  /*  display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;*/
+
+    /*天猫的flex*/
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.g-hrz, .g-hrz *, .g-hrz :after, .g-hrz :before{
+    box-sizing: border-box;
+}
+.g-flex{
+    display: -webkit-box!important;
+    display: -webkit-flex!important;
+    display: -ms-flexbox!important;
+    display: flex!important;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.center{
+    text-align: center;
+}
+
+a, a:link, a:visited, a:hover, a:active{
+    text-decoration:none;
+}
+
+
+.basic-view{
+    /*margin-top: 11.4rem;*/
+    padding-top: 6.65rem;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    /* 增加该属性，可以增加弹性，是滑动更加顺畅 */
+    -webkit-overflow-scrolling: touch; 
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    min-height: 48rem;
+    background: #fff;
+}
+
+
+
+
+.pageContainer{
+    margin: 0 auto;
+}
+
+.hidden{
+    display: none;
+}
+
+.clear-both{
+    clear:both
+}
+
+

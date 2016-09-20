@@ -1,0 +1,207 @@
+@import "../public/variables";
+
+
+#header-container{
+    position: fixed;
+    /*position: absolute;*/
+    z-index: 999;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 6.6rem;
+}
+
+
+
+header {
+    height: 2.2rem;
+    z-index: 3000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    text-align: center;
+    color: #333;
+    line-height: 2.2rem;
+    background-color: #fff;
+    font-size: 0.9px;
+    width: 100%;
+    -webkit-transform: translateZ(0);
+}
+
+#header_container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 1px 1px -1px #ccc;
+}
+
+#back_btn {
+    z-index: 1000001;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 2.2rem;
+    width: 2rem;
+/*    background: url(../images/back_btn-44876e3d.png) no-repeat;*/
+    background-size: 2rem 2.2rem;
+    display: none;
+}
+#header_content {
+    position: fixed;
+    height: 2.2rem;
+    line-height: 2.2rem;
+    left: 0;
+    right: 0;
+}
+
+#header-container .submit-button ,#header-container-Desc-info-input .submit-button-view {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: #1680fa;
+    height: 4.4rem;
+    line-height: 4.4rem;
+
+}
+
+#header-container-Desc-info-input {
+    position: relative;
+}
+
+.header-box {
+    background-color: @color-main-blue;
+    border-bottom: 0.04rem solid #999;
+
+    .goback-button {
+        width: auto;
+        padding-right: 0;
+
+        i {
+            font-size: 1.5rem;
+            text-align: left;
+            margin-left: 0.8rem;
+            color: @color-white;
+            padding: 0;
+        }
+    }
+
+    .right-box {
+        padding: 0rem 1.5rem;
+        width: auto;
+        font-size: 1.2rem;
+        color: #0091ea;
+        pointer-events: all;
+
+        i{
+            padding: 0;
+            font-size: 3.4rem;
+            line-height: 4rem;
+            color: @color-white;
+        }
+    }
+
+    .text.title {
+        color: @color-white;
+        font-size: 1.5rem;
+    }
+    .headHtm {
+        margin: 0.5rem auto 0 auto;
+        width: 17rem;
+        height: 3rem;
+        overflow: hidden;
+        border: 1px solid #0091ea;
+        border-radius: 0.4rem;
+        line-height: 3rem;
+
+        dd{
+            width: 50%;
+            display: inline-block;
+            background: #F5F5F5 ;
+            color: @color-white;
+            font-size: 1.4rem;
+        }
+        dd.active {
+            background: #0091ea ;
+            color: @color-white;
+        }
+    }    
+}
+
+
+
+
+.header-box{
+    height: 6.6rem;
+    border-bottom:1px solid #e2e2e2;    
+    background-color: #fff;
+}
+.header-box .text{
+    height: 4.4rem;
+    margin-top: 2.2rem;
+    line-height: 4.4rem;
+    text-align: center;
+    font-size: 1.8rem;
+    color: #323232;
+    float: left;
+}
+
+.header-box .goback-button{
+    width: 6.2rem;
+    height: 4.4rem;
+    margin-top: 2.2rem;
+    line-height: 4.4rem;    
+    font-size: 1.8rem;
+    color: #566b96;
+    float: left;
+    padding-right: 3rem;
+}
+
+.header-box .goback-button i{        
+    line-height: 4.4rem;    
+    font-size: 1.8rem;
+    color: #323232;    
+    padding-left: 1.5rem;
+}
+
+.header-box .right-box{
+    width: 6.2rem;
+    height: 4.4rem;
+    margin-top: 2.2rem;
+    line-height: 4.4rem;    
+    font-size: 1.6rem;
+    color: #1680fa;
+    float: left;
+    padding: 0 1.5rem;
+}
+.header-box .u-full span{
+    height: 4.4rem;
+    display:-moz-inline-box; 
+    display: inline-block;
+    color: #323232;
+}
+/*.header-box .u-full .bar-activate{
+    border-bottom:1px solid #1680fa;    
+    color: #1680fa;
+}*/
+
+
+
+.header-box a:link{
+    text-decoration:none;
+    color: #323232;
+}
+.header-box a:visited{
+    text-decoration:none;    
+    color: #323232;
+}
+.header-box a:hover{
+    text-decoration:none;
+    color: #323232;
+}
+.header-box a:active{
+    text-decoration:none;
+    color: #323232;
+}
+

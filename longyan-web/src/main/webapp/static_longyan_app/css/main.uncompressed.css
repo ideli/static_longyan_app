@@ -15,18 +15,6 @@ textarea {
   height: 1.5rem;
   background-color: #efeff4;
 }
-.input-box input {
-  font-size: 1.4rem;
-}
-input::-ms-input-placeholder {
-  font-size: 1.4rem;
-}
-input::-webkit-input-placeholder {
-  font-size: 1.4rem;
-}
-input::input-placeholder {
-  font-size: 1.4rem;
-}
 img {
   vertical-align: middle;
 }
@@ -85,16 +73,11 @@ img {
 #login-view .reg-button .text {
   color: #1680fa;
 }
-.button-box .text {
-  height: 4.4rem;
-  line-height: 4.4rem;
-}
 .ui-alert-fund591-mask {
   background: rgba(0, 0, 0, 0.4);
 }
 /*重置密码页*/
 #reset-view {
-  margin-top: 1.5rem;
   background-color: #efeff4;
   width: 100%;
 }
@@ -102,8 +85,7 @@ img {
   background-color: #fff;
 }
 #reset-view .submit-button {
-  margin-top: 3.5rem;
-  height: 4.4rem;
+  margin-top: 3.40425532rem;
 }
 #reset-view .confirm-password-input input {
   width: 16.5rem;
@@ -184,18 +166,6 @@ img {
 }
 #reset-view .forgetPassword .otp-box .button.disable {
   color: #787878;
-}
-#reset-form input::input-placeholder {
-  text-align: left;
-  color: #b7b7b7;
-}
-#reset-form input::-ms-input-placeholder {
-  text-align: left;
-  color: #b7b7b7;
-}
-#reset-form input::-webkit-input-placeholder {
-  text-align: left;
-  color: #b7b7b7;
 }
 .success-info {
   display: inline-block;
@@ -2011,6 +1981,12 @@ img {
   padding: 0 0 0 1.5rem;
   height: 100%;
 }
+#reset-view.feedback #reset-form #textarea-form {
+  margin-top: 0.85rem;
+}
+#reset-view.feedback #reset-form #textarea-form .submit-button {
+  margin-left: 0;
+}
 #reset-view.feedback #reset-form #feedback-form {
   display: -webkit-box;
   /* OLD - iOS 6-, Safari 3.1-6 */
@@ -2030,37 +2006,41 @@ img {
   font-size: 1.5rem;
   background: #fff;
 }
-#reset-view.feedback #reset-form .button-box {
-  margin: 0 1rem 1.5rem 0;
-  width: 8.8rem;
-  height: 3.3rem;
-  line-height: 3.3rem;
+#reset-view.feedback #reset-form #feedback-form .button-box {
+  margin: 0 1.7rem 1.28rem 0;
+  width: 8rem;
+  height: 2.72rem;
+  line-height: 2.72rem;
   border: 1px solid #e2e2e2;
   background-color: transparent;
   -moz-border-radius: 0.16rem;
   -webkit-border-radius: 0.16rem;
-  border-radius: 0.16rem;
-  color: #323232;
+  border-radius: 0.17rem;
+  color: #666666;
+}
+#reset-view.feedback #reset-form #feedback-form .button-box .text {
+  height: 2.72rem;
+  line-height: 2.72rem;
+  font-size: 1.2rem;
 }
 #reset-view.feedback #reset-form .active {
   border: 1px solid #1680fa;
   background-color: #1680fa;
 }
-#reset-view.feedback #reset-form .button-box .text {
-  height: 3.3rem;
-  line-height: 3.3rem;
-  font-size: 1.4rem;
-  color: #323232;
-}
-#reset-view.feedback #reset-form .active .text {
+#reset-view.feedback #reset-form #feedback-form .active .text {
   color: #fff;
+  background-color: #0091ea;
+}
+#reset-view.feedback #reset-form #feedback-form .text {
+  color: #666666;
+  background-color: #ffffff;
 }
 #reset-view.feedback #reset-form .tips-bar.title-tips {
-  height: 2rem;
-  line-height: 2rem;
+  height: 1.2rem;
+  line-height: 1.2rem;
   width: 100%;
   padding: 0;
-  margin: 2rem 0;
+  margin: 2.13rem 0 1.7rem 0;
 }
 #reset-view.feedback #reset-form .textarea-box {
   margin: 0;
@@ -2079,17 +2059,28 @@ img {
   -webkit-border-radius: 0.2rem;
   border-radius: 0.2rem;
   font-size: 1.4rem;
-  padding: 1rem;
+  padding-top: 1.27rem;
+}
+#reset-view.feedback #reset-form .textarea-box textarea::input-placeholder {
+  color: #999999;
+  font-size: 1.19148936rem;
+  line-height: 1.19148936rem;
+}
+#reset-view.feedback #reset-form .textarea-box textarea::-ms-input-placeholder {
+  color: #999999;
+  font-size: 1.19148936rem;
+  line-height: 1.19148936rem;
+}
+#reset-view.feedback #reset-form .textarea-box textarea::-webkit-input-placeholder {
+  color: #999999;
+  font-size: 1.19148936rem;
+  line-height: 1.19148936rem;
 }
 #reset-view.feedback #reset-form .textarea-box textarea:focus {
   border: 0;
 }
 #reset-view.feedback #reset-form .input-box {
   margin: 0;
-  font-size: 1.4rem;
-}
-#reset-view.feedback #reset-form .input-box input {
-  font-size: 1.4rem;
 }
 #reset-view.feedback-success #reset-form {
   width: 100%;

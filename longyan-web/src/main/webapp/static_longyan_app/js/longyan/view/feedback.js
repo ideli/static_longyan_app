@@ -14,7 +14,7 @@ define('js/longyan/view/feedback', [
         'js/api/feedback',
         'js/util/hybrid'
     ],
-    function(feedbackTpl, Cache, AlertUI, HeaderView, InputBox, textareaBox, buttonBox, LinkBox, TipsBar, FeedbackApi, hybrid) {
+    function(feedbackTpl, Cache, AlertUI, HeaderView, InputBox, textareaBox, ButtonBox, LinkBox, TipsBar, FeedbackApi, hybrid) {
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#feedback-form';
         var form_id = '#textarea-form';
@@ -35,7 +35,7 @@ define('js/longyan/view/feedback', [
                 t.$el.html(tpl(feedbackTpl, {}));
                 var __isVerify = function() {
                     if (t.desc_info_input.isVerify()) {
-                        if(t.desc_info_input.getValue().length>=5){
+                        if (t.desc_info_input.getValue().length >= 5) {
                             return true;
                         }
                     }
@@ -60,9 +60,11 @@ define('js/longyan/view/feedback', [
                 t.header_view = new HeaderView({
                     el: $('#header-container')
                 }, {
-                    text: '意见反馈',
+                    text: '吐槽',
                     goBackUrl: function() { //未保存直接返回提示
                         tipsAlert.open({
+                            closeable: false,
+                            titleText: '提示',
                             cancelText: '否',
                             confirmText: '是',
                             content: '您是否放弃保存',
@@ -80,12 +82,14 @@ define('js/longyan/view/feedback', [
                         });
                     }
                 });
+                $('#header-container .link-box').hide();
+
                 //title
                 t.tips_bar = new TipsBar({
                     el: $(view_id)
                 }, {
                     fieldName: 'title-tips',
-                    text: '反馈问题类型'
+                    text: '吐槽类型'
                 });
 
                 //反馈类型遍历
@@ -100,14 +104,14 @@ define('js/longyan/view/feedback', [
                             var nameStr = data.result[i].name;
                             var idNumber = data.result[i].id;
                             //反馈意见列表 
-                            t.feedback_button = new buttonBox({
+                            t.feedback_button = new ButtonBox({
                                 el: $(view_id)
                             }, {
                                 fieldName: aliasStr + '-button',
                                 text: nameStr
                             });
                         }
-                        $('.button-box').on('click', function() {
+                        $('#feedback-form .button-box').on('click', function() {
                             $('.button-box').removeClass('active');
                             $(this).addClass('active');
                             var feedbackInd = $(this).index();
@@ -156,16 +160,73 @@ define('js/longyan/view/feedback', [
                     }
                 });
 
+                //组装提交按钮
+                t.submit_button = new ButtonBox({
+                    el: $(form_id)
+                }, {
+                    fieldName: 'submit-button',
+                    text: '提交'
+                }, {
+                    Click: function(e) {
+                        var resultInfo = Cache.get('result-info');
+                        var userInfo = Cache.get('user-info');
+                        var feedbackLen = $('#feedback-form .active').length;
+                        var feedbackIndex = Cache.get('feedback-index');
+                        var feedbackInd = parseInt(feedbackIndex.feedbackInd) - 1;
+                        if (feedbackLen == 1) {
+                            if (__isVerify()) {
+                                //保存意见反馈
+                                var descInfoContent = t.desc_info_input.getValue();
+                                var descInfoAlias = resultInfo.result[feedbackInd].alias;
+                                var descInfoName = userInfo.xingMing;
+                                var descInfoPhone = t.phone_input.getValue();
+                                tipsAlert.openLoading({
+                                    content: '加载中...'
+                                });
+
+                                FeedbackApi.feedbackCreate(descInfoContent, descInfoAlias, descInfoName, descInfoPhone, function() {
+                                        //success
+                                        setTimeout("router.navigate('feedback_success', {trigger: true});", "2000");
+                                        //关闭loading
+                                        // tipsAlert.close();
+                                    },
+                                    function(code, msg) {
+                                        //关闭loading
+                                        tipsAlert.close();
+                                        //error
+                                        tipsAlert.openAlert({
+                                            content: msg
+                                        });
+                                    });
+                            } else {
+                                tipsAlert.openAlert({
+                                    closeable: false,
+                                    titleText: '提示',
+                                    content: '填写内容不能少于5个字'
+                                });
+                            }
+                        } else {
+                            tipsAlert.openAlert({
+                                closeable: false,
+                                titleText: '提示',
+                                content: '请选择反馈类型'
+                            });
+                            return false;
+                        }
+                    }
+                });
+
                 //文本域输入时，字符提示
                 $("textarea").after("<div class='textarea-length'>100/<span id='textarea-count'>100</span></div>");
 
                 //保存按钮
-                t.submit_button = new LinkBox({
-                    el: $('#header-container')
-                }, {
-                    fieldName: 'submit-button',
-                    text: '保存'
-                });
+                // t.submit_button = new LinkBox({
+                //     el: $('#header-container')
+                // }, {
+                //     fieldName: 'submit-button',
+                //     text: '保存'
+                // });
+
                 //文本域输入时，浮层显示
                 /*$('.Desc-info-input textarea').on('click', function() {
                          $('#textarea-box-pop-view').show();
@@ -208,51 +269,7 @@ define('js/longyan/view/feedback', [
                               trigger: true
                           });
                  });*/
-                //保存按钮
-                t.$el.find('.submit-button').on('click', function() {
-                    var resultInfo = Cache.get('result-info');
-                    var userInfo = Cache.get('user-info');
-                    var feedbackLen = $('#feedback-form .active').length;
-                    var feedbackIndex = Cache.get('feedback-index');
-                    var feedbackInd = parseInt(feedbackIndex.feedbackInd) - 1;
-                    if (feedbackLen == 1) {
-                        if (__isVerify()) {
-                            //保存意见反馈
-                            var descInfoContent = t.desc_info_input.getValue();
-                            var descInfoAlias = resultInfo.result[feedbackInd].alias;
-                            var descInfoName = userInfo.xingMing;
-                            var descInfoPhone = t.phone_input.getValue();
-                            tipsAlert.openLoading({
-                                content: '加载中...'
-                            });
 
-                            FeedbackApi.feedbackCreate(descInfoContent, descInfoAlias, descInfoName, descInfoPhone, function() {
-                                    //success
-                                    setTimeout("router.navigate('feedback_success', {trigger: true});", "2000");
-                                    //关闭loading
-                                    // tipsAlert.close();
-                                },
-                                function(code, msg) {
-                                    //关闭loading
-                                    tipsAlert.close();
-                                    //error
-                                    tipsAlert.openAlert({
-                                        content: msg
-                                    });
-                                });
-                        } else {
-                            tipsAlert.openAlert({
-                                content: '填写内容不能少于5个字'
-                            });
-                        }
-                    } else {
-                        tipsAlert.openAlert({
-                            content: '请选择反馈类型'
-                        });
-                        return false;
-                    }
-
-                });
             }, //文本域输入时，字符提示
             changeLength: function() {
                 var t = this,
