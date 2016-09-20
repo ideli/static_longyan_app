@@ -716,8 +716,8 @@ a:active {
 }
 
 .button-box {
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
+  margin-left: 1.27659574rem;
+  margin-right: 1.27659574rem;
   height: 3.4rem;
   background-color: #0091ea;
   -moz-border-radius: 0.25rem;
@@ -1275,7 +1275,7 @@ input {
 }
 .input-box {
   margin: 0 0 0 1.5rem;
-  padding-right: 1.5rem;
+  padding-right: 1.27659574rem;
   height: 4.2rem;
   line-height: 4.2rem;
   font-size: 1.36170213rem;

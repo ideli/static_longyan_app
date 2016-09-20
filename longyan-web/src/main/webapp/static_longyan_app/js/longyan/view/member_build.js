@@ -15,15 +15,15 @@ define('js/longyan/view/member_build', [
         'js/element/view/link-box',
         'js/element/view/tips-bar',
         'js/element/view/list-box',
-         'js/element/view/group-button-box',
-       'js/api/member'
+        'js/element/view/group-button-box',
+        'js/api/member'
     ],
-    function( MemberBuildListTpl, MemberBuildListItemTpl, NoDataTpl, NoNetworkTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox,GroupButtonBox, MemberApi) {
+    function(MemberBuildListTpl, MemberBuildListItemTpl, NoDataTpl, NoNetworkTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox, GroupButtonBox, MemberApi) {
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#member-build-view';
         var form_id = '#member-build-form';
         var btn_id = '#member-build-btn';
-        
+
         var LayoutView = Backbone.View.extend({
             events: {
 
@@ -46,7 +46,7 @@ define('js/longyan/view/member_build', [
                     router.navigate('', {
                         trigger: true
                     });
-                }; 
+                };
                 t.$el.html(tpl(MemberBuildListTpl, {}));
                 t.header_view = new HeaderView({
                     el: $('#header-container')

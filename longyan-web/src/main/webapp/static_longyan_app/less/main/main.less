@@ -7,7 +7,7 @@ input,button,select,textarea{ outline:none; }
 textarea{resize:none; outline: none;}
 
 .basic-gap{
-    height: 1.5rem;
+    height: @size-20;
     background-color:#efeff4;
 }
 //.input-box input {
@@ -550,47 +550,58 @@ img  {vertical-align: middle;}
 #community-info-form{
     margin: 0;
     padding-bottom: 1.5rem;
-}
-#community-info-form .input-box .label, #member-info-view .input-box .label {
-    color: #666666;
-    font-size: 1.4rem;
-    width: 7.6rem;
-    text-align:justify;
-    text-justify:distribute-all-lines;/*ie6-8*/
-    text-align-last:justify;/* ie9*/
-    -moz-text-align-last:justify;/*ff*/
-    -webkit-text-align-last:justify;/*chrome 20+*/
-  }
-#community-info-form .label-right, #member-info-view .label-right {
-    color: #999999;
-    font-size: 1.24rem;
-    width: 3.3rem;
-    display: none;
+
+    .label{
+        padding-left:@size-10;
+    }
+
+    input{
+        font-size: 1.4rem;
+        color: #666;
+    }
+    .input-box .label, #member-info-view .input-box .label {    
+        width: 7.6rem;    
+    }
+
+    .label-right, #member-info-view .label-right {
+        color: @color-text-font;
+        font-size: @size-32;
+        padding-left:@size-20;        
+    }
+
+    input::input-placeholder {
+        text-align: right;
+        color: #b7b7b7;
+    }
+    input::-ms-input-placeholder{
+        text-align: right;
+        color: #b7b7b7;
+    }
+    input::-webkit-input-placeholder{
+        text-align: right;
+        color: #b7b7b7;
+    }
+
+    .community-developer-input.warning input::-ms-input-placeholder {
+        color: #fc3d39;
+    }
+
+    .community-commit-input{
+        margin-top:@size-80;
+    }
+
 }
 
-#community-info-form  input{
- /*   text-align: right;*/
-    font-size: 1.4rem;
-    color: #666;
-}
+
 #community-info-view.community_create input{
     text-align: right;
 }
-#community-info-form  input::input-placeholder {
-    text-align: right;
-    color: #b7b7b7;
-}
-#community-info-form  input::-ms-input-placeholder{
-    text-align: right;
-    color: #b7b7b7;
-}
-#community-info-form  input::-webkit-input-placeholder{
-    text-align: right;
-    color: #b7b7b7;
-}
-#community-info-form .community-developer-input.warning input::-ms-input-placeholder {
-    color: #fc3d39;
-}
+
+
+
+
+
+
 #community-info-form .community-developer-input.warning input::-webkit-input-placeholder {
     color: #fc3d39;
 }

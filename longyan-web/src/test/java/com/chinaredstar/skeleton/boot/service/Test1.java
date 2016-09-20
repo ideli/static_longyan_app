@@ -2,8 +2,6 @@ package com.chinaredstar.skeleton.boot.service;
 
 import com.chinaredstar.perseus.utils.JsonUtil;
 //import com.chinaredstar.longyan.controller.UserController;
-import com.chinaredstar.longyan.vo.Result;
-import com.chinaredstar.longyan.vo.ResultCode;
 //import com.chinaredstar.longyan.vo.UserVo;
 
 import org.junit.Before;

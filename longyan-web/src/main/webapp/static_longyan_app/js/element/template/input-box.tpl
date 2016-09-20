@@ -5,6 +5,8 @@
 	<input type="<#=data.type||'text'#>" class="u-full" placeholder="<#=data.placeholder#>"  />
 	<div class="iconfont icon-longyanwarn label-warn"></div>
 	<div class="iconfont icon-longyandel1 label-del"></div>
-	<div class="label-right"><#=data.label_right#></div>
+	<#if(data.label_right){#>
+		<div class="label-right"><#=data.label_right#></div>
+	<#}#>	
 	<div class="clear-both"></div>
 </div>
