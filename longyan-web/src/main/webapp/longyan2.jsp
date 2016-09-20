@@ -73,7 +73,7 @@
     </style>
 </head>
 
-<body class="wechat-client pageContainer">
+<body class="wechat-client pageContainer" height='100%'>
 <div style="position: fixed;top: 0px;right: 0px;bottom: 0px;left: 0px;background-color: #777;">
     <span>系统载入中......</span>
 </div>

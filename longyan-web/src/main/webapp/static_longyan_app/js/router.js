@@ -26,6 +26,10 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             "community_build_edit": "member_build_edit",
             "community_build_modify": "member_build_modify",
 
+            "my_owner_community_list": "my_owner_community_list",
+
+
+
             //楼栋
             "community_build_add": "community_build_add",
             //龙榜
@@ -154,7 +158,10 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             var t = this;
             t.changePage('community_build_add');
         },
-
+        my_owner_community_list: function() {
+            var t = this;
+            t.changePage('my_owner_community_list');
+        },
         search_view: function(alias) {
             var t = this;
             t.changePage('think_search', {

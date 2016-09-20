@@ -2739,3 +2739,65 @@ body {
   float: left;
   padding-left: 0.85106383rem;
 }
+
+.pageContainer {
+  flex-flow: column;
+  display: flex;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+.pageContainer #my-owner-community-list-view {
+  flex: 1;
+  background-color: #ffffff;
+}
+.pageContainer #my-owner-community-list-view #my-owner-community-list-box .my-owner-community-list-item {
+  width: 100%;
+  height: 7.06382979rem;
+  border-bottom: 1px solid #e1e1e1;
+  margin-left: 1.27659574rem;
+}
+.pageContainer #my-owner-community-list-view #my-owner-community-list-box .my-owner-community-list-item .item-col-1 {
+  padding-top: 1.70212766rem;
+  float: left;
+}
+.pageContainer #my-owner-community-list-view #my-owner-community-list-box .my-owner-community-list-item .item-col-1 .item-base-info .item-name {
+  float: left;
+  font-size: 1.36170213rem;
+  line-height: 1.36170213rem;
+  color: #333333;
+}
+.pageContainer #my-owner-community-list-view #my-owner-community-list-box .my-owner-community-list-item .item-col-1 .item-base-info .item-mall-name {
+  float: left;
+  font-size: 1.19148936rem;
+  line-height: 1.36170213rem;
+  color: #999999;
+  padding-left: 0.85106383rem;
+}
+.pageContainer #my-owner-community-list-view #my-owner-community-list-box .my-owner-community-list-item .item-col-1 .item-address {
+  padding-top: 1.27659574rem;
+  line-height: 1.27659574rem;
+  color: #999999;
+  font-size: 1.0212766rem;
+}
+.pageContainer #my-owner-community-list-view #my-owner-community-list-box .my-owner-community-list-item .item-col-2 {
+  float: right;
+  color: #333333;
+  font-size: 1.19148936rem;
+  line-height: 7.06382979rem;
+  margin-right: 2.55319149rem;
+}
+.pageContainer #my-owner-community-list-view #my-owner-community-list-box .my-owner-community-list-item .item-col-3 {
+  padding-top: 1.70212766rem;
+  float: right;
+  text-align: right;
+  padding-right: 2.55319149rem;
+}
+.pageContainer #my-owner-community-list-view #my-owner-community-list-box .my-owner-community-list-item .item-col-3 .item-status {
+  font-size: 1.19148936rem;
+  color: #0091ea;
+}
+.pageContainer #my-owner-community-list-view #my-owner-community-list-box .my-owner-community-list-item .item-col-3 .item-distance {
+  color: #999999;
+  font-size: 1.0212766rem;
+}
