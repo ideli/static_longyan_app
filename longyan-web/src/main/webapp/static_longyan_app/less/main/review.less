@@ -1,0 +1,88 @@
+@import "../public/variables";
+
+.pageContainer{
+
+	flex-flow: column;
+	display:flex;
+	height:100%;
+	margin:0px;
+	padding:0px;
+
+	#my-review-list-bar{
+		margin-top:@size-128;
+		height:@size-88+@size-4;
+		line-height:@size-88;
+		font-size:@size-32;	
+		background-color:@color-white;
+		border-bottom: 1px solid @color-frame-font;
+
+		.item-box{
+			float:left;			
+			text-align:center;
+			width:33%;
+			.bar-item{
+				color:@color-text-font;
+				display:inline-block;
+			}
+
+			.bar-item[selected]{			
+				color:@color-main-blue;
+				border-bottom: @size-4 solid @color-main-blue;
+				box-sizing:border-box;  
+				-moz-box-sizing:border-box; /* Firefox */  
+				-webkit-box-sizing:border-box; /* Safari */  
+			}
+		}
+
+		
+	}
+
+	#my-review-list-view{
+		flex: 1;
+		background-color:@color-white;
+
+		#my-review-list-box{
+
+		
+			#scroller.scroll_box{
+				background-color:@color-white;
+				margin-top:0;
+			}
+
+			.my-owner-community-list-item{
+				width:100%;	
+				height:@size-166;
+				border-bottom: 1px solid #e1e1e1;
+				margin-left:@size-30;
+				
+
+				.title{
+					padding-top:@size-40;
+					font-size:@size-32;
+					line-height:@size-32;
+					color:@color-menu-font;
+
+					span{
+						color:@color-main-blue;
+					}
+				}
+				.date{
+					padding-top:@size-30;
+					font-size:@size-24;
+					line-height:@size-24;
+					color:@color-comment-font;
+					span{
+						padding-right:@size-20;
+					}
+				}
+			}
+
+			
+			
+
+		}	
+	}
+
+	
+}
+

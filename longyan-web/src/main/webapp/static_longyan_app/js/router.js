@@ -43,7 +43,9 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             "integral_rule": "integral_rule",
 
             //消息中心
-            "message_list": "message_list"
+            "message_list": "message_list",
+
+            "my_review_list": "my_review_list"
 
         },
 
@@ -220,7 +222,10 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             var t = this;
             t.changePage('message_list');
         },
-
+        my_review_list: function() {
+            var t = this;
+            t.changePage('my_review_list');
+        },
 
 
         _isPC: function() {

@@ -13,40 +13,40 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>首次登陆</td>
-					<td>+10</td>
+					<td>首次打开APP</td>
+					<td>5分</td>
 				</tr>
 				<tr>
-					<td>每日首次打开APP</td>
-					<td>+10</td>
+					<td>创建小区（认领小区）</td>
+					<td>10分</td>
 				</tr>
 				<tr>
-					<td>成功认领一个小区</td>
-					<td>+30</td>
+					<td>“抢”未分配小区成功</td>
+					<td>10分</td>
 				</tr>
 				<tr>
-					<td>成功创建一个无记录小区</td>
-					<td>+50</td>
+					<td>小区负责人更换</td>
+					<td>-10分</td>
 				</tr>
 				<tr>
-					<td>成功添加一个房号</td>
-					<td>+5</td>
+					<td>完善有负责人小区信息</br>审核通过</td>
+					<td>10分</td>
 				</tr>
 				<tr>
-					<td>删除一个认领小区</td>
-					<td>-30</td>
+					<td>完善无负责人小区</td>
+					<td>10分</td>
 				</tr>
 				<tr>
-					<td>删除一个创建小区</td>
-					<td>50</td>
+					<td>小区分配成功</td>
+					<td>20分</td>
 				</tr>
 				<tr>
-					<td>删除一个房号</td>
-					<td>-5</td>
+					<td>“抢”已分配小区成功</td>
+					<td>0分</td>
 				</tr>
 			</tbody>
 		</table>
-		<h3 class="integral-explain-detail-title">龙榜积分奖励(每月统计)</h3>
+		<h3 class="integral-explain-detail-title">龙榜积分奖励(每月统计全国)</h3>
 		<table>
 			<thead>
 				<tr>
@@ -56,89 +56,46 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>1</td>
-					<td>+20000</td>
+					<td>第1名奖励</td>
+					<td>100000分</td>
 				</tr>
 				<tr>
-					<td>2</td>
-					<td>+19000</td>
+					<td>第2名奖励</td>
+					<td>95000分</td>
 				</tr>
 				<tr>
-					<td>3</td>
-					<td>+18500</td>
+					<td>第3名奖励</td>
+					<td>90000分</td>
 				</tr>
 				<tr>
-					<td>4</td>
-					<td>+18000</td>
+					<td>第4名奖励</td>
+					<td>85000分</td>
 				</tr>
 				<tr>
-					<td>5</td>
-					<td>+17500</td>
+					<td>第5名奖励</td>
+					<td>80000分</td>
 				</tr>
 				<tr>
-					<td>6</td>
-					<td>+17000</td>
+					<td>第6名奖励</td>
+					<td>75000分</td>
 				</tr>
 				<tr>
-					<td>7</td>
-					<td>+16500</td>
+					<td>第7名奖励</td>
+					<td>70000分</td>
 				</tr>
 				<tr>
-					<td>8</td>
-					<td>+16000</td>
+					<td>第8名奖励</td>
+					<td>75000分</td>
 				</tr>
 				<tr>
-					<td>9</td>
-					<td>+15500</td>
+					<td>第9名奖励</td>
+					<td>60000分</td>
 				</tr>
 				<tr>
-					<td>10</td>
-					<td>+15000</td>
+					<td>第10名奖励</td>
+					<td>55000分</td>
 				</tr>
-				<tr>
-					<td>11</td>
-					<td>+14500</td>
-				</tr>
-				<tr>
-					<td>12</td>
-					<td>14000</td>
-				</tr>
-				<tr>
-					<td>13</td>
-					<td>+13500</td>
-				</tr>
-				<tr>
-					<td>14</td>
-					<td>+13000</td>
-				</tr>
-				<tr>
-					<td>15</td>
-					<td>+12500</td>
-				</tr>
-				<tr>
-					<td>16</td>
-					<td>+12000</td>
-				</tr>
-				<tr>
-					<td>17</td>
-					<td>+11500</td>
-				</tr>
-				<tr>
-					<td>18</td>
-					<td>+11000</td>
-				</tr>
-				<tr>
-					<td>19</td>
-					<td>+10500</td>
-				</tr>
-				<tr>
-					<td>20</td>
-					<td>+10000</td>
-				</tr>
-				<tr>
-					<td>20名以后</td>
-					<td>0</td>
-				</tr>
+				
 			</tbody>
 		</table>
 		<h3 class="integral-explain-detail-title">所有积分规则解释权归龙眼项目组所有</h3>

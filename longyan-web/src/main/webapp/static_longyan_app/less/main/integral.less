@@ -1,0 +1,249 @@
+@import "../public/variables";
+/*==========龙榜=========*/
+
+#integral_rank_error{
+    margin-top: 14rem;
+    color: #999;
+    font-size: 13rem;
+    background-color: #f5f5f5;
+    padding-top: 15rem;
+}
+#integral_rank_history_error{
+    margin-top: 0rem;
+    color: #999;
+    font-size: 13rem;
+    background-color: #f5f5f5;
+    padding-top: 30rem;
+}
+#integral-list-top {
+    position: relative;
+    margin-top: 6.6rem;
+}
+#integral-rank-item-box .fenge{
+    width: 1rem;
+    margin-top: 4rem;
+    height: 0.15rem;
+    background-color: #999
+}
+.integral-posfixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+
+.integral-history-view-header .title{
+    margin-left: 5.5rem;
+}
+
+#integral-list-box, #integralchampion-list-box {
+    background-color: #fff;
+    margin-top: 0.75rem;
+}
+#integral-list-box #scroller{
+    margin-top: 0rem;
+}
+.integral-rank-item-box, .integral-history-item-box {
+    position: relative;
+    height: 7.5rem;
+    padding-left: 4rem;
+    background: #fff;
+    overflow: hidden;
+    border:none;
+}
+.integral-rank-item-box .bottom-border,.integral-history-item-box .bottom-border{
+    border-bottom: 0.05rem solid #e1e1e1;
+}
+.integral-rank-item-box .xingMing, .integral-history-item-box .xingMing {
+    font-size: 1.25rem;
+    line-height: 1.25;
+    color: #333;
+    margin: 2.3rem 0 0.5rem 0;
+}
+.integral-rank-item-box .others .location, .integral-history-item-box  .others .location {
+   font-size: 1.1rem;
+   line-height: 1.1rem;
+   color: #999;
+}
+.integral-rank-item-box .touxiang, .integral-history-item-box .touxiang {
+    height: 8rem;
+    line-height: 8rem;
+    float: left;
+    margin-right: 1rem;
+}
+.integral-rank-item-box .touxiang img, .integral-history-item-box .touxiang img {
+    width: 4.2rem;
+    height: 4.2rem;
+    display: inline-block;
+    vertical-align: middle;
+    border: 0.05rem solid #F5F5F5;
+    border-radius: 2.4rem; 
+}
+.integral-rank-item-box .right ,.integral-history-item-box .right {
+    width: auto;
+    color: #999;
+    font-size: 1.2rem;
+    line-height: 8rem;
+    padding-right: 1.2rem;
+}
+.integral-rank-item-box span ,.integral-history-item-box span {
+    color: #333;
+    font-size: 1.3rem;
+}
+
+.integral-rank-item-box .top ,.integral-history-item-box .top {
+    position: absolute;
+    top: 0;
+    left: 1.2rem;
+    height: 8rem;
+    line-height: 8rem;
+    font-size: 1.3rem;
+    color: #999;
+}
+.integral-rank-item-box .top.top-highlight,.integral-rank-item-box .right.integral .score,.integral-history-item-box .top-highlight {
+    color: #0091ea;
+}
+#integral-list-bottom{
+    background-color: #fff;
+    height: 4rem;
+    line-height: 4rem;
+    text-align: center;
+}
+#integral-list-bottom .tips{
+    font-size: 1rem;
+    color: #999;
+    /*text-align: center;*/
+}
+/*==========我的积分=========*/
+#integral-explain-top {
+    margin-top: @size-128;
+    background: url(../img/integral-explain-top.jpg) no-repeat 0 0;
+    background-size: 100%;
+    height: @size-250;
+    padding: 0 1.2rem;
+}
+#integral-explain-list-box {
+    margin: 0;
+    padding: 0;
+
+}
+.integral-explain-item-box {    
+    margin-left: @size-30;
+    background: @color-white;
+    overflow: hidden;
+    border-bottom: 0.05rem solid #e1e1e1;
+}
+
+.integral-explain-item-box .name {
+    font-size: @size-32;
+    color: @color-text-font;
+    line-height: @size-32;
+    margin: @size-40 0 @size-20 0;
+}
+.integral-explain-item-box .createDate {
+    font-size: @size-24;
+    color: @color-comment-font;
+    line-height: @size-24;
+    margin-bottom: @size-40;
+}
+.integral-explain-item-box .integral {
+    font-size: @size-32;
+    color: @color-menu-font;
+    line-height: @size-156;
+    padding-right: @size-30;
+}
+.integral-explain-item-box .integral .reduce {
+    color: #999;
+}
+.integral-explain-item-box .integral .increase {
+    font-size:@size-32;
+    color: @color-menu-font;
+}
+#integral-explain-list-box #scroller.scroll_box {margin: 0;background: #fff;}
+
+#integral-explain-list-view{
+    background-color:@color-white;
+    .top-bar{
+        width:100%;
+        margin-top: @size-128;
+        background: url(../img/longyan_jifeng_bg.png) no-repeat 0 0;
+        background-size: 100%;
+        height: @size-250;
+        padding: 0 1.2rem;
+        color:@color-white;
+        display:block;
+
+        .bar-item{
+            width:50%;
+            float:left;
+            margin-top: @size-80;
+            text-align:center;
+            
+
+            .value{
+                font-size:@size-50;
+                line-height:@size-50;
+                height:@size-50;
+            }
+            .text{
+                padding-top:@size-30;
+                font-size:@size-32;
+                line-height:@size-32;
+                height:@size-32;
+            }
+        }
+    }
+
+    #integralDetail-title{
+        padding-top:@size-30;
+        padding-left:@size-30;
+        font-size:@size-24;
+        height:@size-24;
+        line-height:@size-24;
+        color:@color-comment-font;
+    }
+}
+
+
+
+#integral-explain-detail-form {margin: 0;background: #fff; padding: 0 1.5rem;}
+.integral-explain-detail-title {
+    padding: 1.5rem 0 1rem 0;
+    font-size: 1.4rem;
+    color: #333;
+    font-weight: normal;
+}
+#integral-explain-detail-form table {
+    text-align: center;
+    font-size: 1.4rem;
+    color:#666;   
+    border: 0.05rem solid #eaeaea;
+    border-bottom: none;
+
+}
+#integral-explain-detail-form table thead tr{
+    background: #F5F5F5 ;
+    height: 3rem;
+    line-height: 3rem;
+}
+#integral-explain-detail-form table thead tr th:first-child{
+    width: 19.5rem;
+    border-right: 0.05rem solid #eaeaea;
+}
+#integral-explain-detail-form table thead tr th:last-child{
+    width: 14.4rem;
+}
+#integral-explain-detail-form table tbody tr{
+    height: 3.5rem;
+    line-height: 3.5rem;
+}
+#integral-explain-detail-form table tr{
+    border-bottom: 0.05rem solid #eaeaea;
+}
+
+#integral-explain-detail-form table tbody tr td:first-child{
+    border-right: 0.05rem solid #eaeaea;
+}
+.integral-explain-detail-title:last-child{
+    color: #666;
+}

@@ -336,7 +336,7 @@
     /*line-height: 1.8rem;*/
     line-height: 2.2rem;
     font-size: 1.24rem;
-    color:#9dacb6;
+    color:@color-comment-font;
     text-overflow: ellipsis;
     white-space: nowrap;
     -webkit-transition: 300ms;
@@ -379,10 +379,10 @@
     left: 0;
     z-index: 15;
     display: block;
-    width: 100%;
-    height: 1px;
+    width: 100%;    
     content: '';
-    background-color: #e1e1e1;
+    height: 4px;
+    background-color: @color-frame-font;
     -webkit-transform-origin: 50% 0;
     -ms-transform-origin: 50% 0;
     -o-transform-origin: 50% 0;
@@ -413,9 +413,10 @@
     z-index: 15;
     display: block;
     width: 100%;
-    height: 1px;
+    height: 4px;
+    background-color: @color-frame-font;
     content: '';
-    background-color: #e1e1e1;
+    
     -webkit-transform-origin: 50% 100%;
     -ms-transform-origin: 50% 100%;
     -o-transform-origin: 50% 100%;

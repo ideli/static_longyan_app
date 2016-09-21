@@ -1105,7 +1105,7 @@ input {
   left: 0;
   right: 0;
   top: 0;
-  height: 6.6rem;
+  height: 5.44680851rem;
 }
 header {
   height: 2.2rem;
@@ -1160,8 +1160,7 @@ header {
 }
 .header-box {
   border-bottom: 0.04rem solid #999;
-  height: 6.6rem;
-  border-bottom: 1px solid #e2e2e2;
+  height: 5.44680851rem;
   background-color: #0091ea;
 }
 .header-box .goback-button {
@@ -1178,8 +1177,8 @@ header {
 .header-box .right-box {
   padding: 0rem 1.5rem;
   width: auto;
-  font-size: 1.2rem;
-  color: #0091ea;
+  font-size: 1.19148936rem;
+  color: #ffffff;
   pointer-events: all;
 }
 .header-box .right-box i {
@@ -1195,17 +1194,21 @@ header {
   color: #323232;
 }
 .header-box .text {
-  height: 4.4rem;
-  margin-top: 2.2rem;
-  line-height: 4.4rem;
+  height: 1.53191489rem;
+  margin-top: 2.72340426rem;
+  line-height: 1.53191489rem;
   text-align: center;
-  font-size: 1.8rem;
+  font-size: 1.53191489rem;
   color: #323232;
   float: left;
 }
 .header-box .text.title {
   color: #ffffff;
   font-size: 1.5rem;
+}
+.header-box .text.right-box {
+  color: #ffffff;
+  font-size: 1.19148936rem;
 }
 .header-box .headHtm {
   margin: 0.5rem auto 0 auto;
@@ -1734,7 +1737,7 @@ input {
   /*line-height: 1.8rem;*/
   line-height: 2.2rem;
   font-size: 1.24rem;
-  color: #9dacb6;
+  color: #999999;
   text-overflow: ellipsis;
   white-space: nowrap;
   -webkit-transition: 300ms;
@@ -1778,9 +1781,9 @@ input {
   z-index: 15;
   display: block;
   width: 100%;
-  height: 1px;
   content: '';
-  background-color: #e1e1e1;
+  height: 4px;
+  background-color: #e4e4e4;
   -webkit-transform-origin: 50% 0;
   -ms-transform-origin: 50% 0;
   -o-transform-origin: 50% 0;
@@ -1811,9 +1814,9 @@ input {
   z-index: 15;
   display: block;
   width: 100%;
-  height: 1px;
+  height: 4px;
+  background-color: #e4e4e4;
   content: '';
-  background-color: #e1e1e1;
   -webkit-transform-origin: 50% 100%;
   -ms-transform-origin: 50% 100%;
   -o-transform-origin: 50% 100%;

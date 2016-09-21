@@ -9,7 +9,7 @@
     left: 0;
     right: 0;
     top: 0;
-    height: 6.6rem;
+    height: @size-128;
 }
 
 
@@ -74,8 +74,8 @@ header {
     background-color: @color-main-blue;
     border-bottom: 0.04rem solid #999;
 
-    height: 6.6rem;
-    border-bottom:1px solid #e2e2e2;    
+    height: @size-128;
+    //border-bottom:1px solid #e2e2e2;    
     background-color: @color-main-blue;
 
 
@@ -100,29 +100,16 @@ header {
             color: @color-white;
             padding: 0;
 
-            //line-height: 4.4rem;    
-            //font-size: 1.8rem;
-            //color: #323232;    
-            //padding-left: 1.5rem;
+           
         }
     }
 
     .right-box {
         padding: 0rem 1.5rem;
         width: auto;
-        font-size: 1.2rem;
-        color: #0091ea;
+        font-size: @size-28;
+        color: @color-white;
         pointer-events: all;
-
-        //width: 6.2rem;
-        //height: 4.4rem;
-        //margin-top: 2.2rem;
-        //line-height: 4.4rem;    
-        //font-size: 1.6rem;
-        //color: #1680fa;
-        //float: left;
-        //padding: 0 1.5rem;
-
 
         i{
             padding: 0;
@@ -140,11 +127,11 @@ header {
     }
 
     .text{
-        height: 4.4rem;
-        margin-top: 2.2rem;
-        line-height: 4.4rem;
+        height: @size-36;
+        margin-top: @size-64;
+        line-height: @size-36;
         text-align: center;
-        font-size: 1.8rem;
+        font-size: @size-36;
         color: #323232;
         float: left;
     }
@@ -153,6 +140,11 @@ header {
         color: @color-white;
         font-size: 1.5rem;
     }
+    .text.right-box {
+        color: @color-white;
+        font-size: @size-28;
+    }
+
     .headHtm {
         margin: 0.5rem auto 0 auto;
         width: 17rem;
