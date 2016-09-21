@@ -692,7 +692,7 @@ a:active {
 }
 .basic-view {
   /*margin-top: 11.4rem;*/
-  padding-top: 6.65rem;
+  padding-top: 5.44680851rem;
   overflow-x: hidden;
   overflow-y: scroll;
   /* 增加该属性，可以增加弹性，是滑动更加顺畅 */
@@ -1175,7 +1175,7 @@ header {
   padding: 0;
 }
 .header-box .right-box {
-  padding: 0rem 1.5rem;
+  padding-right: 1.27659574rem;
   width: auto;
   font-size: 1.19148936rem;
   color: #ffffff;
@@ -1309,7 +1309,7 @@ input {
   outline: none;
 }
 .input-box {
-  margin: 0 0 0 1.5rem;
+  margin: 0 0 0 1.27659574rem;
   padding-right: 1.27659574rem;
   height: 4.2rem;
   line-height: 4.2rem;

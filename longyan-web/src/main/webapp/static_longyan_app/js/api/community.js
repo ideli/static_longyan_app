@@ -4,7 +4,7 @@
  */
 define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(http, MockData) {
 	var _basePath = '/longyan/community';
-	var __debug = false;
+	var __debug = true;
 	var CommunityApi = {
 		initialize: function() {},
 		_executeRequest: function(url, data, handler, isJsonp, method, async) {
@@ -37,7 +37,7 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 		getCommunityList: function(page, pageSize, success, error) {
 			var t = this;
 			var url = _basePath + '/list';
-			console.log(page+"_"+pageSize)
+			console.log(page + "_" + pageSize)
 			var data = {
 				page: page,
 				pageSize: pageSize
@@ -82,17 +82,17 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 			city,
 			name,
 			address,
-            shortName,
-            roomMount,
-            buildingAmount,
-            checkMemberRate,
-            priceSection,
-            constructionTypes,
-            renovations,
-            deliveryTime,
-            developers,
-            propertyName,
-            hotline,
+			shortName,
+			roomMount,
+			buildingAmount,
+			checkMemberRate,
+			priceSection,
+			constructionTypes,
+			renovations,
+			deliveryTime,
+			developers,
+			propertyName,
+			hotline,
 			success, error) {
 			var t = this;
 			var url = _basePath + '/create';
@@ -100,17 +100,17 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 				city: city,
 				name: name,
 				address: address,
-                shortName: shortName,
-                roomMount: roomMount,
-                buildingAmount: buildingAmount,
-                checkMemberRate: checkMemberRate,
-                priceSection: priceSection,
-                constructionTypes: constructionTypes,
-                renovations: renovations,
-                deliveryTime: deliveryTime,
-                developers: developers,
-                propertyName: propertyName,
-                hotline: hotline,
+				shortName: shortName,
+				roomMount: roomMount,
+				buildingAmount: buildingAmount,
+				checkMemberRate: checkMemberRate,
+				priceSection: priceSection,
+				constructionTypes: constructionTypes,
+				renovations: renovations,
+				deliveryTime: deliveryTime,
+				developers: developers,
+				propertyName: propertyName,
+				hotline: hotline,
 			};
 			//发送http psot请求
 			t._executeRequest(url, data, function(response) {
@@ -124,34 +124,34 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 		updateCommunity: function(
 			id,
 			address,
-            shortName,
-            roomMount,
-            buildingAmount,
-            checkMemberRate,
-            priceSection,
-            constructionTypes,
-            renovations,
-            deliveryTime,
-            developers,
-            propertyName,
-            hotline,
+			shortName,
+			roomMount,
+			buildingAmount,
+			checkMemberRate,
+			priceSection,
+			constructionTypes,
+			renovations,
+			deliveryTime,
+			developers,
+			propertyName,
+			hotline,
 			success, error) {
 			var t = this;
 			var url = _basePath + '/update';
 			var data = {
 				id: id,
 				address: address,
-                shortName: shortName,
-                roomMount: roomMount,
-                buildingAmount: buildingAmount,
-                checkMemberRate: checkMemberRate,
-                priceSection: priceSection,
-                constructionTypes: constructionTypes,
-                renovations: renovations,
-                deliveryTime: deliveryTime,
-                developers: developers,
-                propertyName: propertyName,
-                hotline: hotline,
+				shortName: shortName,
+				roomMount: roomMount,
+				buildingAmount: buildingAmount,
+				checkMemberRate: checkMemberRate,
+				priceSection: priceSection,
+				constructionTypes: constructionTypes,
+				renovations: renovations,
+				deliveryTime: deliveryTime,
+				developers: developers,
+				propertyName: propertyName,
+				hotline: hotline,
 			};
 			//发送http psot请求
 			t._executeRequest(url, data, function(response) {
@@ -198,16 +198,16 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 				t._executeResponse(response, success, error);
 			}, false, 'POST', false, $nvwa.header.getHeaders());
 		},
-		getCommunityListByEmoloyee: function(page, pageSize,data, success, error) {
+		getCommunityListByEmoloyee: function(page, pageSize, data, success, error) {
 			var t = this;
 			var url = _basePath + '/list_by_employee';
 			//发送http psot请求
 			alert(233)
 			t._executeRequest(url, data, function(response) {
-			alert(44444)
-				//返回的http请求数据
+				alert(44444)
+					//返回的http请求数据
 				t._executeResponse(response, success, error);
-			alert(6666)
+				alert(6666)
 			}, false, 'POST', false, $nvwa.header.getHeaders());
 		},
 		//获取楼栋号列表
@@ -215,7 +215,7 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 			var t = this;
 			var url = _basePath + '/building/list';
 			var data = {
-				page: page, 
+				page: page,
 				pageSize: pageSize,
 				communityId: communityId
 			};
@@ -226,7 +226,7 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 			}, false, 'POST', false, $nvwa.header.getHeaders());
 		},
 		//添加楼栋号
-		addCommunityBuilding: function(communityId, buildingName,roomAmount,unitAmount,floorAmount, success, error) {
+		addCommunityBuilding: function(communityId, buildingName, roomAmount, unitAmount, floorAmount, success, error) {
 			var t = this;
 			var url = _basePath + '/building/add';
 			var data = {
@@ -244,7 +244,7 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 			}, false, 'POST', false, $nvwa.header.getHeaders());
 		},
 		//编辑楼栋号
-		updateCommunityBuilding: function(id, communityId, buildingName,roomAmount,unitAmount,floorAmount,success, error) {
+		updateCommunityBuilding: function(id, communityId, buildingName, roomAmount, unitAmount, floorAmount, success, error) {
 			var t = this;
 			var url = _basePath + '/building/update';
 			var data = {
@@ -266,7 +266,7 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 			var t = this;
 			var url = _basePath + '/building/delete';
 			var data = {
-				ids: ids ,
+				ids: ids,
 				communityId: communityId,
 			};
 

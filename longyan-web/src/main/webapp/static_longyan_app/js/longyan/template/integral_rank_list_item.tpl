@@ -3,7 +3,7 @@
 			<div class="top u-wrap">
 				<hr class="fenge" style="width: 1rem;margin-top: 4rem;height: 0.15rem;background-color: #999">
 			</div>
-		<# }else if(data.scoreRank<4){#>
+		<# }else if(data.scoreRank<2){#>
 			<div class="top u-wrap top-highlight">
 				<#=data.scoreRank#>
 			</div>
@@ -23,12 +23,12 @@
 		<div class="right integral bottom-border">
 			<#if(data.scoreRank==null){   #>
 				<span>0</span>
-			<#}else if(data.scoreRank<4){#>
+			<#}else if(data.scoreRank<2){#>
 				<span class="score"><#=data.scoreAmount#></span>
 			<#}else{ #>
 				<span><#=data.scoreAmount#></span>
 	 		<#}#>
-				积分</div>
+				</div>
 		<div class="clear-both"></div>
 	</div>
 </div>

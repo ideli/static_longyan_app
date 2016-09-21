@@ -4,7 +4,7 @@
  */
 define('js/api/score', ['js/util/http', 'js/api/score_mock'], function(http, MockData) {
     var _basePath = '/longyan/score';
-    var __debug = false;
+    var __debug = true;
     var ScoreApi = {
         initialize: function() {},
         _executeRequest: function(url, data, handler, isJsonp, method, async) {
@@ -48,7 +48,7 @@ define('js/api/score', ['js/util/http', 'js/api/score_mock'], function(http, Moc
         /*
          * 获取龙榜
          */
-        getScoreHistoryRank:function(success, error){
+        getScoreHistoryRank: function(success, error) {
             var t = this;
             var url = _basePath + '/rank-history';
             var data = {};

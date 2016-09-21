@@ -1,3 +1,48 @@
+#building-view #building-form {
+  margin-top: 0;
+  height: 100%;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+}
+#building-view #building-form .button-container {
+  padding-top: 3.40425532rem;
+  flex: 1;
+}
+
+.community-home-header .header-box {
+  height: 13.61702128rem;
+  background: url('../img/longyan_xiaoquzuye.png');
+}
+#community-home-view {
+  padding-top: 13.61702128rem;
+}
+#community-home-view .form-box {
+  margin-top: 0;
+}
+#community-home-view .form-box .owner-name {
+  font-size: 1.36170213rem;
+  color: #666666;
+  float: left;
+  margin-right: 0.85106383rem;
+}
+#community-home-view .form-box .touxiang {
+  margin-top: 0.5106383rem;
+  float: left;
+  width: 3.40425532rem;
+  height: 3.40425532rem;
+  background: #f5f5f5;
+  border: 2px solid #e4e4e4;
+  border-radius: 100%;
+}
+#community-home-view .form-box .label-right i {
+  font-size: 1.36170213rem;
+  color: #666666;
+}
+
 #reset-view {
   background-color: #efeff4;
   width: 100%;
@@ -90,6 +135,27 @@
 }
 
 /*==========龙榜=========*/
+#integralchampion-list-view #scroller {
+  margin-top: 5.44680851rem;
+}
+#integralchampion-list-view #integralchampion-list-box .scrollBox .integral-history-item-box:first-child {
+  margin-bottom: 0.85106383rem;
+}
+#integralchampion-list-view #integralchampion-list-box .scrollBox .integral-history-item-box:first-child .top {
+  color: #0091ea;
+}
+#integralchampion-list-view #integralchampion-list-box .scrollBox .integral-history-item-box:first-child .top-highlight {
+  color: #0091ea;
+}
+#integralchampion-list-view #integralchampion-list-box .integral-history-item-box {
+  border-bottom: 0.1rem solid #e1e1e1;
+}
+#integralchampion-list-view #integralchampion-list-box .integral-history-item-box .top {
+  color: #999999;
+}
+#integralchampion-list-view #integralchampion-list-box .integral-history-item-box .top-highlight {
+  color: #999999;
+}
 #integral_rank_error {
   margin-top: 14rem;
   color: #999;
@@ -106,7 +172,13 @@
 }
 #integral-list-top {
   position: relative;
-  margin-top: 6.6rem;
+  margin-top: 5.44680851rem;
+}
+#integral-list-top .top {
+  color: #0091ea;
+}
+#integral-list-top .bottom-border {
+  color: #0091ea;
 }
 #integral-rank-item-box .fenge {
   width: 1rem;
@@ -130,38 +202,36 @@
 #integral-list-box #scroller {
   margin-top: 0rem;
 }
+.integral-rank-item-box {
+  border-bottom: 0.05rem solid #e1e1e1;
+}
 .integral-rank-item-box,
 .integral-history-item-box {
   position: relative;
-  height: 7.5rem;
+  height: 7.31914894rem;
   padding-left: 4rem;
   background: #fff;
   overflow: hidden;
-  border: none;
-}
-.integral-rank-item-box .bottom-border,
-.integral-history-item-box .bottom-border {
-  border-bottom: 0.05rem solid #e1e1e1;
 }
 .integral-rank-item-box .xingMing,
 .integral-history-item-box .xingMing {
-  font-size: 1.25rem;
-  line-height: 1.25;
+  font-size: 1.36170213rem;
+  line-height: 1.36170213rem;
   color: #333;
-  margin: 2.3rem 0 0.5rem 0;
+  margin: 2.3rem 0 0.85106383rem 0;
 }
 .integral-rank-item-box .others .location,
 .integral-history-item-box .others .location {
-  font-size: 1.1rem;
-  line-height: 1.1rem;
+  font-size: 1.0212766rem;
+  line-height: 1.0212766rem;
   color: #999;
 }
 .integral-rank-item-box .touxiang,
 .integral-history-item-box .touxiang {
-  height: 8rem;
-  line-height: 8rem;
+  height: 7.31914894rem;
+  line-height: 7.31914894rem;
   float: left;
-  margin-right: 1rem;
+  margin-right: 0.85106383rem;
 }
 .integral-rank-item-box .touxiang img,
 .integral-history-item-box .touxiang img {
@@ -177,28 +247,27 @@
   width: auto;
   color: #999;
   font-size: 1.2rem;
-  line-height: 8rem;
-  padding-right: 1.2rem;
+  line-height: 7.31914894rem;
+  padding-right: 1.27659574rem;
 }
 .integral-rank-item-box span,
 .integral-history-item-box span {
-  color: #333;
-  font-size: 1.3rem;
+  color: #666666;
+  font-size: 1.36170213rem;
 }
 .integral-rank-item-box .top,
 .integral-history-item-box .top {
   position: absolute;
   top: 0;
   left: 1.2rem;
-  height: 8rem;
-  line-height: 8rem;
-  font-size: 1.3rem;
-  color: #999;
+  height: 7.31914894rem;
+  line-height: 7.31914894rem;
+  font-size: 1.36170213rem;
+  color: #666666;
 }
 .integral-rank-item-box .top.top-highlight,
-.integral-rank-item-box .right.integral .score,
-.integral-history-item-box .top-highlight {
-  color: #0091ea;
+.integral-rank-item-box .right.integral .score {
+  color: #ff9966;
 }
 #integral-list-bottom {
   background-color: #fff;
@@ -1960,4 +2029,44 @@ body {
 }
 .pageContainer #my-review-list-view #my-review-list-box .my-owner-community-list-item .date span {
   padding-right: 0.85106383rem;
+}
+.pageContainer #my-review-detail-view {
+  padding-top: 5.44680851rem;
+}
+.pageContainer #my-review-detail-form {
+  margin-top: 0;
+}
+.pageContainer #my-review-detail-form .top-tips {
+  height: 4.25531915rem;
+  padding-left: 1.36170213rem;
+  font-size: 1.19148936rem;
+  line-height: 4.25531915rem;
+  border-bottom: 1px solid #ff9966;
+  background-color: #fffaf1;
+  color: #ff9966;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  /* Firefox */
+  -webkit-box-sizing: border-box;
+  /* Safari */
+}
+.pageContainer #my-review-detail-form .label-right {
+  color: #666666;
+}
+.pageContainer #my-review-detail-form .button-container {
+  height: 11.91489362rem;
+  padding-top: 3.40425532rem;
+}
+.pageContainer #my-review-detail-form .button-box.rollback-button {
+  background-color: #ffffff;
+  border: 1px solid #0091ea;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  /* Firefox */
+  -webkit-box-sizing: border-box;
+  /* Safari */
+  margin-top: 2.55319149rem;
+}
+.pageContainer #my-review-detail-form .button-box.rollback-button .text {
+  color: #0091ea;
 }

@@ -1,6 +1,43 @@
 @import "../public/variables";
 /*==========龙榜=========*/
 
+#integralchampion-list-view{
+    #scroller{
+        margin-top:@size-128;
+    }
+}
+
+#integralchampion-list-view{
+    #integralchampion-list-box{
+
+        .scrollBox .integral-history-item-box:first-child{
+            margin-bottom:@size-20;
+            .top{
+                color:@color-main-blue;
+            }
+            .top-highlight{
+                color:@color-main-blue;
+            }
+        }        
+
+            
+        .integral-history-item-box{
+            border-bottom: 0.1rem solid #e1e1e1;
+
+            .top{
+                color:@color-comment-font;
+            }
+            .top-highlight{
+                color:@color-comment-font;
+            }
+        }
+    }    
+}
+
+
+
+
+
 #integral_rank_error{
     margin-top: 14rem;
     color: #999;
@@ -17,7 +54,14 @@
 }
 #integral-list-top {
     position: relative;
-    margin-top: 6.6rem;
+    margin-top: @size-128;
+
+    .top{
+        color:@color-main-blue;
+    }
+    .bottom-border{
+        color:@color-main-blue;
+    }
 }
 #integral-rank-item-box .fenge{
     width: 1rem;
@@ -43,33 +87,36 @@
 #integral-list-box #scroller{
     margin-top: 0rem;
 }
+.integral-rank-item-box{
+    border-bottom: 0.05rem solid #e1e1e1;
+}
 .integral-rank-item-box, .integral-history-item-box {
     position: relative;
-    height: 7.5rem;
+    height: @size-172;
     padding-left: 4rem;
     background: #fff;
     overflow: hidden;
-    border:none;
+    //border:none;
 }
 .integral-rank-item-box .bottom-border,.integral-history-item-box .bottom-border{
-    border-bottom: 0.05rem solid #e1e1e1;
+    //border-bottom: 0.05rem solid #e1e1e1;
 }
 .integral-rank-item-box .xingMing, .integral-history-item-box .xingMing {
-    font-size: 1.25rem;
-    line-height: 1.25;
+    font-size: @size-32;
+    line-height: @size-32;
     color: #333;
-    margin: 2.3rem 0 0.5rem 0;
+    margin: 2.3rem 0 @size-20 0;
 }
 .integral-rank-item-box .others .location, .integral-history-item-box  .others .location {
-   font-size: 1.1rem;
-   line-height: 1.1rem;
+   font-size: @size-24;
+   line-height: @size-24;
    color: #999;
 }
 .integral-rank-item-box .touxiang, .integral-history-item-box .touxiang {
-    height: 8rem;
-    line-height: 8rem;
+    height: @size-172;
+    line-height: @size-172;
     float: left;
-    margin-right: 1rem;
+    margin-right: @size-20;
 }
 .integral-rank-item-box .touxiang img, .integral-history-item-box .touxiang img {
     width: 4.2rem;
@@ -83,25 +130,25 @@
     width: auto;
     color: #999;
     font-size: 1.2rem;
-    line-height: 8rem;
-    padding-right: 1.2rem;
+    line-height: @size-172;
+    padding-right: @size-30;
 }
 .integral-rank-item-box span ,.integral-history-item-box span {
-    color: #333;
-    font-size: 1.3rem;
+    color:@color-text-font;
+    font-size: @size-32;
 }
 
 .integral-rank-item-box .top ,.integral-history-item-box .top {
     position: absolute;
     top: 0;
     left: 1.2rem;
-    height: 8rem;
-    line-height: 8rem;
-    font-size: 1.3rem;
-    color: #999;
+    height: @size-172;
+    line-height: @size-172;
+    font-size: @size-32;
+    color:@color-text-font;
 }
-.integral-rank-item-box .top.top-highlight,.integral-rank-item-box .right.integral .score,.integral-history-item-box .top-highlight {
-    color: #0091ea;
+.integral-rank-item-box .top.top-highlight,.integral-rank-item-box .right.integral .score{
+    color: @color-tips-yellow;
 }
 #integral-list-bottom{
     background-color: #fff;

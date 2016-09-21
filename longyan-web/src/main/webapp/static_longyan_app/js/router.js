@@ -19,7 +19,8 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             "community_update/:id": "community_update",
             "community_update_exist/:id": "community_update_exist",
             "community_success": "community_success",
-
+            "community_home": "community_home",
+            "building_create": "building_create",
 
             "community_build": "member_build",
             "community_build_add": "member_build_add",
@@ -45,7 +46,9 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             //消息中心
             "message_list": "message_list",
 
-            "my_review_list": "my_review_list"
+            "my_review_list": "my_review_list",
+            "my_review_detail": "my_review_detail"
+
 
         },
 
@@ -116,6 +119,11 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             // }
         },
 
+
+        community_home: function() {
+            var t = this;
+            t.changePage('community_home');
+        },
         community_list: function() {
             var t = this;
             t.changePage('community_list');
@@ -160,6 +168,15 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             var t = this;
             t.changePage('community_build_add');
         },
+        building_create: function() {
+            var t = this;
+            t.changePage('building_form', {
+                create: true
+            });
+        },
+
+
+
         my_owner_community_list: function() {
             var t = this;
             t.changePage('my_owner_community_list');
@@ -225,6 +242,10 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
         my_review_list: function() {
             var t = this;
             t.changePage('my_review_list');
+        },
+        my_review_detail: function() {
+            var t = this;
+            t.changePage('my_review_detail');
         },
 
 

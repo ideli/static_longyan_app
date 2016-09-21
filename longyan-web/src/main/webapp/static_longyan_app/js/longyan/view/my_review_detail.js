@@ -1,8 +1,8 @@
 /**
  * 审核详情
  **/
-define('js/longyan/view/review_detail', [
-        'text!js/longyan/template/review_detail.tpl',
+define('js/longyan/view/my_review_detail', [
+        'text!js/longyan/template/my_review_detail.tpl',
         'js/util/memory_cache',
         'js/components/alert_ui',
         'js/element/view/header',
@@ -19,8 +19,8 @@ define('js/longyan/view/review_detail', [
     ],
     function(CommunityListTpl, Cache, AlertUI, HeaderView, LocationView, PickerBox, InputBox, ThinkInputBox, LocationBox, InputPercentageBox, ButtonBox, LinkBox, TipsBar, CommunityApi) {
         var tipsAlert = tipsAlert || new AlertUI();
-        var view_id = '#community-info-view';
-        var form_id = '#community-info-form';
+        var view_id = '#my-review-detail-view';
+        var form_id = '#my-review-detail-form';
         var LayoutView = Backbone.View.extend({
             events: {
 
@@ -38,8 +38,7 @@ define('js/longyan/view/review_detail', [
                 var t = this;
                 $('body').css('background-color', '#efeff4');
                 t.$el.html(tpl(CommunityListTpl, {}));
-                t.$el.find('#community-info-view').addClass('community-info-detail-view');
-                t.config.readonly = true;
+                t.$el.find('#my-review-detail-view').addClass('my-review-detail-detail-view');
 
                 //==========heander view==========
                 t.header_view = new HeaderView({
@@ -48,67 +47,58 @@ define('js/longyan/view/review_detail', [
                     text: '审核详情'
                 });
 
-
-                if (!t.config.report_detail) {
-                    //非社区报表详情状态
-                    if (right_button_text && right_button_text.length > 0) {
-
-                    }
-                } else {
-                    $('#community-info-button-container').hide();
-                }
-
-
-                t.community_base_info_input = new TipsBar({
+                t.community_city_input = new InputBox({
                     el: $(form_id)
                 }, {
-                    fieldName: 'community-base-info-tipsbar',
-                    text: '基本信息',
+                    fieldName: 'community-city-input',
+                    text: '城市',
+                    readonly: true,
                 });
+
+                t.community_name_input = new InputBox({
+                    el: $(form_id)
+                }, {
+                    fieldName: 'community-name-input',
+                    text: '小区名称',
+                    readonly: true,
+                });
+
+                t.community_short_name_input = new InputBox({
+                    el: $(form_id)
+                }, {
+                    fieldName: 'community-short-name-input',
+                    text: '小区别名',
+                    readonly: true,
+                });
+
                 t.community_address_input = new InputBox({
                     el: $(form_id)
                 }, {
                     fieldName: 'community-address-input',
-                    text: '详细地址:',
-                    readonly: t.config.readonly,
-
-                }, {
-                    Keyup: function() {
-                        var value = t.community_area_covered_input.getValue();
-                        if (isNaN(value)) t.community_area_covered_input.setValue(value.substring(0, value.length - 1));
-                    }
-                });
-                t.community_area_covered_input = new InputBox({
-                    el: $(form_id)
-                }, {
-                    fieldName: 'community-area-covered-input',
-                    text: '占地面积:',
-                    readonly: t.config.readonly,
-                    placeholder: '㎡',
-
-                }, {
-                    Keyup: function() {
-                        var value = t.community_area_covered_input.getValue();
-                        if (isNaN(value)) t.community_area_covered_input.setValue(value.substring(0, value.length - 1));
-                    }
+                    text: '详细地址',
+                    readonly: true,
                 });
 
-                /*t.community_room_amount_input = new InputBox({
+                //间隔
+                $('<div class="gap basic-gap owner-gap"></div>').appendTo($(form_id));
+
+                t.community_room_amount_input = new InputBox({
                     el: $(form_id)
                 }, {
                     fieldName: 'community-room-amount-input',
                     text: '总户数',
-                    readonly: t.config.readonly,
-                    placeholder: '户'
+                    label_right: '户',
+                    readonly: true,
+                });
 
-                });*/
                 t.community_building_amount_input = new InputBox({
                     el: $(form_id)
                 }, {
                     fieldName: 'community-building-amount-input',
-                    text: '楼幢数:',
-                    readonly: t.config.readonly,
-                    placeholder: '幢'
+                    text: '楼栋数',
+                    label_right: '栋',
+                    readonly: true,
+
 
                 });
 
@@ -116,9 +106,10 @@ define('js/longyan/view/review_detail', [
                     el: $(form_id)
                 }, {
                     fieldName: 'community-occupancy-rate-input',
-                    text: '入住率:',
-                    readonly: t.config.readonly,
-                    placeholder: '%'
+                    text: '入住率',
+                    label_right: '%',
+                    readonly: true,
+
 
                 });
 
@@ -126,200 +117,109 @@ define('js/longyan/view/review_detail', [
                     el: $(form_id)
                 }, {
                     fieldName: 'community-price-section-input',
-                    text: '房价:',
-                    readonly: t.config.readonly,
-                    placeholder: '元/㎡'
+                    text: '房屋均价',
+                    label_right: '元/m²',
+                    readonly: true,
+
                 });
-                $('<div class="gap basic-gap owner-gap"></div>').appendTo($(form_id));
-                t.community_developer_info_input = new TipsBar({
+
+
+                t.community_construction_types_input = new InputBox({
                     el: $(form_id)
                 }, {
-                    fieldName: 'community-developer-info-tipsbar',
-                    text: '开发商信息',
+                    fieldName: 'community-construction-types-input',
+                    text: '建筑类型',
+                    readonly: true
+
+
                 });
-                //$('<hr>').appendTo($(form_id));
+
+                t.community_renovations_input = new InputBox({
+                    el: $(form_id)
+                }, {
+                    fieldName: 'community-renovations-input',
+                    text: '交房装修',
+                    readonly: true
+                });
+
+
+                t.community_delivery_time_input = new InputBox({
+                    el: $(form_id)
+                }, {
+                    fieldName: 'community-delivery-time-input',
+                    text: '交房时间',
+                    readonly: true,
+                });
+
+                $('<div class="gap basic-gap owner-gap"></div>').appendTo($(form_id));
                 t.community_developer_input = new InputBox({
                     el: $(form_id)
                 }, {
                     fieldName: 'community-developer-input',
-                    text: '开发商:',
-                    readonly: t.config.readonly
+                    text: '开发商',
+                    readonly: true
                 });
 
-                t.community_building_age_input = new InputBox({
+                t.community_property_name_input = new InputBox({
                     el: $(form_id)
                 }, {
-                    fieldName: 'community-building-age-input',
-                    text: '交房时间:',
-                    readonly: t.config.readonly,
-                    placeholder: '年'
+                    fieldName: 'community-property-name-input',
+                    text: '物业公司',
+                    readonly: true
+                });
 
+
+
+                t.community_property_name_input = new InputBox({
+                    el: $(form_id)
+                }, {
+                    fieldName: 'community-property-name-input',
+                    text: '物业公司',
+                    readonly: true
                 });
 
                 t.community_hotline_input = new InputBox({
                     el: $(form_id)
                 }, {
                     fieldName: 'community-hotline-input',
-                    text: '物业电话:',
+                    text: '物业电话',
                     type: "tel",
-                    readonly: t.config.readonly
-                });
-                $('<div class="gap basic-gap owner-gap"></div>').appendTo($(form_id));
-                t.community_base_info_input = new TipsBar({
-                    el: $(form_id)
-                }, {
-                    fieldName: 'community-base-info-tipsbar',
-                    text: '管理信息',
-                });
-                /*t.ownerXingMing_input = new InputBox({
-                     el: $(form_id)
-                 }, {
-                     fieldName: 'ownerXingMing-input',
-                     text: '负责人',
-                     readonly: t.config.readonly
-
-                 });*/
-                t.creator_input = new InputBox({
-                    el: $(form_id)
-                }, {
-                    fieldName: 'createor-input',
-                    text: '创建者:',
-                    readonly: t.config.readonly
-                });
-                t.createDate_input = new InputBox({
-                    el: $(form_id)
-                }, {
-                    fieldName: 'createDate-input',
-                    text: '创建时间:',
-                    readonly: t.config.readonly
-                });
-                t.createAdmin_input = new InputBox({
-                    el: $(form_id)
-                }, {
-                    fieldName: 'createAdmin-input',
-                    text: '管理员:',
-                    readonly: t.config.readonly
-                });
-                t.createNumber_input = new InputBox({
-                    el: $(form_id)
-                }, {
-                    fieldName: 'createNumber-input',
-                    text: '已录入户数:',
-                    readonly: t.config.readonly
+                    readonly: true
                 });
 
-                if (t.config.report_detail) {
-                    //社区报表详情状态,隐藏负责人和创建时间
-                    t.$el.find('.ownerXingMing-input').hide();
-                    t.$el.find('.createDate-input').hide();
-                    t.$el.find('.owner-gap').hide();
-                }
-
-                // 按钮
-                t.edit_community_button = new ButtonBox({
+                t.community_owner_mall_name_input = new InputBox({
                     el: $(form_id)
                 }, {
-                    fieldName: 'edit-community-button',
-                    text: '楼栋信息'
+                    fieldName: 'community-owner-mall-name-input',
+                    text: '所属商场',
+                    readonly: true
+                });
+
+                $('<div class="gap basic-gap owner-gap button-container"></div>').appendTo($(form_id));
+
+                //审核通过按钮
+                t.pass_button = new ButtonBox({
+                    el: $('.button-container')
+                }, {
+                    fieldName: 'pass-button',
+                    text: '通过'
                 }, {
                     Click: function(e) {
-                        //取出表单上显示的社区信息
-                        var community = Cache.get('community-manager-object');
-                        if (community) {
-                            //将小区信息和地理位置信息写入到缓存
-                            community.communityId = community.id;
-                            community.communityName = community.name;
-                            Cache.set('member-manager-object', community);
-                            //跳转
-                            router.navigate('member_list', {
-                                trigger: true
-                            });
-                        } else {
-                            //没有社区信息
-                            tipsAlert.openAlert({
-                                content: '系统异常'
-                            });
-                        }
+
                     }
                 });
-                /*$('<div class="gap basic-gap"></div>').appendTo($(form_id));
-                t.delete_community_button = new ButtonBox({
-                    el: $(form_id)
+                //审核驳回按钮
+                t.rollback_button = new ButtonBox({
+                    el: $('.button-container')
                 }, {
-                    fieldName: 'delete-community-button',
-                    text: '删除'
+                    fieldName: 'rollback-button',
+                    text: '不通过'
                 }, {
                     Click: function(e) {
-                        //表单类型
-                        tipsAlert.open({
-                            cancelText: '取消',
-                            confirmText: '确定',
-                            content: '你确定要删除此小区吗?',
-                            onConfirm: function(e) {
-                                tipsAlert.close();
-                                var success = function (data) {
-                                    if (t.config.create) {
-                                        //创建表单返回到上一页
-                                        Backbone.history.history.back();
-                                    } else {
-                                        //更新表单,返回上一页
-                                        Backbone.history.history.back();
-                                    }
-                                }
-                                var error = function (code, msg) {
-                                    tipsAlert.close();
-                                    //显示异常信息
-                                    tipsAlert.openAlert({
-                                        content: msg
-                                    });
-                                };
-                                CommunityApi.deleteCommunity(t.config.id, success, error);
-                                _log(t.config.id);
 
-                            },
-                            onCancel: function(e) {
-                                tipsAlert.close();
-                            }
-                        });
                     }
-                });*/
-                //组装添加住户
-                /*t.add_member_button = new ButtonBox({
-                    el: $('#community-info-button-container')
-                }, {
-                    fieldName: 'add-member-button',
-                    text: '添加住宅'
-                }, {
-                    Click: function(e) {
-                        //取出表单上显示的社区信息
-                        var community = Cache.get('community-manager-object');
-                        if (community) {
-                            //将小区信息和地理位置信息写入到缓存
-                            community.communityId = community.id;
-                            community.communityName = community.name;
-                            Cache.set('member-manager-object', community);
-                            // {
-                            //     provinceCode: community.provinceCode,
-                            //     cityCode: community.cityCode,
-                            //     areaCode: community.areaCode,
-                            //     province: community.province,
-                            //     city: community.city,
-                            //     area: community.area,
-                            //     communityId: community.id,
-                            //     communityName: community.name
-                            // });
-                            //跳转
-                            router.navigate('member_create_by_commonity', {
-                                trigger: true
-                            });
-                        } else {
-                            //没有社区信息
-                            tipsAlert.openAlert({
-                                content: '系统异常'
-                            });
-                        }
-                    }
-                });*/
+                });
+
 
 
                 if (t.config && t.config.action && t.config.action == 'update') {
@@ -348,81 +248,7 @@ define('js/longyan/view/review_detail', [
                         tipsAlert.close();
                         //返回数据
                         if (data && data.community) {
-                            //放入缓存
-                            Cache.set('community-manager-object', data.community);
-                            //跳转到更新界面
-                            // router.navigate('community_update', {
-                            //     trigger: true
-                            // });
-                            var community = data.community;
-                            //_log(community);
-                            t.header_view.setText(community.name);
-                            //console.log(community.createXingMing);
-                            /*t.location_view.setValue({
-                                roomMount: community.roomMount,
-                                alreadyInputAmount: community.alreadyInputAmount,
-                                address: 
-                                    community.province + ' ' + 
-                                    community.city + ' ' +
-                                    community.area + ' ' + 
-                                    community.address,
-                                createAuth: community.createXingMing,
-                                createDate: community.createDate.split(' ')[0],
-                                admin: community.ownerXingMing
-                            });
-                            if (community.createXingMing == null) {
-                               $('.create-auth').find('span').html('');
-                               //t.location_view.setValue({createAuth: null});
-                            } */
 
-                            $('.auth-info').show();
-                            //t.location_read_input.setValue(community.province + ' ' + community.city + ' ' + community.area);
-
-                            t.community_address_input.setValue(community.address);
-                            //总面积
-                            t.community_area_covered_input.setValue(community.areaMonut + '㎡');
-                            //总户数
-                            // t.community_room_amount_input.setValue(community.roomMount + '户');
-                            if (community.buildingAmount) {
-                                t.community_building_amount_input.setValue(community.buildingAmount + '幢');
-                            } else {
-                                t.community_building_amount_input.setValue('暂无');
-                            }
-
-                            //总入住户数
-                            t.community_occupancy_rate_input.setValue(community.occupanyRate + '%');
-                            if (community.priceSection) {
-                                t.community_price_section_input.setValue(community.priceSection + '元/㎡');
-                            } else {
-                                t.community_price_section_input.setValue('暂无');
-                            }
-
-                            if (community.deliveryTime) {
-                                t.community_building_age_input.setValue(community.deliveryTime + '年');
-                            } else {
-                                t.community_building_age_input.setValue('暂无');
-                            }
-                            t.community_developer_input.setValue(community.developers);
-                            t.community_hotline_input.setValue(community.hotline);
-
-                            t.creator_input.setValue(community.createXingMing);
-                            t.createDate_input.setValue(community.createDate);
-                            t.createAdmin_input.setValue(community.ownerXingMing);
-                            if (community.alreadyInputAmount) {
-                                t.createNumber_input.setValue(community.alreadyInputAmount);
-                            } else {
-                                t.createNumber_input.setValue(0);
-                            }
-                            /*if (community.createXingMing == null) {
-                               $('.create-auth').find('span').html('');
-                               //t.location_view.setValue({createAuth: null});
-                            }*/
-                            //t.ownerXingMing_input.setValue(community.ownerXingMing);
-                            /*var createDate = community.createDate;
-                            if (createDate && createDate.length > 9) {
-                                createDate = createDate.substring(0, 10);
-                            }
-                            t.createDate_input.setValue(createDate);*/
 
                         } else {
                             tipsAlert.openAlert({
