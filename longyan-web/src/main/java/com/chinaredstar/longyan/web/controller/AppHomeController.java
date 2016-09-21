@@ -1,12 +1,15 @@
 package com.chinaredstar.longyan.web.controller;
 
 import com.chinaredstar.commonBiz.bean.RedstarEmployeeDayInput;
+import com.chinaredstar.commonBiz.bean.RedstarMessageCenter;
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
 import com.xiwa.base.bean.Request;
 import com.xiwa.base.bean.Response;
+import com.xiwa.base.bean.search.ConditionType;
 import com.xiwa.base.bean.search.ext.IntSearch;
+import com.xiwa.base.bean.search.ext.MultiSearchBean;
 import com.xiwa.base.pipeline.PipelineContext;
 import com.xiwa.base.util.StringUtil;
 import com.xiwa.zeus.trinity.bean.Employee;
@@ -18,14 +21,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
 /**
- * Created by StevenDong on 2016/9/19 0019.
+ * Created by StevenDong on 2016/9/19
  */
 @Controller
-@RequestMapping(value = "/appHome", method = RequestMethod.POST)
+@RequestMapping(value = "/appHome")
 public class AppHomeController extends BaseController implements CommonBizConstant {
     @Autowired
     private DispatchDriver dispatchDriver;
@@ -34,9 +38,9 @@ public class AppHomeController extends BaseController implements CommonBizConsta
     private RedstarCommonManager redstarCommonManager;
 
     // APP首页显示数据集合
-    @RequestMapping(value = "/viewList")
+    @RequestMapping(value = "/viewList", method = RequestMethod.POST)
     @ResponseBody
-    public Response getViewListData() {
+    public Response getViewListData(String longitude, String latitude, String provinceCode, String cityCode, String limitM) {
         PipelineContext pipelineContext = this.buildPipelineContent();
         Response res = pipelineContext.getResponse();
         Request req = pipelineContext.getRequest();
@@ -46,21 +50,21 @@ public class AppHomeController extends BaseController implements CommonBizConsta
             // 登陆EmployeeID获得
             Employee loginEmployee = this.getEmployeeromSession();
             if (loginEmployee.getId() == 0) {
-                setErrMsg(res, "参数缺失");
+                setErrMsg(res, "用户ID参数缺失");
                 return res;
             }
             int intEmployeeId = loginEmployee.getId();
 
-            // 所在经纬度,省市code获得
-            String longitude = req.getString("longitude");
-            String latitude = req.getString("latitude");
-            String provinceCode = req.getString("provinceCode");
-            String cityCode = req.getString("cityCode");
-
+            // 所在经纬度,省市code判断
             if (StringUtil.isInvalid(latitude) || StringUtil.isInvalid(longitude)
                     || StringUtil.isInvalid(provinceCode) || StringUtil.isInvalid(cityCode)) {
                 setErrMsg(res, "经纬度参数缺失");
                 return res;
+            }
+
+            // 查询小区范围如果缺失，设定默认查询范围为5公里
+            if (StringUtil.isInvalid(limitM)) {
+                limitM = "5000";
             }
 
             // 首页广告banner取得
@@ -70,7 +74,7 @@ public class AppHomeController extends BaseController implements CommonBizConsta
             // 查询我的小区总数
             res.addKey("myCommunities", getDataCountByEmployeeId(intEmployeeId));
             // 查询周边小区总数
-            res.addKey("aroundCommunities", getDataCountByLongitudeAndLatitude(latitude, longitude, provinceCode, cityCode));
+            res.addKey("aroundCommunities", getDataCountByLongitudeAndLatitude(latitude, longitude, provinceCode, cityCode, limitM));
             // 查询龙榜排名
             res.addKey("dragonEyeRanking", getDragonEyeRanking(intEmployeeId));
             // 成功与否消息文字设置
@@ -97,9 +101,10 @@ public class AppHomeController extends BaseController implements CommonBizConsta
     /**
      * 周边小区数获得函数
      */
-    public int getDataCountByLongitudeAndLatitude(String longitude, String latitude, String provinceCode, String cityCode) throws Exception {
+    public int getDataCountByLongitudeAndLatitude(String longitude, String latitude, String provinceCode,
+                                                  String cityCode, String limitM) throws Exception {
 
-        final int intLimtKm = 5000;
+        int intLimtM = Integer.parseInt(limitM);
         StringBuffer sb = new StringBuffer();
 
         sb.append("Select c.id,c.city,c.province, c.name,c.longitude, c.latitude, ");
@@ -117,9 +122,9 @@ public class AppHomeController extends BaseController implements CommonBizConsta
         paramsList.add(Double.parseDouble(latitude));
         paramsList.add(provinceCode);
         paramsList.add(cityCode);
-        paramsList.add(intLimtKm);
+        paramsList.add(intLimtM);
 
-        //搜索结果（以员工GPS位置为圆心半径5KM内所有小区数量）
+        //搜索结果（以员工GPS位置为圆心半径intLimtM内所有小区数量）
         List lsAroundCommunity = redstarCommonManager.excuteBySql(querySQL, paramsList);
         return lsAroundCommunity.size();
     }
@@ -131,7 +136,8 @@ public class AppHomeController extends BaseController implements CommonBizConsta
 
         IntSearch employeeIdSearch = new IntSearch("employeeId");
         employeeIdSearch.setSearchValue(String.valueOf(employeeId));
-        List<RedstarEmployeeDayInput> memberRanking = dispatchDriver.getRedstarEmployeeDayInputManager().searchIdentify(employeeIdSearch, "scoreRank", false);
+        List<RedstarEmployeeDayInput> memberRanking = dispatchDriver.getRedstarEmployeeDayInputManager().
+                searchIdentify(employeeIdSearch, "scoreRank", false);
 
         // 最新排名只可能有一个，所以降序查找出数据后取首位
         return memberRanking.get(0).getScoreRank();
@@ -144,7 +150,7 @@ public class AppHomeController extends BaseController implements CommonBizConsta
 
         // 系统时间在广告开始结束时间内的，activity为激活的广告按sortNum顺取出
         StringBuffer sb = new StringBuffer();
-        sb.append("Select android720p,adnroid1280p,ios47,ios55,ios40,ios35,url,title,sortNum ");
+        sb.append("Select adnroid1280p,ios55,url,title,sortNum ");
         sb.append("FROM xiwa_redstar_app_ad ");
         sb.append("WHERE activity='1' AND beginDatetime <= ? AND endDatetime > ? ");
         sb.append("ORDER BY sortNum DESC");
@@ -156,16 +162,45 @@ public class AppHomeController extends BaseController implements CommonBizConsta
         paramsList.add(strSysytemDateTime);
         paramsList.add(strSysytemDateTime);
 
-        List lsAD = redstarCommonManager.excuteBySql(querySQL, paramsList);
+        List lsADs = redstarCommonManager.excuteBySql(querySQL, paramsList);
+        List<HashMap> lsADObjs = new ArrayList<HashMap>();
 
-        return lsAD;
+        // 查询结果list转化成输出对象
+        for(int i = 0;i<lsADs.size();i++){
+            Object[] objAd = (Object[]) lsADs.get(i);
+            HashMap hmADObj =  new HashMap();
+            hmADObj.put("adnroid1280p",objAd[0]);
+            hmADObj.put("ios55",objAd[1]);
+            hmADObj.put("url",objAd[2]);
+            hmADObj.put("title",objAd[3]);
+            hmADObj.put("sortNum",objAd[4]);
+
+            lsADObjs.add(hmADObj);
+        }
+        return lsADObjs;
     }
 
     /**
      * 推送消息获得函数
      */
     public int getMessageCount(Integer employeeId) throws Exception {
-        // TODO
-        return 0;
+
+        MultiSearchBean multiSearchBean = new MultiSearchBean();
+        multiSearchBean.setCondition(ConditionType.AND);
+
+        IntSearch recipientIdSearch = new IntSearch("recipientID");
+        recipientIdSearch.setSearchValue(String.valueOf(employeeId));
+        multiSearchBean.addSearchBean(recipientIdSearch);
+
+        IntSearch readFlgSearch = new IntSearch("readFlg");
+        readFlgSearch.setSearchValue("0");
+        multiSearchBean.addSearchBean(readFlgSearch);
+
+        // 消息接收者ID为该员工并且未读的消息按创建时间倒序
+        List<RedstarMessageCenter> message = dispatchDriver.getRedstarMessageCenterManager().
+                searchIdentify(multiSearchBean, "createDate", false);
+
+        // 新消息数返回
+        return message.size();
     }
 }
