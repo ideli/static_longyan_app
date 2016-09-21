@@ -564,4 +564,20 @@
         <property name="activity" type="integer"/>
     </class>
 
+    <class name="com.chinaredstar.commonBiz.bean.RedstarMessageCenter" table="xiwa_redstar_message_center" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="recipientID" type="integer"/>
+        <property name="recipientName" type="string"/>
+        <property name="messageTitle" type="string"/>
+        <property name="messageType" type="string"/>
+        <property name="messageSource" type="string"/>
+        <property name="messageContent" type="string"/>
+        <property name="readFlg" type="integer"/>
+        <property name="createDate" type="java.util.Date"/>
+        <property name="readDate" type="java.util.Date"/>
+    </class>
+
+
 </hibernate-mapping>
