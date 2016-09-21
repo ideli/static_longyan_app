@@ -22,6 +22,7 @@
 
     <!--dubbo配置-->
     <import resource="classpath:applicationContext-dubbo.xml" />
+    <import resource="classpath:applicationContext-redis.xml" />
 
     <bean id="systemConfig" class="java.util.HashMap">
         <constructor-arg>
