@@ -145,6 +145,8 @@
           class="com.chinaredstar.commonBiz.manager.ext.SimpleRedstarAppAdManager"
           parent="commonBizAbstractManager"/>
 
-
+    <bean id="redstarMessageCenterManager"
+          class="com.chinaredstar.commonBiz.manager.ext.SimpleRedstarMessageCenterManager"
+          parent="commonBizAbstractManager"/>
 
 </beans>

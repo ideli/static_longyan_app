@@ -47,6 +47,6 @@ public interface DispatchDriver {
 
     public RedstarCommonManager getRedstarCommonManager();
 
-
+    public RedstarMessageCenterManager getRedstarMessageCenterManager();
 
 }
