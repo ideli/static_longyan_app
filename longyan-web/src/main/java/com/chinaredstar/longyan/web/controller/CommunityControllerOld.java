@@ -50,7 +50,7 @@ import java.util.regex.Pattern;
  */
 @RequestMapping("/community_old")
 @Controller
-public class CommunityController_Old extends BaseController implements CommonBizConstant {
+public class CommunityControllerOld extends BaseController implements CommonBizConstant {
 
     @Autowired
     private DispatchDriver dispatchDriver;
