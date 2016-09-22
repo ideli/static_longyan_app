@@ -155,9 +155,9 @@ public class AppHomeController extends BaseController implements CommonBizConsta
 
         // 系统时间在广告开始结束时间内的，activity为激活的广告按sortNum顺取出
         StringBuffer sb = new StringBuffer();
-        sb.append("Select adnroid1280p,ios55,url,title,sortNum ");
+        sb.append("Select android1280p,ios55,url,title,sortNum ");
         sb.append("FROM xiwa_redstar_app_ad ");
-        sb.append("WHERE activity='1' AND beginDatetime <= ? AND endDatetime > ? ");
+        sb.append("WHERE activity='1' AND beginDatetime <= ? AND endDatetime > ? AND android1280p <> '' AND ios55 <> ''");
         sb.append("ORDER BY sortNum DESC");
         String querySQL = sb.toString();
 
@@ -174,7 +174,7 @@ public class AppHomeController extends BaseController implements CommonBizConsta
         for (int i = 0; i < lsADs.size(); i++) {
             Object[] objAd = (Object[]) lsADs.get(i);
             HashMap hmADObj = new HashMap();
-            hmADObj.put("adnroid1280p", objAd[0]);
+            hmADObj.put("android1280p", objAd[0]);
             hmADObj.put("ios55", objAd[1]);
             hmADObj.put("url", objAd[2]);
             hmADObj.put("title", objAd[3]);
