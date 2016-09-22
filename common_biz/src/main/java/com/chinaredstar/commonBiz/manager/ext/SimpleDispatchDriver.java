@@ -70,6 +70,9 @@ public class SimpleDispatchDriver implements DispatchDriver {
     @Autowired
     private RedstarMessageCenterManager redstarMessageCenterManager;
 
+    @Autowired
+    private RedstarCommunityUpdateLogManager redstarCommunityUpdateLogManager;
+
     @Override
     public DispatchCityManager getDispatchCityManager() {
         return dispatchCityManager;
@@ -171,5 +174,10 @@ public class SimpleDispatchDriver implements DispatchDriver {
     @Override
     public RedstarMessageCenterManager getRedstarMessageCenterManager() {
         return redstarMessageCenterManager;
+    }
+
+    @Override
+    public RedstarCommunityUpdateLogManager getRedstarCommunityUpdateLogManager() {
+        return redstarCommunityUpdateLogManager;
     }
 }
