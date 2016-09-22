@@ -149,4 +149,7 @@
           class="com.chinaredstar.commonBiz.manager.ext.SimpleRedstarMessageCenterManager"
           parent="commonBizAbstractManager"/>
 
+    <bean id="redstarCommunityUpdateLogManager"
+          class="com.chinaredstar.commonBiz.manager.ext.SimpleRedstarCommunityUpdateLogManager"
+          parent="commonBizAbstractManager"/>
 </beans>

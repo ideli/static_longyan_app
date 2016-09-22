@@ -116,6 +116,55 @@
         <property name="remark" type="string"/>
 
     </class>
+    <class name="com.chinaredstar.commonBiz.bean.RedstarCommunityUpdateLog" table="xiwa_redstar_community_update_log" lazy="false">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="city" type="string"/>
+        <property name="province" type="string"/>
+        <property name="merchantId" type="int"/>
+        <property name="name" type="string"/>
+        <property name="area" type="string"/>
+        <property name="provinceCode" type="string"/>
+        <property name="cityCode" type="string"/>
+        <property name="areaCode" type="string"/>
+        <property name="address" type="string"/>
+        <property name="logo" type="string"/>
+        <property name="userOpen" type="boolean"/>
+        <property name="currentNo" type="int"/>
+        <property name="hotline" type="string"/>
+        <property name="pickupAddress" type="string"/>
+        <property name="distributionCharge" type="string"/>
+        <property name="freeDistribution" type="string"/>
+        <property name="shortName" type="string"/>
+        <property name="developers" type="string"/>
+        <property name="programFeatures" type="string"/>
+        <property name="areaMonut" type="int"/>
+        <property name="roomMount" type="int"/>
+        <property name="priceSection" type="int"/>
+        <property name="buildingDate" type="string"/>
+        <property name="alreadyCheckAmount" type="int"/>
+        <property name="buildingAmount" type="int"/>
+        <property name="createEmployeeId" type="int"/>
+        <property name="updateEmployeeId" type="int"/>
+        <property name="createXingMing" type="string"/>
+        <property name="updateEmployeeXingMing" type="string"/>
+        <property name="updateDate" type="java.util.Date"/>
+        <property name="createDate" type="java.util.Date"/>
+        <property name="ownerId" type="int"/>
+        <property name="ownerXingMing" type="string"/>
+        <property name="source" type="string"/>
+        <property name="alreadyInputAmount" type="int"/>
+        <property name="longitude" type="java.lang.Double"/>
+        <property name="latitude" type="java.lang.Double"/>
+        <property name="ownerMallId" type="integer"/>
+        <property name="ownerMallName" type="string"/>
+        <property name="constructionTypes" type="string"/>
+        <property name="renovations" type="string"/>
+        <property name="deliveryTime" type="string"/>
+        <property name="propertyName" type="string"/>
+        <property name="reviewStatus" type="integer"/>
+    </class>
 
 
 </hibernate-mapping>
