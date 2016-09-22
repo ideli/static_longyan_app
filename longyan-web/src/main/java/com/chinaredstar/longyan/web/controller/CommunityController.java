@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public class CommunityController extends BaseController implements CommonBizCons
 
 
     //查询小区列表
-    @RequestMapping(value = "/list/{type}")
+    @RequestMapping(value = "/list/{type}", method = RequestMethod.POST)
     @ResponseBody
     public Response dataList(@PathVariable("type") String strType) {
         PipelineContext pipelineContext = this.buildPipelineContent();
