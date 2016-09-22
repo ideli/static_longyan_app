@@ -47,7 +47,7 @@ public class CommunityController extends BaseController implements CommonBizCons
 
 
     //查询小区列表
-    @RequestMapping(value = "/list/{type}")
+    @RequestMapping(value = "/list/{type}", method = RequestMethod.POST)
     @ResponseBody
     public Response dataList(@PathVariable("type") String strType) {
         PipelineContext pipelineContext = this.buildPipelineContent();
