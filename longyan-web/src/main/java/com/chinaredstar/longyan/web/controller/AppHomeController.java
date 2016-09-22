@@ -90,12 +90,17 @@ public class AppHomeController extends BaseController implements CommonBizConsta
      */
     public int getDataCountByEmployeeId(Integer employeeId) throws Exception {
 
-        // 小区ownerID是该查询员工的记录（员工负责小区数量）
+        // 小区表ownerID是该查询员工的记录（员工负责小区数量）
         IntSearch ownerIdSearch = new IntSearch("ownerId");
         ownerIdSearch.setSearchValue(String.valueOf(employeeId));
+        List lstOwerIdResults = dispatchDriver.getRedstarCommunityManager().searchIdentify(ownerIdSearch);
 
-        List lstResults = dispatchDriver.getRedstarCommunityManager().searchIdentify(ownerIdSearch);
-        return lstResults.size();
+        // 小区更新记录表updateId是该查询员工的记录（员工完善的小区数量）
+        IntSearch updateIdSearch = new IntSearch("updateEmployeeId");
+        updateIdSearch.setSearchValue(String.valueOf(employeeId));
+        List lstUpdateIdResults = dispatchDriver.getRedstarCommunityUpdateLogManager().searchIdentify(updateIdSearch);
+
+        return lstOwerIdResults.size() + lstUpdateIdResults.size();
     }
 
     /**
@@ -137,7 +142,7 @@ public class AppHomeController extends BaseController implements CommonBizConsta
         IntSearch employeeIdSearch = new IntSearch("employeeId");
         employeeIdSearch.setSearchValue(String.valueOf(employeeId));
         List<RedstarEmployeeDayInput> memberRanking = dispatchDriver.getRedstarEmployeeDayInputManager().
-                searchIdentify(employeeIdSearch, "scoreRank", false);
+                searchIdentify(employeeIdSearch, "scoreRank", Boolean.FALSE);
 
         // 最新排名只可能有一个，所以降序查找出数据后取首位
         return memberRanking.get(0).getScoreRank();
@@ -166,14 +171,14 @@ public class AppHomeController extends BaseController implements CommonBizConsta
         List<HashMap> lsADObjs = new ArrayList<HashMap>();
 
         // 查询结果list转化成输出对象
-        for(int i = 0;i<lsADs.size();i++){
+        for (int i = 0; i < lsADs.size(); i++) {
             Object[] objAd = (Object[]) lsADs.get(i);
-            HashMap hmADObj =  new HashMap();
-            hmADObj.put("adnroid1280p",objAd[0]);
-            hmADObj.put("ios55",objAd[1]);
-            hmADObj.put("url",objAd[2]);
-            hmADObj.put("title",objAd[3]);
-            hmADObj.put("sortNum",objAd[4]);
+            HashMap hmADObj = new HashMap();
+            hmADObj.put("adnroid1280p", objAd[0]);
+            hmADObj.put("ios55", objAd[1]);
+            hmADObj.put("url", objAd[2]);
+            hmADObj.put("title", objAd[3]);
+            hmADObj.put("sortNum", objAd[4]);
 
             lsADObjs.add(hmADObj);
         }
@@ -198,7 +203,7 @@ public class AppHomeController extends BaseController implements CommonBizConsta
 
         // 消息接收者ID为该员工并且未读的消息按创建时间倒序
         List<RedstarMessageCenter> message = dispatchDriver.getRedstarMessageCenterManager().
-                searchIdentify(multiSearchBean, "createDate", false);
+                searchIdentify(multiSearchBean, "createDate", Boolean.FALSE);
 
         // 新消息数返回
         return message.size();
