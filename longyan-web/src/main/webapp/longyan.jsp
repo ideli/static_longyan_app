@@ -27,18 +27,18 @@
     <!-- <link href="static_longyan_app/css/app.uncompressed.css" rel="stylesheet">-->
 
     <!-- build:css static_longyan_app/build/css/longyan-1.0.0.min-->
-		<link rel="stylesheet" href="<%=systemConfig.get("staticLongyanUrl")%>/build/release-864ca8/css/longyan-1.0.0.min.a1f308.css">
+		<link rel="stylesheet" href="<%=systemConfig.get("staticLongyanUrl")%>/build/release-9ffdf7/css/longyan-1.0.0.min.a82849.css">
  <!-- endbuild -->
     <!-- build:js static_longyan_app/build/js/longyan-1.0.0.min -->
 		<script src="<%=systemConfig.get("staticLongyanUrl")%>/nvwa-loader-1.7.0.js"
 		api = ""
-		baseUrl = "build/release-864ca8/js"
+		baseUrl = "build/release-9ffdf7/js"
 		skin = ""
 		debug = "true"
 		lang = "zh_CN"
 		jsonp = "true"
 		staticDomain = "<%=systemConfig.get("staticDomain")%>"
-		preload = "<%=systemConfig.get("staticLongyanUrl")%>/build/release-864ca8/js/longyan-1.0.0.min.22dd29.js,bootstrap.min,jquery.ui.widget,fileUpload" > </script>
+		preload = "<%=systemConfig.get("staticLongyanUrl")%>/build/release-9ffdf7/js/longyan-1.0.0.min.a8e52b.js,bootstrap.min,jquery.ui.widget,fileUpload" > </script>
  <!-- endbuild -->
     <style type="text/css">
         @font-face {font-family: "iconfont";

@@ -12,6 +12,99 @@
   padding-top: 3.40425532rem;
   flex: 1;
 }
+#building-info-view {
+  background-color: #ffffff;
+  margin-top: 5.44680851rem;
+}
+#building-info-view .item-col {
+  float: left;
+  width: 33%;
+  text-align: center;
+  margin-top: 1.70212766rem;
+  margin-bottom: 1.70212766rem;
+}
+#building-info-view .item-col .value {
+  color: #333333;
+  line-height: 2.12765957rem;
+  font-size: 2.12765957rem;
+  height: 2.12765957rem;
+}
+#building-info-view .item-col .text {
+  margin-top: 1.27659574rem;
+  color: #999999;
+  line-height: 1.19148936rem;
+  font-size: 1.19148936rem;
+}
+#building-info-view .last {
+  border-left: 0.1rem solid #e1e1e1;
+}
+#building-info-view .last .value {
+  color: #0091ea;
+}
+#building-info-view .last .value .image {
+  margin: 0 auto;
+  width: 2.12765957rem;
+  height: 2.12765957rem;
+  background: url('../img/longyan_longyan_luotianjia_3x.png');
+  background-size: 2.12765957rem 2.12765957rem;
+}
+#building-info-view .last .text {
+  color: #0091ea;
+}
+#building-info-view .item-col:last-child {
+  color: #0091ea;
+}
+#building-list-view {
+  height: 100%;
+  background-color: #ffffff;
+}
+#building-list-view #building-list-box #scroller.scroll_box {
+  background-color: #ffffff;
+  margin-top: 0;
+}
+#building-list-view #building-list-box .building-list-item {
+  margin-left: 1.27659574rem;
+  border-bottom: 0.1rem solid #e1e1e1;
+}
+#building-list-view #building-list-box .building-list-item .item-col-1 {
+  padding-bottom: 1.70212766rem;
+  padding-left: 0.42553191rem;
+  float: left;
+}
+#building-list-view #building-list-box .building-list-item .item-col-1 .item-building-no {
+  color: #333333;
+  font-size: 1.36170213rem;
+  line-height: 1.36170213rem;
+  padding-top: 1.70212766rem;
+}
+#building-list-view #building-list-box .building-list-item .item-col-1 .item-building-detail {
+  color: #999999;
+  font-size: 1.19148936rem;
+  line-height: 1.19148936rem;
+  padding-top: 1.27659574rem;
+}
+#building-list-view #building-list-box .building-list-item .item-col-1 .item-building-detail .item-floor-amount {
+  float: left;
+  padding-right: 1.70212766rem;
+}
+#building-list-view #building-list-box .building-list-item .item-col-1 .item-building-detail .item-unit-amount {
+  float: left;
+  padding-right: 1.70212766rem;
+}
+#building-list-view #building-list-box .building-list-item .item-col-1 .item-building-detail .item-room-amount {
+  float: left;
+}
+#building-list-view #building-list-box .building-list-item .item-col-2 {
+  background: url('../img/longyan_liejiangtou_3x.png');
+  background-size: 0.76595745rem 1.10638298rem;
+  width: 0.76595745rem;
+  height: 1.10638298rem;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  margin-right: 1.27659574rem;
+  margin-top: -0.38297872rem;
+}
 
 .community-home-header .header-box {
   height: 13.61702128rem;
@@ -148,7 +241,7 @@
   color: #0091ea;
 }
 #integralchampion-list-view #integralchampion-list-box .integral-history-item-box {
-  border-bottom: 0.1rem solid #e1e1e1;
+  border-bottom: 0.1rem solid #e4e4e4;
 }
 #integralchampion-list-view #integralchampion-list-box .integral-history-item-box .top {
   color: #999999;

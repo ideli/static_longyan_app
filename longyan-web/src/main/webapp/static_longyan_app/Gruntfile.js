@@ -152,8 +152,8 @@ module.exports = function(grunt) {
         //dest: 'build/css/<%= pkg.name %>-<%= pkg.version %>.css' //生成到grunt项目路径下的dist文件夹下为all.css  
         files: {
           'build/release-<%=buildConfig.randomNum%>/css/<%= pkg.name %>-<%= pkg.version %>.css': [
-            'css/element.css',
-            'css/main.css',
+            'css/element.*.css',
+            'css/main.*.css',
             'css/demo.css',
             'css/iconfont.css',
             'css/picker.css',
@@ -396,7 +396,7 @@ module.exports = function(grunt) {
   //执行js合并压缩任务
   grunt.registerTask('js', ['jst', 'concat:js', 'uglify']);
   //执行css合并压缩任务
-  grunt.registerTask('css', ['sass', 'concat:css', 'cssmin']);
+  grunt.registerTask('css', ['less', 'concat:css', 'cssmin']);
   //执行任务
   grunt.registerTask('app', ['clean', 'js', 'css', 'filerev', 'copy', 'usemin', 'compress']);
 };

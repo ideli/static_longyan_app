@@ -75,13 +75,15 @@ header {
     border-bottom: 0.04rem solid #999;
 
     height: @size-128;
+
     //border-bottom:1px solid #e2e2e2;    
     background-color: @color-main-blue;
 
 
     .goback-button {
-        width: auto;
+        width: 50%;
         padding-right: 0;
+        margin-top:@size-64;
 
         //width: 6.2rem;
         //height: 4.4rem;
@@ -106,8 +108,10 @@ header {
 
     .right-box {
         //padding: 0rem 1.5rem;
+        margin-top:@size-64;
+        text-align: right;
         padding-right:@size-30;
-        width: auto;
+        width: 50%;
         font-size: @size-28;
         color: @color-white;
         pointer-events: all;
@@ -129,17 +133,26 @@ header {
 
     .text{
         height: @size-36;
-        margin-top: @size-64;
+        //margin-top: @size-64;
         line-height: @size-36;
-        text-align: center;
+        //text-align: center;
         font-size: @size-36;
         color: #323232;
         float: left;
+
+
     }
 
     .text.title {
         color: @color-white;
         font-size: 1.5rem;
+        text-align: center;
+        top:@size-64;
+        width:50%;
+        position: absolute;
+        left:50%;
+        margin-left:-25%;
+
     }
     .text.right-box {
         color: @color-white;

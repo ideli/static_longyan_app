@@ -17,3 +17,122 @@
 	    }
 	}
 }
+
+#building-info-view{
+	background-color:@color-white;	
+	margin-top:@size-128;	
+
+	.item-col{
+		float:left;
+		width:33%;
+		text-align:center;
+		margin-top:@size-40;
+		margin-bottom:@size-40;
+
+
+		.value{
+			color:@color-menu-font;
+			line-height:@size-50;
+			font-size:@size-50;
+			height:@size-50;
+
+		}		
+		.text{
+			margin-top:@size-30;			
+			color:@color-comment-font;
+			line-height:@size-28;
+			font-size:@size-28;
+		}
+
+	}
+
+	.last{
+		border-left: 0.1rem solid #e1e1e1;	
+		.value{
+			color:@color-main-blue;
+			.image{
+				margin:0 auto;
+				width:@size-50;
+				height:@size-50;
+				background:url('../img/longyan_longyan_luotianjia_3x.png'); 
+				background-size: @size-50 @size-50;
+			}
+		}
+		.text{
+			color:@color-main-blue;
+		}
+	}
+
+
+}
+
+#building-info-view .item-col:last-child{
+	color:@color-main-blue;
+}
+
+#building-list-view{
+	height:100%;
+	background-color:@color-white;
+
+	#building-list-box{
+		#scroller.scroll_box{
+			background-color:@color-white;
+			margin-top:0;
+		}
+
+		.building-list-item{
+			margin-left:@size-30;
+			border-bottom: 0.1rem solid #e1e1e1;	
+			
+			.item-col-1	{
+				padding-bottom:@size-40;
+				padding-left:@size-10;
+				float:left;
+
+				.item-building-no{
+					color:@color-menu-font;
+					font-size:@size-32;
+					line-height:@size-32;
+					padding-top:@size-40;
+				}
+				.item-building-detail{
+					color:@color-comment-font;
+					font-size:@size-28;
+					line-height:@size-28;
+					padding-top:@size-30;
+
+					.item-floor-amount{
+						float:left;
+						padding-right:@size-40;
+					}
+					.item-unit-amount{
+						float:left;	
+						padding-right:@size-40;
+					}
+					.item-room-amount{
+						float:left;
+					}
+				}
+			}
+
+			.item-col-2	{
+				//float:right;
+				background:url('../img/longyan_liejiangtou_3x.png'); 
+				background-size: @size-18 @size-26;
+				width:@size-18;
+				height:@size-26;
+
+				position: absolute;
+				top: 50%;
+				right:0;
+				margin-right:@size-30;
+				margin-top:@size-9-;
+			}
+
+		}
+	}
+
+	
+}
+
+

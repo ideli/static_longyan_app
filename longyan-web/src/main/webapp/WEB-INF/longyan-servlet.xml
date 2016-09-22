@@ -68,8 +68,6 @@
 
             <!--&lt;!&ndash;小区&ndash;&gt;-->
             <!--<mvc:mapping path="/community/*/**"/>-->
-            <!--&lt;!&ndash;住户&ndash;&gt;-->
-            <!--<mvc:mapping path="/member/*/**"/>-->
             <!--&lt;!&ndash;反馈&ndash;&gt;-->
             <!--<mvc:mapping path="/feedback/*/**"/>-->
             <!--&lt;!&ndash;报表&ndash;&gt;-->

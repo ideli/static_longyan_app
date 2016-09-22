@@ -20,6 +20,7 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             "community_update_exist/:id": "community_update_exist",
             "community_success": "community_success",
             "community_home": "community_home",
+            "building_list": "building_list",
             "building_create": "building_create",
 
             "community_build": "member_build",
@@ -28,8 +29,6 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             "community_build_modify": "member_build_modify",
 
             "my_owner_community_list": "my_owner_community_list",
-
-
 
             //楼栋
             "community_build_add": "community_build_add",
@@ -167,6 +166,11 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
         community_build_add: function() {
             var t = this;
             t.changePage('community_build_add');
+        },
+        //楼栋
+        building_list: function() {
+            var t = this;
+            t.changePage('building_list');
         },
         building_create: function() {
             var t = this;

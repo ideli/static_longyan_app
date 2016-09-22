@@ -1164,8 +1164,9 @@ header {
   background-color: #0091ea;
 }
 .header-box .goback-button {
-  width: auto;
+  width: 50%;
   padding-right: 0;
+  margin-top: 2.72340426rem;
 }
 .header-box .goback-button i {
   font-size: 1.5rem;
@@ -1175,8 +1176,10 @@ header {
   padding: 0;
 }
 .header-box .right-box {
+  margin-top: 2.72340426rem;
+  text-align: right;
   padding-right: 1.27659574rem;
-  width: auto;
+  width: 50%;
   font-size: 1.19148936rem;
   color: #ffffff;
   pointer-events: all;
@@ -1195,9 +1198,7 @@ header {
 }
 .header-box .text {
   height: 1.53191489rem;
-  margin-top: 2.72340426rem;
   line-height: 1.53191489rem;
-  text-align: center;
   font-size: 1.53191489rem;
   color: #323232;
   float: left;
@@ -1205,6 +1206,12 @@ header {
 .header-box .text.title {
   color: #ffffff;
   font-size: 1.5rem;
+  text-align: center;
+  top: 2.72340426rem;
+  width: 50%;
+  position: absolute;
+  left: 50%;
+  margin-left: -25%;
 }
 .header-box .text.right-box {
   color: #ffffff;

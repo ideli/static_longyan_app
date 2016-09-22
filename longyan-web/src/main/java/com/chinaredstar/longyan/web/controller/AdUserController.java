@@ -355,7 +355,8 @@ public class AdUserController  extends BaseController implements CommonBizConsta
     //查询用户信息
     @RequestMapping(value = "/user-info")
     @ResponseBody
-    public Response getUserInfo() {
+    public Response getUserInfo(HttpServletRequest request) {
+
         Response res = this.buildPipelineContent().getResponse();
         try {
             //Employee employee = (Employee) session.getAttribute(SESSION_EMPLOYEE);
