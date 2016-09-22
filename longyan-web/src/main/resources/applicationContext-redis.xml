@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
     <context:annotation-config/>
-    <cache:annotation-driven cache-manager="redisCacheManager"/>
+    <cache:annotation-driven cache-manager="CacheManager"/>
     <!-- 将session放入redis -->
     <bean id="redisHttpSessionConfiguration"
             class="com.chinaredstar.longyan.bean.RedisHttpSessionConfiguration2"
@@ -88,7 +88,7 @@
         </property>
     </bean>
     <!--缓存时长根据自己的业务需求来设定-->
-    <bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+    <bean id="CacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
         <constructor-arg ref="cacheRedisTemplate"/>
         <property name="defaultExpiration" value="300"/>
     </bean>
