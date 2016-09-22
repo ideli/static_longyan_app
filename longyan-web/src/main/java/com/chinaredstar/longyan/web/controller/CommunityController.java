@@ -1,24 +1,35 @@
 package com.chinaredstar.longyan.web.controller;
 
 import com.chinaredstar.commonBiz.bean.RedstarCommunity;
+import com.chinaredstar.commonBiz.bean.RedstarCommunityBuilding;
+import com.chinaredstar.commonBiz.bean.RedstarCommunityUnit;
 import com.chinaredstar.commonBiz.bean.RedstarCommunityUpdateLog;
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
 import com.chinaredstar.commonBiz.manager.RedstarCommunityUnitManager;
+import com.chinaredstar.longyan.exception.BusinessException;
+import com.chinaredstar.longyan.exception.constant.CommonExceptionType;
+import com.chinaredstar.longyan.exception.constant.CommunityExceptionType;
 import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
 import com.xiwa.base.bean.PaginationDescribe;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.bean.SimplePaginationDescribe;
 import com.xiwa.base.bean.search.ext.IntSearch;
+import com.xiwa.base.bean.search.ext.MultiSearchBean;
 import com.xiwa.base.pipeline.PipelineContext;
+import com.xiwa.base.util.DataUtil;
+import com.xiwa.base.util.StringUtil;
 import com.xiwa.zeus.trinity.bean.Employee;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -31,6 +42,8 @@ public class CommunityController extends BaseController implements CommonBizCons
 
     @Autowired
     private DispatchDriver dispatchDriver;
+    @Autowired
+    private RedstarCommonManager redstarCommonManager;
 
 
     //查询小区列表
@@ -89,6 +102,333 @@ public class CommunityController extends BaseController implements CommonBizCons
             setUnknowException(e, res);
         }
         return res;
+    }
+
+
+
+
+
+
+    /**
+     * 返回某个小区的栋单元列表
+     * <p/>
+     * 参数 communityId
+     * 表 xiwa_redstar_community_building
+     *
+     * @return response
+     */
+    @RequestMapping(value = "/building/list", method = RequestMethod.POST)
+    @ResponseBody
+    public Response buildingList() {
+        PipelineContext pipelineContext = buildPipelineContent();
+        Response response = pipelineContext.getResponse();
+        int communityId = pipelineContext.getRequest().getInt("communityId");
+        //communityId 输入为空，为0，格式不符时 报错
+        if (communityId == 0) {
+            response.setCode(FORM_ERROR_CODE);
+            response.setOk(false);
+            response.setMessage("communityId输入有误");
+            return response;
+        }
+
+        try {
+            List<RedstarCommunityBuilding> redstarCommunityBuildings = dispatchDriver.getRedstarCommunityBuildingManager().getBeanListByColumn("communityId", communityId);
+            response.addKey("redstarCommunityBuildings", redstarCommunityBuildings);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setCode(40901);
+            response.setOk(false);
+            response.setMessage(e.getMessage());
+            return response;
+        }
+        return response;
+    }
+
+
+    /**
+     * 添加栋
+     * <p/>
+     * 再某个小区下面添加一个栋单元
+     * <p/>
+     * 栋数据表：xiwa_redstar_community_building
+     *
+     * @return response
+     */
+    @RequestMapping(value = "/building/add", method = RequestMethod.POST)
+    @ResponseBody
+    public Response buildingAdd() {
+        PipelineContext pipelineContext = this.buildPipelineContent();
+        Response response = pipelineContext.getResponse();
+
+        //小区ID 和 栋的姓名
+        int communityId = pipelineContext.getRequest().getInt("communityId");
+        String buildingName = pipelineContext.getRequest().getString("buildingName");
+
+        int roomAmount = pipelineContext.getRequest().getInt("roomAmount");//住宅数
+        int unitAmount = pipelineContext.getRequest().getInt("unitAmount");//单元数
+        int floorAmount = pipelineContext.getRequest().getInt("floorAmount");//楼层数
+
+        if(roomAmount<=0){
+            setErrCodeAndMsg(response,-1001,"住宅数不能为空");
+            return response;
+        }
+
+        if(floorAmount<=0){
+            setErrCodeAndMsg(response,-1001,"楼层数不能为空");
+            return response;
+        }
+        if (communityId == 0) {
+            response.setCode(FORM_ERROR_CODE);
+            response.setOk(false);
+            response.setMessage("communityId不能为空");
+            return response;
+        }
+
+        if (StringUtils.isBlank(buildingName)) {
+            response.setOk(false);
+            response.setMessage("buildingName不能为空");
+            response.setCode(FORM_ERROR_CODE);
+            return response;
+        }
+
+        RedstarCommunityBuilding redstarCommunityBuilding = new RedstarCommunityBuilding();
+
+        redstarCommunityBuilding.setCommunityId(communityId);
+        redstarCommunityBuilding.setBuildingName(buildingName);
+        redstarCommunityBuilding.setRoomAmount(roomAmount);
+        redstarCommunityBuilding.setUnitAmount(unitAmount);
+        redstarCommunityBuilding.setFloorAmount(floorAmount);
+
+        try {
+            //Employee employee = null;    // 获取session中的登陆用户的employeeCode
+            Employee employee = getEmployeeromSession();
+
+            //用户ID,姓名，创建时间
+            redstarCommunityBuilding.setCreateEmployeeId(employee.getId());
+            redstarCommunityBuilding.setCreateXingMing(employee.getXingMing());
+            redstarCommunityBuilding.setCreateDate(new Date());
+
+            //添加进栋列表
+            int buildingId = dispatchDriver.getRedstarCommunityBuildingManager().addBean(redstarCommunityBuilding);
+            response.addKey("buildingId", buildingId);
+            response.setMessage("添加成功");
+            response.setOk(true);
+            response.setCode(HTTP_SUCCESS_CODE);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            response.setCode(40101);
+            response.setOk(false);
+            response.setMessage(exception.getMessage());
+            return response;
+
+        }
+
+        return response;
+    }
+
+
+    //编辑栋信息
+    @RequestMapping(value = "/building/update", method = RequestMethod.POST)
+    @ResponseBody
+    public Response buildingUpdate()  {
+        PipelineContext pipelineContext = this.buildPipelineContent();
+        Response response = pipelineContext.getResponse();
+
+        Integer dataId = pipelineContext.getRequest().getInt("id");
+
+        if(dataId<=0){
+            setErrCodeAndMsg(response,-1001,"数据id缺失");
+            return response;
+        }
+
+        //小区ID 和 栋的姓名
+
+        String buildingName = pipelineContext.getRequest().getString("buildingName");
+        int roomAmount = pipelineContext.getRequest().getInt("roomAmount");//住宅数
+        int unitAmount = pipelineContext.getRequest().getInt("unitAmount");//单元数
+        int floorAmount = pipelineContext.getRequest().getInt("floorAmount");//楼层数
+
+        if(roomAmount<=0){
+            setErrCodeAndMsg(response,-1001,"住宅数不能为空");
+            return response;
+        }
+        if(unitAmount<=0){
+            setErrCodeAndMsg(response,-1001,"单元数不能为空");
+            return response;
+        }
+        if(floorAmount<=0){
+            setErrCodeAndMsg(response,-1001,"楼层数不能为空");
+            return response;
+        }
+
+        if (StringUtils.isBlank(buildingName)) {
+            setErrCodeAndMsg(response,-1001,"buildingName不能为空");
+            return response;
+        }
+
+        try {
+
+            RedstarCommunityBuilding redstarCommunityBuilding = (RedstarCommunityBuilding) dispatchDriver.getRedstarCommunityBuildingManager().getBean(dataId);
+
+            if (redstarCommunityBuilding==null){
+                setErrCodeAndMsg(response,-1001,"当前数据不存在");
+                return response;
+            }
+
+            redstarCommunityBuilding.setBuildingName(buildingName);
+            redstarCommunityBuilding.setRoomAmount(roomAmount);
+            redstarCommunityBuilding.setUnitAmount(unitAmount);
+            redstarCommunityBuilding.setFloorAmount(floorAmount);
+
+            //添加进栋列表
+            dispatchDriver.getRedstarCommunityBuildingManager().updateBean(redstarCommunityBuilding);
+            response.setMessage("更新成功");
+            response.setOk(true);
+            response.setCode(HTTP_SUCCESS_CODE);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            response.setCode(40101);
+            response.setOk(false);
+            response.setMessage(exception.getMessage());
+            return response;
+        }
+
+        return response;
+    }
+
+
+
+    /**
+     * 根据栋单元ID删除栋单元数据
+     * <p/>
+     * 只能删除自己创建的栋/单元
+     * 删除栋单元前查询该栋下面有无住宅，有则不允许删除
+     * 是否有住宅查询表: xiwa_redstar_member
+     *
+     * @return response
+     */
+    @RequestMapping(value = "/building/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public Response buildingDelete() {
+        PipelineContext pipelineContext = buildPipelineContent();
+        Response response = pipelineContext.getResponse();
+        String idStr = pipelineContext.getRequest().getString("ids");
+        int communityId = pipelineContext.getRequest().getInt("communityId");
+
+        try {
+            //1.判断 栋ID 、 communityId 是否为空
+            if (StringUtils.isBlank(idStr)) {
+                throw new BusinessException(CommonExceptionType.ParameterError);
+            }
+            if (communityId == 0) {
+                throw new BusinessException(CommonExceptionType.ParameterError);
+            }
+
+            // 获取session中的登陆用户的employeeCode
+            Employee employee = getEmployeeromSession();
+            if (employee == null) {
+                throw new BusinessException(CommonExceptionType.NoSession);
+            }
+
+            //2.截取，获得string 数组
+            String[] deleteArray = idStr.split(",");
+            String strIds = "";      //*****
+            //.获取ids数组
+            if (deleteArray.length < 1) {
+                throw new BusinessException(CommonExceptionType.ParameterError);
+            }
+            for (int i = 0; i < deleteArray.length; i++) {
+                //获取集合的值 下标从0开始
+                int id = DataUtil.getInt(deleteArray[i], 0);    //如果数组中有非数字时，这个方法直接将其排除掉了
+
+                //判断是否符合删除条件，如果不符合，continue
+                if (id <= 0) {  //ID为非整形数 和 0
+                    continue;
+                }
+
+                try {
+                    //封装查询参数
+                    MultiSearchBean multiSearchBean = new MultiSearchBean();
+                    IntSearch idIntSearch = new IntSearch("id");
+                    idIntSearch.setSearchValue(String.valueOf(id));
+                    multiSearchBean.addSearchBean(idIntSearch);
+                    IntSearch communityIdIntSearch = new IntSearch("communityId");
+                    communityIdIntSearch.setSearchValue(String.valueOf(communityId));
+                    multiSearchBean.addSearchBean(communityIdIntSearch);
+
+                    int createEmployeeId = employee.getId();
+
+//                    IntSearch createEmployeeIdSearch = new IntSearch("createEmployeeId");
+//                    createEmployeeIdSearch.setSearchValue(String.valueOf(createEmployeeId));
+//                    multiSearchBean.addSearchBean(createEmployeeIdSearch);
+
+                    //3.根据communityID 和 创建人ID 查询是否存在该栋 xiwa_redstar_community_building
+                    List<RedstarCommunityBuilding> redstarCommunityBuildings = dispatchDriver.getRedstarCommunityBuildingManager().searchIdentify(multiSearchBean);
+
+                    //判断如果存在该栋
+                    if (redstarCommunityBuildings.size() > 0) {    //存在该栋
+                        //3.1. 存在该栋   根据buildingID查找 单元表 xiwa_redstar_community_unit
+                        for (RedstarCommunityBuilding redstarCommunityBuilding : redstarCommunityBuildings) {
+                            int buildingId = redstarCommunityBuilding.getId();
+                            IntSearch buildingIdSearch = new IntSearch("buildingId");
+                            buildingIdSearch.setSearchValue(String.valueOf(buildingId));
+
+                            //根据buildingID查找 该栋下是否存在unit
+                            List<RedstarCommunityUnit> redstarCommunityUnits = redstarCommonManager.getDataList(RedstarCommunityUnit.class, buildingIdSearch);
+                            if (redstarCommunityUnits.size() > 0) { //该栋下有单元存在
+                                response.setOk(false);
+                                response.setCode(DataUtil.getInt(CommunityExceptionType.DeleteInUse.getCode(), 0));
+                                response.setMessage(CommunityExceptionType.DeleteInUse.getMessage());
+                                continue;
+                            }
+                            if (id != 0) {
+                                //下标i循环到最后一个时 得到栋存在的字符串
+                                if (i + 1 == deleteArray.length) {
+                                    strIds += id;
+                                } else {
+                                    strIds += id + ",";
+                                }
+                            }
+                        }
+
+                    } else {
+                        continue;
+
+                    }
+
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                    response.setCode(401101);
+                    response.setMessage(exception.getMessage());
+                    response.setOk(false);
+                    return response;
+                }
+
+            }
+
+
+            if (StringUtil.isValid(strIds)) {
+                int ids[] = new int[strIds.split(",").length];
+                for (int i = 0; i < strIds.split(",").length; i++) {
+                    ids[i] = Integer.parseInt(strIds.split(",")[i]);
+                }
+                if (ids.length == 0) {
+                    throw new BusinessException(CommonExceptionType.DeleteNoExist);
+                }
+                //删除
+                dispatchDriver.getRedstarCommunityBuildingManager().removeBeans(ids);
+                setSuccessMsg(response, "删除成功");
+            } else {
+                throw new BusinessException(CommonExceptionType.ParameterError);
+            }
+
+        } catch (BusinessException e) {
+            setBusinessException(e, response);
+        } catch (Exception e) {
+            setUnknowException(e, response);
+        }
+        return response;
     }
 
 

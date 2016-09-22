@@ -75,29 +75,6 @@ define('js/longyan/view/building_list', [
                                     content: msg
                                 });
                             });
-
-                        // var currentPage = 1;
-                        // var totalPages = 1;
-                        // var currentRecords = [{
-                        //     id: 1,
-                        //     building_no: '1',
-                        //     floor_amount: '24',
-                        //     unit_amount: '3',
-                        //     room_amount: '30'
-                        // }, {
-                        //     id: 2,
-                        //     building_no: '1',
-                        //     floor_amount: '24',
-                        //     unit_amount: '3',
-                        //     room_amount: '30'
-                        // }, {
-                        //     id: 3,
-                        //     building_no: '1',
-                        //     floor_amount: '24',
-                        //     unit_amount: '3',
-                        //     room_amount: '30'
-                        // }];
-                        // handler(currentRecords, currentPage, totalPages);
                     },
                     appendItem: function(data) {
                         var item = {
@@ -124,25 +101,29 @@ define('js/longyan/view/building_list', [
             initEvents: function() {
                 var t = this;
                 t.$el.find('#building-info-view .last').on('click', function() {
+                    //缓存community数据
+                    window.tmp_building = {
+                        community_id: t.config.id
+                    };
                     //添加楼栋
                     window.location.href = '#building_create';
                 });
             },
             _clickItem: function(e) {
+                var t = this;
                 var id = $(e.currentTarget).attr('data-value');
                 if (id) {
                     var building_no = $(e.currentTarget).find('.item-building-no').attr('data-value');
                     var floor_amount = $(e.currentTarget).find('.item-floor-amount').attr('data-value');
                     var unit_amount = $(e.currentTarget).find('.item-unit-amount').attr('data-value');
                     var room_amount = $(e.currentTarget).find('.item-room-amount').attr('data-value');
-                    var community_id = $(e.currentTarget).find('.item-community-id').attr('data-value');
                     //缓存
                     window.tmp_building = {
                         building_no: building_no,
                         floor_amount: floor_amount,
                         unit_amount: unit_amount,
                         room_amount: room_amount,
-                        community_id: community_id
+                        community_id: t.config.id
                     };
                     //跳转
                     window.location.href = '#building_detail/' + id;

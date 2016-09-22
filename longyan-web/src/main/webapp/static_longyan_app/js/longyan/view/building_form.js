@@ -19,7 +19,9 @@ define('js/longyan/view/building_form', [
         var form_id = '#building-form';
         var city;
         var LayoutView = Backbone.View.extend({
-            events: {},
+            events: {
+                'keyup input': '_pre_check'
+            },
             //
             initialize: function(options, config) {
                 var t = this;
@@ -152,10 +154,22 @@ define('js/longyan/view/building_form', [
             },
             //添加
             __add: function(t) {
+                var t = this;
+
                 //添加小区逻辑
                 if (t.checkForm()) {
-                    //获取输入的地理位置
-                    //获取输入的社区信息
+                    // var tmp_building = window.tmp_building;
+                    // var community_id = tmp_building.community_id;
+                    var building = t.getFormValue();
+                    CommunityApi.addCommunityBuilding(building.community_id, building.building_name, building.building_room_amount, building.building_unit_amount, building.building_floor_amount, function(data) {
+                        tipsAlert.close();
+                        Backbone.history.history.back();
+                    }, function(code, msg) {
+                        tipsAlert.close();
+                        tipsAlert.openToast({
+                            content: '添加楼栋失败'
+                        });
+                    });
 
                 }
             },
@@ -164,22 +178,19 @@ define('js/longyan/view/building_form', [
                 var t = this;
                 //更新逻辑                
                 if (t.checkForm()) {
-                    var buildingName = t.building_number_input.getValue() || '';
-                    var building_room_amount = t.building_room_amount_input.getValue() || 0;
-                    var building_unit_amount = t.building_unit_amount_input.getValue() || 0;
-                    var building_floor_amount = t.building_floor_amount_input.getValue() || 0;
+
 
                     tipsAlert.openLoading({
                         content: '加载中...'
                     });
-
-                    CommunityApi.updateCommunityBuilding(t.config.id, buildingName, building_room_amount, building_unit_amount, building_floor_amount, function(data) {
+                    var building = t.getFormValue();
+                    CommunityApi.updateCommunityBuilding(t.config.id, building.building_name, building.building_room_amount, building.building_unit_amount, building.building_floor_amount, function(data) {
                         tipsAlert.close();
                         Backbone.history.history.back();
                     }, function(code, msg) {
                         tipsAlert.close();
                         tipsAlert.openToast({
-                            content: '添加楼栋失败'
+                            content: '更新楼栋失败'
                         });
                     });
                 }
@@ -208,6 +219,30 @@ define('js/longyan/view/building_form', [
                     });
                 }
             },
+            _pre_check: function() {
+                var t = this;
+                console.log('_pre_check', t.checkForm());
+                if (t.checkForm()) {
+                    //激活
+                    if (t.create_commit_button) {
+                        t.create_commit_button.setDisable(false);
+                    }
+                    if (t.save_commit_button) {
+                        t.save_commit_button.setDisable(false);
+                    }
+                } else {
+                    //禁用
+                    if (t.create_commit_button) {
+                        t.create_commit_button.setDisable(true);
+                        console.log('t.create_commit_button.setDisable(true)');
+                    }
+                    if (t.save_commit_button) {
+                        t.save_commit_button.setDisable(true);
+                        console.log('t.save_commit_button.setDisable(true)');
+                    }
+                }
+                return false;
+            },
             //从缓存加载数据
             loadData: function() {
                 var t = this;
@@ -235,11 +270,32 @@ define('js/longyan/view/building_form', [
                     t.building_room_amount_input.setValue(data.roomAmount);
                 }
             },
+            //获取表单的值
+            getFormValue: function() {
+                var t = this;
+                var tmp_building = window.tmp_building;
+                var building_name = t.building_number_input.getValue() || '';
+                var building_room_amount = t.building_room_amount_input.getValue() || 0;
+                var building_unit_amount = t.building_unit_amount_input.getValue() || 0;
+                var building_floor_amount = t.building_floor_amount_input.getValue() || 0;
+                return {
+                    id: t.config.id,
+                    community_id: tmp_building.community_id,
+                    building_name: building_name,
+                    building_room_amount: building_room_amount,
+                    building_unit_amount: building_unit_amount,
+                    building_floor_amount: building_floor_amount
+                };
+            },
             //检查必填字段是否为空
             checkForm: function() {
                 var t = this;
-
-                return true;
+                var building = t.getFormValue();
+                if (building && $nvwa.string.isVerify(building.building_name) && $nvwa.string.isVerify(building.building_floor_amount) && building.building_floor_amount > 0 && $nvwa.string.isVerify(building.building_room_amount) && building.building_room_amount > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         });
         return LayoutView;
