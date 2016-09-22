@@ -43,6 +43,14 @@ define('js/element/view/button-box', [
                 } else {
                     t.$el.find('.' + t.config.fieldName).find('.text').removeClass('disable');
                 }
+            },
+            hide: function() {
+                var t = this;
+                t.$el.find('.' + t.config.fieldName).hide();
+            },
+            show: function() {
+                var t = this;
+                t.$el.find('.' + t.config.fieldName).show();
             }
         });
         return LayoutView;

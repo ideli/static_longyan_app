@@ -4,7 +4,7 @@
  */
 define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(http, MockData) {
 	var _basePath = '/longyan/community';
-	var __debug = true;
+	var __debug = false;
 	var CommunityApi = {
 		initialize: function() {},
 		_executeRequest: function(url, data, handler, isJsonp, method, async) {
@@ -244,12 +244,11 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 			}, false, 'POST', false, $nvwa.header.getHeaders());
 		},
 		//编辑楼栋号
-		updateCommunityBuilding: function(id, communityId, buildingName, roomAmount, unitAmount, floorAmount, success, error) {
+		updateCommunityBuilding: function(id, buildingName, roomAmount, unitAmount, floorAmount, success, error) {
 			var t = this;
 			var url = _basePath + '/building/update';
 			var data = {
 				id: id,
-				communityId: communityId,
 				buildingName: buildingName,
 				roomAmount: roomAmount,
 				unitAmount: unitAmount,

@@ -1325,6 +1325,9 @@ input {
   padding-bottom: 1px;
   background-color: #fff;
 }
+.input-box .label-right {
+  color: #666666;
+}
 .input-box .label {
   float: left;
   z_index: 999;
@@ -1343,6 +1346,7 @@ input {
   -webkit-appearance: none;
   background: transparent;
   text-align: right;
+  color: #666666;
 }
 
 .line-chart-box .chart-box {

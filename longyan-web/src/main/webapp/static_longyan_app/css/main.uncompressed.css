@@ -12,6 +12,17 @@
   padding-top: 3.40425532rem;
   flex: 1;
 }
+#building-view #building-form .button-container .delete-button {
+  margin-top: 3.40425532rem;
+  background-color: #ffffff;
+  border: 0.1rem solid #0091ea;
+}
+#building-view #building-form .button-container .delete-button .text {
+  color: #0091ea;
+}
+#building-view #building-form .label-right {
+  padding-left: 0.85106383rem;
+}
 #building-info-view {
   background-color: #ffffff;
   margin-top: 5.44680851rem;

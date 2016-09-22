@@ -78,13 +78,45 @@ define('js/longyan/view/community_home', [
                     readonly: true,
                     label_right: '<i class="iconfont">&#xe602;</i>'
                 });
-
-
-
             },
             loadData: function() {
                 var t = this;
+                if (t.config && t.config.id && t.config.id > 0) {
+                    tipsAlert.openLoading({
+                        content: '加载中...'
+                    });
 
+                    CommunityApi.getCommunityById(t.config.id, function(data) {
+                        tipsAlert.close();
+                        //success
+                        console.log(data);
+                        if (data && data.community) {
+                            var data = data.community;
+                            t.$el.find('#header-container').find('.title').html(data.name);
+
+                            if (data && data.ownerId && data.ownerId > 0) {
+                                t.$el.find('#community-home-form .owner-name').html(data.ownerXingMing);
+                            }
+
+                        }
+
+                    }, function(code, msg) {
+                        tipsAlert.close();
+                        //error
+                        tipsAlert.openToast({
+                            content: '系统异常'
+                        });
+                    });
+
+                } else {
+                    tipsAlert.openToast({
+                        content: '数据异常'
+                    });
+                }
+
+            },
+            setData: function(data) {
+                var t = this;
             }
         });
         return LayoutView;

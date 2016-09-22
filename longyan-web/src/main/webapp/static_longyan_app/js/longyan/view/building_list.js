@@ -13,15 +13,16 @@ define('js/longyan/view/building_list', [
         'js/element/view/link-box',
         'js/element/view/tips-bar',
         'js/element/view/list-box',
-        'js/api/report'
+        'js/api/community'
     ],
-    function(ListContailerTpl, BuildingListItemTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox, ReportApi) {
+    function(ListContailerTpl, BuildingListItemTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox, CommunityApi) {
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#building-list-view';
         var form_id = '#building-list-form';
+
         var LayoutView = Backbone.View.extend({
             events: {
-                'click .message-item': '_clickItem'
+                'click .building-list-item': '_clickItem'
             },
             //
             initialize: function(options, config) {
@@ -34,6 +35,7 @@ define('js/longyan/view/building_list', [
             },
             render: function() {
                 var t = this;
+                t.room_amount = 0;
                 $('body').css('background-color', '#efeff4');
                 t.$el.html(tpl(ListContailerTpl, {}));
                 t.header_view = new HeaderView({
@@ -44,88 +46,76 @@ define('js/longyan/view/building_list', [
 
                 var i = 1;
                 var mallId = t.config.id;
+
                 t.list_box = new ListBox({
                     el: $('#building-list-box')
                 }, {
-                    scroll: true //支持下拉刷新
+                    scroll: false //支持下拉刷新
                 }, {
                     loadData: function(page, handler) {
 
-                        // tipsAlert.openLoading({
-                        //     content: '加载中...'
-                        // });
-                        // ReportApi.getEmployeeList({
-                        //         mallId: mallId,
-                        //         page: page
-                        //     },
-                        //     function(data) {
-                        //         tipsAlert.close();
-                        //         console.log(data);
-                        //         if (data && data.result) {
-                        //             var totalPages = data.totalPages;
-                        //             var currentPage = data.currentPage;
-                        //             var currentRecords = data.result;
-                        //             // t.list_box.setCurrentPage(currentPage);
-                        //             // t.list_box.setTotalPage(totalPages);
-                        //             if (handler) {
-                        //                 handler(currentRecords, currentPage, totalPages);
-                        //             }
-                        //         }
-                        //     },
-                        //     function(code, msg) {
-                        //         tipsAlert.close();
-                        //         tipsAlert.openAlert({
-                        //             content: msg
-                        //         });
-                        //     });
+                        tipsAlert.openLoading({
+                            content: '加载中...'
+                        });
+                        CommunityApi.getCommunityBuildingList(1, 9999, t.config.id,
+                            function(data) {
+                                tipsAlert.close();
+                                console.log(data);
+                                if (data && data.redstarCommunityBuildings) {
+                                    var building_data = data.redstarCommunityBuildings;
+                                    //加载列表
+                                    handler(building_data, 1, 1);
+                                    //填写顶部的数字
+                                    t.$el.find('#building-info-view .building-amount').html(building_data.length);
+                                }
+                            },
+                            function(code, msg) {
+                                tipsAlert.close();
+                                tipsAlert.openAlert({
+                                    content: msg
+                                });
+                            });
 
-                        var currentPage = 1;
-                        var totalPages = 1;
-                        var currentRecords = [{
-                            id: 1,
-                            building_no: '1',
-                            floor_amount: '24',
-                            unit_amount: '3',
-                            room_amount: '30'
-                        }, {
-                            id: 2,
-                            building_no: '1',
-                            floor_amount: '24',
-                            unit_amount: '3',
-                            room_amount: '30'
-                        }, {
-                            id: 3,
-                            building_no: '1',
-                            floor_amount: '24',
-                            unit_amount: '3',
-                            room_amount: '30'
-                        }];
-                        handler(currentRecords, currentPage, totalPages);
+                        // var currentPage = 1;
+                        // var totalPages = 1;
+                        // var currentRecords = [{
+                        //     id: 1,
+                        //     building_no: '1',
+                        //     floor_amount: '24',
+                        //     unit_amount: '3',
+                        //     room_amount: '30'
+                        // }, {
+                        //     id: 2,
+                        //     building_no: '1',
+                        //     floor_amount: '24',
+                        //     unit_amount: '3',
+                        //     room_amount: '30'
+                        // }, {
+                        //     id: 3,
+                        //     building_no: '1',
+                        //     floor_amount: '24',
+                        //     unit_amount: '3',
+                        //     room_amount: '30'
+                        // }];
+                        // handler(currentRecords, currentPage, totalPages);
                     },
                     appendItem: function(data) {
-                        console.log(data);
-                        //住宅录入率
-                        // var inputMemberRate = 0;
-                        // if (data && data.inputCommunityRoomAmount) {
-                        //     inputMemberRate = ((data.inputMemberAmount / data.inputCommunityRoomAmount) * 100).toFixed(0);
-                        //     if (inputMemberRate > 100) {
-                        //         inputMemberRate = 100;
-                        //     }
-                        // }
+                        var item = {
+                            id: data.id,
+                            building_no: data.buildingName,
+                            floor_amount: data.floorAmount,
+                            unit_amount: data.unitAmount,
+                            room_amount: data.roomAmount,
+                            community_id: data.communityId
 
-                        // var item = {
-                        //     index: i,
-                        //     name: data['xingMing'],
-                        //     inputMemberAmount: data['inputMemberAmount'],
-                        //     inputCommunityAmount: data['inputCommunityAmount'],
-                        //     employeeCount: data['employeeCount'],
-                        //     inputMemberRate: inputMemberRate,
-                        //     url: '#report_employee_by_id/' + data['id']
-                        // };
-                        // i++;
-
+                        };
+                        if (data.roomAmount) {
+                            room_amount = +data.roomAmount;
+                        }
+                        //填写顶部的数字
+                        t.$el.find('#building-info-view .room-amount').html(room_amount);
                         return tpl(BuildingListItemTpl, {
-                            data: data
+                            data: item
                         });
                     }
                 });
@@ -133,13 +123,33 @@ define('js/longyan/view/building_list', [
             //初始化监听器
             initEvents: function() {
                 var t = this;
-
+                t.$el.find('#building-info-view .last').on('click', function() {
+                    //添加楼栋
+                    window.location.href = '#building_create';
+                });
             },
             _clickItem: function(e) {
-                if ($(e.currentTarget).hasClass('isRead')) {
-                    console.log('isRead');
+                var id = $(e.currentTarget).attr('data-value');
+                if (id) {
+                    var building_no = $(e.currentTarget).find('.item-building-no').attr('data-value');
+                    var floor_amount = $(e.currentTarget).find('.item-floor-amount').attr('data-value');
+                    var unit_amount = $(e.currentTarget).find('.item-unit-amount').attr('data-value');
+                    var room_amount = $(e.currentTarget).find('.item-room-amount').attr('data-value');
+                    var community_id = $(e.currentTarget).find('.item-community-id').attr('data-value');
+                    //缓存
+                    window.tmp_building = {
+                        building_no: building_no,
+                        floor_amount: floor_amount,
+                        unit_amount: unit_amount,
+                        room_amount: room_amount,
+                        community_id: community_id
+                    };
+                    //跳转
+                    window.location.href = '#building_detail/' + id;
                 } else {
-                    console.log('not to read');
+                    tipsAlert.openToast({
+                        content: '数据异常'
+                    });
                 }
             },
             destroy: function() {

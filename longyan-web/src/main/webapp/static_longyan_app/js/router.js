@@ -12,41 +12,32 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             "login": "login", //登录
             //小区
             "community_list": "community_list",
-            "community_list_setup": "community_list_setup",
             "community_info/:id": "community_info",
             "community_preview/:id": "community_preview",
             "community_create": "community_create",
             "community_update/:id": "community_update",
             "community_update_exist/:id": "community_update_exist",
             "community_success": "community_success",
-            "community_home": "community_home",
-            "building_list": "building_list",
+            "community_home/:id": "community_home",
+            "building_list/:id": "building_list",
+            "building_detail/:id": "building_detail",
             "building_create": "building_create",
-
-            "community_build": "member_build",
-            "community_build_add": "member_build_add",
-            "community_build_edit": "member_build_edit",
-            "community_build_modify": "member_build_modify",
-
+            //我的小区
             "my_owner_community_list": "my_owner_community_list",
-
-            //楼栋
-            "community_build_add": "community_build_add",
             //龙榜
             "integral_rank_list": "integral_rank_list",
             //龙榜 历史列表
             "integral_rank_list_history_champion": "integral_rank_list_history_champion",
-            //积分明细
-            "integral_explain_list": "integral_explain_list",
-            "integral_explain_detail": "integral_explain_detail",
-            //积分说明
-            "integral_rule": "integral_rule",
-
             //消息中心
             "message_list": "message_list",
-
+            //我的->审核
             "my_review_list": "my_review_list",
-            "my_review_detail": "my_review_detail"
+            "my_review_detail": "my_review_detail",
+            //我的->积分说明
+            "integral_rule": "integral_rule",
+            //我的->积分明细
+            "integral_explain_list": "integral_explain_list",
+            "integral_explain_detail": "integral_explain_detail",
 
 
         },
@@ -119,9 +110,11 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
         },
 
 
-        community_home: function() {
+        community_home: function(id) {
             var t = this;
-            t.changePage('community_home');
+            t.changePage('community_home', {
+                id: id
+            });
         },
         community_list: function() {
             var t = this;
@@ -168,9 +161,18 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             t.changePage('community_build_add');
         },
         //楼栋
-        building_list: function() {
+        building_list: function(id) {
             var t = this;
-            t.changePage('building_list');
+            t.changePage('building_list', {
+                id: id
+            });
+        },
+        building_detail: function(id) {
+            var t = this;
+            t.changePage('building_form', {
+                id: id,
+                info: true
+            });
         },
         building_create: function() {
             var t = this;
