@@ -1,5 +1,6 @@
 package com.chinaredstar.commonBiz.manager;
 
+import com.chinaredstar.commonBiz.bean.RedstarCommunityUpdateLog;
 import com.chinaredstar.nvwaBiz.manager.NvwaSecurityOperationLogManager;
 import com.chinaredstar.nvwaBiz.manager.NvwaDepartmentManager;
 import com.chinaredstar.nvwaBiz.manager.NvwaEmployeeManager;
@@ -48,5 +49,7 @@ public interface DispatchDriver {
     public RedstarCommonManager getRedstarCommonManager();
 
     public RedstarMessageCenterManager getRedstarMessageCenterManager();
+
+    public RedstarCommunityUpdateLogManager getRedstarCommunityUpdateLogManager();
 
 }
