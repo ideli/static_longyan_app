@@ -3,6 +3,7 @@ package com.chinaredstar.longyan.web.controller;
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.longyan.bean.constant.LanchuiConstant;
 import com.chinaredstar.longyan.exception.BusinessException;
+import com.chinaredstar.longyan.exception.NoSessionException;
 import com.chinaredstar.longyan.exception.constant.CommonExceptionType;
 //import com.chinaredstar.uc.dubbo.core.api.IEmployeeService;
 import com.xiwa.base.bean.Response;
@@ -105,7 +106,7 @@ public class BaseController extends AdvanceControllerSupport implements LanchuiC
      * @return
      * @throws ManagerException
      */
-    protected Employee getEmployeeromSession() throws ManagerException {
+    protected Employee getEmployeeromSession() throws NoSessionException {
 
         // redies中Session取得
         HttpSession session = request.getSession();
@@ -117,6 +118,11 @@ public class BaseController extends AdvanceControllerSupport implements LanchuiC
         Employee employee = new Employee();
         employee.setId(11722);
         employee.setXingMing("张学超");
+
+        if(employee==null){
+            throw new NoSessionException();
+        }
+
         return employee;
     }
 
