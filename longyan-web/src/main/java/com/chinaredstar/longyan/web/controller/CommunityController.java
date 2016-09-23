@@ -241,14 +241,10 @@ public class CommunityController extends BaseController implements CommonBizCons
 
                 String querySQL = sb.toString();
 
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String strSysytemDateTime = df.format(System.currentTimeMillis());
-
                 List<Object> paramsList = new ArrayList<Object>();
                 paramsList.add(Double.parseDouble(longitude));
                 paramsList.add(Double.parseDouble(longitude));
                 paramsList.add(Double.parseDouble(latitude));
-                paramsList.add(strSysytemDateTime);
                 paramsList.add(intLimtM);
 
                 //搜索结果（以员工GPS位置为圆心半径intLimtM内所有小区列表）
