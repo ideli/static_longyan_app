@@ -18,7 +18,7 @@ define('js/longyan/view/community_list', [
         'js/api/community',
         'js/util/hybrid'
     ],
-    function (TabsBottom, CommunityListTpl, CommunityListItemTpl, NoDataTpl, NoNetworkTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox, CommunityApi, hybrid) {
+    function(TabsBottom, CommunityListTpl, CommunityListItemTpl, NoDataTpl, NoNetworkTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox, CommunityApi, hybrid) {
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#community-list-view';
         var form_id = '#community-list-form';
@@ -26,7 +26,7 @@ define('js/longyan/view/community_list', [
         var LayoutView = Backbone.View.extend({
             events: {},
             //
-            initialize: function (options, config) {
+            initialize: function(options, config) {
                 var t = this;
                 t.config = config || {};
                 t.$el.off('click');
@@ -34,12 +34,12 @@ define('js/longyan/view/community_list', [
                 //加载数据
                 t.initEvents();
             },
-            render: function () {
+            render: function() {
                 var t = this;
                 $('body').css('background-color', '#efeff4');
                 t.$el.html(tpl(CommunityListTpl, {}));
                 var right_button_text = $('<i class="icon iconfont icon-longyanjiahao">+</i>');
-                var right_button_action = function (e) {
+                var right_button_action = function(e) {
                     e.preventDefault();
                     router.navigate('community_create', {
                         trigger: true
@@ -49,7 +49,7 @@ define('js/longyan/view/community_list', [
                     el: $('#header-container')
                 }, {
                     text: '我的小区',
-                    goBackUrl: function () {
+                    goBackUrl: function() {
                         hybrid.backToHybrid("Mine", "direct");
                     }
                 });
@@ -62,7 +62,7 @@ define('js/longyan/view/community_list', [
                 }, {
                     scroll: true //支持下拉刷新
                 }, {
-                    loadData: function (page, handler) {
+                    loadData: function(page, handler) {
                         var page = page || 1;
                         var pageSize = 10;
                         var name = '';
@@ -71,7 +71,7 @@ define('js/longyan/view/community_list', [
                         });
                         //我的小区列表
                         CommunityApi.getCommunityList(page, pageSize,
-                            function (data) {
+                            function(data) {
                                 tipsAlert.close();
                                 if (data && data.result) {
                                     var totalRecords = data.result.totalRecords;
@@ -80,7 +80,7 @@ define('js/longyan/view/community_list', [
                                         $('#scroller').after(tpl(NoDataTpl, {}));
                                         var $test = t.$el.find('.error-no-data').find('.button');
                                         //console.log($test)
-                                        t.$el.find('.error-no-data').find('.button').on('click', function () {
+                                        t.$el.find('.error-no-data').find('.button').on('click', function() {
                                             //添加小区
                                             t.list_box.removeEvent();
                                             router.navigate('community_create', {
@@ -96,12 +96,12 @@ define('js/longyan/view/community_list', [
                                     var currentPage = data.result.currentPage;
                                     var currentRecords = data.result.currentRecords;
                                     if (handler) {
-                                        handler(currentRecords, currentPage, totalPages);
+                                        handler(currentRecords, currentPage, totalPages, 0);
                                         //$test.click()
                                     }
                                 }
                             },
-                            function (code, msg) {
+                            function(code, msg) {
                                 tipsAlert.close();
                                 if (code && code == 408) {
                                     //请求超时
@@ -112,7 +112,7 @@ define('js/longyan/view/community_list', [
                                     } else {
                                         $('#scroller').after(tpl(NoNetworkTpl, {}));
                                         t.$el.find('.error-no-network').off('click');
-                                        t.$el.find('.error-no-network').on('click', function () {
+                                        t.$el.find('.error-no-network').on('click', function() {
                                             //重新刷新 reload
                                             t.list_box.loadData();
                                         });
@@ -124,7 +124,7 @@ define('js/longyan/view/community_list', [
                                 });
                             });
                     },
-                    appendItem: function (data) {
+                    appendItem: function(data) {
                         var _data = data;
                         _data['url'] = '#community_info/' + data.id;
                         if (t.config.employee_id) {
@@ -139,12 +139,12 @@ define('js/longyan/view/community_list', [
                         //     console.log(data);
                         // });
                     },
-                    clickItem: function (e, item) {
+                    clickItem: function(e, item) {
                         console.log(item);
                     },
-                    slideEdit: function (elem) {
+                    slideEdit: function(elem) {
                         var id = $(elem).parents('.community-item-box').data('key');
-                        CommunityApi.getCommunityById(id, function (data) {
+                        CommunityApi.getCommunityById(id, function(data) {
                             tipsAlert.close();
                             //返回数据
                             if (data && data.community) {
@@ -160,7 +160,7 @@ define('js/longyan/view/community_list', [
                                     content: '系统异常'
                                 });
                             }
-                        }, function (code, msg) {
+                        }, function(code, msg) {
                             tipsAlert.close();
                             //显示异常信息
                             tipsAlert.openAlert({
@@ -168,20 +168,20 @@ define('js/longyan/view/community_list', [
                             });
                         });
                     },
-                    slideDelete: function (elem) {
+                    slideDelete: function(elem) {
                         //表单类型
                         tipsAlert.open({
                             cancelText: '否',
                             confirmText: '是',
                             content: '你确定要删除此小区吗',
-                            onConfirm: function (e) {
+                            onConfirm: function(e) {
                                 var $item = $(elem).parents('.community-item-box');
                                 var id = $item.data('key');
                                 tipsAlert.close();
-                                var success = function (data) {
+                                var success = function(data) {
                                     $item.remove();
                                 }
-                                var error = function (code, msg) {
+                                var error = function(code, msg) {
                                     tipsAlert.close();
                                     //显示异常信息
                                     tipsAlert.openAlert({
@@ -190,7 +190,7 @@ define('js/longyan/view/community_list', [
                                 };
                                 CommunityApi.deleteCommunity(id, success, error);
                             },
-                            onCancel: function (e) {
+                            onCancel: function(e) {
                                 tipsAlert.close();
                             }
                         });
@@ -209,19 +209,19 @@ define('js/longyan/view/community_list', [
                  });*/
             },
             //初始化监听器
-            initEvents: function () {
+            initEvents: function() {
                 var t = this;
-                t.$el.on('click', '.community-item-box', function (e) {
+                t.$el.on('click', '.community-item-box', function(e) {
                     e.preventDefault();
                 });
                 if (t.config.employee_id) {
                     t.$el.find('#fix-button').hide();
                 }
             },
-            test: function () {
+            test: function() {
                 console.log(123);
             },
-            destroy: function () {
+            destroy: function() {
                 $(window).off('scroll');
                 this.list_box.removeEvent();
             }

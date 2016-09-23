@@ -4,6 +4,7 @@
 	#message-list-box{
 		#scroller{
 			background-color:@color-white;
+			margin-top:@size-128;
 		}
 		.message-item{
 			margin-left:@size-30;
@@ -16,15 +17,20 @@
 				height:@size-32;
 				font-size:@size-32;
 				.message-item-title-readmark{
-					float:left;
-					padding-left:@size-10;
+					//float:left;
+					//margin-left:@size-10;
 					color:@color-alert-red;
 					font-size:@size-12;
+					position: absolute;
+					//width:100px;
+					left:@size-40;
 				}
 				.message-item-title-text{
-					float:left;
+					//float:left;
 					color:@color-menu-font;
-					padding-left:@size-10;
+					//padding-left:@size-10;
+					position: absolute;
+					left:@size-60;
 				}
 			}
 

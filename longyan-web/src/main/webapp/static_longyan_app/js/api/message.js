@@ -55,7 +55,32 @@ define('js/api/message', ['js/util/http'], function(http) {
 				//返回的http请求数据
 				t._executeResponse(response, success, error);
 			}, false, 'POST', false, $nvwa.header.getHeaders());
+		},
+		/*
+		 * 获取我的消息
+		 */
+		getMyMessageList: function(data, success, error) {
+			var t = this;
+			var url = _basePath + '/my-message-list';
+			//发送http psot请求
+			t._executeRequest(url, data, function(response) {
+				//返回的http请求数据
+				t._executeResponse(response, success, error);
+			}, false, 'POST', false, $nvwa.header.getHeaders());
+		},
+		/*
+		 * 标记消息为已读
+		 */
+		readMessage: function(data, success, error) {
+			var t = this;
+			var url = _basePath + '/read-message';
+			//发送http psot请求
+			t._executeRequest(url, data, function(response) {
+				//返回的http请求数据
+				t._executeResponse(response, success, error);
+			}, false, 'POST', false, $nvwa.header.getHeaders());
 		}
+
 
 	};
 	return CommonAPI;

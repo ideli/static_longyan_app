@@ -1,4 +1,4 @@
-<div class="message-item <#=data.isRead?'isRead':''#>">
+<div class="message-item <#=data.isRead?'isRead':''#>" data-value="<#=data.id?data.id:'0'#>">
 	<div class="message-item-title">
 		<div class="message-item-title-readmark">
 			<#=data.isRead?'圆':''#>			

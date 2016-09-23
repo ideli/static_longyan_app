@@ -1,6 +1,7 @@
 package com.chinaredstar.longyan.web.controller;
 
 
+import com.chinaredstar.commonBiz.bean.RedstarCommunityUpdateLog;
 import com.chinaredstar.commonBiz.bean.RedstarMessageCenter;
 import com.chinaredstar.longyan.exception.BasicException;
 import com.chinaredstar.longyan.exception.BusinessException;
@@ -11,7 +12,9 @@ import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
 import com.redstar.sms.api.AppPushService;
+import com.xiwa.base.bean.PaginationDescribe;
 import com.xiwa.base.bean.Response;
+import com.xiwa.base.bean.search.ext.IntSearch;
 import com.xiwa.base.pipeline.PipelineContext;
 import com.xiwa.base.util.CollectionUtil;
 import com.xiwa.base.util.DataUtil;
@@ -119,7 +122,7 @@ public class MessageController extends BaseController implements CommonBizConsta
     }
 
 
-    @RequestMapping(value = "/my-message", method = RequestMethod.POST)
+    @RequestMapping(value = "/my-message-list", method = RequestMethod.POST)
     public Response myMessage() {
         PipelineContext pipelineContext = this.buildPipelineContent();
         Response res = pipelineContext.getResponse();
@@ -128,10 +131,22 @@ public class MessageController extends BaseController implements CommonBizConsta
         try {
             //从session中获取员工信息
             Employee employee = getEmployeeromSession();
+            //页数
+            Integer page = pipelineContext.getRequest().getInt("page");
+            //每页记录数
+            Integer pageSize = pipelineContext.getRequest().getInt("pageSize");
+            if (page == 0) {
+                page = Page_Default;
+            }
+            if (pageSize == 0) {
+                pageSize = PageSize_Default;
+            }
+            IntSearch recipientIDSearch=new IntSearch("recipientID");
+            recipientIDSearch.setSearchValue(StringUtil.getString(employee.getId()));
             //获取消息列表
-            List<RedstarMessageCenter> list= dispatchDriver.getRedstarMessageCenterManager().getBeanListByColumn("recipientID", employee.getId(), "createDate", false);
+            PaginationDescribe<RedstarMessageCenter> pageData=dispatchDriver.getRedstarMessageCenterManager().searchBeanPage(page,pageSize,recipientIDSearch,"createDate", false);
             //返回给客户端
-            res.addKey("message",list);
+            res.addKey("page_data",pageData);
         } catch (Exception e) {
             e.printStackTrace();
             setErrorMessage(res, "服务器响应异常");

@@ -1941,6 +1941,7 @@ body {
 
 #message-list-view #message-list-box #scroller {
   background-color: #ffffff;
+  margin-top: 5.44680851rem;
 }
 #message-list-view #message-list-box .message-item {
   margin-left: 1.27659574rem;
@@ -1954,15 +1955,15 @@ body {
   font-size: 1.36170213rem;
 }
 #message-list-view #message-list-box .message-item .message-item-title .message-item-title-readmark {
-  float: left;
-  padding-left: 0.42553191rem;
   color: #e85043;
   font-size: 0.5106383rem;
+  position: absolute;
+  left: 1.70212766rem;
 }
 #message-list-view #message-list-box .message-item .message-item-title .message-item-title-text {
-  float: left;
   color: #333333;
-  padding-left: 0.42553191rem;
+  position: absolute;
+  left: 2.55319149rem;
 }
 #message-list-view #message-list-box .message-item .message-item-datetime {
   padding-top: 1.27659574rem;
