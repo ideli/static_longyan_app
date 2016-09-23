@@ -7,13 +7,11 @@ import com.chinaredstar.commonBiz.bean.RedstarCommunityUpdateLog;
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
-import com.chinaredstar.commonBiz.manager.RedstarCommunityUnitManager;
 import com.chinaredstar.commonBiz.util.DoubleUtil;
 import com.chinaredstar.longyan.exception.BusinessException;
 import com.chinaredstar.longyan.exception.constant.CommonExceptionType;
 import com.chinaredstar.longyan.exception.constant.CommunityExceptionType;
 import com.chinaredstar.longyan.util.RateUtil;
-import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
 import com.xiwa.base.bean.PaginationDescribe;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.bean.SimplePaginationDescribe;
@@ -31,7 +29,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -48,10 +49,10 @@ public class CommunityController extends BaseController implements CommonBizCons
     private RedstarCommonManager redstarCommonManager;
 
 
-    //查询小区列表
-    @RequestMapping(value = "/list/{type}", method = RequestMethod.POST)
+    //查询我的小区列表
+    @RequestMapping(value = "/myList/{type}", method = RequestMethod.POST)
     @ResponseBody
-    public Response dataList(@PathVariable("type") String strType) {
+    public Response myList(@PathVariable("type") String strType) {
         PipelineContext pipelineContext = this.buildPipelineContent();
         Response res = pipelineContext.getResponse();
 
@@ -87,8 +88,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                 ((SimplePaginationDescribe) inChargeCommunityResult).setCurrentRecords(redstarCommunityList);
 
                 res.addKey("result", inChargeCommunityResult);
-            } else if ("updateCommunity".equals(strType)) {  // 完善的小区
-                // TODO 审核被驳回的小区更新记录要显示吗
+            } else if ("updateCommunity".equals(strType)) {  // 完善的小区（非商场员工只调用这个接口）
                 IntSearch updateIdSearch = new IntSearch("updateEmployeeId");
                 updateIdSearch.setSearchValue(String.valueOf(intEmployeeId));
 
@@ -106,8 +106,179 @@ public class CommunityController extends BaseController implements CommonBizCons
         return res;
     }
 
+    //查询周边小区列表
+    @RequestMapping(value = "/aroundList/{type}", method = RequestMethod.POST)
+    @ResponseBody
+    public Response aroundList(@PathVariable("type") String strType, String longitude, String latitude,
+                               String provinceCode, String cityCode, String limitM) {
+        PipelineContext pipelineContext = this.buildPipelineContent();
+        Response res = pipelineContext.getResponse();
 
-    //查询小区
+        try {
+            // 查询参数设定
+            // 登陆EmployeeID的商场ID获得（非员工没有商场ID）
+            // TODO 登陆逻辑修改
+            Employee loginEmployee = this.getEmployeeromSession();
+            int intOwnerMallId = loginEmployee.getId();
+
+            // 所在经纬度,省市code判断
+            if (StringUtil.isInvalid(latitude) || StringUtil.isInvalid(longitude)
+                    || StringUtil.isInvalid(provinceCode) || StringUtil.isInvalid(cityCode)) {
+                setErrMsg(res, "经纬度参数缺失");
+                return res;
+            }
+
+            // 查询小区范围如果缺失，设定默认查询范围为5公里
+            if (StringUtil.isInvalid(limitM)) {
+                limitM = "5000";
+            }
+
+            //页数
+            Integer page = pipelineContext.getRequest().getInt("page");
+            //每页记录数
+            Integer pageSize = pipelineContext.getRequest().getInt("pageSize");
+
+            if (page == 0) {
+                page = Page_Default;
+            }
+            if (pageSize == 0) {
+                pageSize = PageSize_Default;
+            }
+
+            // 预分配小区(所属商场下无管理者的小区)
+            if ("predistributionCommunity".equals(strType)) {
+
+                int intLimtM = Integer.parseInt(limitM);
+                StringBuffer sb = new StringBuffer();
+
+                sb.append("Select c.id, c.name,c.address,c.reclaimStatus,c.reclaimCompleteDate, ");
+                sb.append(" round(6378.138 * 2 * asin(  ");
+                sb.append(" sqrt( pow(sin((c.latitude * pi() / 180 - ?*pi() / 180) / 2),2) + cos(c.latitude * pi() / 180) ");
+                sb.append(" * cos(?*pi() / 180) * pow(  ");
+                sb.append(" sin((c.longitude * pi() / 180 - ?*pi()/180) / 2),2))) * 1000) AS distance   ");
+                sb.append(" FROM xiwa_redstar_community c where c.longitude>0 and c.latitude>0 and c.ownerMallId=? HAVING distance < ? ORDER BY distance ");
+
+                String querySQL = sb.toString();
+
+                List<Object> paramsList = new ArrayList<Object>();
+                paramsList.add(Double.parseDouble(longitude));
+                paramsList.add(Double.parseDouble(longitude));
+                paramsList.add(Double.parseDouble(latitude));
+                paramsList.add(intOwnerMallId);
+                paramsList.add(intLimtM);
+
+                //搜索结果（以员工GPS位置为圆心半径intLimtM内所有该员工所属商场下小区列表）
+                List lsAroundCommunity = redstarCommonManager.excuteBySql(querySQL, paramsList);
+                List<HashMap> lsAroundCommunitys = new ArrayList<HashMap>();
+
+                // 查询结果list转化成输出对象
+                for (int i = 0; i < lsAroundCommunity.size(); i++) {
+                    Object[] objAd = (Object[]) lsAroundCommunity.get(i);
+                    HashMap hmADComObj = new HashMap();
+                    hmADComObj.put("communityId", objAd[0]);
+                    hmADComObj.put("name", objAd[1]);
+                    hmADComObj.put("address", objAd[2]);
+                    hmADComObj.put("reclaimStatus", objAd[3]);
+                    hmADComObj.put("reclaimCompleteDate", objAd[4]);
+                    hmADComObj.put("distance", objAd[5]);
+
+                    lsAroundCommunitys.add(hmADComObj);
+                }
+
+                res.addKey("result", lsAroundCommunitys);
+            } else if ("occupyCommunity".equals(strType)) {  // 可抢的小区
+
+                int intLimtM = Integer.parseInt(limitM);
+                StringBuffer sb = new StringBuffer();
+
+                sb.append("Select c.id, c.name,c.address, ");
+                sb.append(" round(6378.138 * 2 * asin(  ");
+                sb.append(" sqrt( pow(sin((c.latitude * pi() / 180 - ?*pi() / 180) / 2),2) + cos(c.latitude * pi() / 180) ");
+                sb.append(" * cos(?*pi() / 180) * pow(  ");
+                sb.append(" sin((c.longitude * pi() / 180 - ?*pi()/180) / 2),2))) * 1000) AS distance   ");
+                sb.append(" FROM xiwa_redstar_community c WHERE c.longitude>0 AND c.latitude>0 AND c.reclaimStatus = 0 AND c.reclaimCompleteDate < ? HAVING distance < ? ORDER BY distance ");
+
+                String querySQL = sb.toString();
+
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String strSysytemDateTime = df.format(System.currentTimeMillis());
+
+                List<Object> paramsList = new ArrayList<Object>();
+                paramsList.add(Double.parseDouble(longitude));
+                paramsList.add(Double.parseDouble(longitude));
+                paramsList.add(Double.parseDouble(latitude));
+                paramsList.add(strSysytemDateTime);
+                paramsList.add(intLimtM);
+
+                //搜索结果（以员工GPS位置为圆心半径intLimtM内所有未分配小区列表）
+                List lsAroundCommunity = redstarCommonManager.excuteBySql(querySQL, paramsList);
+                List<HashMap> lsAroundCommunitys = new ArrayList<HashMap>();
+
+                // 查询结果list转化成输出对象
+                for (int i = 0; i < lsAroundCommunity.size(); i++) {
+                    Object[] objAd = (Object[]) lsAroundCommunity.get(i);
+                    HashMap hmADComObj = new HashMap();
+                    hmADComObj.put("communityId", objAd[0]);
+                    hmADComObj.put("name", objAd[1]);
+                    hmADComObj.put("address", objAd[2]);
+                    hmADComObj.put("distance", objAd[3]);
+
+                    lsAroundCommunitys.add(hmADComObj);
+                }
+
+                res.addKey("result", lsAroundCommunitys);
+            } else if ("allAroundCommunity".equals(strType)) {  // 周边所有的小区（非商场员工调用接口）
+
+                int intLimtM = Integer.parseInt(limitM);
+                StringBuffer sb = new StringBuffer();
+
+                sb.append("Select c.id, c.name,c.address, ");
+                sb.append(" round(6378.138 * 2 * asin(  ");
+                sb.append(" sqrt( pow(sin((c.latitude * pi() / 180 - ?*pi() / 180) / 2),2) + cos(c.latitude * pi() / 180) ");
+                sb.append(" * cos(?*pi() / 180) * pow(  ");
+                sb.append(" sin((c.longitude * pi() / 180 - ?*pi()/180) / 2),2))) * 1000) AS distance   ");
+                sb.append(" FROM xiwa_redstar_community c WHERE c.longitude>0 AND c.latitude>0 HAVING distance < ? ORDER BY distance ");
+
+                String querySQL = sb.toString();
+
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String strSysytemDateTime = df.format(System.currentTimeMillis());
+
+                List<Object> paramsList = new ArrayList<Object>();
+                paramsList.add(Double.parseDouble(longitude));
+                paramsList.add(Double.parseDouble(longitude));
+                paramsList.add(Double.parseDouble(latitude));
+                paramsList.add(strSysytemDateTime);
+                paramsList.add(intLimtM);
+
+                //搜索结果（以员工GPS位置为圆心半径intLimtM内所有小区列表）
+                List lsAllAroundCommunity = redstarCommonManager.excuteBySql(querySQL, paramsList);
+                List<HashMap> lsAllAroundCommunitys = new ArrayList<HashMap>();
+
+                // 查询结果list转化成输出对象
+                for (int i = 0; i < lsAllAroundCommunity.size(); i++) {
+                    Object[] objAllCommunity = (Object[]) lsAllAroundCommunity.get(i);
+                    HashMap hmAllComObj = new HashMap();
+                    hmAllComObj.put("communityId", objAllCommunity[0]);
+                    hmAllComObj.put("name", objAllCommunity[1]);
+                    hmAllComObj.put("address", objAllCommunity[2]);
+                    hmAllComObj.put("distance", objAllCommunity[3]);
+
+                    lsAllAroundCommunitys.add(hmAllComObj);
+                }
+
+                res.addKey("result", lsAllAroundCommunitys);
+            }
+
+            setSuccessMsg(res);
+        } catch (Exception e) {
+            setUnknowException(e, res);
+        }
+        return res;
+    }
+
+
+    //查询小区详细信息
     @RequestMapping(value = "/{id}")
     @ResponseBody
     public Response dataItem(@PathVariable("id") Integer id) {
