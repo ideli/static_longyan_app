@@ -1,17 +1,20 @@
 package com.chinaredstar.longyan.web.controller;
 
+import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.longyan.bean.constant.LanchuiConstant;
 import com.chinaredstar.longyan.exception.BusinessException;
 import com.chinaredstar.longyan.exception.constant.CommonExceptionType;
-import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
+//import com.chinaredstar.uc.dubbo.core.api.IEmployeeService;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.manager.ManagerException;
 import com.xiwa.base.pipeline.PipelineContext;
 import com.xiwa.base.util.DataUtil;
 import com.xiwa.zeus.trinity.bean.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.support.AdvanceControllerSupport;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +23,11 @@ import java.util.Map;
  */
 public class BaseController extends AdvanceControllerSupport implements LanchuiConstant {
 
+    @Autowired
+    private HttpServletRequest request;
 
+//    @Autowired
+//    private IEmployeeService ucIEmployeeService;
 
     protected void _error(String message, PipelineContext context) {
         this._error(new Exception(message), context);
@@ -43,13 +50,13 @@ public class BaseController extends AdvanceControllerSupport implements LanchuiC
     }
 
 
-    protected void setErrMsg(Response res,String message) {
+    protected void setErrMsg(Response res, String message) {
         res.setCode(HTTP_ERROR_CODE);
         res.setOk(Boolean.FALSE);
         res.setMessage(message);
     }
 
-    protected void setErrCodeAndMsg(Response res,int code,String message) {
+    protected void setErrCodeAndMsg(Response res, int code, String message) {
         res.setCode(code);
         res.setOk(Boolean.FALSE);
         res.setMessage(message);
@@ -73,23 +80,25 @@ public class BaseController extends AdvanceControllerSupport implements LanchuiC
         res.setMessage(CommonBizConstant.Http_Query_Success_Message);
     }
 
-    protected void setSuccessMsg(Response res,String message) {
+    protected void setSuccessMsg(Response res, String message) {
         res.setCode(HTTP_SUCCESS_CODE);
         res.setOk(Boolean.TRUE);
         res.setMessage(message);
     }
 
-    protected void setUnknowException(Exception e,Response res){
+    protected void setUnknowException(Exception e, Response res) {
         e.printStackTrace();
         res.setCode(DataUtil.getInt(CommonExceptionType.Unknow.getCode(), 0));
         res.setMessage(CommonExceptionType.Unknow.getMessage());
         res.setOk(Boolean.FALSE);
     }
-    protected void setBusinessException(BusinessException e,Response res){
+
+    protected void setBusinessException(BusinessException e, Response res) {
         res.setCode(DataUtil.getInt(e.getErrorCode(), 0));
         res.setMessage(e.getMessage());
         res.setOk(Boolean.FALSE);
     }
+
     /**
      * 获取session 中的员工信息
      *
@@ -97,12 +106,17 @@ public class BaseController extends AdvanceControllerSupport implements LanchuiC
      * @throws ManagerException
      */
     protected Employee getEmployeeromSession() throws ManagerException {
-        HttpServletRequest request = this.getRequest();
-        Employee employee= (Employee) getObjectFromSession(SESSION_EMPLOYEE);
 
-//        Employee employee =new Employee();
-//        employee.setId(11722);
-//        employee.setXingMing("张学超");
+        // redies中Session取得
+        HttpSession session = request.getSession();
+
+        // 用户中心dubbo服务调用，获取employee信息
+//        ucIEmployeeService.getBasicInfoByEmplid(session.getId());
+
+        // 本地employee对象作成
+        Employee employee = new Employee();
+        employee.setId(11722);
+        employee.setXingMing("张学超");
         return employee;
     }
 
