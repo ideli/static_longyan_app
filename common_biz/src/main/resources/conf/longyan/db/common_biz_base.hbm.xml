@@ -554,7 +554,7 @@
         <property name="createXingMing" type="string"/>
         <property name="android720p" type="string"/>
 
-        <property name="adnroid1280p" type="string"/>
+        <property name="android1280p" type="string"/>
         <property name="ios47" type="string"/>
 
         <property name="ios55" type="string"/>

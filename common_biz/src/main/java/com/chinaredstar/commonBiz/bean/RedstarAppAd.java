@@ -20,7 +20,7 @@ public class RedstarAppAd implements Identified {
 
     private String android720p;//
 
-    private String adnroid1280p;//
+    private String android1280p;//
 
     private String ios47;//
 
@@ -74,12 +74,12 @@ public class RedstarAppAd implements Identified {
         this.android720p = android720p;
     }
 
-    public String getAdnroid1280p() {
-        return adnroid1280p;
+    public String getAndroid1280p() {
+        return android1280p;
     }
 
-    public void setAdnroid1280p(String adnroid1280p) {
-        this.adnroid1280p = adnroid1280p;
+    public void setAndroid1280p(String android1280p) {
+        this.android1280p = android1280p;
     }
 
     public String getIos47() {
