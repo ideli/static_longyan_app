@@ -1,4 +1,4 @@
-package com.chinaredstar.longyan.web.controller;
+package com.chinaredstar.longyan.web.oldcontroller;
 
 import com.chinaredstar.commonBiz.bean.*;
 import com.chinaredstar.longyan.bean.bo.RecommendCommunityExtObject;
@@ -15,6 +15,7 @@ import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
 import com.chinaredstar.commonBiz.manager.RedstarCommunityUnitManager;
 import com.chinaredstar.commonBiz.util.DoubleUtil;
+import com.chinaredstar.longyan.web.controller.BaseController;
 import com.chinaredstar.nvwaBiz.bean.NvwaSecurityOperationLog;
 import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
 import com.xiwa.base.bean.PaginationDescribe;

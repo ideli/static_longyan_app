@@ -1,4 +1,4 @@
-package com.chinaredstar.longyan.web.controller;
+package com.chinaredstar.longyan.web.oldcontroller;
 
 import com.chinaredstar.commonBiz.bean.work.*;
 import com.chinaredstar.commonBiz.manager.*;
@@ -9,6 +9,7 @@ import com.chinaredstar.longyan.util.DistanceUtil;
 import com.chinaredstar.longyan.util.UserUtil;
 
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
+import com.chinaredstar.longyan.web.controller.BaseController;
 import com.xiwa.base.bean.PaginationDescribe;
 import com.xiwa.base.bean.Request;
 import com.xiwa.base.bean.Response;

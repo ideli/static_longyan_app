@@ -1,6 +1,7 @@
-package com.chinaredstar.longyan.web.controller;
+package com.chinaredstar.longyan.web.oldcontroller;
 
 import com.chinaredstar.longyan.api.LotteryService;
+import com.chinaredstar.longyan.web.controller.BaseController;
 import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;

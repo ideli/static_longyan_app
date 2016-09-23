@@ -1,8 +1,9 @@
-package com.chinaredstar.longyan.web.controller;
+package com.chinaredstar.longyan.web.oldcontroller;
 
 import com.chinaredstar.longyan.api.ContactService;
 import com.chinaredstar.commonBiz.bean.ContactVo;
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
+import com.chinaredstar.longyan.web.controller.BaseController;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
