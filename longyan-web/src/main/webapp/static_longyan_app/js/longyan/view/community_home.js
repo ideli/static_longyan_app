@@ -23,7 +23,7 @@ define('js/longyan/view/community_home', [
         var form_id = '#community-home-form';
         var LayoutView = Backbone.View.extend({
             events: {
-
+                "click .community-building-info": "_goto_building_list"
             },
             // 
             initialize: function(options, config) {
@@ -117,6 +117,18 @@ define('js/longyan/view/community_home', [
             },
             setData: function(data) {
                 var t = this;
+            },
+            //跳转到楼栋列表
+            _goto_building_list: function() {
+                var t = this;
+                if (t.config && t.config.id && t.config.id > 0) {
+                    window.location.href = '#building_list/' + t.config.id;
+                } else {
+                    tipsAlert.openToast({
+                        content: '数据异常'
+                    });
+                }
+
             }
         });
         return LayoutView;

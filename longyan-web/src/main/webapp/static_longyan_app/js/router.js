@@ -33,13 +33,16 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             //我的->审核
             "my_review_list": "my_review_list",
             "my_review_detail": "my_review_detail",
+            "my_submit": "my_submit",
             //我的->积分说明
             "integral_rule": "integral_rule",
             //我的->积分明细
             "integral_explain_list": "integral_explain_list",
             "integral_explain_detail": "integral_explain_detail",
-
-
+            "feedback": "feedback",
+            "feature_list": "feature_list",
+            "help_list": "help_list",
+            "help_detail": "help_detail"
         },
 
         //初始化布局
@@ -94,6 +97,11 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
         simple: function() {
             var t = this;
             t.changePage('simple');
+        },
+        feature_list: function() {
+            var t = this;
+            window.debug = true;
+            t.changePage('feature_list');
         },
         login: function() {
             var t = this;
@@ -244,6 +252,10 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
         message_list: function() {
             var t = this;
             t.changePage('message_list');
+        },
+        my_submit: function() {
+            var t = this;
+            t.changePage('my_review_list');
         },
         my_review_list: function() {
             var t = this;

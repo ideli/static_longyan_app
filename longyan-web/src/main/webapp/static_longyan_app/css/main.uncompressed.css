@@ -1939,6 +1939,9 @@ body {
   color: #666666;
 }
 
+#message-list-view #message-list-box #scroller {
+  background-color: #ffffff;
+}
 #message-list-view #message-list-box .message-item {
   margin-left: 1.27659574rem;
   height: 7.06382979rem;

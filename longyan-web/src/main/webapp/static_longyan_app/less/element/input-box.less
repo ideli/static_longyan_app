@@ -25,6 +25,9 @@ input::-webkit-input-placeholder{
 	color: @color-comment-font;
     
 } 
+
+
+
 input{ 
 	outline: none;
 }
@@ -42,25 +45,30 @@ input{
     .label-right{
     	color: @color-text-font;	
     }
+
+    .label{
+		float: left;
+		z_index:999;
+	    color: @color-menu-font;
+	    font-size:@font-size-32;
+	}
+	input{
+		z_index:1;
+		padding: 0px 0px 0px 1.5rem;
+		border:0px;
+		font-size: @font-size-28;
+		height: 4.2rem;
+		float: left;
+	    box-sizing:border-box;
+	    display: block;
+	    -webkit-appearance: none;
+	    background: transparent;
+	    text-align : right;
+	    color:@color-text-font;
+	}
 }
 
-.input-box .label{
-	float: left;
-	z_index:999;
-    color: @color-menu-font;
-    font-size:@font-size-32;
+.input-box.focus{
+	border-bottom:1px solid @color-main-blue;
 }
-.input-box input{
-	z_index:1;
-	padding: 0px 0px 0px 1.5rem;
-	border:0px;
-	font-size: @font-size-28;
-	height: 4.2rem;
-	float: left;
-    box-sizing:border-box;
-    display: block;
-    -webkit-appearance: none;
-    background: transparent;
-    text-align : right;
-    color:@color-text-font;
-}
+

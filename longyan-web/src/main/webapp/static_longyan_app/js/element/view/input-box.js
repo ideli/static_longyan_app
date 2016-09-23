@@ -34,17 +34,17 @@ define('js/element/view/input-box', [
                 } else {
                     t.$current.find('input').on('focus input', function(e) {
                         var $this = $(this);
-                        if(t.hasError) {
+                        if (t.hasError) {
                             t.$labelWarn.hide();
                             t.$input.attr('placeholder', '');
                             t.hasError = false;
                         }
-                        if($this.val().length == 0){
+                        if ($this.val().length == 0) {
                             t.$labelDel.hide();
                         } else {
                             t.$labelDel.show();
                         }
-                    }).on('blur', function (e) {
+                    }).on('blur', function(e) {
                         t.$labelDel.hide();
                     });
                     t.$labelDel.on('click', function() {
@@ -56,14 +56,23 @@ define('js/element/view/input-box', [
             },
             initEvents: function() {
                 var t = this;
+                var container = t.$el.find('.' + t.config.fieldName);
                 if (t.events && t.events.Keyup) {
-                    t.$el.find('.' + t.config.fieldName).off('keyup');
-                    t.$el.find('.' + t.config.fieldName).on('keyup', function(e) {
+                    container.off('keyup');
+                    container.on('keyup', function(e) {
                         if ($(e.currentTarget).hasClass(t.config.fieldName) && !t.disable) {
                             t.events.Keyup(e);
                         }
                     });
                 }
+                container.find('input').on('focus', function(e) {
+                    $(e.currentTarget).parent().addClass('focus');
+                });
+                container.find('input').on('blur', function(e) {
+                    $(e.currentTarget).parent().removeClass('focus');
+                });
+
+
             },
             getValue: function() {
                 var t = this;
@@ -129,7 +138,7 @@ define('js/element/view/input-box', [
                 return $nvwa.string.isPhone(v);
             },
             setErrorByPlaceholder: function(msg) {
-                if(!msg) {
+                if (!msg) {
                     return;
                 }
                 var t = this;

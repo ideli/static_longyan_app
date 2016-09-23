@@ -8,9 +8,11 @@ import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
 import com.chinaredstar.commonBiz.manager.RedstarCommunityUnitManager;
+import com.chinaredstar.commonBiz.util.DoubleUtil;
 import com.chinaredstar.longyan.exception.BusinessException;
 import com.chinaredstar.longyan.exception.constant.CommonExceptionType;
 import com.chinaredstar.longyan.exception.constant.CommunityExceptionType;
+import com.chinaredstar.longyan.util.RateUtil;
 import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
 import com.xiwa.base.bean.PaginationDescribe;
 import com.xiwa.base.bean.Response;
@@ -82,10 +84,10 @@ public class CommunityController extends BaseController implements CommonBizCons
                 PaginationDescribe<RedstarCommunity> inChargeCommunityResult =
                         (PaginationDescribe<RedstarCommunity>) dispatchDriver.getRedstarCommunityManager().searchBeanPage(page, pageSize, ownerIdSearch, "updateDate", Boolean.FALSE);
                 List<RedstarCommunity> redstarCommunityList = inChargeCommunityResult.getCurrentRecords();
-               ((SimplePaginationDescribe) inChargeCommunityResult).setCurrentRecords(redstarCommunityList);
+                ((SimplePaginationDescribe) inChargeCommunityResult).setCurrentRecords(redstarCommunityList);
 
                 res.addKey("result", inChargeCommunityResult);
-            } else if ("updateCommunity".equals(strType)){  // 完善的小区
+            } else if ("updateCommunity".equals(strType)) {  // 完善的小区
                 // TODO 审核被驳回的小区更新记录要显示吗
                 IntSearch updateIdSearch = new IntSearch("updateEmployeeId");
                 updateIdSearch.setSearchValue(String.valueOf(intEmployeeId));
@@ -105,8 +107,35 @@ public class CommunityController extends BaseController implements CommonBizCons
     }
 
 
-
-
+    //查询小区
+    @RequestMapping(value = "/{id}")
+    @ResponseBody
+    public Response dataItem(@PathVariable("id") Integer id) {
+        PipelineContext pipelineContext = this.buildPipelineContent();
+        Response res = pipelineContext.getResponse();
+        try {
+            RedstarCommunity community = (RedstarCommunity) dispatchDriver.getRedstarCommunityManager().getBean(id);
+            double occupanyRate;
+            double inputRate;
+            if (community.getAlreadyCheckAmount() != null && community.getRoomMount() != null && community.getRoomMount() > 0) {
+                occupanyRate = DoubleUtil.div(community.getAlreadyCheckAmount(), community.getRoomMount(), 2);
+                community.setOccupanyRate(RateUtil.getDoubleValue(occupanyRate * 100));
+            } else {
+                community.setOccupanyRate(0.0);
+            }
+            if (community.getAlreadyInputAmount() != null && community.getRoomMount() != null && community.getRoomMount() > 0) {
+                inputRate = DoubleUtil.div(community.getAlreadyInputAmount(), community.getRoomMount(), 2);
+                community.setInputRate(RateUtil.getDoubleValue(inputRate * 100));
+            } else {
+                community.setInputRate(0.0);
+            }
+            res.setCode(HTTP_SUCCESS_CODE);
+            res.addKey("community", community);
+        } catch (Exception e) {
+            setErrMsg(res, "没有数据");
+        }
+        return res;
+    }
 
 
     /**
@@ -169,13 +198,13 @@ public class CommunityController extends BaseController implements CommonBizCons
         int unitAmount = pipelineContext.getRequest().getInt("unitAmount");//单元数
         int floorAmount = pipelineContext.getRequest().getInt("floorAmount");//楼层数
 
-        if(roomAmount<=0){
-            setErrCodeAndMsg(response,-1001,"住宅数不能为空");
+        if (roomAmount <= 0) {
+            setErrCodeAndMsg(response, -1001, "住宅数不能为空");
             return response;
         }
 
-        if(floorAmount<=0){
-            setErrCodeAndMsg(response,-1001,"楼层数不能为空");
+        if (floorAmount <= 0) {
+            setErrCodeAndMsg(response, -1001, "楼层数不能为空");
             return response;
         }
         if (communityId == 0) {
@@ -231,14 +260,14 @@ public class CommunityController extends BaseController implements CommonBizCons
     //编辑栋信息
     @RequestMapping(value = "/building/update", method = RequestMethod.POST)
     @ResponseBody
-    public Response buildingUpdate()  {
+    public Response buildingUpdate() {
         PipelineContext pipelineContext = this.buildPipelineContent();
         Response response = pipelineContext.getResponse();
 
         Integer dataId = pipelineContext.getRequest().getInt("id");
 
-        if(dataId<=0){
-            setErrCodeAndMsg(response,-1001,"数据id缺失");
+        if (dataId <= 0) {
+            setErrCodeAndMsg(response, -1001, "数据id缺失");
             return response;
         }
 
@@ -249,21 +278,21 @@ public class CommunityController extends BaseController implements CommonBizCons
         int unitAmount = pipelineContext.getRequest().getInt("unitAmount");//单元数
         int floorAmount = pipelineContext.getRequest().getInt("floorAmount");//楼层数
 
-        if(roomAmount<=0){
-            setErrCodeAndMsg(response,-1001,"住宅数不能为空");
+        if (roomAmount <= 0) {
+            setErrCodeAndMsg(response, -1001, "住宅数不能为空");
             return response;
         }
-        if(unitAmount<=0){
-            setErrCodeAndMsg(response,-1001,"单元数不能为空");
+        if (unitAmount <= 0) {
+            setErrCodeAndMsg(response, -1001, "单元数不能为空");
             return response;
         }
-        if(floorAmount<=0){
-            setErrCodeAndMsg(response,-1001,"楼层数不能为空");
+        if (floorAmount <= 0) {
+            setErrCodeAndMsg(response, -1001, "楼层数不能为空");
             return response;
         }
 
         if (StringUtils.isBlank(buildingName)) {
-            setErrCodeAndMsg(response,-1001,"buildingName不能为空");
+            setErrCodeAndMsg(response, -1001, "buildingName不能为空");
             return response;
         }
 
@@ -271,8 +300,8 @@ public class CommunityController extends BaseController implements CommonBizCons
 
             RedstarCommunityBuilding redstarCommunityBuilding = (RedstarCommunityBuilding) dispatchDriver.getRedstarCommunityBuildingManager().getBean(dataId);
 
-            if (redstarCommunityBuilding==null){
-                setErrCodeAndMsg(response,-1001,"当前数据不存在");
+            if (redstarCommunityBuilding == null) {
+                setErrCodeAndMsg(response, -1001, "当前数据不存在");
                 return response;
             }
 
@@ -296,7 +325,6 @@ public class CommunityController extends BaseController implements CommonBizCons
 
         return response;
     }
-
 
 
     /**

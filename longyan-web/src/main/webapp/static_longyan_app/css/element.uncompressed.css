@@ -1348,6 +1348,9 @@ input {
   text-align: right;
   color: #666666;
 }
+.input-box.focus {
+  border-bottom: 1px solid #0091ea;
+}
 
 .line-chart-box .chart-box {
   padding-left: 1.5rem;

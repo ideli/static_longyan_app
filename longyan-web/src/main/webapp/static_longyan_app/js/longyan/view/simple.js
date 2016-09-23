@@ -41,6 +41,20 @@ define('js/longyan/view/simple', [
                     text: '功能列表'
                 });
 
+                //组装用户名输入框
+                t.username_input = new InputBox({
+                    el: $(form_id)
+                }, {
+                    fieldName: 'username-input',
+                    text: '手机号',
+                    //type: 'number',
+                    placeholder: '手机号'
+                }, {
+                    Keyup: function() {
+
+                    }
+                });
+
 
             }
         });
