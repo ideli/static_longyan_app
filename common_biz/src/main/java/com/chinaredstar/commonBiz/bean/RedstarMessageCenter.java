@@ -29,6 +29,8 @@ public class RedstarMessageCenter implements Identified  {
 
     private Date readDate;  //消息读取时间
 
+    private String router; // 需要跳转到的页面
+
     @Override
     public int getId() {
 
@@ -37,6 +39,14 @@ public class RedstarMessageCenter implements Identified  {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getRouter() {
+        return router;
+    }
+
+    public void setRouter(String router) {
+        this.router = router;
     }
 
     public Integer getRecipientID() {

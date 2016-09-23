@@ -577,6 +577,7 @@
         <property name="readFlg" type="integer"/>
         <property name="createDate" type="java.util.Date"/>
         <property name="readDate" type="java.util.Date"/>
+        <property name="router" type="string"/>
     </class>
 
 
