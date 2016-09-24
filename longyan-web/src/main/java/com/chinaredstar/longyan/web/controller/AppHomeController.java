@@ -74,7 +74,7 @@ public class AppHomeController extends BaseController implements CommonBizConsta
             // 查询我的小区总数
             res.addKey("myCommunities", getDataCountByEmployeeId(intEmployeeId));
             // 查询周边小区总数
-            res.addKey("aroundCommunities", getDataCountByLongitudeAndLatitude(latitude, longitude, provinceCode, cityCode, limitM));
+            res.addKey("aroundCommunities", getDataCountByLongitudeAndLatitude(longitude, latitude, provinceCode, cityCode, limitM));
             // 查询龙榜排名
             res.addKey("dragonEyeRanking", getDragonEyeRanking(intEmployeeId));
             // 成功与否消息文字设置
@@ -122,9 +122,9 @@ public class AppHomeController extends BaseController implements CommonBizConsta
         String querySQL = sb.toString();
 
         List<Object> paramsList = new ArrayList<Object>();
-        paramsList.add(Double.parseDouble(longitude));
-        paramsList.add(Double.parseDouble(longitude));
         paramsList.add(Double.parseDouble(latitude));
+        paramsList.add(Double.parseDouble(latitude));
+        paramsList.add(Double.parseDouble(longitude));
         paramsList.add(provinceCode);
         paramsList.add(cityCode);
         paramsList.add(intLimtM);
