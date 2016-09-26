@@ -10,7 +10,7 @@
 
 #community-home-view{
 	padding-top:@size-320;
-	
+	position: fixed;
 	.form-box{
 		margin-top:0;
 
@@ -55,6 +55,10 @@
 	background-color:@color-white;
 	border-bottom: 1px solid @color-frame-font;
 
+	position: fixed;
+	width:100%;
+	z-index:999;
+
 	.item-box{
 		float:left;			
 		text-align:center;
@@ -77,6 +81,7 @@
 #community-near-by-list-view{
 	flex: 1;
 	background-color:@color-white;
+	margin-top:@size-128+@size-88;
 
 	#community-near-by-list-box{
 	

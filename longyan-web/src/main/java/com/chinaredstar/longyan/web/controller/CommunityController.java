@@ -1,9 +1,6 @@
 package com.chinaredstar.longyan.web.controller;
 
-import com.chinaredstar.commonBiz.bean.RedstarCommunity;
-import com.chinaredstar.commonBiz.bean.RedstarCommunityBuilding;
-import com.chinaredstar.commonBiz.bean.RedstarCommunityUnit;
-import com.chinaredstar.commonBiz.bean.RedstarCommunityUpdateLog;
+import com.chinaredstar.commonBiz.bean.*;
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
@@ -113,12 +110,13 @@ public class CommunityController extends BaseController implements CommonBizCons
 
     /**
      * //查询周边小区列表
-     * @param strType  allAroundCommunity=全部 occupyCommunity=可抢占 predistributionCommunity=预分配
-     * @param longitude 经度
-     * @param latitude 纬度
+     *
+     * @param strType      allAroundCommunity=全部 occupyCommunity=可抢占 predistributionCommunity=预分配
+     * @param longitude    经度
+     * @param latitude     纬度
      * @param provinceCode
      * @param cityCode
-     * @param limitM 查询小区半径（米）
+     * @param limitM       查询小区半径（米）
      * @return
      */
     @RequestMapping(value = "/aroundList/{type}", method = RequestMethod.POST)
@@ -129,14 +127,18 @@ public class CommunityController extends BaseController implements CommonBizCons
         Response res = pipelineContext.getResponse();
 
         try {
+            int intOwnerMallId = 0;
             // 查询参数设定
             // 登陆EmployeeID的商场ID获得（非员工没有商场ID）
             // TODO 登陆逻辑修改
 //            Employee loginEmployee = this.getEmployeeromSession();
-            NvwaEmployee loginEmployee=new NvwaEmployee();
+            NvwaEmployee loginEmployee = new NvwaEmployee();
             loginEmployee.setDepartmentId(1642);
-            String mallCode= EmployeeUtil.getMallCode(loginEmployee,nvwaDriver);
-            int intOwnerMallId = loginEmployee.getId();
+            //查询员工所属商场
+            RedstarShoppingMall shoppingMall = EmployeeUtil.getMall(loginEmployee, dispatchDriver, nvwaDriver);
+            if (shoppingMall != null) {
+                intOwnerMallId = shoppingMall.getId();
+            }
 
             // 所在经纬度,省市code判断
             if (StringUtil.isInvalid(latitude) || StringUtil.isInvalid(longitude)
@@ -162,8 +164,11 @@ public class CommunityController extends BaseController implements CommonBizCons
                 pageSize = PageSize_Default;
             }
 
-            // 预分配小区(所属商场下无管理者的小区)
-            if ("predistributionCommunity".equals(strType)) {
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String strSysytemDateTime = df.format(System.currentTimeMillis());
+
+            // 预分配小区(所属商场下无管理者的小区)如果员工不是商场员工则该列表不返回数据
+            if ("predistributionCommunity".equals(strType) && intOwnerMallId > 0) {
 
                 int intLimtM = Integer.parseInt(limitM);
                 StringBuffer sb = new StringBuffer();
@@ -173,7 +178,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                 sb.append(" sqrt( pow(sin((c.latitude * pi() / 180 - ?*pi() / 180) / 2),2) + cos(c.latitude * pi() / 180) ");
                 sb.append(" * cos(?*pi() / 180) * pow(  ");
                 sb.append(" sin((c.longitude * pi() / 180 - ?*pi()/180) / 2),2))) * 1000) AS distance   ");
-                sb.append(" FROM xiwa_redstar_community c where c.longitude>0 and c.latitude>0 and c.ownerMallId=? HAVING distance < ? ORDER BY distance ");
+                sb.append(" FROM xiwa_redstar_community c where c.longitude>0 and c.latitude>0 and c.ownerMallId=? AND c.reclaimStatus = 0 AND c.reclaimCompleteDate > ? HAVING distance < ? ORDER BY distance ");
 
                 String querySQL = sb.toString();
 
@@ -182,6 +187,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                 paramsList.add(Double.parseDouble(latitude));
                 paramsList.add(Double.parseDouble(longitude));
                 paramsList.add(intOwnerMallId);
+                paramsList.add(strSysytemDateTime);
                 paramsList.add(intLimtM);
 
                 //搜索结果（以员工GPS位置为圆心半径intLimtM内所有该员工所属商场下小区列表）
@@ -199,12 +205,12 @@ public class CommunityController extends BaseController implements CommonBizCons
                     hmADComObj.put("reclaimStatus", objAd[4]);
                     hmADComObj.put("reclaimCompleteDate", objAd[5]);
                     hmADComObj.put("distance", objAd[6]);
-
+                    hmADComObj.put("status", 1);
                     lsAroundCommunitys.add(hmADComObj);
                 }
-
                 res.addKey("result", lsAroundCommunitys);
-            } else if ("occupyCommunity".equals(strType)) {  // 可抢的小区
+                res.addKey("currentPage", page);
+            } else if ("occupyCommunity".equals(strType) && intOwnerMallId > 0) {  // 可抢的小区,如果员工不是商场员工则该列表不返回数据
 
                 int intLimtM = Integer.parseInt(limitM);
                 StringBuffer sb = new StringBuffer();
@@ -217,10 +223,6 @@ public class CommunityController extends BaseController implements CommonBizCons
                 sb.append(" FROM xiwa_redstar_community c WHERE c.longitude>0 AND c.latitude>0 AND c.reclaimStatus = 0 AND c.reclaimCompleteDate < ? HAVING distance < ? ORDER BY distance ");
 
                 String querySQL = sb.toString();
-
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String strSysytemDateTime = df.format(System.currentTimeMillis());
-
                 List<Object> paramsList = new ArrayList<Object>();
                 paramsList.add(Double.parseDouble(latitude));
                 paramsList.add(Double.parseDouble(latitude));
@@ -241,17 +243,18 @@ public class CommunityController extends BaseController implements CommonBizCons
                     hmADComObj.put("address", objAd[2]);
                     hmADComObj.put("ownerMallName", objAd[3]);
                     hmADComObj.put("distance", objAd[4]);
-
+                    hmADComObj.put("status", 2);
                     lsAroundCommunitys.add(hmADComObj);
                 }
 
                 res.addKey("result", lsAroundCommunitys);
+                res.addKey("currentPage", page);
             } else if ("allAroundCommunity".equals(strType)) {  // 该城市内当前位置周边所有的小区（非商场员工调用接口）
 
                 int intLimtM = Integer.parseInt(limitM);
                 StringBuffer sb = new StringBuffer();
 
-                sb.append("Select c.id, c.name,c.address,c.ownerMallName, ");
+                sb.append("Select c.id, c.name,c.address,c.ownerMallId,c.ownerMallName,c.ownerId,c.reclaimStatus,c.reclaimCompleteDate, ");
                 sb.append(" round(6378.138 * 2 * asin(  ");
                 sb.append(" sqrt( pow(sin((c.latitude * pi() / 180 - ?*pi() / 180) / 2),2) + cos(c.latitude * pi() / 180) ");
                 sb.append(" * cos(?*pi() / 180) * pow(  ");
@@ -274,19 +277,36 @@ public class CommunityController extends BaseController implements CommonBizCons
 
                 // 查询结果list转化成输出对象
                 for (int i = 0; i < lsAllAroundCommunity.size(); i++) {
+
                     Object[] objAllCommunity = (Object[]) lsAllAroundCommunity.get(i);
                     HashMap hmAllComObj = new HashMap();
+                    int communityOwnerMallId = DataUtil.getInt(objAllCommunity[3], 0);
+                    int communityOwnerId = DataUtil.getInt(objAllCommunity[5], 0);
+                    int reclaimStatus = DataUtil.getInt(objAllCommunity[6], 0);
+                    Date reclaimCompleteDate = DataUtil.getDate(DataUtil.getDate(objAllCommunity[7]), new Date(System.currentTimeMillis() + 1000000));
                     hmAllComObj.put("communityId", objAllCommunity[0]);
                     hmAllComObj.put("name", objAllCommunity[1]);
                     hmAllComObj.put("address", objAllCommunity[2]);
-                    hmAllComObj.put("ownerMallName", objAllCommunity[3]);
-                    hmAllComObj.put("distance", objAllCommunity[4]);
-
+                    hmAllComObj.put("ownerMallName", objAllCommunity[4]);
+                    hmAllComObj.put("distance", objAllCommunity[8]);
+                    if (intOwnerMallId < 1) {
+                        //如果不是商场员工,只能编辑
+                        hmAllComObj.put("status", 0);
+                    } else if (reclaimStatus == 0 && reclaimCompleteDate.getTime() < System.currentTimeMillis()) {
+                        //没有认领但是已经过了认领期限了
+                        hmAllComObj.put("status", 2);
+                    } else if (intOwnerMallId == communityOwnerMallId && communityOwnerId < 1) {
+                        //所属商场但是没有管理者,可以认领
+                        hmAllComObj.put("status", 1);
+                    } else {
+                        //其他状态,只能编辑
+                        hmAllComObj.put("status", 0);
+                    }
                     lsAllAroundCommunitys.add(hmAllComObj);
                 }
 
                 res.addKey("result", lsAllAroundCommunitys);
-
+                res.addKey("currentPage", page);
             }
 
             setSuccessMsg(res);

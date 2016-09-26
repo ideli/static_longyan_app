@@ -1,4 +1,4 @@
-<div class="community-near-by-list-item">
+<div class="community-near-by-list-item" data-value="<#=data.id#>" data-status="<#=data.status#>">
 	<div class="item-col-1">
 		<div class="item-base-info">
 			<div class="item-name">
@@ -15,7 +15,7 @@
 	</div>	
 	<div class="item-col-3">
 		<div class="item-status">			
-			<#=data.status==0?'编辑':''#>
+			<#=data.status==0?'查看':''#>
 			<#=data.status==1?'可认领':''#>
 			<#=data.status==2?'可抢':''#>
 		</div>

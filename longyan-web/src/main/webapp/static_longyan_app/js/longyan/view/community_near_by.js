@@ -19,7 +19,8 @@ define('js/longyan/view/community_near_by', [
         var _requestType = ['allAroundCommunity', 'predistributionCommunity', 'occupyCommunity'];
         var LayoutView = Backbone.View.extend({
             events: {
-                "click .item-box": "_clickStatus"
+                "click .item-box": "_clickStatus",
+                "click .community-near-by-list-item": "_clickItem"
             },
             //
             initialize: function(options, config) {
@@ -60,7 +61,7 @@ define('js/longyan/view/community_near_by', [
                             latitude: 31.337771,
                             provinceCode: 310000,
                             cityCode: 310100,
-                            limitM: 5000
+                            limitM: 2000
                         }, function(data) {
                             tipsAlert.close();
                             console.log(data);
@@ -110,14 +111,22 @@ define('js/longyan/view/community_near_by', [
                     },
                     appendItem: function(data) {
                         console.log(data);
+                        var _data_status = data.status ? data.status : 0;
+                        var _distance = '0m';
+                        if (data.distance && data.distance >= 1000) {
+                            _distance = data.distance / 1000;
+                            _distance = _distance.toFixed(1) + 'km';
+                        } else if (data.distance && data.distance < 1000) {
+                            _distance = data.distance + 'm';
+                        }
                         var item = {
                             id: data.communityId,
                             name: data.name,
                             mallName: data.ownerMallName,
                             address: data.address,
-                            distance: '4km',
+                            distance: _distance,
                             lastDays: 0,
-                            status: 0
+                            status: _data_status
                         };
                         return tpl(CommunityNearByItemTpl, {
                             data: item
@@ -131,7 +140,16 @@ define('js/longyan/view/community_near_by', [
 
             },
             _clickItem: function(e) {
-
+                var t = this;
+                var community_id = $(e.currentTarget).attr('data-value') || 0;
+                var community_status = $(e.currentTarget).attr('data-status') || 0;
+                if (community_id > 0 && community_status == 0) {
+                    //跳转到小区首页
+                    window.location.href = "#community_home/" + community_id;
+                } else {
+                    //跳转到抢小区和认领小区的地图界面
+                    //跳转到native
+                }
             },
             //点击状态栏
             _clickStatus: function(e) {
