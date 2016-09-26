@@ -61,7 +61,7 @@ public class CommunityController extends BaseController implements CommonBizCons
         try {
             // 查询参数设定
             // 登陆EmployeeID获得
-            Employee loginEmployee = this.getEmployeeromSession();
+            NvwaEmployee loginEmployee = this.getEmployeeromSession();
             if (loginEmployee.getId() == 0) {
                 setErrMsg(res, "用户ID参数缺失");
                 return res;
@@ -441,7 +441,7 @@ public class CommunityController extends BaseController implements CommonBizCons
 
         try {
             //Employee employee = null;    // 获取session中的登陆用户的employeeCode
-            Employee employee = getEmployeeromSession();
+            NvwaEmployee employee = getEmployeeromSession();
 
             //用户ID,姓名，创建时间
             redstarCommunityBuilding.setCreateEmployeeId(employee.getId());
@@ -564,7 +564,7 @@ public class CommunityController extends BaseController implements CommonBizCons
             }
 
             // 获取session中的登陆用户的employeeCode
-            Employee employee = getEmployeeromSession();
+            NvwaEmployee employee = getEmployeeromSession();
             if (employee == null) {
                 throw new BusinessException(CommonExceptionType.NoSession);
             }

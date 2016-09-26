@@ -97,7 +97,7 @@ public class SpringSessionInterceptor implements HandlerInterceptor {
                         String strSystemDateTime = df.format(System.currentTimeMillis());
 
                         String strNvwaEmployee = String.valueOf(redisSession.getAttribute(SessionTool.SESSION_EMPLOYEE));
-                        if (StringUtil.isValid(strNvwaEmployee)) { // session里存在员工信息（第二次登陆）
+                        if (StringUtil.isValid(strNvwaEmployee)&&!strNvwaEmployee.equalsIgnoreCase("null")) { // session里存在员工信息（第二次登陆）
                             // session 里存储的员工信息取得时间
                             Date sessionDateTime = df.parse(strSystemDateTime);
                             // 计算3小时后的时间
@@ -122,7 +122,7 @@ public class SpringSessionInterceptor implements HandlerInterceptor {
                             return true;
                         } else { //session里未带入员工信息（初回登陆）
                             //根据openId查询员工信息
-                            NvwaEmployee redstarEmployee = nvwaDriver.getNvwaEmployeeManager().getEmployeeById(strOpenId);
+                            NvwaEmployee redstarEmployee = nvwaDriver.getNvwaEmployeeManager().getEmployeeByCode(strOpenId);
                             redisSession.setAttribute(SessionTool.SESSION_EMPLOYEE, JSONObject.fromObject(redstarEmployee).toString());
                             return true;
                         }

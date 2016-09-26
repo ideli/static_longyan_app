@@ -65,9 +65,9 @@ public class MessageController extends BaseController implements CommonBizConsta
             return res;
         }
         try {
-            Employee employee = getEmployeeromSession();
-            NvwaEmployee extEmployee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());
-            String employeeCode = extEmployee.getEmployeeCode();
+            NvwaEmployee employee = getEmployeeromSession();
+//            NvwaEmployee extEmployee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());
+            String employeeCode = employee.getEmployeeCode();
 
 
             Map<String, Object> result = appPushService.registerPush(AppCode, tag, employeeCode, platformType);
@@ -104,9 +104,9 @@ public class MessageController extends BaseController implements CommonBizConsta
             return res;
         }
         try {
-            Employee employee = getEmployeeromSession();
-            NvwaEmployee extEmployee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());
-            String employeeCode = extEmployee.getEmployeeCode();
+            NvwaEmployee employee = getEmployeeromSession();
+//            NvwaEmployee extEmployee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());
+            String employeeCode = employee.getEmployeeCode();
 
             Map<String, Object> result = appPushService.destroyPush(AppCode, employeeCode, platformType);
             if (Integer.parseInt(result.get("code").toString()) == 0) {
@@ -130,7 +130,7 @@ public class MessageController extends BaseController implements CommonBizConsta
 
         try {
             //从session中获取员工信息
-            Employee employee = getEmployeeromSession();
+            NvwaEmployee employee = getEmployeeromSession();
             //页数
             Integer page = pipelineContext.getRequest().getInt("page");
             //每页记录数
@@ -164,7 +164,7 @@ public class MessageController extends BaseController implements CommonBizConsta
                 throw new FormException("消息ID不能为空");
             }
             //从session中获取员工信息
-            Employee employee = getEmployeeromSession();
+            NvwaEmployee employee = getEmployeeromSession();
             //获取消息
             List<RedstarMessageCenter> list= dispatchDriver.getRedstarMessageCenterManager().getBeanListByColumn("id", message_id, "createDate", false);
             if(CollectionUtil.isValid(list)){

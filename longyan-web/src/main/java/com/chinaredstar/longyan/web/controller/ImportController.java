@@ -54,17 +54,17 @@ public class ImportController extends BaseController implements CommonBizConstan
         Request req = context.getRequest();
         Response res = context.getResponse();
 
-        Employee employee = null;
-        NvwaEmployee currentEmployee = null;
+        NvwaEmployee employee = null;
+//        NvwaEmployee currentEmployee = null;
         try {
             employee = getEmployeeromSession();
-            currentEmployee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());
+//            currentEmployee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());
         } catch (ManagerException e) {
             e.printStackTrace();
         }
 
 
-        if (null == currentEmployee) {
+        if (null == employee) {
             setErrMsg(res, "当前不存在登录用户");
             return res;
         }
@@ -391,10 +391,10 @@ public class ImportController extends BaseController implements CommonBizConstan
                     redstarCommunity.setCreateDate(new Date());
                     redstarCommunity.setUpdateDate(new Date());
                     //当前上传人的信息
-                    redstarCommunity.setCreateEmployeeId(currentEmployee.getId());
-                    redstarCommunity.setCreateXingMing(currentEmployee.getXingMing());
-                    redstarCommunity.setUpdateEmployeeId(currentEmployee.getId());
-                    redstarCommunity.setUpdateEmployeeXingMing(currentEmployee.getXingMing());
+                    redstarCommunity.setCreateEmployeeId(employee.getId());
+                    redstarCommunity.setCreateXingMing(employee.getXingMing());
+                    redstarCommunity.setUpdateEmployeeId(employee.getId());
+                    redstarCommunity.setUpdateEmployeeXingMing(employee.getXingMing());
                     redstarCommunity.setSource("employee");
                     //valDataList.add(redstarCommunity);
 
@@ -444,10 +444,10 @@ public class ImportController extends BaseController implements CommonBizConstan
         Request req = context.getRequest();
         Response res = context.getResponse();
 
-        Employee employee = getEmployeeromSession();
-        NvwaEmployee currentEmployee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());
+        NvwaEmployee employee = getEmployeeromSession();
+//        NvwaEmployee currentEmployee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());
 
-        if (null == currentEmployee) {
+        if (null == employee) {
             setErrMsg(res, "当前不存在登录用户");
             return res;
         }
@@ -802,14 +802,14 @@ public class ImportController extends BaseController implements CommonBizConstan
 
 
                     //信息所属当前用户
-                    redStarMember.setOwnerId(currentEmployee.getId());
-                    redStarMember.setOwnerXingMing(currentEmployee.getXingMing());
+                    redStarMember.setOwnerId(employee.getId());
+                    redStarMember.setOwnerXingMing(employee.getXingMing());
 
                     //上传人信息
-                    redStarMember.setCreateEmployeeId(currentEmployee.getId());
-                    redStarMember.setCreateXingming(currentEmployee.getXingMing());
-                    redStarMember.setUpdateEmployeeId(currentEmployee.getId());
-                    redStarMember.setUpdateEmployeeXingMing(currentEmployee.getXingMing());
+                    redStarMember.setCreateEmployeeId(employee.getId());
+                    redStarMember.setCreateXingming(employee.getXingMing());
+                    redStarMember.setUpdateEmployeeId(employee.getId());
+                    redStarMember.setUpdateEmployeeXingMing(employee.getXingMing());
                     redStarMember.setSource("employee");
                     //该记录是否存在
                     //装修情况 Y  住宅类型 房型 面积 N  //存在则查询 否则直接插入

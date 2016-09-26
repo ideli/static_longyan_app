@@ -265,16 +265,16 @@ public class AdUserController  extends BaseController implements CommonBizConsta
         PipelineContext context = buildPipelineContent();
         Response res = context.getResponse();
         try {
-            Employee employee = getEmployeeromSession(); //从session中获取登陆员工的ID
-            NvwaEmployee redstarEmployee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());//从 xiwa_crm_employee 获取员工信息
+            NvwaEmployee employee = getEmployeeromSession(); //从session中获取登陆员工的ID
+//            NvwaEmployee redstarEmployee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());//从 xiwa_crm_employee 获取员工信息
             //从 xiwa_redstar_mall_employee 获取商场所属员工信息
-            List<RedstarMallEmployee> redstarMallEmployees = dispatchDriver.getRedstarMallEmployeeManager().getBeanListByColumn("employeeId", redstarEmployee.getId());
+            List<RedstarMallEmployee> redstarMallEmployees = dispatchDriver.getRedstarMallEmployeeManager().getBeanListByColumn("employeeId", employee.getId());
             RedstarMallEmployee redstarMallEmployee;
 
-            res.addKey("id", redstarEmployee.getId());
-            res.addKey("name", redstarEmployee.getXingMing());
-            res.addKey("employeeCode", redstarEmployee.getEmployeeCode());
-            res.addKey("gender", redstarEmployee.getGender());
+            res.addKey("id", employee.getId());
+            res.addKey("name", employee.getXingMing());
+            res.addKey("employeeCode", employee.getEmployeeCode());
+            res.addKey("gender", employee.getGender());
             int mallOrganizationId = 0;
             String mallOrganizationName = "";
             //if (redstarMallEmployees.size() > 0) {
@@ -360,34 +360,34 @@ public class AdUserController  extends BaseController implements CommonBizConsta
         Response res = this.buildPipelineContent().getResponse();
         try {
             //Employee employee = (Employee) session.getAttribute(SESSION_EMPLOYEE);
-            Employee employee = getEmployeeromSession();
+            NvwaEmployee employee = getEmployeeromSession();
             if (employee == null) {
                 setErrMsg(res, "登录超时");
                 return res;
             }
 
-            NvwaEmployee employeeObject = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());
+//            NvwaEmployee employeeObject = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());
 
-            IntSearch dataIdSearch = new IntSearch("employeeId");
-            dataIdSearch.setSearchValue(String.valueOf(employeeObject.getId()));
+//            IntSearch dataIdSearch = new IntSearch("employeeId");
+//            dataIdSearch.setSearchValue(String.valueOf(employee.getId()));
 
-            List<RedstarMallEmployee> dataList = redstarMallEmployeeManager.searchIdentify(dataIdSearch);
-            if (CollectionUtil.isValid(dataList)) {
-                RedstarMallEmployee redstarMallEmployee = dataList.get(0);
-                List<RedstarShoppingMall> shoppingMalls = redstarShoppingMallManager.getBeanListByColumn(Identified.BEAN_NAME, redstarMallEmployee.getShoppingMallId());
-                //员工所属商场信息
-                res.addKey("shoppingMalls", shoppingMalls);
-            }
+//            List<RedstarMallEmployee> dataList = redstarMallEmployeeManager.searchIdentify(dataIdSearch);
+//            if (CollectionUtil.isValid(dataList)) {
+//                RedstarMallEmployee redstarMallEmployee = dataList.get(0);
+//                List<RedstarShoppingMall> shoppingMalls = redstarShoppingMallManager.getBeanListByColumn(Identified.BEAN_NAME, redstarMallEmployee.getShoppingMallId());
+//                //员工所属商场信息
+//                res.addKey("shoppingMalls", shoppingMalls);
+//            }
 
 
-            List<NvwaRole> redstarRole = nvwaDriver.getNvwaEmployeeManager().getRoleByEmployeeId(employee.getId());
-            if (CollectionUtil.isValid(redstarRole)) {
-                employeeObject.setRole(redstarRole.get(0).getName());
-            }
-            ExtCountryData countryData = ReportUtil.getAllDataBySum(redstarCommonManager, res);
-            res.addKey("userInfo", employeeObject);
-            res.addKey("roleInfo", redstarRole);
-            res.addKey("dashboard", countryData);
+//            List<NvwaRole> redstarRole = nvwaDriver.getNvwaEmployeeManager().getRoleByEmployeeId(employee.getId());
+//            if (CollectionUtil.isValid(redstarRole)) {
+//                employee.setRole(redstarRole.get(0).getName());
+//            }
+//            ExtCountryData countryData = ReportUtil.getAllDataBySum(redstarCommonManager, res);
+            res.addKey("userInfo", employee);
+//            res.addKey("roleInfo", redstarRole);
+//            res.addKey("dashboard", countryData);
         } catch (Exception e) {
             e.printStackTrace();
             setErrMsg(res, "系统异常");
@@ -410,13 +410,13 @@ public class AdUserController  extends BaseController implements CommonBizConsta
 
             String fileUrl =  iFastdfsService.upload(file.getBytes(), UploadFileUtil.getImgSuffix(file).replace(".", ""));
 
-            Employee employee = getEmployeeromSession();
+            NvwaEmployee employee = getEmployeeromSession();
 
-            NvwaEmployee redstarEmployee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());
+//            NvwaEmployee redstarEmployee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getBean(employee.getId());
 
-            redstarEmployee.setPhotos(fileUrl);
-            redstarEmployee.setHead(fileUrl);
-            redstarMallEmployeeManager.updateBean(redstarEmployee);
+            employee.setPhotos(fileUrl);
+            employee.setHead(fileUrl);
+            redstarMallEmployeeManager.updateBean(employee);
 
             res.addKey("headUrl",fileUrl);
             res.setCode(HTTP_SUCCESS_CODE);

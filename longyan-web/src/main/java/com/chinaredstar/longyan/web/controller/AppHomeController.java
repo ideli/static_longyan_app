@@ -5,6 +5,7 @@ import com.chinaredstar.commonBiz.bean.RedstarMessageCenter;
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
+import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.xiwa.base.bean.Request;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.bean.search.ConditionType;
@@ -48,7 +49,7 @@ public class AppHomeController extends BaseController implements CommonBizConsta
         try {
             // 查询参数设定
             // 登陆EmployeeID获得
-            Employee loginEmployee = this.getEmployeeromSession();
+            NvwaEmployee loginEmployee = this.getEmployeeromSession();
             if (loginEmployee.getId() == 0) {
                 setErrMsg(res, "用户ID参数缺失");
                 return res;

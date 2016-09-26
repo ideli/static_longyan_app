@@ -1,16 +1,20 @@
 package com.chinaredstar.longyan.web.controller;
 
+import com.alibaba.dubbo.common.json.JSONObject;
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.longyan.bean.constant.LanchuiConstant;
 import com.chinaredstar.longyan.exception.BusinessException;
 import com.chinaredstar.longyan.exception.NoSessionException;
 import com.chinaredstar.longyan.exception.constant.CommonExceptionType;
 //import com.chinaredstar.uc.dubbo.core.api.IEmployeeService;
+import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.manager.ManagerException;
 import com.xiwa.base.pipeline.PipelineContext;
 import com.xiwa.base.util.DataUtil;
+import com.xiwa.base.util.StringUtil;
 import com.xiwa.zeus.trinity.bean.Employee;
+import com.xiwa.zeus.util.SessionTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.support.AdvanceControllerSupport;
 
@@ -103,14 +107,20 @@ public class BaseController extends AdvanceControllerSupport implements LanchuiC
      * @return
      * @throws ManagerException
      */
-    protected Employee getEmployeeromSession() throws ManagerException {
+    protected NvwaEmployee getEmployeeromSession() throws ManagerException {
         HttpServletRequest request = this.getRequest();
-        Employee employee= (Employee) getObjectFromSession(SESSION_EMPLOYEE);
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute(SessionTool.SESSION_EMPLOYEE) != null && StringUtil.isValid(StringUtil.getString(session.getAttribute(SessionTool.SESSION_EMPLOYEE)))) {
+            String employeeStr = StringUtil.getString(session.getAttribute(SessionTool.SESSION_EMPLOYEE));
+            NvwaEmployee nvwaEmployee = (NvwaEmployee) net.sf.json.JSONObject.toBean(net.sf.json.JSONObject.fromObject(employeeStr),NvwaEmployee.class);
+            return nvwaEmployee;
+        }
+//        Employee employee= (Employee) getObjectFromSession(SESSION_EMPLOYEE);
 
-//        Employee employee =new Employee();
+//        Employee employee = new Employee();
 //        employee.setId(11722);
 //        employee.setXingMing("张学超");
-        return employee;
+        return null;
     }
 
     /**

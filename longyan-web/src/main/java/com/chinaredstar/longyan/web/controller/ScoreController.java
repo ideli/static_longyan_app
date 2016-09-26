@@ -59,7 +59,7 @@ public class ScoreController extends BaseController implements CommonBizConstant
         PipelineContext context = buildPipelineContent();
         Response res = context.getResponse();
         try {
-            Employee employee = getEmployeeromSession();
+            NvwaEmployee employee = getEmployeeromSession();
             Calendar calendar = Calendar.getInstance();
             Integer year = calendar.get(Calendar.YEAR);
             Integer month = calendar.get(Calendar.MONTH) + 1;
@@ -105,7 +105,7 @@ public class ScoreController extends BaseController implements CommonBizConstant
         PipelineContext context = buildPipelineContent();
         Response res = context.getResponse();
         try {
-            Employee loginEmployee = getEmployeeromSession();
+            NvwaEmployee loginEmployee = getEmployeeromSession();
             if (loginEmployee == null) {
                 response.setOk(false);
                 response.setMessage("您的登录已超时，请重新登录");
