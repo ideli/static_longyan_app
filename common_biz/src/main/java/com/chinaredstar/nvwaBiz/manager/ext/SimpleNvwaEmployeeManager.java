@@ -125,6 +125,22 @@ public class SimpleNvwaEmployeeManager extends AbstractBasicManager implements N
         return null;
     }
 
+    /**
+     * 根据员工ID获取员工信息
+     *
+     * @param id
+     * @return
+     * @throws ManagerException
+     */
+    public NvwaEmployee getEmployeeById(String id) throws ManagerException {
+        List<NvwaEmployee> list = this.getBeanListByColumn("id", Integer.parseInt(id));
+        if (CollectionUtil.isValid(list)) {
+            return list.get(0);
+        }
+        return null;
+    }
+
+
     @Override
     public List<NvwaRole> getRoleByEmployeeId(int employeeId) throws ManagerException {
         //获取权限
