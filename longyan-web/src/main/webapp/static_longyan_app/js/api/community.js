@@ -274,7 +274,17 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 				//返回的http请求数据
 				t._executeResponse(response, success, error);
 			}, false, 'POST', false, $nvwa.header.getHeaders());
-		}
+		},
+		aroundList: function(data, success, error) {
+			var t = this;
+			var url = _basePath + '/aroundList/' + data.type;
+			var request_body = data || {};
+			//发送http psot请求
+			t._executeRequest(url, request_body, function(response) {
+				//返回的http请求数据
+				t._executeResponse(response, success, error);
+			}, false, 'POST', false, $nvwa.header.getHeaders());
+		},
 	};
 	return CommunityApi;
 });

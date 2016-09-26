@@ -108,7 +108,7 @@
         <property name="showData" type="boolean"/>
         <property name="departmentCode" type="string"/>
         <property name="pinYin" type="string"/>
-        <property name="peopleNumber" type="java.lang.Integer"/>
+        <!--<property name="peopleNumber" type="java.lang.Integer"/>-->
         <property name="departmentParentCode" type="string"/>
         <property name="description" type="string"/>
         <property name="alias" type="string"/>

@@ -5,7 +5,7 @@
 				<#=data.name#>
 			</div>
 			<div class="item-mall-name">
-				<#=data.mallName#>
+				<#=data.mallName?data.mallName:''#>
 			</div>
 			<div class="clear-both"></div>
 		</div>

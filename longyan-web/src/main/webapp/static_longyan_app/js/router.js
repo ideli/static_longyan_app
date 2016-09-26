@@ -22,9 +22,8 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             "building_list/:id": "building_list",
             "building_detail/:id": "building_detail",
             "building_create": "building_create",
-            //附近的小区
-            "community_near_by_ling": "community_near_by_ling",
-            "community_near_by_qiang": "community_near_by_qiang",
+            //附近的小区            
+            "community_near_by/:status": "community_near_by",
             //我的小区
             "my_owner_community_list": "my_owner_community_list",
             //龙榜
@@ -127,18 +126,11 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
                 id: id
             });
         },
-        //附近的小区(领)
-        community_near_by_ling: function() {
+        //附近的小区(0=全部，1=可认领，2=可抢)
+        community_near_by: function(status) {
             var t = this;
             t.changePage('community_near_by', {
-                ling: true
-            });
-        },
-        //附近的小区(抢)
-        community_near_by_qiang: function() {
-            var t = this;
-            t.changePage('community_near_by', {
-                qiang: true
+                status: status
             });
         },
         community_list: function() {

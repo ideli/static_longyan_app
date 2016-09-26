@@ -36,7 +36,7 @@ public class NvwaDepartment implements Identified {
 
     private String departmentParentCode;
 
-    private Integer peopleNumber;
+//    private Integer peopleNumber;
 
     public String getDepartmentParentCode() {
         return departmentParentCode;
@@ -151,11 +151,11 @@ public class NvwaDepartment implements Identified {
         this.companyDescr = companyDescr;
     }
 
-    public Integer getPeopleNumber() {
-        return peopleNumber;
-    }
-
-    public void setPeopleNumber(Integer peopleNumber) {
-        this.peopleNumber = peopleNumber;
-    }
+//    public Integer getPeopleNumber() {
+//        return peopleNumber;
+//    }
+//
+//    public void setPeopleNumber(Integer peopleNumber) {
+//        this.peopleNumber = peopleNumber;
+//    }
 }
