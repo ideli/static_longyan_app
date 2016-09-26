@@ -170,9 +170,9 @@ public class CommunityController extends BaseController implements CommonBizCons
                 String querySQL = sb.toString();
 
                 List<Object> paramsList = new ArrayList<Object>();
-                paramsList.add(Double.parseDouble(longitude));
-                paramsList.add(Double.parseDouble(longitude));
                 paramsList.add(Double.parseDouble(latitude));
+                paramsList.add(Double.parseDouble(latitude));
+                paramsList.add(Double.parseDouble(longitude));
                 paramsList.add(intOwnerMallId);
                 paramsList.add(intLimtM);
 
@@ -213,9 +213,9 @@ public class CommunityController extends BaseController implements CommonBizCons
                 String strSysytemDateTime = df.format(System.currentTimeMillis());
 
                 List<Object> paramsList = new ArrayList<Object>();
-                paramsList.add(Double.parseDouble(longitude));
-                paramsList.add(Double.parseDouble(longitude));
                 paramsList.add(Double.parseDouble(latitude));
+                paramsList.add(Double.parseDouble(latitude));
+                paramsList.add(Double.parseDouble(longitude));
                 paramsList.add(strSysytemDateTime);
                 paramsList.add(intLimtM);
 
@@ -236,7 +236,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                 }
 
                 res.addKey("result", lsAroundCommunitys);
-            } else if ("allAroundCommunity".equals(strType)) {  // 周边所有的小区（非商场员工调用接口）
+            } else if ("allAroundCommunity".equals(strType)) {  // 该城市内当前位置周边所有的小区（非商场员工调用接口）
 
                 int intLimtM = Integer.parseInt(limitM);
                 StringBuffer sb = new StringBuffer();
@@ -246,14 +246,16 @@ public class CommunityController extends BaseController implements CommonBizCons
                 sb.append(" sqrt( pow(sin((c.latitude * pi() / 180 - ?*pi() / 180) / 2),2) + cos(c.latitude * pi() / 180) ");
                 sb.append(" * cos(?*pi() / 180) * pow(  ");
                 sb.append(" sin((c.longitude * pi() / 180 - ?*pi()/180) / 2),2))) * 1000) AS distance   ");
-                sb.append(" FROM xiwa_redstar_community c WHERE c.longitude>0 AND c.latitude>0 HAVING distance < ? ORDER BY distance ");
+                sb.append(" FROM xiwa_redstar_community c WHERE c.longitude>0 AND c.latitude>0 and c.provinceCode = ? and c.cityCode = ? HAVING distance < ? ORDER BY distance ");
 
                 String querySQL = sb.toString();
 
                 List<Object> paramsList = new ArrayList<Object>();
-                paramsList.add(Double.parseDouble(longitude));
-                paramsList.add(Double.parseDouble(longitude));
                 paramsList.add(Double.parseDouble(latitude));
+                paramsList.add(Double.parseDouble(latitude));
+                paramsList.add(Double.parseDouble(longitude));
+                paramsList.add(provinceCode);
+                paramsList.add(cityCode);
                 paramsList.add(intLimtM);
 
                 //搜索结果（以员工GPS位置为圆心半径intLimtM内所有小区列表）
