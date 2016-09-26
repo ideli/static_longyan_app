@@ -24,9 +24,6 @@ import java.util.Map;
  */
 public class BaseController extends AdvanceControllerSupport implements LanchuiConstant {
 
-    @Autowired
-    private HttpServletRequest request;
-
 //    @Autowired
 //    private IEmployeeService ucIEmployeeService;
 
@@ -106,23 +103,13 @@ public class BaseController extends AdvanceControllerSupport implements LanchuiC
      * @return
      * @throws ManagerException
      */
-    protected Employee getEmployeeromSession() throws NoSessionException {
+    protected Employee getEmployeeromSession() throws ManagerException {
+        HttpServletRequest request = this.getRequest();
+        Employee employee= (Employee) getObjectFromSession(SESSION_EMPLOYEE);
 
-        // redies中Session取得
-        HttpSession session = request.getSession();
-
-        // 用户中心dubbo服务调用，获取employee信息
-//        ucIEmployeeService.getBasicInfoByEmplid(session.getId());
-
-        // 本地employee对象作成
-        Employee employee = new Employee();
-        employee.setId(11722);
-        employee.setXingMing("张学超");
-
-        if(employee==null){
-            throw new NoSessionException();
-        }
-
+//        Employee employee =new Employee();
+//        employee.setId(11722);
+//        employee.setXingMing("张学超");
         return employee;
     }
 
