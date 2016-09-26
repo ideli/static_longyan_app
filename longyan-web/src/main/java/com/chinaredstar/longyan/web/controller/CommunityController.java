@@ -106,7 +106,16 @@ public class CommunityController extends BaseController implements CommonBizCons
         return res;
     }
 
-    //查询周边小区列表
+    /**
+     * //查询周边小区列表
+     * @param strType  allAroundCommunity=全部 occupyCommunity=可抢占 predistributionCommunity=预分配
+     * @param longitude 经度
+     * @param latitude 纬度
+     * @param provinceCode
+     * @param cityCode
+     * @param limitM 查询小区半径（米）
+     * @return
+     */
     @RequestMapping(value = "/aroundList/{type}", method = RequestMethod.POST)
     @ResponseBody
     public Response aroundList(@PathVariable("type") String strType, String longitude, String latitude,

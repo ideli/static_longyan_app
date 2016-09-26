@@ -22,6 +22,9 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             "building_list/:id": "building_list",
             "building_detail/:id": "building_detail",
             "building_create": "building_create",
+            //附近的小区
+            "community_near_by_ling": "community_near_by_ling",
+            "community_near_by_qiang": "community_near_by_qiang",
             //我的小区
             "my_owner_community_list": "my_owner_community_list",
             //龙榜
@@ -122,6 +125,20 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             var t = this;
             t.changePage('community_home', {
                 id: id
+            });
+        },
+        //附近的小区(领)
+        community_near_by_ling: function() {
+            var t = this;
+            t.changePage('community_near_by', {
+                ling: true
+            });
+        },
+        //附近的小区(抢)
+        community_near_by_qiang: function() {
+            var t = this;
+            t.changePage('community_near_by', {
+                qiang: true
             });
         },
         community_list: function() {

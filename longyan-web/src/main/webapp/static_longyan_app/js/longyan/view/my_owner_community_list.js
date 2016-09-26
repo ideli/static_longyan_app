@@ -68,7 +68,7 @@ define('js/longyan/view/my_owner_community_list', [
                             mallId: 111,
                             mallName: '真北商场',
                             address: '上海市普陀区真北路233号',
-                            distance: '4km',
+                            distance: '200m',
                             lastDays: 1,
                             haveComplate: false
                         }, {

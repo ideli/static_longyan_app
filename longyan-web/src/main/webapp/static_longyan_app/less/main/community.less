@@ -38,3 +38,113 @@
 		}
 	}
 }
+
+.pageContainer{
+	flex-flow: column;
+	display:flex;
+	height:100%;
+	margin:0px;
+	padding:0px;
+}
+
+#community-near-by-list-bar{
+	margin-top:@size-128;
+	height:@size-88+@size-4;
+	line-height:@size-88;
+	font-size:@size-32;	
+	background-color:@color-white;
+	border-bottom: 1px solid @color-frame-font;
+
+	.item-box{
+		float:left;			
+		text-align:center;
+		width:33%;
+		.bar-item{
+			color:@color-text-font;
+			display:inline-block;
+		}
+
+		.bar-item[selected]{			
+			color:@color-main-blue;
+			border-bottom: @size-4 solid @color-main-blue;
+			box-sizing:border-box;  
+			-moz-box-sizing:border-box; /* Firefox */  
+			-webkit-box-sizing:border-box; /* Safari */  
+		}
+	}
+}
+
+#community-near-by-list-view{
+	flex: 1;
+	background-color:@color-white;
+
+	#community-near-by-list-box{
+	
+		#scroller.scroll_box{
+			background-color:@color-white;
+			margin-top:0;
+		}
+
+		
+		.community-near-by-list-item{
+			width:100%;	
+			height:@size-166;
+			border-bottom: 1px solid #e1e1e1;
+			margin-left:@size-30;
+			
+			.item-col-1{
+				padding-top:@size-40;
+				float:left;
+				//margin-left:@size-30;
+
+				.item-base-info{
+					.item-name{
+						float:left;
+						font-size:@size-32;
+						line-height:@size-32;
+						color:@color-menu-font;
+					}
+					.item-mall-name{
+						float:left;
+						font-size:@size-28;
+						line-height:@size-32;
+						color:@color-comment-font;
+						padding-left:@size-20;					
+					}
+				}
+				.item-address{
+					padding-top:@size-30;
+					line-height:@size-30;
+					color:@color-comment-font;
+					font-size:@size-24;
+
+				}
+			}	
+
+			.item-col-2{
+				float:right;
+				color:@color-menu-font;
+				font-size:@size-28;
+				line-height:@size-166;
+				margin-right:@size-60;
+			}
+
+			.item-col-3{
+				padding-top:@size-40;
+				float:right;
+				text-align:right;
+				padding-right:@size-60;
+				.item-status{
+					font-size:@size-28;
+					color:@color-main-blue;
+					
+				}
+				.item-distance{
+					color:@color-comment-font;
+					font-size:@size-24;				
+				}
+			}
+		}
+
+	}	
+}
