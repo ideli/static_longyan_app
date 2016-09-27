@@ -8,7 +8,7 @@
 
     <dubbo:monitor protocol="registry"  />
 
-    <dubbo:reference interface="com.chinaredstar.lang.fastdfs.api.IFastdfsService" owner="mweb"  id="iFastdfsService" timeout="5000" retries="1" />
+    <dubbo:reference interface="com.chinaredstar.lang.fastdfs.api.IFastdfsService" owner="mweb"  id="iFastdfsService" timeout="5000" retries="1"  check="false"/>
 
     <!--通讯录-->
    <dubbo:reference interface="com.chinaredstar.longyan.api.ContactService"
