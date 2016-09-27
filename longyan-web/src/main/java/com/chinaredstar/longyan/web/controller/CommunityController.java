@@ -345,7 +345,7 @@ public class CommunityController extends BaseController implements CommonBizCons
         return null;
     }
 
-        //更新小区信息
+    //更新小区信息
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public Response dataUpdate() {
@@ -363,7 +363,8 @@ public class CommunityController extends BaseController implements CommonBizCons
             if (community == null) {
                 throw new FormException("没有找到小区");
             }
-            //详细地址
+
+              //详细地址
             CommunityFormUtil.setAddress(request, community);
             //小区别称
             CommunityFormUtil.setShortName(request, community);
@@ -418,7 +419,8 @@ public class CommunityController extends BaseController implements CommonBizCons
                 community.setUpdateEmployeeXingMing(employee.getXingMing());
             }
             community.setUpdateDate(new Date());
-            dispatchDriver.getRedstarCommunityManager().updateBean(community);
+
+            dispatchDriver.getRedstarCommunityUpdateLogManager().updateBean(community);
             res.setCode(HTTP_SUCCESS_CODE);
             res.setMessage("操作成功");
         } catch (FormException e) {
@@ -497,7 +499,6 @@ public class CommunityController extends BaseController implements CommonBizCons
 
             community.setCreateDate(new Date());
             community.setUpdateDate(new Date());
-            community.setSource("employee");
 
             Integer dataId = dispatchDriver.getRedstarCommunityManager().addBean(community);
             res.addKey("id", dataId);
