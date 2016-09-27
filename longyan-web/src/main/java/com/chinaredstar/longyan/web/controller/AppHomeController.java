@@ -13,7 +13,6 @@ import com.xiwa.base.bean.search.ext.IntSearch;
 import com.xiwa.base.bean.search.ext.MultiSearchBean;
 import com.xiwa.base.pipeline.PipelineContext;
 import com.xiwa.base.util.StringUtil;
-import com.xiwa.zeus.trinity.bean.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,7 +49,7 @@ public class AppHomeController extends BaseController implements CommonBizConsta
             // 查询参数设定
             // 登陆EmployeeID获得
             NvwaEmployee loginEmployee = this.getEmployeeromSession();
-            if (loginEmployee.getId() == 0) {
+            if (loginEmployee == null || loginEmployee.getId() == 0) {
                 setErrMsg(res, "用户ID参数缺失");
                 return res;
             }
