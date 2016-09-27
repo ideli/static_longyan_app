@@ -102,6 +102,36 @@ public class RedstarCommunity implements Identified {
 
     private String propertyName;//  楼盘名称
 
+    private Integer dataBelong; //  数据拥有者
+
+    private Integer reclaimStatus; //  认领状态
+
+    private Integer completeStatus;//  完善状态
+
+    public Integer getDataBelong() {
+        return dataBelong;
+    }
+
+    public void setDataBelong(Integer dataBelong) {
+        this.dataBelong = dataBelong;
+    }
+
+    public Integer getReclaimStatus() {
+        return reclaimStatus;
+    }
+
+    public void setReclaimStatus(Integer reclaimStatus) {
+        this.reclaimStatus = reclaimStatus;
+    }
+
+    public Integer getCompleteStatus() {
+        return completeStatus;
+    }
+
+    public void setCompleteStatus(Integer completeStatus) {
+        this.completeStatus = completeStatus;
+    }
+
     public String getShortName() {
         return shortName;
     }
