@@ -6,13 +6,18 @@ import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
 import com.chinaredstar.commonBiz.util.DoubleUtil;
 import com.chinaredstar.longyan.exception.BusinessException;
+import com.chinaredstar.longyan.exception.FormException;
 import com.chinaredstar.longyan.exception.constant.CommonExceptionType;
 import com.chinaredstar.longyan.exception.constant.CommunityExceptionType;
+import com.chinaredstar.longyan.util.CommunityFormUtil;
 import com.chinaredstar.longyan.util.RateUtil;
+import com.chinaredstar.longyan.util.SetCommunityMallUtil;
 import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
+import com.chinaredstar.nvwaBiz.bean.NvwaSecurityOperationLog;
 import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
 import com.chinaredstar.nvwaBiz.util.EmployeeUtil;
 import com.xiwa.base.bean.PaginationDescribe;
+import com.xiwa.base.bean.Request;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.bean.SimplePaginationDescribe;
 import com.xiwa.base.bean.search.ext.IntSearch;
@@ -49,6 +54,13 @@ public class CommunityController extends BaseController implements CommonBizCons
     private NvwaDriver nvwaDriver;
     @Autowired
     private RedstarCommonManager redstarCommonManager;
+
+    // 小区认领状态
+    private final int reclaimStatus_OK = 1;
+    // 数据源名
+    private final String source_LY = "LY";
+    // 数据拥有者
+    private final int dataBelong_LY = 2;
 
 
     //查询我的小区列表
@@ -310,6 +322,205 @@ public class CommunityController extends BaseController implements CommonBizCons
             }
 
             setSuccessMsg(res);
+        } catch (Exception e) {
+            setUnknowException(e, res);
+        }
+        return res;
+    }
+
+    //按名字查询小区信息
+    // TODO
+    @RequestMapping(value = "/{communityName}")
+    @ResponseBody
+    public Response dataItem(@PathVariable("communityName") String communityName) {
+        PipelineContext pipelineContext = this.buildPipelineContent();
+        Response res = pipelineContext.getResponse();
+
+        StringBuffer sb = new StringBuffer();
+
+        sb.append("Select c.id, c.name,c.address,c.ownerMallId,c.ownerMallName,c.ownerId,c.reclaimStatus,c.reclaimCompleteDate, ");
+        String querySQL = sb.toString();
+
+
+        return null;
+    }
+
+        //更新小区信息
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public Response dataUpdate() {
+        PipelineContext pipelineContext = this.buildPipelineContent();
+        Request request = pipelineContext.getRequest();
+        Response res = pipelineContext.getResponse();
+
+        try {
+            NvwaEmployee employee = getEmployeeromSession();
+            Integer dataId = request.getInt("id");
+            if (dataId == null) {
+                throw new FormException("小区id没有填写");
+            }
+            RedstarCommunity community = (RedstarCommunity) dispatchDriver.getRedstarCommunityManager().getBean(dataId);
+            if (community == null) {
+                throw new FormException("没有找到小区");
+            }
+            //详细地址
+            CommunityFormUtil.setAddress(request, community);
+            //小区别称
+            CommunityFormUtil.setShortName(request, community);
+            //总户数
+            CommunityFormUtil.setRoomMount(request, community);
+            //总栋数
+            CommunityFormUtil.setBuildingAmount(request, community);
+            //入住率
+            CommunityFormUtil.setAlreadyCheckAmount(request, community);
+            //房屋均价
+            CommunityFormUtil.setPriceSection(request, community);
+            //建筑类型
+            CommunityFormUtil.setConstructionTypes(request, community);
+            //交房装修
+            CommunityFormUtil.setRenovations(request, community);
+            //交房时间
+            CommunityFormUtil.setDeliveryTime(request, community);
+            //开发商信息
+            CommunityFormUtil.setDevelopers(request, community, redstarCommonManager);
+            //物业公司
+            CommunityFormUtil.setPropertyName(request, community, redstarCommonManager);
+            //物业电话
+            CommunityFormUtil.setHotline(request, community);
+
+            NvwaSecurityOperationLog securityOperationLog = new NvwaSecurityOperationLog();
+            if (employee != null) {
+                securityOperationLog.setOperatorId(employee.getId());
+                securityOperationLog.setOperator(employee.getXingMing());
+                securityOperationLog.setOperateResource(Community_Operate_Resource);
+                securityOperationLog.setCreateDate(new Date());
+                securityOperationLog.setBelongedId(LOG_BELONG_ID);
+
+                securityOperationLog.setOperateResourceId(String.valueOf(dataId));
+
+                if (!(DataUtil.getInt(community.getCreateEmployeeId(), 0) > 0)) {
+                    //如果没有CreateEmployeeId，则设置当前用户为CreateEmployeeId
+                    community.setCreateEmployeeId(employee.getId());
+                    community.setCreateXingMing(employee.getXingMing());
+                    //设置小区的商场id name
+                    community = SetCommunityMallUtil.setCommunityMall(redstarCommonManager, employee, community, null);
+                    //重新设置下createDate的时间
+                    community.setCreateDate(new Date());
+                    securityOperationLog.setOperationTypeField(ADD_OPERATION);
+                    securityOperationLog.setContent("添加小区");
+                    nvwaDriver.getNvwaSecurityOperationLogManager().addBean(securityOperationLog);
+                } else {
+                    securityOperationLog.setOperationTypeField(UPDATE_OPERATION);
+                    securityOperationLog.setContent("更新小区");
+                    nvwaDriver.getNvwaSecurityOperationLogManager().addBean(securityOperationLog);
+                }
+                community.setUpdateEmployeeId(employee.getId());
+                community.setUpdateEmployeeXingMing(employee.getXingMing());
+            }
+            community.setUpdateDate(new Date());
+            dispatchDriver.getRedstarCommunityManager().updateBean(community);
+            res.setCode(HTTP_SUCCESS_CODE);
+            res.setMessage("操作成功");
+        } catch (FormException e) {
+            //表单校验不通过
+            res.setCode(FORM_ERROR_CODE);
+            res.setOk(Boolean.FALSE);
+            res.setMessage(e.getMessage());
+        } catch (Exception e) {
+            setUnknowException(e, res);
+        }
+        return res;
+    }
+
+    //添加小区
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @ResponseBody
+    public Response dataCreate() {
+        PipelineContext pipelineContext = this.buildPipelineContent();
+        Request request = pipelineContext.getRequest();
+        Response res = pipelineContext.getResponse();
+        RedstarCommunity community = new RedstarCommunity();
+        try {
+            int intOwnerMallId = 0;
+            NvwaEmployee employee = getEmployeeromSession();
+            // TODO 测试数据删除需要
+            employee.setDepartmentId(1642);
+            //查询员工所属商场
+            RedstarShoppingMall shoppingMall = EmployeeUtil.getMall(employee, dispatchDriver, nvwaDriver);
+            if (shoppingMall != null) {
+                intOwnerMallId = shoppingMall.getId();
+            }
+
+            //设置省市区和小区名称
+            CommunityFormUtil.setLoctionAndName(request, dispatchDriver, community);
+            //小区别称
+            CommunityFormUtil.setShortName(request, community);
+            //详细地址
+            CommunityFormUtil.setAddress(request, community);
+            //总户数
+            CommunityFormUtil.setRoomMount(request, community);
+            //总栋数
+            CommunityFormUtil.setBuildingAmount(request, community);
+            //入住率
+            CommunityFormUtil.setAlreadyCheckAmount(request, community);
+            //房屋均价
+            CommunityFormUtil.setPriceSection(request, community);
+            //建筑类型
+            CommunityFormUtil.setConstructionTypes(request, community);
+            //交房装修
+            CommunityFormUtil.setRenovations(request, community);
+            //交房时间
+            CommunityFormUtil.setDeliveryTime(request, community);
+            //开发商信息
+            CommunityFormUtil.setDevelopers(request, community, redstarCommonManager);
+            //物业公司
+            CommunityFormUtil.setPropertyName(request, community, redstarCommonManager);
+            //物业电话
+            CommunityFormUtil.setHotline(request, community);
+
+
+            NvwaSecurityOperationLog securityOperationLog = new NvwaSecurityOperationLog();
+
+            if (employee != null) {
+                community.setCreateEmployeeId(employee.getId());
+                community.setCreateXingMing(employee.getXingMing());
+                securityOperationLog.setOperatorId(employee.getId());
+                securityOperationLog.setOperator(employee.getXingMing());
+                community.setDataBelong(dataBelong_LY);
+                community.setSource(source_LY);
+                if (intOwnerMallId > 0) {
+                    // 员工创建完即为owner,非员工则不更新
+                    community.setOwnerId(employee.getId());
+                    community.setReclaimStatus(reclaimStatus_OK);
+                }
+            }
+
+            community.setCreateDate(new Date());
+            community.setUpdateDate(new Date());
+            community.setSource("employee");
+
+            Integer dataId = dispatchDriver.getRedstarCommunityManager().addBean(community);
+            res.addKey("id", dataId);
+
+            //添加日志
+            securityOperationLog.setOperateResource(Community_Operate_Resource);
+            securityOperationLog.setCreateDate(new Date());
+            securityOperationLog.setBelongedId(LOG_BELONG_ID);
+            securityOperationLog.setOperationTypeField(ADD_OPERATION);
+            securityOperationLog.setOperateResourceId(String.valueOf(dataId));
+            securityOperationLog.setContent("添加小区");
+            nvwaDriver.getNvwaSecurityOperationLogManager().addBean(securityOperationLog);
+
+            res.setCode(HTTP_SUCCESS_CODE);
+            res.setMessage("操作成功");
+        } catch (FormException e) {
+            res.setCode(FORM_ERROR_CODE);
+            res.setOk(Boolean.FALSE);
+            res.setMessage(e.getMessage());
+        } catch (BusinessException e) {
+            res.setCode(DataUtil.getInt(e.getErrorCode(), 0));//设置异常CODE
+            res.setOk(Boolean.FALSE);
+            res.setMessage(e.getMessage());
         } catch (Exception e) {
             setUnknowException(e, res);
         }
