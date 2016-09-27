@@ -55,17 +55,17 @@ public class AdUserController  extends BaseController implements CommonBizConsta
     @Autowired
     private DispatchDriver dispatchDriver;
 
-    @Autowired
-    private RedstarShoppingMallManager redstarShoppingMallManager;
+//    @Autowired
+//    private RedstarShoppingMallManager redstarShoppingMallManager;
 
     @Autowired
     private RedstarMallEmployeeManager redstarMallEmployeeManager;
 
-    @Autowired
-    private NvwaDriver nvwaDriver;
+//    @Autowired
+//    private NvwaDriver nvwaDriver;
 
-    @Autowired
-    private RedstarCommonManager redstarCommonManager;
+//    @Autowired
+//    private RedstarCommonManager redstarCommonManager;
 
 
     @Autowired
@@ -73,185 +73,185 @@ public class AdUserController  extends BaseController implements CommonBizConsta
 
 
     /********************************发送找回密码验证码*******************************/
-    @RequestMapping(value = "/employee-register-send-otp", method = RequestMethod.POST)
-    @ResponseBody
-    public Response employeeRegisterSendOtp(String phone) {
-        Response res = this.buildPipelineContent().getResponse();
-        try {
-            //校验电话号码
-            Pattern pattern = Pattern.compile(Reg_Phone);
-            Matcher matcher = pattern.matcher(phone);
-            if (StringUtil.isInvalid(phone) || !matcher.matches()) {
-                throw new ManagerException("手机号码格式错误,请重新输入");
-            }
-            HashMap systemConfig = (HashMap) SpringUtil.getContext().getBean("systemConfig");
-            String appId = systemConfig.get("appId").toString();
-            String appSecret = systemConfig.get("appSecret").toString();
-            String userCenterUrl = systemConfig.get("userCenterUrl").toString();
-
-            /*******检查用户名是否存在********/
-            Map<String, String> checkParams = new HashMap<String, String>();
-            checkParams.put("appId", appId);
-            checkParams.put("appSecret", appSecret);
-            checkParams.put("username", phone);
-
-            JSONObject mobileJson = HttpClientUtil.httpGet(new StringBuffer(userCenterUrl).append("/employee/check/username?").append("appId=").append(appId).append("&appSecret=").append(appSecret).append("&username=").append(phone).toString());
-
-            int errorCode = mobileJson.getInt(UserCenter_Res_ErrorCode);
-            if (errorCode != 0) {
-                setErrMsg(res,mobileJson.getString(UserCenter_Res_ErrorMsg));
-                return res;
-            }
-
-            /*******用户名存在时再发送验证码********/
-            String msgType = "10003";//短信验证码模板代号
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("mobile", phone);
-            params.put("appId", appId);
-            params.put("appSecret", appSecret);
-            params.put("smsTemplateId", msgType);
-
-            JSONObject smsJson = HttpClientUtil.post(new StringBuffer(userCenterUrl).append("/sms/send").toString(), params);
-            if (smsJson.getInt(UserCenter_Res_ErrorCode) != 0) {
-                setErrMsg(res, "验证码发送失败!");
-                return res;
-            }
-
-            res.setOk(true);
-            res.setMessage("验证码发送成功");
-            res.setCode(HTTP_SUCCESS_CODE);
-        } catch (ManagerException e) {
-            setErrMsg(res, "验证码发送失败!");
-            return res;
-        }
-        return res;
-    }
+//    @RequestMapping(value = "/employee-register-send-otp", method = RequestMethod.POST)
+//    @ResponseBody
+//    public Response employeeRegisterSendOtp(String phone) {
+//        Response res = this.buildPipelineContent().getResponse();
+//        try {
+//            //校验电话号码
+//            Pattern pattern = Pattern.compile(Reg_Phone);
+//            Matcher matcher = pattern.matcher(phone);
+//            if (StringUtil.isInvalid(phone) || !matcher.matches()) {
+//                throw new ManagerException("手机号码格式错误,请重新输入");
+//            }
+//            HashMap systemConfig = (HashMap) SpringUtil.getContext().getBean("systemConfig");
+//            String appId = systemConfig.get("appId").toString();
+//            String appSecret = systemConfig.get("appSecret").toString();
+//            String userCenterUrl = systemConfig.get("userCenterUrl").toString();
+//
+//            /*******检查用户名是否存在********/
+//            Map<String, String> checkParams = new HashMap<String, String>();
+//            checkParams.put("appId", appId);
+//            checkParams.put("appSecret", appSecret);
+//            checkParams.put("username", phone);
+//
+//            JSONObject mobileJson = HttpClientUtil.httpGet(new StringBuffer(userCenterUrl).append("/employee/check/username?").append("appId=").append(appId).append("&appSecret=").append(appSecret).append("&username=").append(phone).toString());
+//
+//            int errorCode = mobileJson.getInt(UserCenter_Res_ErrorCode);
+//            if (errorCode != 0) {
+//                setErrMsg(res,mobileJson.getString(UserCenter_Res_ErrorMsg));
+//                return res;
+//            }
+//
+//            /*******用户名存在时再发送验证码********/
+//            String msgType = "10003";//短信验证码模板代号
+//            Map<String, String> params = new HashMap<String, String>();
+//            params.put("mobile", phone);
+//            params.put("appId", appId);
+//            params.put("appSecret", appSecret);
+//            params.put("smsTemplateId", msgType);
+//
+//            JSONObject smsJson = HttpClientUtil.post(new StringBuffer(userCenterUrl).append("/sms/send").toString(), params);
+//            if (smsJson.getInt(UserCenter_Res_ErrorCode) != 0) {
+//                setErrMsg(res, "验证码发送失败!");
+//                return res;
+//            }
+//
+//            res.setOk(true);
+//            res.setMessage("验证码发送成功");
+//            res.setCode(HTTP_SUCCESS_CODE);
+//        } catch (ManagerException e) {
+//            setErrMsg(res, "验证码发送失败!");
+//            return res;
+//        }
+//        return res;
+//    }
     /********************************发送找回密码验证码*******************************/
 
 
 
     /**********************重置密码*******************************/
-    @RequestMapping(value = "/reset-password", method = RequestMethod.POST)
-    @ResponseBody
-    public Response resetPassWord() {
-        Request request = this.buildPipelineContent().getRequest();
-        Response res = this.buildPipelineContent().getResponse();
-        try {
-            String smsCode = request.getString("code");
-            String mobile = request.getString("phone");
-            String newPassword = request.getString("password");
-            if (StringUtil.isInvalid(mobile)) {
-                setErrMsg(res, "手机号不能为空");
-                return res;
-            }
-            if (StringUtil.isInvalid(newPassword)) {
-                setErrMsg(res, "密码不能为空");
-                return res;
-            }
-            if (StringUtil.isInvalid(smsCode)) {
-                setErrMsg(res, "验证码不能为空");
-                return res;
-            }
-            HashMap systemConfig = (HashMap) SpringUtil.getContext().getBean("systemConfig");
-
-            String appId = systemConfig.get("appId").toString();
-            String appSecret = systemConfig.get("appSecret").toString();
-            String userCenterUrl = systemConfig.get("userCenterUrl").toString();
-
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("appId",appId);
-            params.put("appSecret",appSecret);
-            params.put("mobile", mobile);
-            params.put("smsCode", smsCode);
-            params.put("password",newPassword);
-
-            JSONObject jsonObject = HttpClientUtil.post(new StringBuffer(userCenterUrl).append("/employee/password/retrieve").toString(), params);
-            if (jsonObject.getInt(UserCenter_Res_ErrorCode) != 0) {
-                setErrMsg(res, jsonObject.getString(UserCenter_Res_ErrorMsg));
-                return res;
-            }
-
-            res.setOk(Boolean.TRUE);
-            res.setMessage("密码设置成功");
-            res.setCode(HTTP_SUCCESS_CODE);
-        } catch (Exception e) {
-            setErrMsg(res, "密码设置失败");
-        }
-        return res;
-    }
+//    @RequestMapping(value = "/reset-password", method = RequestMethod.POST)
+//    @ResponseBody
+//    public Response resetPassWord() {
+//        Request request = this.buildPipelineContent().getRequest();
+//        Response res = this.buildPipelineContent().getResponse();
+//        try {
+//            String smsCode = request.getString("code");
+//            String mobile = request.getString("phone");
+//            String newPassword = request.getString("password");
+//            if (StringUtil.isInvalid(mobile)) {
+//                setErrMsg(res, "手机号不能为空");
+//                return res;
+//            }
+//            if (StringUtil.isInvalid(newPassword)) {
+//                setErrMsg(res, "密码不能为空");
+//                return res;
+//            }
+//            if (StringUtil.isInvalid(smsCode)) {
+//                setErrMsg(res, "验证码不能为空");
+//                return res;
+//            }
+//            HashMap systemConfig = (HashMap) SpringUtil.getContext().getBean("systemConfig");
+//
+//            String appId = systemConfig.get("appId").toString();
+//            String appSecret = systemConfig.get("appSecret").toString();
+//            String userCenterUrl = systemConfig.get("userCenterUrl").toString();
+//
+//            Map<String, String> params = new HashMap<String, String>();
+//            params.put("appId",appId);
+//            params.put("appSecret",appSecret);
+//            params.put("mobile", mobile);
+//            params.put("smsCode", smsCode);
+//            params.put("password",newPassword);
+//
+//            JSONObject jsonObject = HttpClientUtil.post(new StringBuffer(userCenterUrl).append("/employee/password/retrieve").toString(), params);
+//            if (jsonObject.getInt(UserCenter_Res_ErrorCode) != 0) {
+//                setErrMsg(res, jsonObject.getString(UserCenter_Res_ErrorMsg));
+//                return res;
+//            }
+//
+//            res.setOk(Boolean.TRUE);
+//            res.setMessage("密码设置成功");
+//            res.setCode(HTTP_SUCCESS_CODE);
+//        } catch (Exception e) {
+//            setErrMsg(res, "密码设置失败");
+//        }
+//        return res;
+//    }
     /**********************重置密码*******************************/
 
 
 
 
-    //根据原密码修改密码
-    @RequestMapping(value = "/change-login-password", method = RequestMethod.POST)
-    @ResponseBody
-    public Response changePassWord(HttpServletRequest httpServletRequest) {
-        Request request = this.buildPipelineContent().getRequest();
-        Response res = this.buildPipelineContent().getResponse();
-        try {
-
-            String oldPassword = request.getString("originPassword");
-            String newPassword = request.getString("newPassword");
-            if (StringUtil.isInvalid(newPassword) || StringUtil.isInvalid(oldPassword)) {
-                setErrMsg(res, "密码不能为空");
-                return res;
-            }
-
-            //获取openid accessToken
-            String token = CookieUtil.getCookieValue("_token", httpServletRequest);
-
-            if(StringUtil.isInvalid(token)){
-                token=httpServletRequest.getHeader(LanchuiConstant.Request_Header_Token);
-            }
-
-            String openId = CookieUtil.getCookieValue("_openId", httpServletRequest);
-            if (StringUtil.isInvalid(openId)){
-                TextSearch textSearch = new TextSearch("token");
-                textSearch.setSearchValue(token);
-                List<RedstarSession> sessionList = redstarCommonManager.getDataList(RedstarSession.class,textSearch);
-                openId = sessionList.get(0).getOpenId();
-            }
-
-
-            //从cookie取不到token或openId
-            if (StringUtil.isInvalid(token) || StringUtil.isInvalid(openId)) {
-                setErrMsg(res, "登录超时!");
-                return res;
-            }
-
-
-
-            //得到配置参数
-            HashMap systemConfig = (HashMap)SpringUtil.getContext().getBean("systemConfig");
-
-            String appId = systemConfig.get("appId").toString();
-            String appSecret = systemConfig.get("appSecret").toString();
-
-
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("oldPassword",oldPassword);
-            params.put("newPassword",newPassword);
-            params.put("emplid", openId);
-
-            params.put("appId", appId);
-            params.put("appSecret", appSecret);
-
-            String userCenterUrl = systemConfig.get("userCenterUrl").toString();
-            JSONObject jsonObject = HttpClientUtil.post(userCenterUrl + "/employee/password/modify", params);
-            if (jsonObject.getInt(UserCenter_Res_ErrorCode) !=0) {
-                setErrMsg(res, jsonObject.getString(UserCenter_Res_ErrorMsg));
-                return res;
-            }
-            res.setOk(true);
-            res.setMessage("密码修改成功");
-            res.setCode(HTTP_SUCCESS_CODE);
-        } catch (Exception e) {
-            setErrMsg(res, "密码修改失败");
-        }
-        return res;
-    }
+//    //根据原密码修改密码
+//    @RequestMapping(value = "/change-login-password", method = RequestMethod.POST)
+//    @ResponseBody
+//    public Response changePassWord(HttpServletRequest httpServletRequest) {
+//        Request request = this.buildPipelineContent().getRequest();
+//        Response res = this.buildPipelineContent().getResponse();
+//        try {
+//
+//            String oldPassword = request.getString("originPassword");
+//            String newPassword = request.getString("newPassword");
+//            if (StringUtil.isInvalid(newPassword) || StringUtil.isInvalid(oldPassword)) {
+//                setErrMsg(res, "密码不能为空");
+//                return res;
+//            }
+//
+//            //获取openid accessToken
+//            String token = CookieUtil.getCookieValue("_token", httpServletRequest);
+//
+//            if(StringUtil.isInvalid(token)){
+//                token=httpServletRequest.getHeader(LanchuiConstant.Request_Header_Token);
+//            }
+//
+//            String openId = CookieUtil.getCookieValue("_openId", httpServletRequest);
+//            if (StringUtil.isInvalid(openId)){
+//                TextSearch textSearch = new TextSearch("token");
+//                textSearch.setSearchValue(token);
+//                List<RedstarSession> sessionList = redstarCommonManager.getDataList(RedstarSession.class,textSearch);
+//                openId = sessionList.get(0).getOpenId();
+//            }
+//
+//
+//            //从cookie取不到token或openId
+//            if (StringUtil.isInvalid(token) || StringUtil.isInvalid(openId)) {
+//                setErrMsg(res, "登录超时!");
+//                return res;
+//            }
+//
+//
+//
+//            //得到配置参数
+//            HashMap systemConfig = (HashMap)SpringUtil.getContext().getBean("systemConfig");
+//
+//            String appId = systemConfig.get("appId").toString();
+//            String appSecret = systemConfig.get("appSecret").toString();
+//
+//
+//            Map<String, String> params = new HashMap<String, String>();
+//            params.put("oldPassword",oldPassword);
+//            params.put("newPassword",newPassword);
+//            params.put("emplid", openId);
+//
+//            params.put("appId", appId);
+//            params.put("appSecret", appSecret);
+//
+//            String userCenterUrl = systemConfig.get("userCenterUrl").toString();
+//            JSONObject jsonObject = HttpClientUtil.post(userCenterUrl + "/employee/password/modify", params);
+//            if (jsonObject.getInt(UserCenter_Res_ErrorCode) !=0) {
+//                setErrMsg(res, jsonObject.getString(UserCenter_Res_ErrorMsg));
+//                return res;
+//            }
+//            res.setOk(true);
+//            res.setMessage("密码修改成功");
+//            res.setCode(HTTP_SUCCESS_CODE);
+//        } catch (Exception e) {
+//            setErrMsg(res, "密码修改失败");
+//        }
+//        return res;
+//    }
 
 
 
