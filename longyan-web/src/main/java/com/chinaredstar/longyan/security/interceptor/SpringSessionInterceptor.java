@@ -13,6 +13,8 @@ import com.xiwa.base.util.StringUtil;
 import com.xiwa.zeus.util.SessionTool;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,6 +26,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -97,11 +100,15 @@ public class SpringSessionInterceptor implements HandlerInterceptor {
                         String strSystemDateTime = df.format(System.currentTimeMillis());
 
                         String strNvwaEmployee = String.valueOf(redisSession.getAttribute(SessionTool.SESSION_EMPLOYEE));
-                        if (StringUtil.isValid(strNvwaEmployee)&&!strNvwaEmployee.equalsIgnoreCase("null")) { // session里存在员工信息（第二次登陆）
+                        if (StringUtil.isValid(strNvwaEmployee) && !strNvwaEmployee.equalsIgnoreCase("null")) { // session里存在员工信息（第二次登陆）
+                            WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(httpServletRequest.getSession().getServletContext());
+                            HashMap systemConfig = (HashMap) context.getBean("systemConfig");
+                            int intValidMinute = Integer.valueOf(systemConfig.get("validMinute").toString());
+
                             // session 里存储的员工信息取得时间
                             Date sessionDateTime = df.parse(strSystemDateTime);
                             // 计算3小时后的时间
-                            sessionDateTime.setTime(sessionDateTime.getTime() + 180 * 60 * 1000);
+                            sessionDateTime.setTime(sessionDateTime.getTime() + intValidMinute * 60 * 1000);
 
                             // 每隔3小时去员工中心校验一次员工信息
                             if (sessionDateTime.compareTo(df.parse(strSystemDateTime)) < 0) {

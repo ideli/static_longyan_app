@@ -39,6 +39,7 @@
                 <entry key="roles" value="${roles}"></entry>
                 <entry key="staticLongyanVersion" value="${longyan_app_static_version}"></entry>
                 <entry key="psServiceUrl" value="${ps.url}"></entry>
+                <entry key="validMinute" value="${validMinute}"></entry>
             </map>
         </constructor-arg>
     </bean>
