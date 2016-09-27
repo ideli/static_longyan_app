@@ -38,7 +38,7 @@ define('js/longyan/view/community_update', [
                 t.config = config || {};
                 t.$el.off('click');
                 t.render();
-                t.loadData();
+                // t.loadData();
             },
             render: function() {
                 var t = this;
@@ -187,8 +187,6 @@ define('js/longyan/view/community_update', [
                     fieldName: 'community-name-input',
                     text: '小区名称',
                     placeholder: '例: 浦江小区',
-                    search_placeholder: '小区名称',
-                    header_view_text: '小区名称',
                     readonly: true
                 });
 
@@ -360,14 +358,33 @@ define('js/longyan/view/community_update', [
                         }
                     }
                 });
-                if (t.config && t.config.action && t.config.action == 'update') {
-                    if (!t.config.update_exist) {
-                        //更新小区
-                        t.community_name_input.setReadOnly(true);
+
+                t.community_edit_input = new ButtonBox({
+                    el: $(form_id)
+                }, {
+                    fieldName: 'community-edit-input',
+                    text: '编辑',
+                }, {
+                    Click: function(e) {
+                        //打开编辑模式
+                        t.community_commit_input.show();
+                        t.community_edit_input.hide();
+                        //关闭遮罩
+                        $('.readonly-mask').hide();
                     }
+                });
+
+
+                if (t.config && t.config.action && t.config.action == 'update') {
+                    //加载数据
+                    t.loadData(t.config.id);
+                    t.community_commit_input.hide();
                 } else {
 
                 }
+
+                //添加遮罩
+                $('<div class="readonly-mask"></div>').appendTo($(form_id));
             },
             //添加小区
             __add: function(t) {
@@ -512,51 +529,37 @@ define('js/longyan/view/community_update', [
                         });
                 }
             },
-            loadData: function() {
+            loadData: function(id) {
                 var t = this;
-                if (t.config && t.config.action && t.config.action == 'update') {
-                    //填充表单
-                    var community = Cache.get('community-manager-object');
-
-                    if (t.config.update_exist) {
-                        //更新已有小区
-                        CommunityApi.getCommunityById(t.config.id, function(data) {
-                            tipsAlert.close();
-                            //返回数据
-                            if (data && data.community) {
-                                Cache.set('community-manager-object', data.community);
-                                t.setFormValue(data.community);
-                            } else {
-                                tipsAlert.openAlert({
-                                    content: '系统异常'
-                                });
-                            }
-                        }, function(code, msg) {
-                            tipsAlert.close();
-                            //显示异常信息
-                            tipsAlert.openAlert({
-                                content: msg
-                            });
-                        });
-
-                        return;
-                    }
-
-                    if (community) {
-                        t.setFormValue(community);
+                //更新已有小区
+                tipsAlert.openLoading({
+                    content: '加载中...'
+                });
+                CommunityApi.getCommunityById(id, function(data) {
+                    tipsAlert.close();
+                    //返回数据
+                    if (data && data.community) {
+                        //填充表单
+                        t.setFormValue(data.community);
                     } else {
                         tipsAlert.openAlert({
                             content: '系统异常'
                         });
                     }
-                }
+                }, function(code, msg) {
+                    tipsAlert.close();
+                    //显示异常信息
+                    tipsAlert.openAlert({
+                        content: msg
+                    });
+                });
             },
             //设置表单
             setFormValue: function(community) {
                 var t = this;
                 t.location_read_input.setValue(community.city);
-                // t.community_name_input.setValue(community.name, community.name);
-                t.community_name_input.setText(community.name);
+                t.community_name_input.setValue(community.name, community.name);
+                // t.community_name_input.setText(community.name);
                 t.community_address_input.setValue(community.address);
                 t.community_others_name_input.setValue(community.shortName);
                 //总面积
@@ -593,7 +596,7 @@ define('js/longyan/view/community_update', [
                 }
 
                 //开发商
-                t.community_developer_input.setText(community.developers);
+                t.community_developer_input.setValue(community.developers);
                 //物业公司
                 t.community_property_company_input.setValue(community.propertyName);
                 //物业电话
@@ -702,7 +705,7 @@ define('js/longyan/view/community_update', [
                     });
                     return false;
                 }
-                if (!$nvwa.string.isVerify(t.community_developer_input.getText())) {
+                if (!$nvwa.string.isVerify(t.community_developer_input.getValue())) {
                     tipsAlert.openToast({
                         content: '请输入开发商名称'
                     });

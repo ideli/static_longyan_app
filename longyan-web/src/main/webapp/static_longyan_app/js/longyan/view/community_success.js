@@ -52,7 +52,8 @@ define('js/longyan/view/community_success', [
                     text: '添加楼栋号'
                 }, {
                     Click: function(e) {
-                        router.navigate('member_list', {
+                        var dataId = Cache.get('community-data-id');
+                        router.navigate('building_list/' + dataId, {
                             trigger: true
                         });
                     }
@@ -65,7 +66,7 @@ define('js/longyan/view/community_success', [
                 }, {
                     Click: function(e) {
                         var dataId = Cache.get('community-data-id');
-                        router.navigate('community_preview/' + dataId, {
+                        router.navigate('community_home/' + dataId, {
                             trigger: true
                         });
                     }

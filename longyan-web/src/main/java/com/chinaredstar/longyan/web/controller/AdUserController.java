@@ -4,6 +4,7 @@ import com.chinaredstar.commonBiz.bean.*;
 import com.chinaredstar.commonBiz.manager.*;
 import com.chinaredstar.lang.fastdfs.api.IFastdfsService;
 import com.chinaredstar.longyan.bean.constant.LanchuiConstant;
+import com.chinaredstar.longyan.exception.BusinessException;
 import com.chinaredstar.longyan.util.HttpClientUtil;
 import com.chinaredstar.longyan.util.ReportUtil;
 import com.chinaredstar.longyan.util.SpringUtil;
@@ -30,6 +31,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,7 +52,7 @@ import java.util.regex.Pattern;
  */
 @Controller
 @RequestMapping(value = "/user")
-public class AdUserController  extends BaseController implements CommonBizConstant  {
+public class AdUserController extends BaseController implements CommonBizConstant {
 
     @Autowired
     private DispatchDriver dispatchDriver;
@@ -61,8 +63,8 @@ public class AdUserController  extends BaseController implements CommonBizConsta
     @Autowired
     private RedstarMallEmployeeManager redstarMallEmployeeManager;
 
-//    @Autowired
-//    private NvwaDriver nvwaDriver;
+    @Autowired
+    private NvwaDriver nvwaDriver;
 
 //    @Autowired
 //    private RedstarCommonManager redstarCommonManager;
@@ -70,6 +72,9 @@ public class AdUserController  extends BaseController implements CommonBizConsta
 
     @Autowired
     private IFastdfsService iFastdfsService;
+
+    @Autowired
+    private HashMap systemConfig;
 
 
     /********************************发送找回密码验证码*******************************/
@@ -129,7 +134,6 @@ public class AdUserController  extends BaseController implements CommonBizConsta
     /********************************发送找回密码验证码*******************************/
 
 
-
     /**********************重置密码*******************************/
 //    @RequestMapping(value = "/reset-password", method = RequestMethod.POST)
 //    @ResponseBody
@@ -180,8 +184,6 @@ public class AdUserController  extends BaseController implements CommonBizConsta
 //        return res;
 //    }
     /**********************重置密码*******************************/
-
-
 
 
 //    //根据原密码修改密码
@@ -254,9 +256,9 @@ public class AdUserController  extends BaseController implements CommonBizConsta
 //    }
 
 
-
     /**
      * APP用户信息
+     *
      * @return
      */
     @RequestMapping(value = "/user-info-app")
@@ -284,7 +286,7 @@ public class AdUserController  extends BaseController implements CommonBizConsta
                 res.addKey("mallName", redstarMallEmployee.getShoppingMallName());
                 Object[] mallOrg = dispatchDriver.getRedstarShopMallOrganizationManager().getParentId(redstarMallEmployee.getShoppingMallId());
 
-                if (mallOrg!=null  && mallOrg.length == 2) {
+                if (mallOrg != null && mallOrg.length == 2) {
                     mallOrganizationId = DataUtil.getInt(mallOrg[0], 0);
                     mallOrganizationName = DataUtil.getString(mallOrg[1], "");
                 }
@@ -341,13 +343,13 @@ public class AdUserController  extends BaseController implements CommonBizConsta
             res.addKey("yesterdayCommunityCount", yesterdayCommunityCount);
             res.addKey("currMonthCommunityCount", currMonthCommunityCount);
             res.addKey("totalCommunityCount", totalCommunityCount);
-            setSuccessMsg(res,"成功");
+            setSuccessMsg(res, "成功");
         } catch (Exception e) {
             e.printStackTrace();
-            setErrMsg(res,"获取用户信息异常");
+            setErrMsg(res, "获取用户信息异常");
             res.setCode(500);
-            logger.error("user--info--app--------->"+e.getMessage());
-            logger.info("user--info--app--------->"+e.getMessage());
+            logger.error("user--info--app--------->" + e.getMessage());
+            logger.info("user--info--app--------->" + e.getMessage());
         }
         return res;
     }
@@ -408,7 +410,7 @@ public class AdUserController  extends BaseController implements CommonBizConsta
                 return res;
             }
 
-            String fileUrl =  iFastdfsService.upload(file.getBytes(), UploadFileUtil.getImgSuffix(file).replace(".", ""));
+            String fileUrl = iFastdfsService.upload(file.getBytes(), UploadFileUtil.getImgSuffix(file).replace(".", ""));
 
             NvwaEmployee employee = getEmployeeromSession();
 
@@ -418,9 +420,47 @@ public class AdUserController  extends BaseController implements CommonBizConsta
             employee.setHead(fileUrl);
             redstarMallEmployeeManager.updateBean(employee);
 
-            res.addKey("headUrl",fileUrl);
+            res.addKey("headUrl", fileUrl);
             res.setCode(HTTP_SUCCESS_CODE);
             res.setMessage("上传成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            setErrMsg(res, "服务器响应异常,请稍后重试");
+        }
+        return res;
+    }
+
+
+    @RequestMapping(value = "avatar", method = RequestMethod.POST)
+    @ResponseBody
+    public Response avatar() {
+        PipelineContext context = buildPipelineContent();
+        Response res = context.getResponse();
+        try {
+
+            int employeeId = context.getRequest().getInt("id", 0);
+
+            NvwaEmployee employee = getEmployeeromSession();
+            //获取员工信息
+            NvwaEmployee redstarEmployee = (NvwaEmployee) nvwaDriver.getNvwaEmployeeManager().getEmployeeById(employeeId);
+            if (redstarEmployee == null) {
+                throw new BusinessException("找不到员工");
+            }
+            String employeeCode = redstarEmployee.getEmployeeCode();
+            //调用ps系统的头像接口
+            String psServiceUrl=StringUtil.getString(systemConfig.get("psServiceUrl"));
+            String psResponse=HttpClientUtil.sendPostBody(psServiceUrl+"/EmployeePhoto","{\"EmployeeId\":\""+employeeCode+"\",\"IP\":\"127.0.0.1\"}");
+            if(StringUtil.isInvalid(psResponse)){
+                throw new BusinessException("PS接口调用失败");
+            }
+            JSONObject jsonObject=JSONObject.fromObject(psResponse);
+
+            res.addKey("employeeCode",employeeCode);
+            if(jsonObject.containsKey("photo")){
+                res.addKey("photo",jsonObject.getString("photo"));
+            }else{
+                throw new BusinessException("无图片信息");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             setErrMsg(res, "服务器响应异常,请稍后重试");

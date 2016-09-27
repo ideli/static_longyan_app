@@ -7,7 +7,7 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 	var __debug = false;
 	var CommunityApi = {
 		initialize: function() {},
-		_executeRequest: function(url, data, handler, isJsonp, method, async) {
+		_executeRequest: function(url, data, handler, isJsonp, method, async, headers) {
 			if (__debug) {
 				if (MockData[url]) {
 					handler(MockData[url](url, data));
@@ -15,7 +15,7 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 					console.warn('Fill mock data in mockdata.js!');
 				}
 			} else {
-				http.request(url, data, handler, isJsonp, method, async); //这里再区分ajax 和 native
+				http.request(url, data, handler, isJsonp, method, async, headers); //这里再区分ajax 和 native
 			}
 		},
 		_executeResponse: function(response, success, error) {

@@ -19,6 +19,10 @@ define('js/util/http', [], function() {
          */
         request: function(url, data, handle, isJsonp, method, async, headerValue) {
             headerValue = headerValue || {};
+            //测试用的token
+            headerValue = {
+                'x-auth-token': 'a07cc44e-5ce8-4a05-9172-99ede124bb16'
+            };
             //http request exception function
             var __errorException = function(responsoObject) {
                 //exception object
@@ -119,7 +123,7 @@ define('js/util/http', [], function() {
                     parameter: data
                 };
                 // alert(qeqwe);
-                $nvwa.app.request('http', request_data, function(resp){
+                $nvwa.app.request('http', request_data, function(resp) {
                     var obj;
                     if (typeof resp == "object") {
                         obj = resp;

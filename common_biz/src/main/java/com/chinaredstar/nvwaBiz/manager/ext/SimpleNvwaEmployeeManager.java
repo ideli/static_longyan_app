@@ -132,8 +132,8 @@ public class SimpleNvwaEmployeeManager extends AbstractBasicManager implements N
      * @return
      * @throws ManagerException
      */
-    public NvwaEmployee getEmployeeById(String id) throws ManagerException {
-        List<NvwaEmployee> list = this.getBeanListByColumn("id", Integer.parseInt(id));
+    public NvwaEmployee getEmployeeById(int id) throws ManagerException {
+        List<NvwaEmployee> list = this.getBeanListByColumn("id", id);
         if (CollectionUtil.isValid(list)) {
             return list.get(0);
         }

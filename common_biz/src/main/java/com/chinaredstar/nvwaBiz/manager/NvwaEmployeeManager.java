@@ -36,7 +36,7 @@ public interface NvwaEmployeeManager extends BasicManager {
 
     public NvwaEmployee getEmployeeByCode(String code) throws ManagerException;
 
-    public NvwaEmployee getEmployeeById(String id) throws ManagerException;
+    public NvwaEmployee getEmployeeById(int id) throws ManagerException;
 
     public List<NvwaRole> getRoleByEmployeeId(int employeeId) throws ManagerException;
 

@@ -15,14 +15,16 @@ define('js/longyan/view/community_home', [
         'js/element/view/button-box',
         'js/element/view/link-box',
         'js/element/view/tips-bar',
-        'js/api/community'
+        'js/api/community',
+        'js/api/user'
     ],
-    function(CommunityHomeTpl, Cache, AlertUI, HeaderView, LocationView, PickerBox, InputBox, ThinkInputBox, LocationBox, InputPercentageBox, ButtonBox, LinkBox, TipsBar, CommunityApi) {
+    function(CommunityHomeTpl, Cache, AlertUI, HeaderView, LocationView, PickerBox, InputBox, ThinkInputBox, LocationBox, InputPercentageBox, ButtonBox, LinkBox, TipsBar, CommunityApi, UserApi) {
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#community-home-view';
         var form_id = '#community-home-form';
         var LayoutView = Backbone.View.extend({
             events: {
+                "click .community-info": "_goto_update_community",
                 "click .community-building-info": "_goto_building_list"
             },
             // 
@@ -53,8 +55,13 @@ define('js/longyan/view/community_home', [
                     fieldName: 'community-owner',
                     text: '管理员',
                     readonly: true,
-                    label_right: '<div class="owner-name">张学超</div><div class="touxiang"><img src="' + window.resource.image + '/longyan_morentouxiang.png' + '" width="41" /></div><div class="clear-both"></div>'
+                    // label_right: '<div class="owner-name"></div><div class="touxiang"><img src="' + window.resource.image + '/longyan_morentouxiang.png' + '" width="41" /></div><div class="clear-both"></div>'
+                    // label_right: '<div class="owner-name"></div><div class="touxiang"><img src="data:image/jpeg;base64," width="100%" height="100%" /></div><div class="clear-both"></div>'
+                    label_right: '<div class="owner-name"></div><div class="touxiang"></div><div class="clear-both"></div>'
                 });
+
+
+                // t.$el.find('.touxiang').css('background-image', 'url(data:image/gif;base64,' + image_base64 + ')');
 
 
                 $('<div class="gap basic-gap owner-gap"></div>').appendTo($(form_id));
@@ -96,6 +103,7 @@ define('js/longyan/view/community_home', [
 
                             if (data && data.ownerId && data.ownerId > 0) {
                                 t.$el.find('#community-home-form .owner-name').html(data.ownerXingMing);
+                                t.laodPhoto(data.ownerId);
                             }
 
                         }
@@ -115,8 +123,35 @@ define('js/longyan/view/community_home', [
                 }
 
             },
+            //加载员工图片
+            laodPhoto: function(id) {
+                var t = this;
+                UserApi.getAvatar({
+                    id: id
+                }, function(data) {
+                    console.log(data);
+                    //加载头像
+                    if (data && data.photo) {
+                        t.$el.find('.touxiang').css('background-image', 'url(data:image/gif;base64,' + data.photo + ')');
+                    }
+                }, function(code, msg) {
+
+                });
+            },
             setData: function(data) {
                 var t = this;
+            },
+            //跳转到小区编辑界面
+            _goto_update_community: function() {
+                var t = this;
+                if (t.config && t.config.id && t.config.id > 0) {
+                    window.location.href = '#community_update/' + t.config.id;
+                } else {
+                    tipsAlert.openToast({
+                        content: '数据异常'
+                    });
+                }
+
             },
             //跳转到楼栋列表
             _goto_building_list: function() {
