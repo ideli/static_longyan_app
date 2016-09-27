@@ -61,6 +61,8 @@ public class CommunityController extends BaseController implements CommonBizCons
     private final String source_LY = "LY";
     // 数据拥有者
     private final int dataBelong_LY = 2;
+    // 审核状态
+    private final int reviewing = 1;
 
 
     //查询我的小区列表
@@ -364,30 +366,31 @@ public class CommunityController extends BaseController implements CommonBizCons
                 throw new FormException("没有找到小区");
             }
 
+            RedstarCommunityUpdateLog  communityUpdateLog = (RedstarCommunityUpdateLog) community;
               //详细地址
-            CommunityFormUtil.setAddress(request, community);
+            CommunityFormUtil.setAddress(request, communityUpdateLog);
             //小区别称
-            CommunityFormUtil.setShortName(request, community);
+            CommunityFormUtil.setShortName(request, communityUpdateLog);
             //总户数
-            CommunityFormUtil.setRoomMount(request, community);
+            CommunityFormUtil.setRoomMount(request, communityUpdateLog);
             //总栋数
-            CommunityFormUtil.setBuildingAmount(request, community);
+            CommunityFormUtil.setBuildingAmount(request, communityUpdateLog);
             //入住率
-            CommunityFormUtil.setAlreadyCheckAmount(request, community);
+            CommunityFormUtil.setAlreadyCheckAmount(request, communityUpdateLog);
             //房屋均价
-            CommunityFormUtil.setPriceSection(request, community);
+            CommunityFormUtil.setPriceSection(request, communityUpdateLog);
             //建筑类型
-            CommunityFormUtil.setConstructionTypes(request, community);
+            CommunityFormUtil.setConstructionTypes(request, communityUpdateLog);
             //交房装修
-            CommunityFormUtil.setRenovations(request, community);
+            CommunityFormUtil.setRenovations(request, communityUpdateLog);
             //交房时间
-            CommunityFormUtil.setDeliveryTime(request, community);
+            CommunityFormUtil.setDeliveryTime(request, communityUpdateLog);
             //开发商信息
-            CommunityFormUtil.setDevelopers(request, community, redstarCommonManager);
+            CommunityFormUtil.setDevelopers(request, communityUpdateLog, redstarCommonManager);
             //物业公司
-            CommunityFormUtil.setPropertyName(request, community, redstarCommonManager);
+            CommunityFormUtil.setPropertyName(request, communityUpdateLog, redstarCommonManager);
             //物业电话
-            CommunityFormUtil.setHotline(request, community);
+            CommunityFormUtil.setHotline(request, communityUpdateLog);
 
             NvwaSecurityOperationLog securityOperationLog = new NvwaSecurityOperationLog();
             if (employee != null) {
@@ -399,28 +402,17 @@ public class CommunityController extends BaseController implements CommonBizCons
 
                 securityOperationLog.setOperateResourceId(String.valueOf(dataId));
 
-                if (!(DataUtil.getInt(community.getCreateEmployeeId(), 0) > 0)) {
-                    //如果没有CreateEmployeeId，则设置当前用户为CreateEmployeeId
-                    community.setCreateEmployeeId(employee.getId());
-                    community.setCreateXingMing(employee.getXingMing());
-                    //设置小区的商场id name
-                    community = SetCommunityMallUtil.setCommunityMall(redstarCommonManager, employee, community, null);
-                    //重新设置下createDate的时间
-                    community.setCreateDate(new Date());
-                    securityOperationLog.setOperationTypeField(ADD_OPERATION);
-                    securityOperationLog.setContent("添加小区");
-                    nvwaDriver.getNvwaSecurityOperationLogManager().addBean(securityOperationLog);
-                } else {
                     securityOperationLog.setOperationTypeField(UPDATE_OPERATION);
                     securityOperationLog.setContent("更新小区");
                     nvwaDriver.getNvwaSecurityOperationLogManager().addBean(securityOperationLog);
-                }
-                community.setUpdateEmployeeId(employee.getId());
-                community.setUpdateEmployeeXingMing(employee.getXingMing());
-            }
-            community.setUpdateDate(new Date());
 
-            dispatchDriver.getRedstarCommunityUpdateLogManager().updateBean(community);
+                communityUpdateLog.setUpdateEmployeeId(employee.getId());
+                communityUpdateLog.setUpdateEmployeeXingMing(employee.getXingMing());
+            }
+            communityUpdateLog.setUpdateDate(new Date());
+            communityUpdateLog.setReviewStatus(reviewing);
+
+            dispatchDriver.getRedstarCommunityUpdateLogManager().updateBean(communityUpdateLog);
             res.setCode(HTTP_SUCCESS_CODE);
             res.setMessage("操作成功");
         } catch (FormException e) {
