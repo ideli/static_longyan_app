@@ -57,10 +57,11 @@
         <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
         <!--<bean class="SpringSessionInterceptor"/>-->
         <mvc:interceptor>
+            <mvc:mapping path="/**"/>
             <!--登出-->
             <!--<mvc:mapping path="/auth/logout"/>-->
             <!--获取用户信息 长传头像-->
-            <mvc:mapping path="/user/user-info"/>
+            <!--<mvc:mapping path="/user/user-info"/>-->
             <!--<mvc:mapping path="/user/user-info-app"/>-->
             <!--<mvc:mapping path="/user/setting-avatar"/>-->
             <!--<mvc:mapping path="/user/change-login-password"/>-->
