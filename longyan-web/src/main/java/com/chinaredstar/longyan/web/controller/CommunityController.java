@@ -391,10 +391,10 @@ public class CommunityController extends BaseController implements CommonBizCons
                     communityUpdateLog.setUpdateEmployeeId(employee.getId());
                     communityUpdateLog.setUpdateEmployeeXingMing(employee.getXingMing());
                     communityUpdateLog.setUpdateDate(new Date());
-                    communityUpdateLog.setReclaimStatus(reviewing);
+                    communityUpdateLog.setReviewStatus(reviewing);
 
                     // 小区表同步审核状态更新
-                    community.setReclaimStatus(reviewing);
+                    community.setReviewStatus(reviewing);
 
                     Map<String, String> mpCommunityUpdateLog = CommunityFormUtil.transBean2Map(communityUpdateLog);
                     Map<String, String> mpCommunity = CommunityFormUtil.transBean2Map(community);
