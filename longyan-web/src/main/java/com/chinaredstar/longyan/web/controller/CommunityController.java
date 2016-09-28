@@ -328,23 +328,6 @@ public class CommunityController extends BaseController implements CommonBizCons
         return res;
     }
 
-    //按名字查询小区信息
-    // TODO
-    @RequestMapping(value = "/{communityName}")
-    @ResponseBody
-    public Response dataItem(@PathVariable("communityName") String communityName) {
-        PipelineContext pipelineContext = this.buildPipelineContent();
-        Response res = pipelineContext.getResponse();
-
-        StringBuffer sb = new StringBuffer();
-
-        sb.append("Select c.id, c.name,c.address,c.ownerMallId,c.ownerMallName,c.ownerId,c.reclaimStatus,c.reclaimCompleteDate, ");
-        String querySQL = sb.toString();
-
-
-        return null;
-    }
-
     //更新小区信息
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
