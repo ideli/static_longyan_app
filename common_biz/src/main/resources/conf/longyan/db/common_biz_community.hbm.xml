@@ -165,7 +165,8 @@
         <property name="deliveryTime" type="string"/>
         <property name="propertyName" type="string"/>
         <property name="reviewStatus" type="integer"/>
-        <property name="communityId" column="communityId"/>
+        <property name="communityId" type="integer"/>
+        <property name="editColumnName" type="string"/>
     </class>
 
 
