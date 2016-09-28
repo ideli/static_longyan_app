@@ -7,7 +7,7 @@ import com.xiwa.base.bean.Identified;
  */
 public class RedstarCommunityUpdateLog extends RedstarCommunity implements Identified {
 
-    private int reviewStatus; //审核状态
+    private int reviewStatus=0; //审核状态
 
     public int getReviewStatus() {
         return reviewStatus;
