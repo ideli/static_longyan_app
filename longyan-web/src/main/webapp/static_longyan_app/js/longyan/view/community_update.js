@@ -21,10 +21,9 @@ define('js/longyan/view/community_update', [
         'js/element/view/picker-box',
         'js/api/community',
         'js/api/common',
-        'js/util/hybrid',
-        'js/util/baiduMap'
+        'js/util/hybrid'
     ],
-    function(CommunityListTpl, CommunitySearchItemTpl, Cache, AlertUI, HeaderView, PickerBox, InputBox, ThinkInputBox, SearchInputBox, InputPercentageBox, locationCurrentCityBox, ButtonBox, LinkBox, radioBox, CardSelectBox, TipsBar, PickerSelectBox, CommunityApi, CommonApi, hybrid, baiduMap) {
+    function(CommunityListTpl, CommunitySearchItemTpl, Cache, AlertUI, HeaderView, PickerBox, InputBox, ThinkInputBox, SearchInputBox, InputPercentageBox, locationCurrentCityBox, ButtonBox, LinkBox, radioBox, CardSelectBox, TipsBar, PickerSelectBox, CommunityApi, CommonApi, hybrid) {
 
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#community-info-view';
@@ -46,10 +45,6 @@ define('js/longyan/view/community_update', [
                 $('body').css('background-color', '#fff');
                 t.$el.html(tpl(CommunityListTpl, {}));
                 $('#community-info-view').addClass('community_create');
-                hybrid.location(function(resp) {
-                    city = resp.city;
-                    t.location_input.setValue(city);
-                });
 
                 var right_button_text = '';
                 var header_view_text = '';
@@ -88,86 +83,15 @@ define('js/longyan/view/community_update', [
                     }
                 });
 
-
-                //获取所属商场的数据
-                var mall_info = Cache.get('mall-info');
-
-                var mall_object = mall_info[0];
-                t.location_input_container = $("<div class='location-input-container'></div>").appendTo($(form_id));
-                t.location_read_input_container = $("<div class='location-read-input-container'></div>").appendTo($(form_id));
-
-                if (!mall_object) {
-                    //没有所属商场的数据
-                    t.location_input = new InputBox({
-                        el: t.location_input_container
-                    }, {
-                        fieldName: 'location-input',
-                        text: '当前城市',
-                        readonly: true
-
-                    });
-                } else {
-                    //有商场所属数据
-                    // city
-                    t.config.have_mall = true;
-                    var _city = mall_object.city;
-
-                    CommonApi.getAreaList({
-                            _city: _city
-                        },
-                        function(data) {
-                            if (data && data.result && data.result.length > 0) {
-                                var _areaList = [];
-                                $.each(data.result, function(i, item) {
-                                    if (item && item.areaCode) {
-                                        _areaList.push({
-                                            text: item.area,
-                                            value: item.areaCode
-                                        });
-                                    }
-                                });
-                                t.location_input = new InputBox({
-                                    el: t.location_read_input_container
-                                }, {
-                                    fieldName: 'location-input',
-                                    text: '当前城市',
-                                    placeholder: '当前城市',
-                                    // type: "number"
-                                    columns: 1, //表示picker有多少列
-                                    data: [
-                                        _areaList
-                                    ]
-                                });
-                                $('.location-input').find('.label').after("<div class='community-view-location-label'>" + _city + "</div>");
-                            }
-
-                        },
-                        function(code, msg) {
-
-                        });
-                }
-
-                //t.location_input.setValue(city);
-
                 //不可编辑的地址显示框
                 t.location_read_input = new InputBox({
                     el: $(form_id)
                 }, {
                     fieldName: 'location-input-read',
                     text: '城市',
-                    readonly: t.config.readonly,
+                    readonly: true,
                     value: city
                 });
-                //地址显示框和地址选择器的隐藏显示逻辑
-                if (t.config && t.config.action && t.config.action == 'update') {
-                    //只读状态
-                    $('.location-read-input-container').hide();
-                    $('.location-input-container').hide();
-                } else {
-                    //可编辑状态
-                    $('.location-input-read').hide();
-                }
-
 
                 //====================正常的表单====================
                 var _is_mall_employee = false;
@@ -204,7 +128,9 @@ define('js/longyan/view/community_update', [
                 }, {
                     fieldName: 'community-address-input',
                     text: '详细地址',
-                    placeholder: '省/市/区/街道/门牌号'
+                    placeholder: '省/市/区/街道/门牌号',
+                    readonly: true,
+                    label_right: '<div class="icon-goto-map"></div>'
                 });
 
 
@@ -374,17 +300,26 @@ define('js/longyan/view/community_update', [
                     }
                 });
 
-
-                if (t.config && t.config.action && t.config.action == 'update') {
-                    //加载数据
-                    t.loadData(t.config.id);
-                    t.community_commit_input.hide();
-                } else {
-
-                }
-
                 //添加遮罩
                 $('<div class="readonly-mask"></div>').appendTo($(form_id));
+
+                if (t.config && t.config.action && t.config.action == 'update') {
+                    //编辑小区模式
+                    //加载数据                    
+                    t.loadData(t.config.id);
+                    t.community_commit_input.hide();
+                    //加载参数
+                    t.loadParameter();
+                } else {
+                    //创建小区模式
+                    t.community_edit_input.hide();
+                    //关闭遮罩
+                    $('.readonly-mask').hide();
+                    //加载参数
+                    t.loadParameter();
+                }
+
+
             },
             //添加小区
             __add: function(t) {
@@ -392,6 +327,7 @@ define('js/longyan/view/community_update', [
                 if (t.checkForm()) {
                     //获取输入的地理位置
                     //获取输入的社区信息
+                    var city = t.location_read_input.getValue();
                     var name = t.community_name_input.getValue();
                     var address = t.community_address_input.getValue();
 
@@ -463,7 +399,8 @@ define('js/longyan/view/community_update', [
                     _tipsAlertSuccessText = '恭喜您,添加成功';
                 }
                 if (t.checkForm()) {
-                    var community = Cache.get('community-manager-object');
+                    // var community = Cache.get('community-manager-object');
+                    // var city = t.location_read_input.getValue();
                     var community_id = t.config.id;
                     var name = t.community_name_input.getValue();
                     var address = t.community_address_input.getValue();
@@ -524,7 +461,7 @@ define('js/longyan/view/community_update', [
                             tipsAlert.close();
                             //显示异常信息
                             tipsAlert.openAlert({
-                                // content: msg
+                                content: msg
                             });
                         });
                 }
@@ -554,14 +491,36 @@ define('js/longyan/view/community_update', [
                     });
                 });
             },
+            //加载参数
+            loadParameter: function() {
+                var t = this;
+                if (t.config && t.config && t.config.data) {
+                    //解码
+                    var decode = decodeURIComponent(t.config.data);
+                    //编码
+                    var load_object = $nvwa.string.jsonStringToObject(decode);
+                    t.setFormValue(load_object);
+                    return load_object;
+                }
+                return null;
+            },
             //设置表单
             setFormValue: function(community) {
                 var t = this;
-                t.location_read_input.setValue(community.city);
-                t.community_name_input.setValue(community.name, community.name);
+                if (community.city) {
+                    t.location_read_input.setValue(community.city);
+                }
+                if (community.name) {
+                    t.community_name_input.setValue(community.name);
+                }
                 // t.community_name_input.setText(community.name);
-                t.community_address_input.setValue(community.address);
-                t.community_others_name_input.setValue(community.shortName);
+                if (community.address) {
+                    t.community_address_input.setValue(community.address);
+                }
+                if (community.shortName) {
+                    t.community_others_name_input.setValue(community.shortName);
+                }
+
                 //总面积
                 /*if (community.areaMonut) {
                     t.community_area_covered_input.setValue(community.areaMonut); 
@@ -596,17 +555,23 @@ define('js/longyan/view/community_update', [
                 }
 
                 //开发商
-                t.community_developer_input.setValue(community.developers);
+                if (community.developers) {
+                    t.community_developer_input.setValue(community.developers);
+                }
                 //物业公司
-                t.community_property_company_input.setValue(community.propertyName);
+                if (community.propertyName) {
+                    t.community_property_company_input.setValue(community.propertyName);
+                }
                 //物业电话
-                t.community_hotline_input.setValue(community.hotline);
+                if (community.hotline) {
+                    t.community_hotline_input.setValue(community.hotline);
+                }
 
             },
             //检查必填字段是否为空
             checkForm: function() {
                 var t = this;
-                var area = t.getLocation();
+                // var area = t.getLocation();
                 var community_name = t.community_name_input.getValue();
                 var community_address = t.community_address_input.getValue();
                 var community_others_name = t.community_others_name_input.getValue();
@@ -689,7 +654,7 @@ define('js/longyan/view/community_update', [
                 }
                 if (!t.community_building_type_input.getValue() || !$nvwa.string.isVerify(t.community_building_type_input.getValue())) {
                     tipsAlert.openToast({
-                        content: '请输入建造类型'
+                        content: '请输入建筑类型'
                     });
                     return false;
                 }
@@ -712,48 +677,7 @@ define('js/longyan/view/community_update', [
                     // t.community_developer_input.focus();
                     return false;
                 }
-                if (!$nvwa.string.isVerify(t.community_property_company_input.getValue())) {
-                    tipsAlert.openToast({
-                        content: '请输入物业公司名称'
-                    });
-                    // t.community_developer_input.focus();
-                    return false;
-                }
                 return true;
-            },
-            //获取省市区选择信息
-            getLocation: function() {
-                var t = this;
-                var area = {};
-                if (t.config.update_exist) {
-                    //创建已存在的小区
-                    var _community = Cache.get('community-manager-object');
-                    var _city = _community.city;
-                    area = {
-                        _city: _city,
-                    };
-                    return area;
-                }
-
-                if (t.config.have_mall) {
-                    //员工有所属商场的情况
-                    //省市地址数据从员工商场关系带过来
-                    var mall_info = Cache.get('mall-info');
-                    var mall_object = {};
-                    if (mall_info && mall_info.length > 0) {
-                        mall_object = mall_info[0];
-                    } else {
-                        tipsAlert.openAlert({
-                            content: '系统异常'
-                        });
-                    }
-                    var _city = mall_object.city;
-                } else {
-                    //员工没有所属商场的情况
-                    area = t.location_input.getValue();
-
-                }
-                return area;
             }
         });
         return LayoutView;

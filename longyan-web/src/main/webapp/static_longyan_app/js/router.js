@@ -15,7 +15,9 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             "community_info/:id": "community_info",
             "community_preview/:id": "community_preview",
             "community_create": "community_create",
+            "community_create/:data": "community_create",
             "community_update/:id": "community_update",
+            "community_update/:id/:data": "community_update",
             "community_update_exist/:id": "community_update_exist",
             "community_success": "community_success",
             "community_home/:id": "community_home",
@@ -149,17 +151,19 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
                 id: id
             });
         },
-        community_create: function() {
+        community_create: function(data) {
             var t = this;
             t.changePage('community_update', {
-                action: 'create'
+                action: 'create',
+                data: data
             });
         },
-        community_update: function(id) {
+        community_update: function(id, data) {
             var t = this;
             t.changePage('community_update', {
                 action: 'update',
-                id: id
+                id: id,
+                data: data
             });
         },
         community_update_exist: function(id) {
