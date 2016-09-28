@@ -303,8 +303,11 @@ public class CommunityFormUtil {
      */
     public static void setLongitude(Request request, RedstarCommunity community) throws FormException {
         // 非必填字段不验证是否为空
-        String longitude = request.getString("longitude");
-        community.setLongitude(Double.valueOf(longitude));
+//        String longitude = request.getString("longitude");
+        Double longitude=request.getDouble("longitude");
+        if(longitude>0){
+            community.setLongitude(longitude);
+        }
     }
 
 
@@ -317,8 +320,10 @@ public class CommunityFormUtil {
      */
     public static void setLatitude(Request request, RedstarCommunity community) throws FormException {
         // 非必填字段不验证是否为空
-        String latitude = request.getString("latitude");
-        community.setLatitude(Double.valueOf(latitude));
+        Double latitude=request.getDouble("latitude");
+        if(latitude>0){
+            community.setLatitude(latitude);
+        }
     }
 
 }
