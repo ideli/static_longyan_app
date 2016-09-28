@@ -21,7 +21,7 @@ define('js/longyan/view/my_review_list', [
         var form_id = '#my-review-list-form';
         var LayoutView = Backbone.View.extend({
             events: {
-                'click .message-item': '_clickItem'
+                'click .item-box': '_clickItem'
             },
             //
             initialize: function(options, config) {
@@ -35,7 +35,7 @@ define('js/longyan/view/my_review_list', [
             render: function() {
                 var t = this;
                 $('body').css('background-color', '#efeff4');
-                t.$el.html(tpl(ListContailerTpl, {}));
+                t.$el.html(tpl(ListContailerTpl, {config: t.config}));
                 t.header_view = new HeaderView({
                     el: $('#header-container')
                 }, {
@@ -107,11 +107,18 @@ define('js/longyan/view/my_review_list', [
             //初始化监听器
             initEvents: function() {
                 var t = this;
-
             },
+
             _clickItem: function(e) {
-
+                var t = this;
+                var index = $(e.currentTarget).attr('index');
+                if(index != t.config.status){
+                    window.location.href = '#my_review_list/' + index;
+                }else{
+                    console.log("no action");
+                }
             },
+
             destroy: function() {
                 $(window).off('scroll');
             }

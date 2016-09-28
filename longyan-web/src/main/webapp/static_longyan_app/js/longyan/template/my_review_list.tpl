@@ -2,21 +2,20 @@
 	
 </div>
 <div id="my-review-list-bar">
-	<div class="item-box">
-		<div class="bar-item" selected="true">
+	<div class="item-box" index="0">
+        <div class="bar-item" <#=config.status=="0"?'selected="true"':''#>>
 			待审核
 		</div>
-
 	</div>
-	<div class="item-box">
-		<div class="bar-item">
-			通过
-		</div>
+	<div class="item-box" index="1">
+        <div class="bar-item" <#=config.status=="1"?'selected="true"':''#>>
+            通过
+        </div>
 	</div>
-	<div class="item-box">
-		<div class="bar-item">
-			未通过
-		</div>
+	<div class="item-box" index="2">
+        <div class="bar-item" <#=config.status=="2"?'selected="true"':''#>>
+            未通过
+        </div>
 	</div>
 	<div class="clear-both"></div>
 </div>

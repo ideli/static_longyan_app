@@ -33,8 +33,8 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             //消息中心
             "message_list": "message_list",
             //我的->审核
-            "my_review_list": "my_review_list",
-            "my_review_detail": "my_review_detail",
+            "my_review_list/:status": "my_review_list",
+            "my_review_detail/:status": "my_review_detail",
             "my_submit": "my_submit",
             //我的->积分说明
             "integral_rule": "integral_rule",
@@ -133,6 +133,7 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
                 status: status
             });
         },
+
         community_list: function() {
             var t = this;
             t.changePage('community_list');
@@ -266,9 +267,11 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             var t = this;
             t.changePage('my_review_list');
         },
-        my_review_list: function() {
+        my_review_list: function(status) {
             var t = this;
-            t.changePage('my_review_list');
+            t.changePage('my_review_list', {
+                status: status
+            });
         },
         my_review_detail: function() {
             var t = this;
