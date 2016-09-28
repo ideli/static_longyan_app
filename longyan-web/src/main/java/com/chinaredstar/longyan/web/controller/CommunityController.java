@@ -338,6 +338,7 @@ public class CommunityController extends BaseController implements CommonBizCons
         try {
 
             NvwaEmployee employee = getEmployeeromSession();
+
             if (employee == null || employee.getId() == 0) {
                 setErrMsg(res, "用户ID参数缺失");
                 return res;
@@ -345,7 +346,7 @@ public class CommunityController extends BaseController implements CommonBizCons
             int intEmployeeId = employee.getId();
 
             Integer dataId = request.getInt("id");
-            if (dataId == null) {
+            if (dataId == 0) {
                 throw new FormException("小区id没有填写");
             }
             RedstarCommunity community = (RedstarCommunity) dispatchDriver.getRedstarCommunityManager().getBean(dataId);
@@ -356,7 +357,7 @@ public class CommunityController extends BaseController implements CommonBizCons
             if (community.getReclaimStatus() != 1) { // 小区并未处于审核中
                 // 小区责任人非当前修改员工，插入小区更新履历表，待审核
                 if (community.getOwnerId() != intEmployeeId) {
-                    RedstarCommunityUpdateLog communityUpdateLog = (RedstarCommunityUpdateLog) community;
+                    RedstarCommunityUpdateLog communityUpdateLog = new RedstarCommunityUpdateLog(community);
                     //详细地址
                     CommunityFormUtil.setAddress(request, communityUpdateLog);
                     //小区别称
@@ -395,19 +396,21 @@ public class CommunityController extends BaseController implements CommonBizCons
                     // 小区表同步审核状态更新
                     community.setReclaimStatus(reviewing);
 
-                    Map<String,String> mpCommunityUpdateLog = CommunityFormUtil.transBean2Map(communityUpdateLog);
-                    Map<String,String> mpCommunity = CommunityFormUtil.transBean2Map(community);
-                    String editColumnName = null;
+                    Map<String, String> mpCommunityUpdateLog = CommunityFormUtil.transBean2Map(communityUpdateLog);
+                    Map<String, String> mpCommunity = CommunityFormUtil.transBean2Map(community);
+                    String editColumnName = "";
 
-                    for (Map.Entry<String,String> entCommunityUpdateLog : mpCommunityUpdateLog.entrySet()) {
-                        if (!mpCommunity.get(entCommunityUpdateLog.getKey()).equals(entCommunityUpdateLog.getValue())){
-                            editColumnName += entCommunityUpdateLog.getKey() + ",";
+                    for (Map.Entry<String, String> entCommunityUpdateLog : mpCommunityUpdateLog.entrySet()) {
+                        if (mpCommunity.containsKey(entCommunityUpdateLog.getKey())) {
+                            if (!mpCommunity.get(entCommunityUpdateLog.getKey()).equals(entCommunityUpdateLog.getValue())) {
+                                editColumnName += entCommunityUpdateLog.getKey() + ",";
+                            }
                         }
                     }
-                    communityUpdateLog.setEditColumnName(editColumnName.substring(0, editColumnName.length()-1));
+                    communityUpdateLog.setEditColumnName(editColumnName.substring(0, editColumnName.length() - 1));
 
                     // 2个表更新
-                    dispatchDriver.getRedstarCommunityUpdateLogManager().updateBean(communityUpdateLog);
+                    dispatchDriver.getRedstarCommunityUpdateLogManager().addBean(communityUpdateLog);
                     dispatchDriver.getRedstarCommunityUpdateLogManager().updateBean(community);
                 } else { // 小区责任人为当前修改员工，无需审核直接更新小区表
                     //详细地址
@@ -448,10 +451,11 @@ public class CommunityController extends BaseController implements CommonBizCons
                 }
                 res.setCode(HTTP_SUCCESS_CODE);
                 res.setMessage("操作成功");
+            } else {
+                res.setCode(FORM_ERROR_CODE);
+                res.setOk(Boolean.FALSE);
+                res.setMessage("小区信息正在审核中");
             }
-            res.setCode(FORM_ERROR_CODE);
-            res.setOk(Boolean.FALSE);
-            res.setMessage("小区信息正在审核中");
         } catch (FormException e) {
             //表单校验不通过
             res.setCode(FORM_ERROR_CODE);
