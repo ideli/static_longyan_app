@@ -27,6 +27,7 @@ import com.xiwa.base.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -331,6 +332,7 @@ public class CommunityController extends BaseController implements CommonBizCons
     //更新小区信息
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
+    @Transactional
     public Response dataUpdate() {
         PipelineContext pipelineContext = this.buildPipelineContent();
         Request request = pipelineContext.getRequest();
@@ -354,85 +356,92 @@ public class CommunityController extends BaseController implements CommonBizCons
                 throw new FormException("没有找到小区");
             }
 
-            // 小区责任人非当前修改员工，插入小区更新履历表，待审核
-            if (community.getOwnerId() != intEmployeeId) {
-                RedstarCommunityUpdateLog communityUpdateLog = (RedstarCommunityUpdateLog) community;
-                //详细地址
-                CommunityFormUtil.setAddress(request, communityUpdateLog);
-                //小区别称
-                CommunityFormUtil.setShortName(request, communityUpdateLog);
-                //总户数
-                CommunityFormUtil.setRoomMount(request, communityUpdateLog);
-                //总栋数
-                CommunityFormUtil.setBuildingAmount(request, communityUpdateLog);
-                //入住率
-                CommunityFormUtil.setAlreadyCheckAmount(request, communityUpdateLog);
-                //房屋均价
-                CommunityFormUtil.setPriceSection(request, communityUpdateLog);
-                //建筑类型
-                CommunityFormUtil.setConstructionTypes(request, communityUpdateLog);
-                //交房装修
-                CommunityFormUtil.setRenovations(request, communityUpdateLog);
-                //交房时间
-                CommunityFormUtil.setDeliveryTime(request, communityUpdateLog);
-                //开发商信息
-                CommunityFormUtil.setDevelopers(request, communityUpdateLog, redstarCommonManager);
-                //物业公司
-                CommunityFormUtil.setPropertyName(request, communityUpdateLog, redstarCommonManager);
-                //物业电话
-                CommunityFormUtil.setHotline(request, communityUpdateLog);
-                // 经度
-                CommunityFormUtil.setLongitude(request, communityUpdateLog);
-                // 纬度
-                CommunityFormUtil.setLatitude(request, communityUpdateLog);
+            if (community.getReclaimStatus() != 1) { // 小区并未处于审核中
+                // 小区责任人非当前修改员工，插入小区更新履历表，待审核
+                if (community.getOwnerId() != intEmployeeId) {
+                    RedstarCommunityUpdateLog communityUpdateLog = (RedstarCommunityUpdateLog) community;
+                    //详细地址
+                    CommunityFormUtil.setAddress(request, communityUpdateLog);
+                    //小区别称
+                    CommunityFormUtil.setShortName(request, communityUpdateLog);
+                    //总户数
+                    CommunityFormUtil.setRoomMount(request, communityUpdateLog);
+                    //总栋数
+                    CommunityFormUtil.setBuildingAmount(request, communityUpdateLog);
+                    //入住率
+                    CommunityFormUtil.setAlreadyCheckAmount(request, communityUpdateLog);
+                    //房屋均价
+                    CommunityFormUtil.setPriceSection(request, communityUpdateLog);
+                    //建筑类型
+                    CommunityFormUtil.setConstructionTypes(request, communityUpdateLog);
+                    //交房装修
+                    CommunityFormUtil.setRenovations(request, communityUpdateLog);
+                    //交房时间
+                    CommunityFormUtil.setDeliveryTime(request, communityUpdateLog);
+                    //开发商信息
+                    CommunityFormUtil.setDevelopers(request, communityUpdateLog, redstarCommonManager);
+                    //物业公司
+                    CommunityFormUtil.setPropertyName(request, communityUpdateLog, redstarCommonManager);
+                    //物业电话
+                    CommunityFormUtil.setHotline(request, communityUpdateLog);
+                    // 经度
+                    CommunityFormUtil.setLongitude(request, communityUpdateLog);
+                    // 纬度
+                    CommunityFormUtil.setLatitude(request, communityUpdateLog);
 
-                // 更新者信息添加
-                communityUpdateLog.setUpdateEmployeeId(employee.getId());
-                communityUpdateLog.setUpdateEmployeeXingMing(employee.getXingMing());
-                communityUpdateLog.setUpdateDate(new Date());
-                community.setReclaimStatus(reviewing);
+                    // 更新者信息添加(小区更新履历表数据更新)
+                    communityUpdateLog.setUpdateEmployeeId(employee.getId());
+                    communityUpdateLog.setUpdateEmployeeXingMing(employee.getXingMing());
+                    communityUpdateLog.setUpdateDate(new Date());
+                    communityUpdateLog.setReclaimStatus(reviewing);
+                    dispatchDriver.getRedstarCommunityUpdateLogManager().updateBean(communityUpdateLog);
 
-                dispatchDriver.getRedstarCommunityUpdateLogManager().updateBean(communityUpdateLog);
-            } else { // 小区责任人为当前修改员工，无需审核直接更新小区表
-//               if () {
-                //详细地址
-                CommunityFormUtil.setAddress(request, community);
-                //小区别称
-                CommunityFormUtil.setShortName(request, community);
-                //总户数
-                CommunityFormUtil.setRoomMount(request, community);
-                //总栋数
-                CommunityFormUtil.setBuildingAmount(request, community);
-                //入住率
-                CommunityFormUtil.setAlreadyCheckAmount(request, community);
-                //房屋均价
-                CommunityFormUtil.setPriceSection(request, community);
-                //建筑类型
-                CommunityFormUtil.setConstructionTypes(request, community);
-                //交房装修
-                CommunityFormUtil.setRenovations(request, community);
-                //交房时间
-                CommunityFormUtil.setDeliveryTime(request, community);
-                //开发商信息
-                CommunityFormUtil.setDevelopers(request, community, redstarCommonManager);
-                //物业公司
-                CommunityFormUtil.setPropertyName(request, community, redstarCommonManager);
-                //物业电话
-                CommunityFormUtil.setHotline(request, community);
-                // 经度
-                CommunityFormUtil.setLongitude(request, community);
-                // 纬度
-                CommunityFormUtil.setLatitude(request, community);
+                    // 小区表同步审核状态更新
+                    community.setReclaimStatus(reviewing);
+                    dispatchDriver.getRedstarCommunityUpdateLogManager().updateBean(community);
+                } else { // 小区责任人为当前修改员工，无需审核直接更新小区表
+                    //详细地址
+                    CommunityFormUtil.setAddress(request, community);
+                    //小区别称
+                    CommunityFormUtil.setShortName(request, community);
+                    //总户数
+                    CommunityFormUtil.setRoomMount(request, community);
+                    //总栋数
+                    CommunityFormUtil.setBuildingAmount(request, community);
+                    //入住率
+                    CommunityFormUtil.setAlreadyCheckAmount(request, community);
+                    //房屋均价
+                    CommunityFormUtil.setPriceSection(request, community);
+                    //建筑类型
+                    CommunityFormUtil.setConstructionTypes(request, community);
+                    //交房装修
+                    CommunityFormUtil.setRenovations(request, community);
+                    //交房时间
+                    CommunityFormUtil.setDeliveryTime(request, community);
+                    //开发商信息
+                    CommunityFormUtil.setDevelopers(request, community, redstarCommonManager);
+                    //物业公司
+                    CommunityFormUtil.setPropertyName(request, community, redstarCommonManager);
+                    //物业电话
+                    CommunityFormUtil.setHotline(request, community);
+                    // 经度
+                    CommunityFormUtil.setLongitude(request, community);
+                    // 纬度
+                    CommunityFormUtil.setLatitude(request, community);
 
-                // 更新者信息添加
-                community.setUpdateEmployeeId(employee.getId());
-                community.setUpdateEmployeeXingMing(employee.getXingMing());
-                community.setUpdateDate(new Date());
+                    // 更新者信息添加
+                    community.setUpdateEmployeeId(employee.getId());
+                    community.setUpdateEmployeeXingMing(employee.getXingMing());
+                    community.setUpdateDate(new Date());
 
-                dispatchDriver.getRedstarCommunityManager().updateBean(community);
+                    dispatchDriver.getRedstarCommunityManager().updateBean(community);
+                }
+                res.setCode(HTTP_SUCCESS_CODE);
+                res.setMessage("操作成功");
             }
-            res.setCode(HTTP_SUCCESS_CODE);
-            res.setMessage("操作成功");
+            res.setCode(FORM_ERROR_CODE);
+            res.setOk(Boolean.FALSE);
+            res.setMessage("小区信息正在审核中");
         } catch (FormException e) {
             //表单校验不通过
             res.setCode(FORM_ERROR_CODE);
