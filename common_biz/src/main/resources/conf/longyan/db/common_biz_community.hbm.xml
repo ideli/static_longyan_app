@@ -54,6 +54,7 @@
         <property name="renovations" type="string"/>
         <property name="deliveryTime" type="string"/>
         <property name="propertyName" type="string"/>
+        <property name="reviewStatus" type="integer"/>
 
        <!-- <property name="distance"  type="double" />-->
     </class>
