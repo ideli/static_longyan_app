@@ -10,7 +10,7 @@ define('js/longyan/view/community_near_by', [
         'js/element/view/header',
         'js/element/view/tips-bar',
         'js/element/view/list-box',
-        'js/api/community',
+        'js/api/community'
     ],
     function(ListContailerTpl, CommunityNearByItemTpl, Cache, AlertUI, HeaderView, TipsBar, ListBox, CommunityApi) {
         var tipsAlert = tipsAlert || new AlertUI();
