@@ -2,13 +2,16 @@ package com.chinaredstar.longyan.web.controller;
 
 
 import com.chinaredstar.commonBiz.bean.*;
+import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
+import com.chinaredstar.commonBiz.manager.DispatchDriver;
+import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
 import com.chinaredstar.longyan.bean.AppConfig;
 import com.chinaredstar.longyan.bean.bo.AreaObject;
 import com.chinaredstar.longyan.bean.bo.CityObject;
 import com.chinaredstar.longyan.bean.bo.ProvinceObject;
-import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
-import com.chinaredstar.commonBiz.manager.DispatchDriver;
-import com.chinaredstar.commonBiz.manager.RedstarCommonManager;
+import com.chinaredstar.uc.dubbo.core.api.IEmployeeService;
+import com.chinaredstar.uc.dubbo.core.api.vo.PsSyncEmployeesVo;
+import com.chinaredstar.uc.dubbo.core.api.vo.ServiceResult2;
 import com.xiwa.base.bean.Identified;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.bean.ext.SimpleResponse;
@@ -28,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,10 +49,14 @@ public class CommonController extends BaseController implements CommonBizConstan
     private DispatchDriver dispatchDriver;
 
     @Autowired
+    private IEmployeeService iEmployeeService;
+
+    @Autowired
     private RedstarCommonManager redstarCommonManager;
 
     @Autowired
     private AppConfig appConfig;
+    private List<ProvinceObject> provinceObjectList = new ArrayList<ProvinceObject>();
 
     @RequestMapping(value = "/get-app-config")
     public
@@ -58,8 +67,6 @@ public class CommonController extends BaseController implements CommonBizConstan
 
         return pipelineContext.getResponse();
     }
-
-    private List<ProvinceObject> provinceObjectList = new ArrayList<ProvinceObject>();
 
     /**
      * 读取城市区(县)列表
@@ -94,7 +101,7 @@ public class CommonController extends BaseController implements CommonBizConstan
 
         try {
 
-            if(CollectionUtil.isInvalid(provinceObjectList)){
+            if (CollectionUtil.isInvalid(provinceObjectList)) {
                 List<DispatchProvince> dispatchProvinceList = dispatchDriver.getDispatchProvinceManager().getBeanList();
                 List<DispatchCity> dispatchCityList = dispatchDriver.getDispatchCityManager().getBeanList();
                 List<DispatchLocation> dispatchLocationList = dispatchDriver.getDispatchLocationManager().getBeanList();
@@ -127,9 +134,8 @@ public class CommonController extends BaseController implements CommonBizConstan
                     provinceObject.setCityList(cityObjectList);
                     _provinceObjectList.add(provinceObject);
                 }
-                provinceObjectList=_provinceObjectList;
+                provinceObjectList = _provinceObjectList;
             }
-
 
 
             pipelineContext.getResponse().addKey("provinceList", provinceObjectList);
@@ -151,7 +157,7 @@ public class CommonController extends BaseController implements CommonBizConstan
         try {
             res.setCode(HTTP_SUCCESS_CODE);
             res.setMessage("查询成功");
-            res.addKey("result", redstarCommonManager.getDataList(RedstarRoomType.class, null,new String[]{"sortNum"},new Boolean[]{Boolean.FALSE}));
+            res.addKey("result", redstarCommonManager.getDataList(RedstarRoomType.class, null, new String[]{"sortNum"}, new Boolean[]{Boolean.FALSE}));
         } catch (Exception e) {
             e.printStackTrace();
             setErrMsg(res, "服务器响应异常");
@@ -212,18 +218,18 @@ public class CommonController extends BaseController implements CommonBizConstan
     }
 
     //app版本更新
-    @RequestMapping(value = "/get-app-version",method = RequestMethod.POST)
+    @RequestMapping(value = "/get-app-version", method = RequestMethod.POST)
     @ResponseBody
     public Response getAppVersion(String platformType) {
         PipelineContext context = buildPipelineContent();
         Response res = context.getResponse();
         try {
-            if ((!Ios.equals(platformType))&&(!Android.equals(platformType))){
-                setErrMsg(res,"platformType错误");
-                return  res;
+            if ((!Ios.equals(platformType)) && (!Android.equals(platformType))) {
+                setErrMsg(res, "platformType错误");
+                return res;
             }
 
-            res.addKey("platformType",platformType);
+            res.addKey("platformType", platformType);
 
             IntSearch activitySearch = new IntSearch("activity");
             activitySearch.setSearchValue("1");
@@ -243,10 +249,10 @@ public class CommonController extends BaseController implements CommonBizConstan
             String[] orderColumn = new String[]{"id"};
             Boolean[] orders = new Boolean[]{Boolean.TRUE};
 
-            List<RedstarVersion>  platformTypeList =  redstarCommonManager.getDataList(RedstarVersion.class, multiSearchBean, orderColumn, orders);
-            if(!CollectionUtils.isEmpty(platformTypeList)){
-                res.addKey("appVersion",platformTypeList.get(0).getVersion());
-                res.addKey("appDownloadUrl",platformTypeList.get(0).getDownloadUrl());
+            List<RedstarVersion> platformTypeList = redstarCommonManager.getDataList(RedstarVersion.class, multiSearchBean, orderColumn, orders);
+            if (!CollectionUtils.isEmpty(platformTypeList)) {
+                res.addKey("appVersion", platformTypeList.get(0).getVersion());
+                res.addKey("appDownloadUrl", platformTypeList.get(0).getDownloadUrl());
             }
 
             MultiSearchBean staticSearchBean = new MultiSearchBean();
@@ -254,10 +260,10 @@ public class CommonController extends BaseController implements CommonBizConstan
             staticSearchBean.addSearchBean(typeSearch);
             staticSearchBean.addSearchBean(activitySearch);
             staticSearchBean.addSearchBean(codeSearch);
-            List<RedstarVersion>  staticList =  redstarCommonManager.getDataList(RedstarVersion.class, staticSearchBean, orderColumn,orders);
-            if(!CollectionUtils.isEmpty(staticList)){
-                res.addKey("staticVersion",staticList.get(0).getVersion());
-                res.addKey("staticDownloadUrl",staticList.get(0).getDownloadUrl());
+            List<RedstarVersion> staticList = redstarCommonManager.getDataList(RedstarVersion.class, staticSearchBean, orderColumn, orders);
+            if (!CollectionUtils.isEmpty(staticList)) {
+                res.addKey("staticVersion", staticList.get(0).getVersion());
+                res.addKey("staticDownloadUrl", staticList.get(0).getDownloadUrl());
             }
 
             res.setCode(HTTP_SUCCESS_CODE);
@@ -270,17 +276,16 @@ public class CommonController extends BaseController implements CommonBizConstan
     }
 
     //获取服务器时间
-    @RequestMapping(value = "get-server-time",method = RequestMethod.POST)
+    @RequestMapping(value = "get-server-time", method = RequestMethod.POST)
     @ResponseBody
-    public  Object  getServerTime(){
+    public Object getServerTime() {
         SimpleResponse simpleResponse = new SimpleResponse();
         Date date = new Date();
-        simpleResponse.addKey("currentDate",date);
-        simpleResponse.addKey("currentTimeStamp",date.getTime());
+        simpleResponse.addKey("currentDate", date);
+        simpleResponse.addKey("currentTimeStamp", date.getTime());
         setSuccessMsg(simpleResponse);
         return simpleResponse;
     }
-
 
 
     /**
@@ -288,26 +293,26 @@ public class CommonController extends BaseController implements CommonBizConstan
      *
      * @return
      */
-    @RequestMapping(value = "/get-loading-ad",method = RequestMethod.POST)
+    @RequestMapping(value = "/get-loading-ad", method = RequestMethod.POST)
     @ResponseBody
-    public Response getLoadingAd(){
+    public Response getLoadingAd() {
         PipelineContext pipelineContext = buildPipelineContent();
         Response response = pipelineContext.getResponse();
 
         //激活为 1
-        int activity =1;
-        boolean isAsc=false;
+        int activity = 1;
+        boolean isAsc = false;
 
 
         String orderColumn = "createDate";
         //查询最近 一条激活记录
         //激活  时间排序
 
-        try{
-            List<RedstarAppAd> redstarAppAds = dispatchDriver.getRedstarAppAdManager().getBeanListByColumn("activity",activity,orderColumn,isAsc);
-            response.addKey("redstarAppAd",redstarAppAds.get(0));
+        try {
+            List<RedstarAppAd> redstarAppAds = dispatchDriver.getRedstarAppAdManager().getBeanListByColumn("activity", activity, orderColumn, isAsc);
+            response.addKey("redstarAppAd", redstarAppAds.get(0));
 
-        }catch (Exception exception){
+        } catch (Exception exception) {
             exception.printStackTrace();
             response.setOk(false);
             response.setMessage(exception.getMessage());
@@ -317,9 +322,43 @@ public class CommonController extends BaseController implements CommonBizConstan
         return response;
     }
 
+    //查询用户信息（调用用户中心dubbo）
+    @RequestMapping(value = "/user-info")
+    @ResponseBody
+    public Response getUserInfo(HttpServletRequest request) {
 
+        Response res = this.buildPipelineContent().getResponse();
 
+        try {
+            String strSessionId = request.getHeader("x-auth-token");
 
+            // sessionId 不为空
+            if (StringUtil.isValid(strSessionId)) {
+                HttpSession redisSession = request.getSession(false);
+
+                if (redisSession != null) {
+                    String strOpenId = String.valueOf(redisSession.getAttribute("openId"));
+
+                    //有OpenId
+                    if (StringUtil.isValid(strOpenId)) {
+                        ServiceResult2 ucEmployeesService = iEmployeeService.getBasicInfoByEmplid(strOpenId);
+                        PsSyncEmployeesVo ucEmployeesInfo = (PsSyncEmployeesVo) ucEmployeesService.getData();
+
+                        if (ucEmployeesInfo == null) {
+                            setErrMsg(res, "登录超时");
+                            return res;
+                        }
+
+                        res.addKey("userInfo", ucEmployeesInfo);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            setErrMsg(res, "系统异常");
+        }
+        return res;
+    }
 
 
 }
