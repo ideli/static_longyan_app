@@ -39,6 +39,7 @@
           href="http://t.longyan.com:1000/static_longyan_app/css/demo.css">
 
     <!-- endbuild -->
+    <script src="http://t.longyan.com:1000/static_longyan_app/bridge.js" > </script>
     <!-- build:js static_longyan_app/build/js/longyan-1.0.0.min -->
     <script src="http://t.longyan.com:1000/static_longyan_app/nvwa-loader-1.7.0.js"
             api=""

@@ -55,9 +55,10 @@ this.exports?e=b.exports:void 0===e&&this.usingExports&&(e=this.exports));if(a)r
         R).push([b,c,d])};define.amd={jQuery:!0};j.exec=function(b){return eval(b)};j(t)}})(this);
 /*! tpl.js 0.3.1, github.com/niceue/tpl.js */
 !function(n){function t(n,t){var i=e(n);return t?i(t):i}function e(n){n=n||"","#"===n.charAt(0)&&(n=document.getElementById(n.substring(1)).innerHTML);for(var e,i,r,_=function(n){return n.trim?n.trim():n.replace(/^\s*|\s*$/g,"")},u=function(n){return n.replace(/('|\\|\r?\n)/g,"\\$1")},f=t.begin,s=t.end,c=t.variable,d=c||"$",o="var "+d+"="+d+"||this,__='',___,                echo=function(s){__+=s},                include=function(t,d){__+=tpl(t).call(d||"+d+")};"+(c?"":"with($||{}){"),g=f.length,l=s.length,a=n.indexOf(f);-1!=a&&(e=i?a+g:n.indexOf(s),!(a>e));)o+="__+='"+u(n.substring(0,a))+"';",i?(n=n.substring(g+l+1),i--):(r=_(n.substring(a+g,e)),"#"===r?i=1:0===r.indexOf("=")?(r=r.substring(1),o+="___="+r+";typeof ___!=='undefined'&&(__+=___);"):o+="\n"+r+"\n"),n=n.substring(e+l),a=n.indexOf(f+(i?"#"+s:""));return o+="__+='"+u(n)+"'"+(c?";":"}")+"return __",new Function(d,o)}t.begin="<#",t.end="#>",n.tpl=t,"function"==typeof define&&define("tpl",[],function(){return t})}(this);
-var $nvwa = {
-	version: "1.0.0"
-};
+window.$nvwa=window.$nvwa||{};
+// var $nvwa = {
+// 	version: "1.0.0"
+// };
 
 //定义全局loader
 var loaderEle = null;
@@ -266,78 +267,6 @@ requirejs.config({
 		}
 	}
 });
-
-var _isIOS = function() {
-	var userAgentInfo = navigator.userAgent;
-	var Agents = [ "iPhone",
-		"iPad", "iPod"
-	];
-	var flag = false;
-	for (var v = 0; v < Agents.length; v++) {
-		if (userAgentInfo.indexOf(Agents[v]) > 0) {
-			flag = true;
-			break;
-		}
-	}
-	return flag;
-}
-
-// window.hybrid._app_call=function(a,b,c){
-// 	//空函数
-// 	alert('123abc');
-// }
-
-var _app_callback = function(uuid, response) {
-	//alert(uuid);
-	// _app_log('_app_callback,uuid='+uuid+',response='+response);
-	var handler = window.App[uuid];
-	if (handler) {
-		if(response&&response.length>0){
-			var _response = eval("(" + response + ")");
-			handler(_response);
-		}
-	}
-}
-window.App = {
-	call: function(uuid, action, data, handler) {
-		window.App[uuid] = handler;
-	},
-	handler: function(uuid, data) {
-		//console.log('window.app.call');
-		//alert("handler1"+data);
-		var response = window.App[uuid];
-		if (response) {
-			response();
-		}
-	}
-}
-
-
-
-$nvwa.app = {
-	/*
-	 * action:表示需要执行功能的枚举，比如:http请求
-	 * data: 执行的参数
-	 * handler:app执行完后调用的回调函数
-	 */
-	request: function(action, request, responseHandler) {
-		var uuid='';
-		if(action&&action!='log'){
-			uuid = $nvwa.string.randomSN();
-		}
-		//window.hybrid._app_log(responseHandler);
-		if (responseHandler) {
-			//alert(responseHandler)
-			window.App[uuid] = responseHandler;
-
-		}
-		if(_isIOS()){
-			_app_call(uuid, action, $nvwa.string.objectToJsonString(request));	
-		}else{
-			window.hybrid._app_call(uuid, action, $nvwa.string.objectToJsonString(request));
-		}
-	}
-};
 
 //默认加载preLoadList
 requirejs(preLoadList, function() {

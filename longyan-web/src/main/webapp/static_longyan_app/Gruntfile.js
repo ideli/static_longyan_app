@@ -310,6 +310,9 @@ module.exports = function(grunt) {
             src: ['nvwa-loader-1.7.0.js'],
             dest: release_path + '/'
           }, {
+            src: ['bridge.js'],
+            dest: release_path + '/'
+          }, {
             src: ['release_index.html'],
             dest: release_path + '/'
           }, { //拷贝lib素材
