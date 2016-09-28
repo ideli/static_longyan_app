@@ -34,10 +34,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -394,10 +391,23 @@ public class CommunityController extends BaseController implements CommonBizCons
                     communityUpdateLog.setUpdateEmployeeXingMing(employee.getXingMing());
                     communityUpdateLog.setUpdateDate(new Date());
                     communityUpdateLog.setReclaimStatus(reviewing);
-                    dispatchDriver.getRedstarCommunityUpdateLogManager().updateBean(communityUpdateLog);
 
                     // 小区表同步审核状态更新
                     community.setReclaimStatus(reviewing);
+
+                    Map<String,String> mpCommunityUpdateLog = CommunityFormUtil.transBean2Map(communityUpdateLog);
+                    Map<String,String> mpCommunity = CommunityFormUtil.transBean2Map(community);
+                    String editColumnName = null;
+
+                    for (Map.Entry<String,String> entCommunityUpdateLog : mpCommunityUpdateLog.entrySet()) {
+                        if (!mpCommunity.get(entCommunityUpdateLog.getKey()).equals(entCommunityUpdateLog.getValue())){
+                            editColumnName += entCommunityUpdateLog.getKey() + ",";
+                        }
+                    }
+                    communityUpdateLog.setEditColumnName(editColumnName.substring(0, editColumnName.length()-1));
+
+                    // 2个表更新
+                    dispatchDriver.getRedstarCommunityUpdateLogManager().updateBean(communityUpdateLog);
                     dispatchDriver.getRedstarCommunityUpdateLogManager().updateBean(community);
                 } else { // 小区责任人为当前修改员工，无需审核直接更新小区表
                     //详细地址
