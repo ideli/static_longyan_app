@@ -353,6 +353,7 @@ public class CommonController extends BaseController implements CommonBizConstan
                     }
                 }
             }
+            setErrMsg(res, "登录超时");
         } catch (Exception e) {
             e.printStackTrace();
             setErrMsg(res, "系统异常");
