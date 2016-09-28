@@ -108,6 +108,16 @@ public class RedstarCommunity implements Identified {
 
     private Integer completeStatus=0;//  完善状态
 
+    private int reviewStatus=0; //审核状态
+
+    public int getReviewStatus() {
+        return reviewStatus;
+    }
+
+    public void setReviewStatus(int reviewStatus) {
+        this.reviewStatus = reviewStatus;
+    }
+
     public Integer getDataBelong() {
         return dataBelong;
     }

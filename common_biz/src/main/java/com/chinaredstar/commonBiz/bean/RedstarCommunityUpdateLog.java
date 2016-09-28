@@ -9,6 +9,8 @@ public class RedstarCommunityUpdateLog extends RedstarCommunity implements Ident
 
     private int reviewStatus=0; //审核状态
 
+    private String editColumnName; //本次修改的字段名
+
     public int getReviewStatus() {
         return reviewStatus;
     }
@@ -17,6 +19,13 @@ public class RedstarCommunityUpdateLog extends RedstarCommunity implements Ident
         this.reviewStatus = reviewStatus;
     }
 
+    public String getEditColumnName() {
+        return editColumnName;
+    }
+
+    public void setEditColumnName(String editColumnName) {
+        this.editColumnName = editColumnName;
+    }
 
     public RedstarCommunityUpdateLog() {
 
