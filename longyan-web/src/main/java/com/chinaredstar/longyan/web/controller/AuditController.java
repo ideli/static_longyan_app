@@ -36,12 +36,11 @@ public class AuditController extends BaseController implements CommonBizConstant
     private String strAuditNeedAction = "1";
 
     // 查询我的审核列表
-    @RequestMapping(value = "/viewAuditList/{type}", method = RequestMethod.GET)
+    @RequestMapping(value = "/viewAuditList/{type}", method = RequestMethod.POST)
     @ResponseBody
     public Response getViewAuditList(@PathVariable("type") String strType) {
         PipelineContext pipelineContext = this.buildPipelineContent();
         Response res = pipelineContext.getResponse();
-        Request req = pipelineContext.getRequest();
 
         try {
             // 查询参数设定
@@ -85,6 +84,7 @@ public class AuditController extends BaseController implements CommonBizConstant
             multiSearchBean.addSearchBean(reviewStatusSearch);
 
             PaginationDescribe<RedstarCommunityUpdateLog> result = (PaginationDescribe<RedstarCommunityUpdateLog>) dispatchDriver.getRedstarCommunityUpdateLogManager().searchBeanPage(page, pageSize, multiSearchBean, "updateDate", Boolean.FALSE);
+            res.addKey("result", result);
 
             // 成功与否消息文字设置
             setSuccessMsg(res);
