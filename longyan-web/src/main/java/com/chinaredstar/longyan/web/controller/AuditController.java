@@ -5,7 +5,6 @@ import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.xiwa.base.bean.PaginationDescribe;
-import com.xiwa.base.bean.Request;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.bean.search.ext.IntSearch;
 import com.xiwa.base.bean.search.ext.MultiSearchBean;
@@ -94,5 +93,64 @@ public class AuditController extends BaseController implements CommonBizConstant
         return res;
     }
 
+
+    // 查询我的提交列表
+    @RequestMapping(value = "/viewUpdateList/{type}", method = RequestMethod.POST)
+    @ResponseBody
+    public Response getViewUpdateList(@PathVariable("type") String strType) {
+        PipelineContext pipelineContext = this.buildPipelineContent();
+        Response res = pipelineContext.getResponse();
+
+        try {
+            // 查询参数设定
+            // 登陆EmployeeID获得
+            NvwaEmployee loginEmployee = this.getEmployeeromSession();
+            if (loginEmployee == null || loginEmployee.getId() == 0) {
+                setErrMsg(res, "用户ID参数缺失");
+                return res;
+            }
+            int intEmployeeId = loginEmployee.getId();
+
+            //页数
+            Integer page = pipelineContext.getRequest().getInt("page");
+            //每页记录数
+            Integer pageSize = pipelineContext.getRequest().getInt("pageSize");
+
+            if (page == 0) {
+                page = Page_Default;
+            }
+            if (pageSize == 0) {
+                pageSize = PageSize_Default;
+            }
+
+            IntSearch updateEmployeeIdSearch = new IntSearch("updateEmployeeId");
+            updateEmployeeIdSearch.setSearchValue(String.valueOf(intEmployeeId));
+
+            IntSearch reviewStatusSearch = null;
+            if ("OK".equals(strType)) {
+                reviewStatusSearch = new IntSearch("reviewStatus");
+                reviewStatusSearch.setSearchValue(strAuditOK);
+            } else if ("NG".equals(strType)) {
+                reviewStatusSearch = new IntSearch("reviewStatus");
+                reviewStatusSearch.setSearchValue(strAuditNG);
+            } else if ("NEEDACTION".equals(strType)) {
+                reviewStatusSearch = new IntSearch("reviewStatus");
+                reviewStatusSearch.setSearchValue(strAuditNeedAction);
+            }
+
+            MultiSearchBean multiSearchBean = new MultiSearchBean();
+            multiSearchBean.addSearchBean(updateEmployeeIdSearch);
+            multiSearchBean.addSearchBean(reviewStatusSearch);
+
+            PaginationDescribe<RedstarCommunityUpdateLog> resultCommunityUpdateLog = (PaginationDescribe<RedstarCommunityUpdateLog>) dispatchDriver.getRedstarCommunityUpdateLogManager().searchBeanPage(page, pageSize, multiSearchBean, "updateDate", Boolean.FALSE);
+            res.addKey("result", resultCommunityUpdateLog);
+
+            // 成功与否消息文字设置
+            setSuccessMsg(res);
+        } catch (Exception e) {
+            setUnknowException(e, res);
+        }
+        return res;
+    }
 
 }
