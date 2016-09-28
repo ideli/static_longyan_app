@@ -7,15 +7,27 @@ import com.xiwa.base.bean.Identified;
  */
 public class RedstarCommunityUpdateLog extends RedstarCommunity implements Identified {
 
-    private int reviewStatus=0; //审核状态
+    private int communityId;
+
+    private Integer reviewStatus=0; //审核状态
 
     private String editColumnName; //本次修改的字段名
 
-    public int getReviewStatus() {
+    public int getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(int communityId) {
+        this.communityId = communityId;
+    }
+
+    @Override
+    public Integer getReviewStatus() {
         return reviewStatus;
     }
 
-    public void setReviewStatus(int reviewStatus) {
+    @Override
+    public void setReviewStatus(Integer reviewStatus) {
         this.reviewStatus = reviewStatus;
     }
 
@@ -32,7 +44,7 @@ public class RedstarCommunityUpdateLog extends RedstarCommunity implements Ident
     }
 
     public RedstarCommunityUpdateLog(RedstarCommunity community) {
-        this.setId(community.getId());
+        this.setCommunityId(community.getId());
         this.setName(community.getName());
         this.setShortName(community.getShortName());
         this.setAddress(community.getAddress());
