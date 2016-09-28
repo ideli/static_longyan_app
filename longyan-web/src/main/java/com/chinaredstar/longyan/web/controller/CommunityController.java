@@ -381,15 +381,20 @@ public class CommunityController extends BaseController implements CommonBizCons
                 CommunityFormUtil.setPropertyName(request, communityUpdateLog, redstarCommonManager);
                 //物业电话
                 CommunityFormUtil.setHotline(request, communityUpdateLog);
+                // 经度
+                CommunityFormUtil.setLongitude(request, communityUpdateLog);
+                // 纬度
+                CommunityFormUtil.setLatitude(request, communityUpdateLog);
 
                 // 更新者信息添加
                 communityUpdateLog.setUpdateEmployeeId(employee.getId());
                 communityUpdateLog.setUpdateEmployeeXingMing(employee.getXingMing());
                 communityUpdateLog.setUpdateDate(new Date());
+                community.setReclaimStatus(reviewing);
 
                 dispatchDriver.getRedstarCommunityUpdateLogManager().updateBean(communityUpdateLog);
             } else { // 小区责任人为当前修改员工，无需审核直接更新小区表
-
+//               if () {
                 //详细地址
                 CommunityFormUtil.setAddress(request, community);
                 //小区别称
@@ -414,11 +419,16 @@ public class CommunityController extends BaseController implements CommonBizCons
                 CommunityFormUtil.setPropertyName(request, community, redstarCommonManager);
                 //物业电话
                 CommunityFormUtil.setHotline(request, community);
+                // 经度
+                CommunityFormUtil.setLongitude(request, community);
+                // 纬度
+                CommunityFormUtil.setLatitude(request, community);
 
                 // 更新者信息添加
                 community.setUpdateEmployeeId(employee.getId());
                 community.setUpdateEmployeeXingMing(employee.getXingMing());
                 community.setUpdateDate(new Date());
+
                 dispatchDriver.getRedstarCommunityManager().updateBean(community);
             }
             res.setCode(HTTP_SUCCESS_CODE);
@@ -481,7 +491,10 @@ public class CommunityController extends BaseController implements CommonBizCons
             CommunityFormUtil.setPropertyName(request, community, redstarCommonManager);
             //物业电话
             CommunityFormUtil.setHotline(request, community);
-
+            // 经度
+            CommunityFormUtil.setLongitude(request, community);
+            // 纬度
+            CommunityFormUtil.setLatitude(request, community);
 
             NvwaSecurityOperationLog securityOperationLog = new NvwaSecurityOperationLog();
 
