@@ -11,7 +11,6 @@ import com.chinaredstar.longyan.exception.constant.CommonExceptionType;
 import com.chinaredstar.longyan.exception.constant.CommunityExceptionType;
 import com.chinaredstar.longyan.util.CommunityFormUtil;
 import com.chinaredstar.longyan.util.RateUtil;
-import com.chinaredstar.longyan.util.SetCommunityMallUtil;
 import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.chinaredstar.nvwaBiz.bean.NvwaSecurityOperationLog;
 import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
@@ -25,7 +24,6 @@ import com.xiwa.base.bean.search.ext.MultiSearchBean;
 import com.xiwa.base.pipeline.PipelineContext;
 import com.xiwa.base.util.DataUtil;
 import com.xiwa.base.util.StringUtil;
-import com.xiwa.zeus.trinity.bean.Employee;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,13 +46,6 @@ import java.util.List;
 @Controller
 public class CommunityController extends BaseController implements CommonBizConstant {
 
-    @Autowired
-    private DispatchDriver dispatchDriver;
-    @Autowired
-    private NvwaDriver nvwaDriver;
-    @Autowired
-    private RedstarCommonManager redstarCommonManager;
-
     // 小区认领状态
     private final int reclaimStatus_OK = 1;
     // 数据源名
@@ -63,7 +54,12 @@ public class CommunityController extends BaseController implements CommonBizCons
     private final int dataBelong_LY = 2;
     // 审核状态
     private final int reviewing = 1;
-
+    @Autowired
+    private DispatchDriver dispatchDriver;
+    @Autowired
+    private NvwaDriver nvwaDriver;
+    @Autowired
+    private RedstarCommonManager redstarCommonManager;
 
     //查询我的小区列表
     @RequestMapping(value = "/myList/{type}", method = RequestMethod.POST)
@@ -76,7 +72,7 @@ public class CommunityController extends BaseController implements CommonBizCons
             // 查询参数设定
             // 登陆EmployeeID获得
             NvwaEmployee loginEmployee = this.getEmployeeromSession();
-            if (loginEmployee.getId() == 0) {
+            if (loginEmployee == null || loginEmployee.getId() == 0) {
                 setErrMsg(res, "用户ID参数缺失");
                 return res;
             }
@@ -144,10 +140,12 @@ public class CommunityController extends BaseController implements CommonBizCons
             int intOwnerMallId = 0;
             // 查询参数设定
             // 登陆EmployeeID的商场ID获得（非员工没有商场ID）
-            // TODO 登陆逻辑修改
-//            Employee loginEmployee = this.getEmployeeromSession();
-            NvwaEmployee loginEmployee = new NvwaEmployee();
-            loginEmployee.setDepartmentId(1642);
+            NvwaEmployee loginEmployee = this.getEmployeeromSession();
+            if (loginEmployee == null) {
+                setErrMsg(res, "用户ID参数缺失");
+                return res;
+            }
+
             //查询员工所属商场
             RedstarShoppingMall shoppingMall = EmployeeUtil.getMall(loginEmployee, dispatchDriver, nvwaDriver);
             if (shoppingMall != null) {
@@ -356,7 +354,14 @@ public class CommunityController extends BaseController implements CommonBizCons
         Response res = pipelineContext.getResponse();
 
         try {
+
             NvwaEmployee employee = getEmployeeromSession();
+            if (employee == null || employee.getId() == 0) {
+                setErrMsg(res, "用户ID参数缺失");
+                return res;
+            }
+            int intEmployeeId = employee.getId();
+
             Integer dataId = request.getInt("id");
             if (dataId == null) {
                 throw new FormException("小区id没有填写");
@@ -366,53 +371,73 @@ public class CommunityController extends BaseController implements CommonBizCons
                 throw new FormException("没有找到小区");
             }
 
-            RedstarCommunityUpdateLog  communityUpdateLog = (RedstarCommunityUpdateLog) community;
-              //详细地址
-            CommunityFormUtil.setAddress(request, communityUpdateLog);
-            //小区别称
-            CommunityFormUtil.setShortName(request, communityUpdateLog);
-            //总户数
-            CommunityFormUtil.setRoomMount(request, communityUpdateLog);
-            //总栋数
-            CommunityFormUtil.setBuildingAmount(request, communityUpdateLog);
-            //入住率
-            CommunityFormUtil.setAlreadyCheckAmount(request, communityUpdateLog);
-            //房屋均价
-            CommunityFormUtil.setPriceSection(request, communityUpdateLog);
-            //建筑类型
-            CommunityFormUtil.setConstructionTypes(request, communityUpdateLog);
-            //交房装修
-            CommunityFormUtil.setRenovations(request, communityUpdateLog);
-            //交房时间
-            CommunityFormUtil.setDeliveryTime(request, communityUpdateLog);
-            //开发商信息
-            CommunityFormUtil.setDevelopers(request, communityUpdateLog, redstarCommonManager);
-            //物业公司
-            CommunityFormUtil.setPropertyName(request, communityUpdateLog, redstarCommonManager);
-            //物业电话
-            CommunityFormUtil.setHotline(request, communityUpdateLog);
+            // 小区责任人非当前修改员工，插入小区更新履历表，待审核
+            if (community.getOwnerId() != intEmployeeId) {
+                RedstarCommunityUpdateLog communityUpdateLog = (RedstarCommunityUpdateLog) community;
+                //详细地址
+                CommunityFormUtil.setAddress(request, communityUpdateLog);
+                //小区别称
+                CommunityFormUtil.setShortName(request, communityUpdateLog);
+                //总户数
+                CommunityFormUtil.setRoomMount(request, communityUpdateLog);
+                //总栋数
+                CommunityFormUtil.setBuildingAmount(request, communityUpdateLog);
+                //入住率
+                CommunityFormUtil.setAlreadyCheckAmount(request, communityUpdateLog);
+                //房屋均价
+                CommunityFormUtil.setPriceSection(request, communityUpdateLog);
+                //建筑类型
+                CommunityFormUtil.setConstructionTypes(request, communityUpdateLog);
+                //交房装修
+                CommunityFormUtil.setRenovations(request, communityUpdateLog);
+                //交房时间
+                CommunityFormUtil.setDeliveryTime(request, communityUpdateLog);
+                //开发商信息
+                CommunityFormUtil.setDevelopers(request, communityUpdateLog, redstarCommonManager);
+                //物业公司
+                CommunityFormUtil.setPropertyName(request, communityUpdateLog, redstarCommonManager);
+                //物业电话
+                CommunityFormUtil.setHotline(request, communityUpdateLog);
 
-            NvwaSecurityOperationLog securityOperationLog = new NvwaSecurityOperationLog();
-            if (employee != null) {
-                securityOperationLog.setOperatorId(employee.getId());
-                securityOperationLog.setOperator(employee.getXingMing());
-                securityOperationLog.setOperateResource(Community_Operate_Resource);
-                securityOperationLog.setCreateDate(new Date());
-                securityOperationLog.setBelongedId(LOG_BELONG_ID);
-
-                securityOperationLog.setOperateResourceId(String.valueOf(dataId));
-
-                    securityOperationLog.setOperationTypeField(UPDATE_OPERATION);
-                    securityOperationLog.setContent("更新小区");
-                    nvwaDriver.getNvwaSecurityOperationLogManager().addBean(securityOperationLog);
-
+                // 更新者信息添加
                 communityUpdateLog.setUpdateEmployeeId(employee.getId());
                 communityUpdateLog.setUpdateEmployeeXingMing(employee.getXingMing());
-            }
-            communityUpdateLog.setUpdateDate(new Date());
-            communityUpdateLog.setReviewStatus(reviewing);
+                communityUpdateLog.setUpdateDate(new Date());
 
-            dispatchDriver.getRedstarCommunityUpdateLogManager().updateBean(communityUpdateLog);
+                dispatchDriver.getRedstarCommunityUpdateLogManager().updateBean(communityUpdateLog);
+            } else { // 小区责任人为当前修改员工，无需审核直接更新小区表
+
+                //详细地址
+                CommunityFormUtil.setAddress(request, community);
+                //小区别称
+                CommunityFormUtil.setShortName(request, community);
+                //总户数
+                CommunityFormUtil.setRoomMount(request, community);
+                //总栋数
+                CommunityFormUtil.setBuildingAmount(request, community);
+                //入住率
+                CommunityFormUtil.setAlreadyCheckAmount(request, community);
+                //房屋均价
+                CommunityFormUtil.setPriceSection(request, community);
+                //建筑类型
+                CommunityFormUtil.setConstructionTypes(request, community);
+                //交房装修
+                CommunityFormUtil.setRenovations(request, community);
+                //交房时间
+                CommunityFormUtil.setDeliveryTime(request, community);
+                //开发商信息
+                CommunityFormUtil.setDevelopers(request, community, redstarCommonManager);
+                //物业公司
+                CommunityFormUtil.setPropertyName(request, community, redstarCommonManager);
+                //物业电话
+                CommunityFormUtil.setHotline(request, community);
+
+                // 更新者信息添加
+                community.setUpdateEmployeeId(employee.getId());
+                community.setUpdateEmployeeXingMing(employee.getXingMing());
+                community.setUpdateDate(new Date());
+                dispatchDriver.getRedstarCommunityManager().updateBean(community);
+            }
             res.setCode(HTTP_SUCCESS_CODE);
             res.setMessage("操作成功");
         } catch (FormException e) {
@@ -437,8 +462,10 @@ public class CommunityController extends BaseController implements CommonBizCons
         try {
             int intOwnerMallId = 0;
             NvwaEmployee employee = getEmployeeromSession();
-            // TODO 测试数据删除需要
-            employee.setDepartmentId(1642);
+            if (employee == null) {
+                setErrMsg(res, "用户参数缺失");
+                return res;
+            }
             //查询员工所属商场
             RedstarShoppingMall shoppingMall = EmployeeUtil.getMall(employee, dispatchDriver, nvwaDriver);
             if (shoppingMall != null) {
@@ -494,15 +521,6 @@ public class CommunityController extends BaseController implements CommonBizCons
 
             Integer dataId = dispatchDriver.getRedstarCommunityManager().addBean(community);
             res.addKey("id", dataId);
-
-            //添加日志
-            securityOperationLog.setOperateResource(Community_Operate_Resource);
-            securityOperationLog.setCreateDate(new Date());
-            securityOperationLog.setBelongedId(LOG_BELONG_ID);
-            securityOperationLog.setOperationTypeField(ADD_OPERATION);
-            securityOperationLog.setOperateResourceId(String.valueOf(dataId));
-            securityOperationLog.setContent("添加小区");
-            nvwaDriver.getNvwaSecurityOperationLogManager().addBean(securityOperationLog);
 
             res.setCode(HTTP_SUCCESS_CODE);
             res.setMessage("操作成功");
@@ -646,6 +664,10 @@ public class CommunityController extends BaseController implements CommonBizCons
         try {
             //Employee employee = null;    // 获取session中的登陆用户的employeeCode
             NvwaEmployee employee = getEmployeeromSession();
+            if (employee == null) {
+                throw new BusinessException(CommonExceptionType.NoSession);
+            }
+
 
             //用户ID,姓名，创建时间
             redstarCommunityBuilding.setCreateEmployeeId(employee.getId());
