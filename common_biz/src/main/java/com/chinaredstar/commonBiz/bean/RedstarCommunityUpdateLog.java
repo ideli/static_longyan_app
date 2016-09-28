@@ -16,4 +16,13 @@ public class RedstarCommunityUpdateLog extends RedstarCommunity implements Ident
     public void setReviewStatus(int reviewStatus) {
         this.reviewStatus = reviewStatus;
     }
+
+
+    public RedstarCommunityUpdateLog(){
+
+    }
+
+    public RedstarCommunityUpdateLog(RedstarCommunity community){
+
+    }
 }

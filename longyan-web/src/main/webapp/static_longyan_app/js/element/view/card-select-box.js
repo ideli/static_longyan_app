@@ -71,6 +71,9 @@ define('js/element/view/card-select-box', [
             },
             setValue: function(values) {
                 var t = this;
+                if (typeof(values) == 'string') {
+                    values = values.split(',');
+                }
                 var container = t.$el.find('.' + t.config.fieldName);
                 if (container) {
                     var selectContainer = t.$el.find('.' + t.config.fieldName).find('.selection');
