@@ -34,7 +34,7 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             "message_list": "message_list",
             //我的->审核
             "my_review_list": "my_review_list",
-            "my_review_detail": "my_review_detail",
+            "my_review_detail/:id": "my_review_detail",
             "my_submit": "my_submit",
             //我的->积分说明
             "integral_rule": "integral_rule",
@@ -270,9 +270,11 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             var t = this;
             t.changePage('my_review_list');
         },
-        my_review_detail: function() {
+        my_review_detail: function(id) {
             var t = this;
-            t.changePage('my_review_detail');
+            t.changePage('my_review_detail', {
+                id: id
+            });
         },
 
 

@@ -65,14 +65,14 @@ define('js/element/view/input-box', [
                         }
                     });
                 }
-                container.find('input').on('focus', function(e) {
-                    $(e.currentTarget).parent().addClass('focus');
-                });
-                container.find('input').on('blur', function(e) {
-                    $(e.currentTarget).parent().removeClass('focus');
-                });
-
-
+                if (!container.find('input').attr('readonly')) {
+                    container.find('input').on('focus', function(e) {
+                        $(e.currentTarget).parent().addClass('focus');
+                    });
+                    container.find('input').on('blur', function(e) {
+                        $(e.currentTarget).parent().removeClass('focus');
+                    });
+                }
             },
             getValue: function() {
                 var t = this;
