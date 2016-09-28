@@ -294,5 +294,31 @@ public class CommunityFormUtil {
         }
     }
 
+    /**
+     * 设置经度
+     *
+     * @param request
+     * @param community
+     * @throws FormException
+     */
+    public static void setLongitude(Request request, RedstarCommunity community) throws FormException {
+        // 非必填字段不验证是否为空
+        String longitude = request.getString("longitude");
+        community.setLongitude(Double.valueOf(longitude));
+    }
+
+
+    /**
+     * 设置纬度
+     *
+     * @param request
+     * @param community
+     * @throws FormException
+     */
+    public static void setLatitude(Request request, RedstarCommunity community) throws FormException {
+        // 非必填字段不验证是否为空
+        String latitude = request.getString("latitude");
+        community.setLatitude(Double.valueOf(latitude));
+    }
 
 }
