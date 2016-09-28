@@ -488,6 +488,8 @@ public class CommunityController extends BaseController implements CommonBizCons
             if (employee != null) {
                 community.setCreateEmployeeId(employee.getId());
                 community.setCreateXingMing(employee.getXingMing());
+                community.setUpdateEmployeeId(employee.getId());
+                community.setUpdateEmployeeXingMing(employee.getXingMing());
                 securityOperationLog.setOperatorId(employee.getId());
                 securityOperationLog.setOperator(employee.getXingMing());
                 community.setDataBelong(dataBelong_LY);
@@ -496,6 +498,9 @@ public class CommunityController extends BaseController implements CommonBizCons
                     // 员工创建完即为owner,非员工则不更新
                     community.setOwnerId(employee.getId());
                     community.setReclaimStatus(reclaimStatus_OK);
+                    //填充所属商场信息
+                    community.setOwnerMallId(shoppingMall.getId());
+                    community.setOwnerMallName(shoppingMall.getName());
                 }
             }
 
