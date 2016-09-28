@@ -411,7 +411,7 @@ public class CommunityController extends BaseController implements CommonBizCons
 
                     // 2个表更新
                     dispatchDriver.getRedstarCommunityUpdateLogManager().addBean(communityUpdateLog);
-                    dispatchDriver.getRedstarCommunityUpdateLogManager().updateBean(community);
+                    dispatchDriver.getRedstarCommunityManager().updateBean(community);
                 } else { // 小区责任人为当前修改员工，无需审核直接更新小区表
                     //详细地址
                     CommunityFormUtil.setAddress(request, community);
