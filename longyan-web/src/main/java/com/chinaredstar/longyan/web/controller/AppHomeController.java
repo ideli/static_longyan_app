@@ -40,7 +40,7 @@ public class AppHomeController extends BaseController implements CommonBizConsta
     // APP首页显示数据集合
     @RequestMapping(value = "/viewList", method = RequestMethod.POST)
     @ResponseBody
-    public Response getViewListData(String longitude, String latitude, String provinceCode, String cityCode, String limitM) {
+    public Response getViewListData(String longitude, String latitude, String cityName, String limitM) {
         PipelineContext pipelineContext = this.buildPipelineContent();
         Response res = pipelineContext.getResponse();
         Request req = pipelineContext.getRequest();
@@ -57,8 +57,8 @@ public class AppHomeController extends BaseController implements CommonBizConsta
 
             // 所在经纬度,省市code判断
             if (StringUtil.isInvalid(latitude) || StringUtil.isInvalid(longitude)
-                    || StringUtil.isInvalid(provinceCode) || StringUtil.isInvalid(cityCode)) {
-                setErrMsg(res, "经纬度参数缺失");
+                    || StringUtil.isInvalid(cityName)) {
+                setErrMsg(res, "位置参数缺失");
                 return res;
             }
 
@@ -74,7 +74,7 @@ public class AppHomeController extends BaseController implements CommonBizConsta
             // 查询我的小区总数
             res.addKey("myCommunities", getDataCountByEmployeeId(intEmployeeId));
             // 查询周边小区总数
-            res.addKey("aroundCommunities", getDataCountByLongitudeAndLatitude(longitude, latitude, provinceCode, cityCode, limitM));
+            res.addKey("aroundCommunities", getDataCountByLongitudeAndLatitude(longitude, latitude, cityName, limitM));
             // 查询龙榜排名
             res.addKey("dragonEyeRanking", getDragonEyeRanking(intEmployeeId));
             // 成功与否消息文字设置
@@ -106,8 +106,8 @@ public class AppHomeController extends BaseController implements CommonBizConsta
     /**
      * 周边小区数获得函数
      */
-    public int getDataCountByLongitudeAndLatitude(String longitude, String latitude, String provinceCode,
-                                                  String cityCode, String limitM) throws Exception {
+    public int getDataCountByLongitudeAndLatitude(String longitude, String latitude,
+                                                  String cityName, String limitM) throws Exception {
 
         int intLimtM = Integer.parseInt(limitM);
         StringBuffer sb = new StringBuffer();
@@ -117,7 +117,7 @@ public class AppHomeController extends BaseController implements CommonBizConsta
         sb.append(" sqrt( pow(sin((c.latitude * pi() / 180 - ?*pi() / 180) / 2),2) + cos(c.latitude * pi() / 180) ");
         sb.append(" * cos(?*pi() / 180) * pow(  ");
         sb.append(" sin((c.longitude * pi() / 180 - ?*pi()/180) / 2),2))) * 1000) AS distance   ");
-        sb.append(" FROM xiwa_redstar_community c where c.longitude>0 and c.latitude>0 and c.provinceCode = ? and c.cityCode = ? HAVING distance < ?");
+        sb.append(" FROM xiwa_redstar_community c where c.longitude>0 and c.latitude>0 and c.city = ? HAVING distance < ?");
 
         String querySQL = sb.toString();
 
@@ -125,8 +125,7 @@ public class AppHomeController extends BaseController implements CommonBizConsta
         paramsList.add(Double.parseDouble(latitude));
         paramsList.add(Double.parseDouble(latitude));
         paramsList.add(Double.parseDouble(longitude));
-        paramsList.add(provinceCode);
-        paramsList.add(cityCode);
+        paramsList.add(cityName);
         paramsList.add(intLimtM);
 
         //搜索结果（以员工GPS位置为圆心半径intLimtM内所有小区数量）
@@ -143,6 +142,10 @@ public class AppHomeController extends BaseController implements CommonBizConsta
         employeeIdSearch.setSearchValue(String.valueOf(employeeId));
         List<RedstarEmployeeDayInput> memberRanking = dispatchDriver.getRedstarEmployeeDayInputManager().
                 searchIdentify(employeeIdSearch, "scoreRank", Boolean.FALSE);
+
+        if (memberRanking.size() == 0) {
+            return 0;
+        }
 
         // 最新排名只可能有一个，所以降序查找出数据后取首位
         return memberRanking.get(0).getScoreRank();

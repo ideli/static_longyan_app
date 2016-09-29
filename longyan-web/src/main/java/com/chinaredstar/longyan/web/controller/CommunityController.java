@@ -119,18 +119,17 @@ public class CommunityController extends BaseController implements CommonBizCons
     /**
      * //查询周边小区列表
      *
-     * @param strType      allAroundCommunity=全部 occupyCommunity=可抢占 predistributionCommunity=预分配
-     * @param longitude    经度
-     * @param latitude     纬度
-     * @param provinceCode
-     * @param cityCode
-     * @param limitM       查询小区半径（米）
+     * @param strType   allAroundCommunity=全部 occupyCommunity=可抢占 predistributionCommunity=预分配
+     * @param longitude 经度
+     * @param latitude  纬度
+     * @param cityName
+     * @param limitM    查询小区半径（米）
      * @return
      */
     @RequestMapping(value = "/aroundList/{type}", method = RequestMethod.POST)
     @ResponseBody
     public Response aroundList(@PathVariable("type") String strType, String longitude, String latitude,
-                               String provinceCode, String cityCode, String limitM) {
+                               String cityName, String limitM) {
         PipelineContext pipelineContext = this.buildPipelineContent();
         Response res = pipelineContext.getResponse();
 
@@ -152,8 +151,8 @@ public class CommunityController extends BaseController implements CommonBizCons
 
             // 所在经纬度,省市code判断
             if (StringUtil.isInvalid(latitude) || StringUtil.isInvalid(longitude)
-                    || StringUtil.isInvalid(provinceCode) || StringUtil.isInvalid(cityCode)) {
-                setErrMsg(res, "经纬度参数缺失");
+                    || StringUtil.isInvalid(cityName)) {
+                setErrMsg(res, "位置参数缺失");
                 return res;
             }
 
@@ -269,7 +268,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                 sb.append(" sqrt( pow(sin((c.latitude * pi() / 180 - ?*pi() / 180) / 2),2) + cos(c.latitude * pi() / 180) ");
                 sb.append(" * cos(?*pi() / 180) * pow(  ");
                 sb.append(" sin((c.longitude * pi() / 180 - ?*pi()/180) / 2),2))) * 1000) AS distance   ");
-                sb.append(" FROM xiwa_redstar_community c WHERE c.longitude>0 AND c.latitude>0 and c.provinceCode = ? and c.cityCode = ? HAVING distance < ? ORDER BY distance ");
+                sb.append(" FROM xiwa_redstar_community c WHERE c.longitude>0 AND c.latitude>0 and c.cityName = ? HAVING distance < ? ORDER BY distance ");
 
                 String querySQL = sb.toString();
 
@@ -277,8 +276,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                 paramsList.add(Double.parseDouble(latitude));
                 paramsList.add(Double.parseDouble(latitude));
                 paramsList.add(Double.parseDouble(longitude));
-                paramsList.add(provinceCode);
-                paramsList.add(cityCode);
+                paramsList.add(cityName);
                 paramsList.add(intLimtM);
 
                 //搜索结果（以员工GPS位置为圆心半径intLimtM内所有小区列表）
@@ -956,6 +954,5 @@ public class CommunityController extends BaseController implements CommonBizCons
         }
         return response;
     }
-
 
 }
