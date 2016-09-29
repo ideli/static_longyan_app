@@ -3,9 +3,11 @@ package com.chinaredstar.longyan.web.controller;
 
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.longyan.util.Encryption;
+import com.redstar.sms.api.AppPushService;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.pipeline.PipelineContext;
 import com.xiwa.base.util.StringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +23,9 @@ import java.util.Date;
 @Controller
 @RequestMapping(value = "/test")
 public class TestController extends BaseController implements CommonBizConstant {
+
+    @Autowired
+    private AppPushService appPushService;
 
     @RequestMapping(value = "/index")
     public
@@ -39,6 +44,19 @@ public class TestController extends BaseController implements CommonBizConstant 
         if (StringUtil.isValid(password)) {
             password = Encryption.Encrypt(password);
             pipelineContext.getResponse().addKey("password", password);
+        }
+        return pipelineContext.getResponse();
+    }
+
+
+    @RequestMapping(value = "/push")
+    @ResponseBody
+    public Response pushMessageToClient() {
+        PipelineContext pipelineContext = buildPipelineContent();
+        String empCode = pipelineContext.getRequest().getString("empCode");
+        String content = pipelineContext.getRequest().getString("content");
+        if (StringUtil.isValid(empCode)) {
+            pipelineContext.getResponse().getDataMap().putAll(appPushService.sendPush(content, content, "LY", empCode, null, 0, null));
         }
         return pipelineContext.getResponse();
     }
