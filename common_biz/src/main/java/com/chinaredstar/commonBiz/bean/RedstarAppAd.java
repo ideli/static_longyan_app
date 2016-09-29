@@ -32,6 +32,15 @@ public class RedstarAppAd implements Identified {
 
     private Integer activity;   //是否激活  1：激活，0：未激活
 
+    private Integer defaultAd;   //是否默认广告  1：是，0：否
+
+    public Integer getDefaultAd() {
+        return defaultAd;
+    }
+
+    public void setDefaultAd(Integer defaultAd) {
+        this.defaultAd = defaultAd;
+    }
 
     @Override
     public int getId() {

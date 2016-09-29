@@ -562,6 +562,44 @@ public class CommunityController extends BaseController implements CommonBizCons
         return res;
     }
 
+    //按名字查询小区信息
+    @RequestMapping(value = "/searchByCommunityName", method = RequestMethod.POST)
+    @ResponseBody
+    public Response dataItem() {
+        PipelineContext pipelineContext = this.buildPipelineContent();
+        Response res = pipelineContext.getResponse();
+        String communityName = pipelineContext.getRequest().getString("communityName");
+
+        try {
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String strSysytemDateTime = df.format(System.currentTimeMillis());
+
+            StringBuffer sb = new StringBuffer();
+
+            sb.append("Select c.id, c.name,c.address,c.ownerMallId,c.ownerMallName,c.reclaimStatus,c.reclaimCompleteDate,c.updateEmployeeId,c.longitude,c.latitude, ");
+            sb.append("(CASE WHEN c.reclaimStatus = 1 THEN '已认领' WHEN c.reclaimStatus = 0 AND c.reclaimCompleteDate > ?");
+            sb.append(" THEN '可认领' " + "END) AS status ");
+//                "WHEN createDate = '2016/9/27 星期二 0:00:00' AND updateEmployeeId = '0' THEN '已创建' END) AS status ");
+            sb.append("FROM xiwa_redstar_community as c WHERE  c.name LIKE '");
+            sb.append(communityName);
+            sb.append("%'");
+
+            String querySQL = sb.toString();
+
+
+            List<Object> paramsList = new ArrayList<Object>();
+            paramsList.add(strSysytemDateTime);
+
+            //按小区名模糊查找结果
+            List lsAroundCommunityByName = redstarCommonManager.excuteBySql(querySQL, paramsList);
+
+            res.addKey("community", lsAroundCommunityByName);
+        } catch (Exception e) {
+            setErrMsg(res, "没有数据");
+        }
+        return res;
+    }
+
 
     //查询小区详细信息
     @RequestMapping(value = "/{id}")

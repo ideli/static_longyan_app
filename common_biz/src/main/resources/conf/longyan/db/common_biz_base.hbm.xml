@@ -562,6 +562,7 @@
 
         <property name="ios35" type="string"/>
         <property name="activity" type="integer"/>
+        <property name="defaultAd" type="integer"/>
     </class>
 
     <class name="com.chinaredstar.commonBiz.bean.RedstarMessageCenter" table="xiwa_redstar_message_center" lazy="false">
