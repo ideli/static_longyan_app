@@ -92,7 +92,7 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 			deliveryTime,
 			developers,
 			propertyName,
-			hotline,
+			hotline, longitude, latitude,
 			success, error) {
 			var t = this;
 			var url = _basePath + '/create';
@@ -111,6 +111,8 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 				developers: developers,
 				propertyName: propertyName,
 				hotline: hotline,
+				longitude: longitude,
+				latitude: latitude
 			};
 			//发送http psot请求
 			t._executeRequest(url, data, function(response) {
@@ -134,7 +136,7 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 			deliveryTime,
 			developers,
 			propertyName,
-			hotline,
+			hotline, longitude, latitude,
 			success, error) {
 			var t = this;
 			var url = _basePath + '/update';
@@ -152,6 +154,8 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 				developers: developers,
 				propertyName: propertyName,
 				hotline: hotline,
+				longitude: longitude,
+				latitude: latitude
 			};
 			//发送http psot请求
 			t._executeRequest(url, data, function(response) {

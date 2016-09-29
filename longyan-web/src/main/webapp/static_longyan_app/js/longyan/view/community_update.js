@@ -268,6 +268,21 @@ define('js/longyan/view/community_update', [
                     text: '物业电话',
                     placeholder: '非必填项'
                 });
+                //经纬度
+                t.community_longitude_input = new InputBox({
+                    el: $(form_id)
+                }, {
+                    fieldName: 'community-longitude-input',
+                    text: '经度'
+                });
+                t.community_latitude_input = new InputBox({
+                    el: $(form_id)
+                }, {
+                    fieldName: 'community-latitude-input',
+                    text: '纬度'
+                });
+
+
                 t.community_commit_input = new ButtonBox({
                     el: $(form_id)
                 }, {
@@ -309,7 +324,8 @@ define('js/longyan/view/community_update', [
                     t.loadData(t.config.id);
                     t.community_commit_input.hide();
                     //加载参数
-                    t.loadParameter();
+                    // t.loadParameter();
+
                 } else {
                     //创建小区模式
                     t.community_edit_input.hide();
@@ -317,7 +333,11 @@ define('js/longyan/view/community_update', [
                     $('.readonly-mask').hide();
                     //加载参数
                     t.loadParameter();
+                    if (t.config.source == 'create_community_map') {
+                        t.loadParameterV2();
+                    }
                 }
+
 
 
             },
@@ -344,6 +364,8 @@ define('js/longyan/view/community_update', [
                     var developers = t.community_developer_input.getValue();
                     var propertyName = t.community_property_company_input.getValue();
                     var hotline = t.community_hotline_input.getValue();
+                    var longitude = t.community_longitude_input.getValue();
+                    var latitude = t.community_latitude_input.getValue();
 
                     tipsAlert.openLoading({
                         content: '加载中...'
@@ -363,7 +385,7 @@ define('js/longyan/view/community_update', [
                         deliveryTime,
                         developers,
                         propertyName,
-                        hotline,
+                        hotline, longitude, latitude,
                         function(data) {
                             console.log(data)
                             tipsAlert.close();
@@ -421,6 +443,9 @@ define('js/longyan/view/community_update', [
                     var propertyName = t.community_property_company_input.getValue();
                     var hotline = t.community_hotline_input.getValue();
 
+                    var longitude = t.community_longitude_input.getValue();
+                    var latitude = t.community_latitude_input.getValue();
+
 
                     tipsAlert.openLoading({
                         content: '加载中...'
@@ -438,7 +463,7 @@ define('js/longyan/view/community_update', [
                         deliveryTime,
                         developers,
                         propertyName,
-                        hotline,
+                        hotline, longitude, latitude,
                         function(data) {
                             tipsAlert.close();
                             tipsAlert.openToast({
@@ -493,6 +518,22 @@ define('js/longyan/view/community_update', [
                     var decode = decodeURIComponent(t.config.data);
                     //编码
                     var load_object = $nvwa.string.jsonStringToObject(decode);
+                    t.setFormValue(load_object);
+                    return load_object;
+                }
+                return null;
+            },
+            //加载参数,从config加载
+            loadParameterV2: function() {
+                var t = this;
+                if (t.config && t.config) {
+                    var load_object = {
+                        city: t.config.city,
+                        name: t.config.name,
+                        address: t.config.address,
+                        longitude: t.config.longitude,
+                        latitude: t.config.latitude
+                    };
                     t.setFormValue(load_object);
                     return load_object;
                 }
@@ -559,6 +600,13 @@ define('js/longyan/view/community_update', [
                 //物业电话
                 if (community.hotline) {
                     t.community_hotline_input.setValue(community.hotline);
+                }
+                //经纬度
+                if (community.longitude) {
+                    t.community_longitude_input.setValue(community.longitude);
+                }
+                if (community.latitude) {
+                    t.community_latitude_input.setValue(community.latitude);
                 }
 
             },
