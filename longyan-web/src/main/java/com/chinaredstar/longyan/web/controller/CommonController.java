@@ -350,6 +350,8 @@ public class CommonController extends BaseController implements CommonBizConstan
                         }
 
                         res.addKey("userInfo", ucEmployeesInfo);
+                        setSuccessMsg(res);
+                        return res;
                     }
                 }
             }
