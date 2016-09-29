@@ -8,7 +8,7 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             //首页
             "simple": "simple",
             "": "login",
-
+            "hybrid_landing_page/:data": "hybrid_landing_page",
             "login": "login", //登录
             //小区
             "community_list": "community_list",
@@ -101,6 +101,13 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
         simple: function() {
             var t = this;
             t.changePage('simple');
+        },
+        //hybrid中转页
+        hybrid_landing_page: function(data) {
+            var t = this;
+            t.changePage('hybrid_landing_page', {
+                data: data
+            });
         },
         feature_list: function() {
             var t = this;

@@ -280,16 +280,16 @@ public class CommunityFormUtil {
 
     public static void setPropertyName(Request request, RedstarCommunity community,RedstarCommonManager redstarCommonManager) throws FormException, ManagerException {
         String propertyName = request.getString("propertyName");
-        if (StringUtil.isInvalid(propertyName)) {
-            throw new FormException("物业公司没有填写");
-        }
-        TextSearch propertyNameSearch = new TextSearch("name");
-        propertyNameSearch.setSearchValue(propertyName);
-        if (CollectionUtils.isEmpty(redstarCommonManager.getDataList(RedstarProperty.class, propertyNameSearch))) {
-            RedstarProperty redstarPropertys = new RedstarProperty();
-            redstarPropertys.setName(propertyName);
-            redstarCommonManager.addData(redstarPropertys);
-        }
+//        if (StringUtil.isInvalid(propertyName)) {
+//            throw new FormException("物业公司没有填写");
+//        }
+//        TextSearch propertyNameSearch = new TextSearch("name");
+//        propertyNameSearch.setSearchValue(propertyName);
+//        if (CollectionUtils.isEmpty(redstarCommonManager.getDataList(RedstarProperty.class, propertyNameSearch))) {
+//            RedstarProperty redstarPropertys = new RedstarProperty();
+//            redstarPropertys.setName(propertyName);
+//            redstarCommonManager.addData(redstarPropertys);
+//        }
         community.setPropertyName(propertyName);
     }
 
