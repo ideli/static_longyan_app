@@ -53,7 +53,7 @@ define('js/longyan/view/feature_list', [
                     fieldName: 'my-review',
                     text: '我的审核',
                     readonly: true,
-                    label_right: '<a href="#my_review_list"><i class="iconfont">&#xe602;</i></a>'
+                    label_right: '<a href="#my_review_list/0"><i class="iconfont">&#xe602;</i></a>'
                 });
                 t.my_submit = new InputBox({
                     el: $(form_id)

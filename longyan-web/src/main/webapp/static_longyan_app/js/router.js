@@ -279,7 +279,9 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
         },
         my_submit: function() {
             var t = this;
-            t.changePage('my_review_list');
+            t.changePage('my_review_list', {
+                status: status
+            });
         },
         my_review_list: function(status) {
             var t = this;

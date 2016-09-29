@@ -15,18 +15,16 @@ define('js/longyan/view/my_review_detail', [
         'js/element/view/button-box',
         'js/element/view/link-box',
         'js/element/view/tips-bar',
-        'js/api/community'
+        'js/api/audit'
     ],
-    function(CommunityListTpl, Cache, AlertUI, HeaderView, LocationView, PickerBox, InputBox, ThinkInputBox, LocationBox, InputPercentageBox, ButtonBox, LinkBox, TipsBar, CommunityApi) {
+    function (CommunityListTpl, Cache, AlertUI, HeaderView, LocationView, PickerBox, InputBox, ThinkInputBox, LocationBox, InputPercentageBox, ButtonBox, LinkBox, TipsBar, AuditApi) {
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#my-review-detail-view';
         var form_id = '#my-review-detail-form';
         var LayoutView = Backbone.View.extend({
-            events: {
-
-            },
+            events: {},
             // 
-            initialize: function(options, config) {
+            initialize: function (options, config) {
                 var t = this;
                 t.config = config || {};
 
@@ -34,7 +32,7 @@ define('js/longyan/view/my_review_detail', [
                 t.render();
                 t.loadData();
             },
-            render: function() {
+            render: function () {
                 var t = this;
                 $('body').css('background-color', '#efeff4');
                 t.$el.html(tpl(CommunityListTpl, {}));
@@ -169,7 +167,6 @@ define('js/longyan/view/my_review_detail', [
                 });
 
 
-
                 t.community_property_name_input = new InputBox({
                     el: $(form_id)
                 }, {
@@ -204,7 +201,7 @@ define('js/longyan/view/my_review_detail', [
                     fieldName: 'pass-button',
                     text: '通过'
                 }, {
-                    Click: function(e) {
+                    Click: function (e) {
 
                     }
                 });
@@ -215,11 +212,10 @@ define('js/longyan/view/my_review_detail', [
                     fieldName: 'rollback-button',
                     text: '不通过'
                 }, {
-                    Click: function(e) {
+                    Click: function (e) {
 
                     }
                 });
-
 
 
                 if (t.config && t.config.action && t.config.action == 'update') {
@@ -234,34 +230,68 @@ define('js/longyan/view/my_review_detail', [
                         });
                     }
                 }
-
-
             },
-            loadData: function() {
+            loadData: function () {
                 var t = this;
                 if (t.config && t.config.id) {
                     // alert(t.config.id);
                     tipsAlert.openLoading({
                         content: '加载中...'
                     });
-                    CommunityApi.getCommunityById(t.config.id, function(data) {
+
+                    AuditApi.changeId(t.config.id, function (data) {
                         tipsAlert.close();
                         //返回数据
                         if (data && data.community) {
-
-
+                            t.setFormValue(data.community);
                         } else {
                             tipsAlert.openAlert({
                                 content: '系统异常'
                             });
                         }
-                    }, function(code, msg) {
+                    }, function (code, msg) {
                         tipsAlert.close();
                         //显示异常信息
                         tipsAlert.openAlert({
                             content: msg
                         });
                     });
+                }
+            },
+            //设置表单
+            setFormValue: function (data) {
+                var t = this;
+                if(data){
+                    //城市名称
+                    t.community_city_input.setValue(data.city);
+                    //小区名称
+                    t.community_name_input.setValue(data.name);
+                    //小区别名
+                    t.community_short_name_input.setValue(data.shortName);
+                    //详细地址
+                    t.community_address_input.setValue(data.address);
+                    //总户数
+                    t.community_room_amount_input.setValue(data.roomMount);
+                    //楼栋数
+                    t.community_building_amount_input.setValue(data.buildingAmount);
+                    //录入率
+                    t.community_occupancy_rate_input.setValue(data.inputRate);
+                    //房屋均价
+                    t.community_price_section_input.setValue(data.priceSection);
+                    //建筑类型
+                    t.community_construction_types_input.setValue(data.constructionTypes);
+                    //交房装修
+                    t.community_renovations_input.setValue(data.renovations);
+                    //交房时间
+                    t.community_delivery_time_input.setValue(data.deliveryTime);
+                    //开发商
+                    t.community_developer_input.setValue(data.developers);
+                    //物业公司
+                    t.community_property_name_input.setValue(data.propertyName);
+                    //物业电话
+                    t.community_hotline_input.setValue(data.hotline);
+                    //所属商场
+                    t.community_owner_mall_name_input.setValue(data.ownerMallName);
                 }
             }
         });

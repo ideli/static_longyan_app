@@ -13,15 +13,16 @@ define('js/longyan/view/my_review_list', [
         'js/element/view/link-box',
         'js/element/view/tips-bar',
         'js/element/view/list-box',
-        'js/api/report'
+        'js/api/audit'
     ],
-    function(ListContailerTpl, ReviewListItemTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox, ReportApi) {
+    function(ListContailerTpl, ReviewListItemTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox, AuditApi) {
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#my-review-list-view';
         var form_id = '#my-review-list-form';
         var LayoutView = Backbone.View.extend({
             events: {
-                'click .item-box': '_clickItem'
+                'click .item-box': '_clickItem',
+                'click .my-owner-community-list-item': '_clickToAnother'
             },
             //
             initialize: function(options, config) {
@@ -50,43 +51,32 @@ define('js/longyan/view/my_review_list', [
                     scroll: false //支持下拉刷新
                 }, {
                     loadData: function(page, handler) {
+                        tipsAlert.openLoading({
+                            content: '加载中...'
+                        });
 
-                        var currentPage = 1;
-                        var totalPages = 1;
-                        var currentRecords = [{
-                            id: 1,
-                            name: '李晓明提交了万科十一区的小区变更申请',
-                            dateStr: '2016-09-20',
-                            timeStr: '21:22:14',
-                            status: 0
-                        }, {
-                            id: 2,
-                            name: '李晓明提交了<span>万科十一区</span>的小区变更申请',
-                            dateStr: '2016-09-20',
-                            timeStr: '21:22:14',
-                            status: 0
-                        }, {
-                            id: 3,
-                            name: '李晓明提交了万科十一区的小区变更申请',
-                            dateStr: '2016-09-20',
-                            timeStr: '21:22:14',
-                            status: 0
-                        }];
-                        handler(currentRecords, currentPage, totalPages);
+                        AuditApi.myReviewList(t.config.status,{},function(data){
+                            if(data&&data.result){
+                                tipsAlert.close();
+                                var result=data.result;
+                                var currentPage = result.currentPage;
+                                var totalPages = result.totalPages;
+                                var currentRecords = result.currentRecords;
+                                if(handler){
+                                    handler(currentRecords, currentPage, totalPages);
+                                }
+                            }
+                        },function(code, msg) {
+                            tipsAlert.close();
+                            tipsAlert.openAlert({
+                                content: msg
+                            });
+                        });
                     },
+
                     appendItem: function(data) {
                         console.log(data);
                         //住宅录入率
-                        // var inputMemberRate = 0;
-                        // if (data && data.inputCommunityRoomAmount) {
-                        //     inputMemberRate = ((data.inputMemberAmount / data.inputCommunityRoomAmount) * 100).toFixed(0);
-                        //     if (inputMemberRate > 100) {
-                        //         inputMemberRate = 100;
-                        //     }
-                        // }
-
-
-
                         // var item = {
                         //     index: i,
                         //     name: data['xingMing'],
@@ -97,9 +87,28 @@ define('js/longyan/view/my_review_list', [
                         //     url: '#report_employee_by_id/' + data['id']
                         // };
                         // i++;
+                        //'李晓明提交了<span>万科十一区</span>的小区变更申请',
+                        var arrDay = data.auditShowDate.substring(0,10);
+                        var arrSec = data.auditShowDate.substring(11);
+                        var name = data.updateEmployeeXingMing||"";
+                        var str = name+'提交了<span>'+data.name+'</span>的小区变更申请';
+                        if(t.config.status==0){
+                            var showName = str;
+                        }else if(t.config.status==1){
+                            var showName = str+"通过";
+                        }else if(t.config.status==2){
+                            var showName = str+"未通过";
+                        }
+                        var item = {
+                            id: data.id,
+                            name: showName,
+                            dateStr: arrDay,
+                            timeStr: arrSec,
+                            status: 0
+                        };
 
                         return tpl(ReviewListItemTpl, {
-                            data: data
+                            data: item
                         });
                     }
                 });
@@ -109,13 +118,20 @@ define('js/longyan/view/my_review_list', [
                 var t = this;
             },
 
+            //点击跳转至相关页面
+            _clickToAnother: function(e) {
+                var t = this;
+                var id = $(e.currentTarget).attr('data-id') || 0;
+                window.location.href = "#my_review_detail/"+id;
+            },
+            //点击跳转小区详情页面
             _clickItem: function(e) {
                 var t = this;
                 var index = $(e.currentTarget).attr('index');
-                if(index != t.config.status){
+                if (index != t.config.status) {
                     window.location.href = '#my_review_list/' + index;
-                }else{
-                    console.log("no action");
+                } else {
+                    console.log('no action');
                 }
             },
 
