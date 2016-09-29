@@ -584,7 +584,6 @@ public class CommunityController extends BaseController implements CommonBizCons
 
             String querySQL = sb.toString();
 
-
             List<Object> paramsList = new ArrayList<Object>();
             paramsList.add(strSysytemDateTime);
 
@@ -592,6 +591,7 @@ public class CommunityController extends BaseController implements CommonBizCons
             List lsAroundCommunityByName = redstarCommonManager.excuteBySql(querySQL, paramsList);
 
             res.addKey("community", lsAroundCommunityByName);
+            setSuccessMsg(res);
         } catch (Exception e) {
             setErrMsg(res, "没有数据");
         }
