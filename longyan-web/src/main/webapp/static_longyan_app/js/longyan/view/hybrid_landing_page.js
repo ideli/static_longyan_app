@@ -26,7 +26,7 @@ define('js/longyan/view/hybrid_landing_page', [
                     //     gotoPage:'community/1',
                     //     source:'hybrid',
                     //     ......
-                    // }
+                    // }                    
                     //解码
                     var decode = decodeURIComponent(t.config.data);
                     //编码

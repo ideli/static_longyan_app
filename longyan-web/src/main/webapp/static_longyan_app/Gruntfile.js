@@ -365,6 +365,16 @@ module.exports = function(grunt) {
           filter: 'isFile'
         }]
       }
+    },
+    //手工发包到测试环境并且更新版本号
+    shell: {
+      multiple: {
+        command: [
+          'cd build_zip',
+          'scp release-' + randomNum + '.zip root@192.168.221.12:/opt/project/longyanweb_dev/p-itcenter-longyan/static_longyan_app/build_zip',
+          'curl "http://192.168.221.13:9993/longyan/appversion?version=release-' + randomNum + '.zip"'
+        ].join('&&')
+      }
     }
   });
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -383,7 +393,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-filerev');
   grunt.loadNpmTasks('grunt-usemin');
-  // grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-autoprefixer');
@@ -402,4 +412,6 @@ module.exports = function(grunt) {
   grunt.registerTask('css', ['less', 'concat:css', 'cssmin']);
   //执行任务
   grunt.registerTask('app', ['clean', 'js', 'css', 'filerev', 'copy', 'usemin', 'compress']);
+  //自动发布静态资源到dev上
+  grunt.registerTask('staticdev', ['app', 'shell:multiple']);
 };
