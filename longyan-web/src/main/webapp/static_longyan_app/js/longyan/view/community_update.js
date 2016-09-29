@@ -445,15 +445,9 @@ define('js/longyan/view/community_update', [
                                 content: _tipsAlertSuccessText,
                                 closeCallback: function() {
                                     tipsAlert.close();
-                                    if (t.config.update_exist) {
-                                        // window.history.go(-2);
-
-                                        router.navigate('community_preview/' + t.config.id, {
-                                            trigger: true
-                                        });
-                                    } else {
-                                        history.back();
-                                    }
+                                    router.navigate('community_home/' + t.config.id, {
+                                        trigger: true
+                                    });
                                 }
                             });
                         },

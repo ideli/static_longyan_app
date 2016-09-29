@@ -201,13 +201,10 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 		getCommunityListByEmoloyee: function(page, pageSize, data, success, error) {
 			var t = this;
 			var url = _basePath + '/list_by_employee';
-			//发送http psot请求
-			alert(233)
+			//发送http psot请求			
 			t._executeRequest(url, data, function(response) {
-				alert(44444)
-					//返回的http请求数据
+				//返回的http请求数据
 				t._executeResponse(response, success, error);
-				alert(6666)
 			}, false, 'POST', false, $nvwa.header.getHeaders());
 		},
 		//获取楼栋号列表

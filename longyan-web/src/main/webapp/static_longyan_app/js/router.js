@@ -33,6 +33,7 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             //龙榜 历史列表
             "integral_rank_list_history_champion": "integral_rank_list_history_champion",
             //消息中心
+            "message_list/:source": "message_list",
             "message_list": "message_list",
             //我的->审核
             "my_review_list/:status": "my_review_list",
@@ -270,9 +271,11 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             var t = this;
             t.changePage('integral_rule');
         },
-        message_list: function() {
+        message_list: function(source) {
             var t = this;
-            t.changePage('message_list');
+            t.changePage('message_list', {
+                source: source
+            });
         },
         my_submit: function() {
             var t = this;
