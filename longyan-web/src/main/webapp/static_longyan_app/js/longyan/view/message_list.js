@@ -9,9 +9,10 @@ define('js/longyan/view/message_list', [
         'js/components/alert_ui',
         'js/element/view/header',
         'js/element/view/list-box',
+        'js/util/hybrid',
         'js/api/message'
     ],
-    function(ListContailerTpl, MessageListItemTpl, Cache, AlertUI, HeaderView, ListBox, MessageApi) {
+    function(ListContailerTpl, MessageListItemTpl, Cache, AlertUI, HeaderView, ListBox, hybrid, MessageApi) {
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#message-list-view';
         var form_id = '#message-list-form';
@@ -35,7 +36,10 @@ define('js/longyan/view/message_list', [
                 t.header_view = new HeaderView({
                     el: $('#header-container')
                 }, {
-                    text: '消息中心'
+                    text: '消息中心',
+                    goBackUrl: function() {
+                        hybrid.backToHybrid("HomePage");
+                    }
                 });
 
                 var i = 1;
