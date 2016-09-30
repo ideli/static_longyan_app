@@ -278,7 +278,7 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 		},
 		aroundList: function(data, success, error) {
 			var t = this;
-			var url = _basePath + '/aroundList/' + data.type;
+			var url = _basePath + '/aroundList';
 			var request_body = data || {};
 			//发送http psot请求
 			t._executeRequest(url, request_body, function(response) {

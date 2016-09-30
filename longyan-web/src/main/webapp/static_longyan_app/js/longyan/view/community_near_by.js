@@ -43,9 +43,17 @@ define('js/longyan/view/community_near_by', [
                     text: '周边小区'
                 });
 
-
                 var i = 1;
                 var mallId = t.config.id;
+
+                var request_body = {
+                    queryType: _requestType[t.config.status],
+                    longitude: t.config.longitude || 121.447682,
+                    latitude: t.config.latitude || 31.337771,
+                    cityName: t.config.cityName || '上海市',
+                    limitM: 2000
+                };
+
                 t.list_box = new ListBox({
                     el: $('#community-near-by-list-box')
                 }, {
@@ -55,14 +63,7 @@ define('js/longyan/view/community_near_by', [
                         tipsAlert.openLoading({
                             content: '加载中...'
                         });
-                        CommunityApi.aroundList({
-                            type: _requestType[t.config.status],
-                            longitude: 121.447682,
-                            latitude: 31.337771,
-                            provinceCode: 310000,
-                            cityCode: 310100,
-                            limitM: 2000
-                        }, function(data) {
+                        CommunityApi.aroundList(request_body, function(data) {
                             tipsAlert.close();
                             console.log(data);
                             if (data && data.result) {
