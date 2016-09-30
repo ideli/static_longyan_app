@@ -110,6 +110,63 @@ public class RedstarCommunity implements Identified {
 
     private Integer reviewStatus=0; //审核状态
 
+    public RedstarCommunity() {
+
+    }
+
+    public RedstarCommunity(RedstarCommunityUpdateLog communityUpdateLog) {
+
+        this.setId(communityUpdateLog.getCommunityId());
+        this.setAddress(communityUpdateLog.getAddress());
+        this.setAlreadyCheckAmount(communityUpdateLog.getAlreadyCheckAmount());
+        this.setAlreadyInputAmount(communityUpdateLog.getAlreadyInputAmount());
+        this.setArea(communityUpdateLog.getArea());
+        this.setAreaCode(communityUpdateLog.getAreaCode());
+        this.setAreaMonut(communityUpdateLog.getAreaMonut());
+        this.setBuildingAmount(communityUpdateLog.getBuildingAmount());
+        this.setBuildingDate(communityUpdateLog.getBuildingDate());
+        this.setCity(communityUpdateLog.getCity());
+        this.setCityCode(communityUpdateLog.getCityCode());
+        this.setCompleteStatus(communityUpdateLog.getCompleteStatus());
+        this.setConstructionTypes(communityUpdateLog.getConstructionTypes());
+        this.setCreateDate(communityUpdateLog.getCreateDate());
+        this.setCreateEmployeeId(communityUpdateLog.getCreateEmployeeId());
+        this.setCreateXingMing(communityUpdateLog.getCreateXingMing());
+        this.setCurrentNo(communityUpdateLog.getCurrentNo());
+        this.setDataBelong(communityUpdateLog.getDataBelong());
+        this.setDeliveryTime(communityUpdateLog.getDeliveryTime());
+        this.setDevelopers(communityUpdateLog.getDevelopers());
+        this.setDistributionCharge(communityUpdateLog.getDistributionCharge());
+        this.setFreeDistribution(communityUpdateLog.getFreeDistribution());
+        this.setHotline(communityUpdateLog.getHotline());
+        this.setInputRate(communityUpdateLog.getInputRate());
+        this.setLatitude(communityUpdateLog.getLatitude());
+        this.setLogo(communityUpdateLog.getLogo());
+        this.setLongitude(communityUpdateLog.getLongitude());
+        this.setMerchantId(communityUpdateLog.getMerchantId());
+        this.setName(communityUpdateLog.getName());
+        this.setOccupanyRate(communityUpdateLog.getOccupanyRate());
+        this.setOwnerId(communityUpdateLog.getOwnerId());
+        this.setOwnerMallId(communityUpdateLog.getOwnerMallId());
+        this.setOwnerMallName(communityUpdateLog.getOwnerMallName());
+        this.setOwnerXingMing(communityUpdateLog.getOwnerXingMing());
+        this.setPickupAddress(communityUpdateLog.getPickupAddress());
+        this.setPriceSection(communityUpdateLog.getPriceSection());
+        this.setProgramFeatures(communityUpdateLog.getProgramFeatures());
+        this.setPropertyName(communityUpdateLog.getPropertyName());
+        this.setProvince(communityUpdateLog.getProvince());
+        this.setProvinceCode(communityUpdateLog.getProvinceCode());
+        this.setReclaimStatus(communityUpdateLog.getReclaimStatus());
+        this.setRenovations(communityUpdateLog.getRenovations());
+        this.setReviewStatus(communityUpdateLog.getReviewStatus());
+        this.setRoomMount(communityUpdateLog.getRoomMount());
+        this.setShortName(communityUpdateLog.getShortName());
+        this.setSource(communityUpdateLog.getSource());
+        this.setUpdateDate(communityUpdateLog.getUpdateDate());
+        this.setUpdateEmployeeId(communityUpdateLog.getUpdateEmployeeId());
+        this.setUpdateEmployeeXingMing(communityUpdateLog.getUpdateEmployeeXingMing());
+    }
+
     public Integer getReviewStatus() {
         return reviewStatus;
     }
