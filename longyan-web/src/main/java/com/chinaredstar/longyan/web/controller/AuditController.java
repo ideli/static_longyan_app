@@ -1,23 +1,28 @@
 package com.chinaredstar.longyan.web.controller;
 
+import com.chinaredstar.commonBiz.bean.RedstarCommunity;
 import com.chinaredstar.commonBiz.bean.RedstarCommunityUpdateLog;
 import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.commonBiz.util.DoubleUtil;
+import com.chinaredstar.longyan.exception.FormException;
 import com.chinaredstar.longyan.util.RateUtil;
 import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.xiwa.base.bean.PaginationDescribe;
+import com.xiwa.base.bean.Request;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.bean.search.ext.IntSearch;
 import com.xiwa.base.bean.search.ext.MultiSearchBean;
 import com.xiwa.base.pipeline.PipelineContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -208,10 +213,63 @@ public class AuditController extends BaseController implements CommonBizConstant
             } else {
                 communityUpdateLog.setInputRate(0.0);
             }
-            res.setCode(HTTP_SUCCESS_CODE);
             res.addKey("community", communityUpdateLog);
+            setSuccessMsg(res);
         } catch (Exception e) {
             setErrMsg(res, "没有数据");
+        }
+        return res;
+    }
+
+    //依据审核状态变更小区信息
+    @RequestMapping(value = "/update/{status}", method = RequestMethod.POST)
+    @ResponseBody
+    @Transactional
+    public Response dataUpdate(@PathVariable("status") String status) {
+        PipelineContext pipelineContext = this.buildPipelineContent();
+        Request request = pipelineContext.getRequest();
+        Response res = pipelineContext.getResponse();
+
+        try {
+
+            Integer dataId = request.getInt("id");
+            if (dataId == 0) {
+                throw new FormException("小区id没有填写");
+            }
+            RedstarCommunityUpdateLog communityUpdateLog = (RedstarCommunityUpdateLog) dispatchDriver.getRedstarCommunityUpdateLogManager().getBean(dataId);
+            if (communityUpdateLog == null) {
+                throw new FormException("没有找到小区");
+            }
+
+            if ("OK".equals(status)) { // 小区修正信息审核成功
+
+                // 小区更新履历表数据更新
+                communityUpdateLog.setUpdateDate(new Date());
+                communityUpdateLog.setReviewStatus(Integer.valueOf(strAuditOK));
+
+                RedstarCommunity community = new RedstarCommunity(communityUpdateLog);
+                community.setId(communityUpdateLog.getCommunityId());
+
+                // 2个表更新
+                dispatchDriver.getRedstarCommunityUpdateLogManager().updateBean(communityUpdateLog);
+                dispatchDriver.getRedstarCommunityManager().updateBean(community);
+            } else { // 审核失败
+                // 更新者信息添加
+                communityUpdateLog.setUpdateDate(new Date());
+                //  审核状态变成失败
+                communityUpdateLog.setReviewStatus(Integer.valueOf(strAuditNG));
+
+                dispatchDriver.getRedstarCommunityUpdateLogManager().updateBean(communityUpdateLog);
+            }
+            res.setCode(HTTP_SUCCESS_CODE);
+            res.setMessage("操作成功");
+        } catch (FormException e) {
+            //表单校验不通过
+            res.setCode(FORM_ERROR_CODE);
+            res.setOk(Boolean.FALSE);
+            res.setMessage(e.getMessage());
+        } catch (Exception e) {
+            setUnknowException(e, res);
         }
         return res;
     }
