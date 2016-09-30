@@ -44,9 +44,9 @@ public class AuditController extends BaseController implements CommonBizConstant
     private String strAuditNeedAction = "1";
 
     // 查询我的审核列表
-    @RequestMapping(value = "/viewAuditList/{type}", method = RequestMethod.POST)
+    @RequestMapping(value = "/viewAuditList", method = RequestMethod.POST)
     @ResponseBody
-    public Response getViewAuditList(@PathVariable("type") String strType) {
+    public Response getViewAuditList(String type) {
         PipelineContext pipelineContext = this.buildPipelineContent();
         Response res = pipelineContext.getResponse();
 
@@ -77,13 +77,13 @@ public class AuditController extends BaseController implements CommonBizConstant
             ownerIdSearch.setSearchValue(String.valueOf(intEmployeeId));
 
             IntSearch reviewStatusSearch = null;
-            if ("OK".equals(strType)) {
+            if ("OK".equals(type)) {
                 reviewStatusSearch = new IntSearch("reviewStatus");
                 reviewStatusSearch.setSearchValue(strAuditOK);
-            } else if ("NG".equals(strType)) {
+            } else if ("NG".equals(type)) {
                 reviewStatusSearch = new IntSearch("reviewStatus");
                 reviewStatusSearch.setSearchValue(strAuditNG);
-            } else if ("NEEDACTION".equals(strType)) {
+            } else if ("NEEDACTION".equals(type)) {
                 reviewStatusSearch = new IntSearch("reviewStatus");
                 reviewStatusSearch.setSearchValue(strAuditNeedAction);
             }
@@ -95,7 +95,7 @@ public class AuditController extends BaseController implements CommonBizConstant
             PaginationDescribe<RedstarCommunityUpdateLog> result = (PaginationDescribe<RedstarCommunityUpdateLog>) dispatchDriver.getRedstarCommunityUpdateLogManager().searchBeanPage(page, pageSize, multiSearchBean, "updateDate", Boolean.FALSE);
 
             List lstTemp = result.getCurrentRecords();
-            if ("NEEDACTION".equals(strType)) { // 待审核显示创建时间
+            if ("NEEDACTION".equals(type)) { // 待审核显示创建时间
                 for (int i = 0; i < lstTemp.size(); i++) {
                     RedstarCommunityUpdateLog objTemp = (RedstarCommunityUpdateLog) lstTemp.get(i);
                     objTemp.setAuditShowDate(objTemp.getCreateDate());
@@ -118,9 +118,9 @@ public class AuditController extends BaseController implements CommonBizConstant
 
 
     // 查询我的提交列表
-    @RequestMapping(value = "/viewUpdateList/{type}", method = RequestMethod.POST)
+    @RequestMapping(value = "/viewUpdateList", method = RequestMethod.POST)
     @ResponseBody
-    public Response getViewUpdateList(@PathVariable("type") String strType) {
+    public Response getViewUpdateList(String type) {
         PipelineContext pipelineContext = this.buildPipelineContent();
         Response res = pipelineContext.getResponse();
 
@@ -150,13 +150,13 @@ public class AuditController extends BaseController implements CommonBizConstant
             updateEmployeeIdSearch.setSearchValue(String.valueOf(intEmployeeId));
 
             IntSearch reviewStatusSearch = null;
-            if ("OK".equals(strType)) {
+            if ("OK".equals(type)) {
                 reviewStatusSearch = new IntSearch("reviewStatus");
                 reviewStatusSearch.setSearchValue(strAuditOK);
-            } else if ("NG".equals(strType)) {
+            } else if ("NG".equals(type)) {
                 reviewStatusSearch = new IntSearch("reviewStatus");
                 reviewStatusSearch.setSearchValue(strAuditNG);
-            } else if ("NEEDACTION".equals(strType)) {
+            } else if ("NEEDACTION".equals(type)) {
                 reviewStatusSearch = new IntSearch("reviewStatus");
                 reviewStatusSearch.setSearchValue(strAuditNeedAction);
             }
@@ -168,7 +168,7 @@ public class AuditController extends BaseController implements CommonBizConstant
             PaginationDescribe<RedstarCommunityUpdateLog> resultCommunityUpdateLog = (PaginationDescribe<RedstarCommunityUpdateLog>) dispatchDriver.getRedstarCommunityUpdateLogManager().searchBeanPage(page, pageSize, multiSearchBean, "updateDate", Boolean.FALSE);
 
             List lstTemp = resultCommunityUpdateLog.getCurrentRecords();
-            if ("NEEDACTION".equals(strType)) { // 待审核显示创建时间
+            if ("NEEDACTION".equals(type)) { // 待审核显示创建时间
                 for (int i = 0; i < lstTemp.size(); i++) {
                     RedstarCommunityUpdateLog objTemp = (RedstarCommunityUpdateLog) lstTemp.get(i);
                     objTemp.setAuditShowDate(objTemp.getCreateDate());
@@ -222,10 +222,10 @@ public class AuditController extends BaseController implements CommonBizConstant
     }
 
     //依据审核状态变更小区信息
-    @RequestMapping(value = "/update/{status}", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     @Transactional
-    public Response dataUpdate(@PathVariable("status") String status) {
+    public Response dataUpdate(String status) {
         PipelineContext pipelineContext = this.buildPipelineContent();
         Request request = pipelineContext.getRequest();
         Response res = pipelineContext.getResponse();
