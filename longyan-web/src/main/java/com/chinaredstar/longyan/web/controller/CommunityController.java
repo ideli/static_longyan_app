@@ -274,7 +274,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                 sb.append(" sqrt( pow(sin((c.latitude * pi() / 180 - ?*pi() / 180) / 2),2) + cos(c.latitude * pi() / 180) ");
                 sb.append(" * cos(?*pi() / 180) * pow(  ");
                 sb.append(" sin((c.longitude * pi() / 180 - ?*pi()/180) / 2),2))) * 1000) AS distance   ");
-                sb.append(" FROM xiwa_redstar_community c WHERE c.longitude>0 AND c.latitude>0 and c.cityName = ? HAVING distance < ? ORDER BY distance ");
+                sb.append(" FROM xiwa_redstar_community c WHERE c.longitude>0 AND c.latitude>0 and c.city = ? HAVING distance < ? ORDER BY distance ");
 
                 String querySQL = sb.toString();
 
