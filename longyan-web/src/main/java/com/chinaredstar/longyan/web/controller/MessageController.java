@@ -23,6 +23,7 @@ import com.xiwa.zeus.trinity.bean.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
@@ -141,12 +142,12 @@ public class MessageController extends BaseController implements CommonBizConsta
             if (pageSize == 0) {
                 pageSize = PageSize_Default;
             }
-            IntSearch recipientIDSearch=new IntSearch("recipientID");
+            IntSearch recipientIDSearch = new IntSearch("recipientID");
             recipientIDSearch.setSearchValue(StringUtil.getString(employee.getId()));
             //获取消息列表
-            PaginationDescribe<RedstarMessageCenter> pageData=dispatchDriver.getRedstarMessageCenterManager().searchBeanPage(page,pageSize,recipientIDSearch,"createDate", false);
+            PaginationDescribe<RedstarMessageCenter> pageData = dispatchDriver.getRedstarMessageCenterManager().searchBeanPage(page, pageSize, recipientIDSearch, "createDate", false);
             //返回给客户端
-            res.addKey("page_data",pageData);
+            res.addKey("page_data", pageData);
         } catch (Exception e) {
             e.printStackTrace();
             setErrorMessage(res, "服务器响应异常");
@@ -166,15 +167,15 @@ public class MessageController extends BaseController implements CommonBizConsta
             //从session中获取员工信息
             NvwaEmployee employee = getEmployeeromSession();
             //获取消息
-            List<RedstarMessageCenter> list= dispatchDriver.getRedstarMessageCenterManager().getBeanListByColumn("id", message_id, "createDate", false);
-            if(CollectionUtil.isValid(list)){
-                RedstarMessageCenter item=list.get(0);
+            List<RedstarMessageCenter> list = dispatchDriver.getRedstarMessageCenterManager().getBeanListByColumn("id", message_id, "createDate", false);
+            if (CollectionUtil.isValid(list)) {
+                RedstarMessageCenter item = list.get(0);
                 //更新消息状态
                 item.setReadFlg(1);
                 item.setReadDate(new Date());
                 dispatchDriver.getRedstarMessageCenterManager().updateBean(item);
                 //返回给客户端
-            }else{
+            } else {
                 //消息不存在
                 throw new BusinessException("消息不存在");
             }
@@ -187,6 +188,35 @@ public class MessageController extends BaseController implements CommonBizConsta
             setErrorMessage(res, "服务器响应异常");
         }
         return res;
+    }
+
+    /**
+     * 消息推送接口
+     *
+     * @return
+     */
+    @RequestMapping(value = "/push", method = RequestMethod.POST)
+    @ResponseBody
+    public Response pushMessageToClient() {
+        PipelineContext pipelineContext = buildPipelineContent();
+        //员工号
+        String empCode = pipelineContext.getRequest().getString("empCode");
+        //消息标题
+        String title = pipelineContext.getRequest().getString("title");
+        //正文 仅Android版本会显示
+        String content = pipelineContext.getRequest().getString("content");
+        //额外参数
+        String extParm = pipelineContext.getRequest().getString("extParm");
+        if (StringUtil.isInvalid(extParm)) {
+            extParm = null;
+        }
+        //插入数据到message center的表
+
+        //调用dubbo接口发送消息
+        if (StringUtil.isValid(empCode)) {
+            pipelineContext.getResponse().getDataMap().putAll(appPushService.sendPush(title, content, "LY", empCode, null, 0, extParm));
+        }
+        return pipelineContext.getResponse();
     }
 
 

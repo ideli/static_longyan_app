@@ -49,17 +49,7 @@ public class TestController extends BaseController implements CommonBizConstant 
     }
 
 
-    @RequestMapping(value = "/push")
-    @ResponseBody
-    public Response pushMessageToClient() {
-        PipelineContext pipelineContext = buildPipelineContent();
-        String empCode = pipelineContext.getRequest().getString("empCode");
-        String content = pipelineContext.getRequest().getString("content");
-        if (StringUtil.isValid(empCode)) {
-            pipelineContext.getResponse().getDataMap().putAll(appPushService.sendPush(content, content, "LY", empCode, null, 0, null));
-        }
-        return pipelineContext.getResponse();
-    }
+
 
 //    @Autowired
 //    private DispatchDriver dispatchDriver;
