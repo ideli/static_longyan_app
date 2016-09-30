@@ -86,9 +86,6 @@ define('js/longyan/view/my_submit_list', [
                         //         inputMemberRate = 100;
                         //     }
                         // }
-
-
-
                         // var item = {
                         //     index: i,
                         //     name: data['xingMing'],

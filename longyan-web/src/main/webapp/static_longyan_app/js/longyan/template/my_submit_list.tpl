@@ -4,7 +4,7 @@
 <div id="my-submit-list-bar">
 	<div class="item-box" index="0">
         <div class="bar-item" <#=config.status=="0"?'selected="true"':''#>>
-			待审核
+			审核中
 		</div>
 	</div>
 	<div class="item-box" index="1">
