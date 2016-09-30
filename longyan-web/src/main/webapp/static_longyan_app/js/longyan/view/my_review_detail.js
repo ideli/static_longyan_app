@@ -166,7 +166,6 @@ define('js/longyan/view/my_review_detail', [
                     readonly: true
                 });
 
-
                 t.community_property_name_input = new InputBox({
                     el: $(form_id)
                 }, {
@@ -202,7 +201,23 @@ define('js/longyan/view/my_review_detail', [
                     text: '通过'
                 }, {
                     Click: function (e) {
-
+                        //AuditApi.update(t.config.status,{},function(data){
+                        //    if(data&&data.result){
+                        //        tipsAlert.close();
+                        //        var result=data.result;
+                        //        var currentPage = result.currentPage;
+                        //        var totalPages = result.totalPages;
+                        //        var currentRecords = result.currentRecords;
+                        //        if(handler){
+                        //            handler(currentRecords, currentPage, totalPages);
+                        //        }
+                        //    }
+                        //},function(code, msg) {
+                        //    tipsAlert.close();
+                        //    tipsAlert.openAlert({
+                        //        content: msg
+                        //    });
+                        //});
                     }
                 });
                 //审核驳回按钮
@@ -217,13 +232,11 @@ define('js/longyan/view/my_review_detail', [
                     }
                 });
 
-
                 if (t.config && t.config.action && t.config.action == 'update') {
                     //填充表单
                     var community = Cache.get('community-manager-object');
                     if (community) {
                         console.log(community);
-
                     } else {
                         tipsAlert.openAlert({
                             content: '系统异常'
@@ -262,6 +275,38 @@ define('js/longyan/view/my_review_detail', [
             setFormValue: function (data) {
                 var t = this;
                 if(data){
+                    if(data.editColumnName){
+                        var arr = data.editColumnName.split(",");
+                        if(arr&&arr.length>0){
+                            $.each(arr,function(index,item){
+                                console.log(item);
+                                if(item){
+                                    switch (item){
+                                        case 'city':t.$el.find('.community-city-input').addClass('colorChange') ;break;
+                                        case 'name':t.$el.find('.community-name-input').addClass('colorChange') ;break;
+                                        case 'shortName':t.$el.find('.community-short-name-input').addClass('colorChange') ;break;
+                                        case 'address':t.$el.find('.community-address-input').addClass('colorChange') ;break;
+                                        case 'roomMount':t.$el.find('.community-room-amount-input').addClass('colorChange') ;break;
+                                        case 'buildingAmount':t.$el.find('.community-building-amount-input').addClass('colorChange') ;break;
+                                        case 'inputRate':t.$el.find('.community-occupancy-rate-input').addClass('colorChange') ;break;
+                                        case 'priceSection':t.$el.find('.community-price-section-input').addClass('colorChange') ;break;
+                                        case 'constructionTypes':t.$el.find('.community-construction-types-input').addClass('colorChange') ;break;
+                                        case 'renovations':t.$el.find('.community-developer-input').addClass('colorChange') ;break;
+                                        case 'deliveryTime':t.$el.find('.community-renovations-input').addClass('colorChange') ;break;
+                                        case 'developers':t.$el.find('.community-developer-input').addClass('colorChange') ;break;
+                                        case 'propertyName':t.$el.find('.community-property-name-input').addClass('colorChange') ;break;
+                                        case 'hotline':t.$el.find('.community-hotline-input').addClass('colorChange') ;break;
+                                        case 'ownerMallName':t.$el.find('.community-owner-mall-name-input').addClass('colorChange') ;break;
+                                    }
+                                }
+                            });
+                        }
+
+                    }
+                    //for(var i=0; i<arr.length; i++){
+                    //
+                    //}
+
                     //城市名称
                     t.community_city_input.setValue(data.city);
                     //小区名称

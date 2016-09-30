@@ -55,7 +55,11 @@ define('js/longyan/view/my_review_list', [
                             content: '加载中...'
                         });
 
-                        AuditApi.myReviewList(t.config.status,{},function(data){
+                        var _request_type=['NEEDACTION','OK','NG'];
+
+                        AuditApi.myReviewList({
+                            type:_request_type[t.config.status]
+                        },function(data){
                             if(data&&data.result){
                                 tipsAlert.close();
                                 var result=data.result;
