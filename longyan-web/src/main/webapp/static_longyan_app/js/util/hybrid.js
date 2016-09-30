@@ -40,34 +40,12 @@
 
 define('js/util/hybrid', [], function() {
     $nvwa.hybrid = {
-        locationDistance: function(posData,callback){//返回我的坐标和目标距离
+        locationDistance: function(posData, callback) { //返回我的坐标和目标距离
             if (window._isNative) {
                 var request_data = {
                     parameter: posData
                 };
-                $nvwa.app.request("locationAndDistance", request_data, function(resp){
-                    var obj;
-                    if (typeof resp == "object") {
-                        obj = resp;
-                        callback(obj);
-                    } else {
-                        try {
-                            obj = eval("(" + resp + ")");
-                        } catch (e) {
-                            alert('ajax error url=' + url);
-                        }
-                    }
-                });
-            } else {
-               console.log("不是native")
-            }
-        },
-        location: function(callback){//返回我的坐标和目标距离
-            if (window._isNative) {
-                var request_data = {
-                    parameter: ""
-                };
-                $nvwa.app.request("location", request_data, function(resp){
+                $nvwa.app.request("locationAndDistance", request_data, function(resp) {
                     var obj;
                     if (typeof resp == "object") {
                         obj = resp;
@@ -84,26 +62,57 @@ define('js/util/hybrid', [], function() {
                 console.log("不是native")
             }
         },
-        backToHybrid: function(nativeTag,directGoback){
+        location: function(callback) { //返回我的坐标和目标距离
+            if (window._isNative) {
+                var request_data = {
+                    parameter: ""
+                };
+                $nvwa.app.request("location", request_data, function(resp) {
+                    var obj;
+                    if (typeof resp == "object") {
+                        obj = resp;
+                        callback(obj);
+                    } else {
+                        try {
+                            obj = eval("(" + resp + ")");
+                        } catch (e) {
+                            alert('ajax error url=' + url);
+                        }
+                    }
+                });
+            } else {
+                console.log("不是native")
+            }
+        },
+        //router_to_native
+        //pop_to_native
+        //dismiss_to_native
+        backToHybrid: function(nativeTag, directGoback) {
             //console.log(Backbone.history)
             var historyLength = Backbone.history.history.length;
             var uuid = $nvwa.string.randomSN();
-            if(directGoback == "direct"){
-                parameter={"alias":nativeTag,"parameter":""}
-                if(_isIOS()){
+            if (directGoback == "direct") {
+                parameter = {
+                    "alias": nativeTag,
+                    "parameter": ""
+                }
+                if (_isIOS()) {
                     _app_call(uuid, "router_to_native", parameter);
-                }else{
+                } else {
                     window.hybrid._app_call(uuid, "router_to_native", parameter);
                 }
-            }else{
-                if(historyLength <= 1){
-                    parameter={"alias":nativeTag,"parameter":""}
-                    if(_isIOS()){
-                        _app_call(uuid, "router_to_native", parameter);
-                    }else{
-                        window.hybrid._app_call(uuid, "router_to_native",parameter);
+            } else {
+                if (historyLength <= 1) {
+                    parameter = {
+                        "alias": nativeTag,
+                        "parameter": ""
                     }
-                }else{
+                    if (_isIOS()) {
+                        _app_call(uuid, "router_to_native", parameter);
+                    } else {
+                        window.hybrid._app_call(uuid, "router_to_native", parameter);
+                    }
+                } else {
                     Backbone.history.history.back();
                 }
             }

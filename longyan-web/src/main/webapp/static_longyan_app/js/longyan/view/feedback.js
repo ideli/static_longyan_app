@@ -185,8 +185,16 @@ define('js/longyan/view/feedback', [
                                 });
 
                                 FeedbackApi.feedbackCreate(descInfoContent, descInfoAlias, descInfoName, descInfoPhone, function() {
+                                        tipsAlert.close();
+                                        // router.navigate('feedback_success', {
+                                        //     trigger: true
+                                        // });
+                                        // alert(1);
+                                        // window.location.href = '#feedback_success';
+                                        // alert(2);
                                         //success
-                                        setTimeout("router.navigate('feedback_success', {trigger: true});", "2000");
+                                        // setTimeout("router.navigate('feedback_success', {trigger: true});", "2000");
+                                        window.router.changePage('feedback_success');
                                         //关闭loading
                                         // tipsAlert.close();
                                     },

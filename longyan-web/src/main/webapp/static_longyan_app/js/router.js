@@ -38,7 +38,8 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             //我的->审核
             "my_review_list/:status": "my_review_list",
             "my_review_detail/:id": "my_review_detail",
-            "my_submit": "my_submit",
+            "my_submit_list/:status": "my_submit_list",
+            "my_submit_detail/:id": "my_submit_detail",
             //我的->积分说明
             "integral_rule": "integral_rule",
             //我的->积分明细
@@ -277,10 +278,16 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
                 source: source
             });
         },
-        my_submit: function() {
+        my_submit_list: function(status) {
             var t = this;
-            t.changePage('my_review_list', {
+            t.changePage('my_submit_list', {
                 status: status
+            });
+        },
+        my_submit_detail: function(id) {
+            var t = this;
+            t.changePage('my_submit_detail', {
+                id: id
             });
         },
         my_review_list: function(status) {
