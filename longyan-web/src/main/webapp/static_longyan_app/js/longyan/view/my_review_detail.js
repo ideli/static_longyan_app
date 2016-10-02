@@ -23,7 +23,7 @@ define('js/longyan/view/my_review_detail', [
         var form_id = '#my-review-detail-form';
         var LayoutView = Backbone.View.extend({
             events: {},
-            // 
+            // id
             initialize: function (options, config) {
                 var t = this;
                 t.config = config || {};
@@ -201,23 +201,16 @@ define('js/longyan/view/my_review_detail', [
                     text: '通过'
                 }, {
                     Click: function (e) {
-                        //AuditApi.update(t.config.status,{},function(data){
-                        //    if(data&&data.result){
-                        //        tipsAlert.close();
-                        //        var result=data.result;
-                        //        var currentPage = result.currentPage;
-                        //        var totalPages = result.totalPages;
-                        //        var currentRecords = result.currentRecords;
-                        //        if(handler){
-                        //            handler(currentRecords, currentPage, totalPages);
-                        //        }
-                        //    }
-                        //},function(code, msg) {
-                        //    tipsAlert.close();
-                        //    tipsAlert.openAlert({
-                        //        content: msg
-                        //    });
-                        //});
+                        var id = $(".button-box.pass-button").attr('data-id');
+                        AuditApi.update(id,"Ok",function(data){
+                            $('.basic-gap.owner-gap').hide();
+                            console.log("成功");
+                        },function(code, msg) {
+                           tipsAlert.close();
+                           tipsAlert.openAlert({
+                               content: msg
+                           });
+                        });
                     }
                 });
                 //审核驳回按钮
@@ -228,7 +221,16 @@ define('js/longyan/view/my_review_detail', [
                     text: '不通过'
                 }, {
                     Click: function (e) {
-
+                        var id = $(".button-box.pass-button").attr('data-id');
+                        AuditApi.update(id,"nG",function(data){
+                            $('.basic-gap.owner-gap').hide();
+                            console.log("失败");
+                        },function(code, msg) {
+                            tipsAlert.close();
+                            tipsAlert.openAlert({
+                                content: msg
+                            });
+                        });
                     }
                 });
 
@@ -282,7 +284,7 @@ define('js/longyan/view/my_review_detail', [
                                 console.log(item);
                                 if(item){
                                     switch (item){
-                                        case 'city':t.$el.find('.community-city-input').addClass('colorChange') ;break;
+                                        case 'city':t.$el.find('.community-city-input').addClass('colorChange'); break;
                                         case 'name':t.$el.find('.community-name-input').addClass('colorChange') ;break;
                                         case 'shortName':t.$el.find('.community-short-name-input').addClass('colorChange') ;break;
                                         case 'address':t.$el.find('.community-address-input').addClass('colorChange') ;break;

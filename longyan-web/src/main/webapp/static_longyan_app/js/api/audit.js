@@ -78,11 +78,21 @@ define('js/api/audit', ['js/util/http', 'js/api/auth_mock'], function(http, Mock
 			}, false, 'POST', false, $nvwa.header.getHeaders());
 		},
 
-		update : function(id, success, error){
+		update : function(id, status, success, error){
 			var t = this;
-			var url = _basePath + '/update/'+id;
-			var data = data;
+			var url = _basePath + '/update';
+			var data = {id:id, status:status}
 			t._executeRequest(url, data, function(response) {
+				//返回的http请求数据
+				t._executeResponse(response, success, error);
+			}, false, 'POST', false, $nvwa.header.getHeaders());
+		},
+
+		auditDetails : function(id, success, error){
+			var t = this;
+			var url = _basePath+'/'+id ;
+			var data = id;
+			t._executeRequest(url,data, function(response) {
 				//返回的http请求数据
 				t._executeResponse(response, success, error);
 			}, false, 'POST', false, $nvwa.header.getHeaders());
