@@ -27,7 +27,7 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             //附近的小区            
             "community_near_by/:status": "community_near_by",
             //我的小区
-            "my_owner_community_list": "my_owner_community_list",
+            "my_owner_community_list/:status": "my_owner_community_list",
             //龙榜
             "integral_rank_list": "integral_rank_list",
             //龙榜 历史列表
@@ -212,11 +212,11 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             });
         },
 
-
-
-        my_owner_community_list: function() {
+        my_owner_community_list: function(status) {
             var t = this;
-            t.changePage('my_owner_community_list');
+            t.changePage('my_owner_community_list', {
+                status:status
+            });
         },
         search_view: function(alias) {
             var t = this;
