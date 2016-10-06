@@ -78,6 +78,15 @@ define('js/api/audit', ['js/util/http', 'js/api/auth_mock'], function(http, Mock
 			}, false, 'POST', false, $nvwa.header.getHeaders());
 		},
 
+		viewUpdateList : function(id, success, error){
+			var t = this;
+			var url = _basePath + '/viewUpdateList';
+			var data = id;
+			t._executeRequest(url, data, function(response){
+					t._executeRequest(response, success, error);
+			}, true, 'POST', false, $nvwa.header.getHeader());
+		},
+
 		update : function(id, status, success, error){
 			var t = this;
 			var url = _basePath + '/update';
@@ -107,23 +116,6 @@ define('js/api/audit', ['js/util/http', 'js/api/auth_mock'], function(http, Mock
 				//返回的http请求数据
 				t._executeResponse(response, success, error);
 			}, false, 'POST', false, $nvwa.header.getHeaders());
-
-			//var t=this;
-			////type=0 调用待审核列表
-			//if(type&&type==0){
-			//	t.needAction(data,success,error);
-			//}
-			////type=1 调用审核通过列表
-			//if(type&&type==1){
-			//	t.ok(data,success,error);
-			//}
-			////type=2 调用审核未通过列表
-			//if(type&&type==2){
-			//	t.ng(data,success,error);
-			//}
-			//else {
-			//	console.log("no action");
-			//}
 		}
 	};
 	return AuthAPI;

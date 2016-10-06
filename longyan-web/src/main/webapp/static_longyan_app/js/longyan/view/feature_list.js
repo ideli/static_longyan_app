@@ -44,7 +44,7 @@ define('js/longyan/view/feature_list', [
                     fieldName: 'my-community',
                     text: '我的小区',
                     readonly: true,
-                    label_right: '<a href="#my_owner_community_list"><i class="iconfont">&#xe602;</i></a>'
+                    label_right: '<a href="#my_owner_community_list/0"><i class="iconfont">&#xe602;</i></a>'
 
                 });
                 t.my_review = new InputBox({
@@ -61,7 +61,7 @@ define('js/longyan/view/feature_list', [
                     fieldName: 'my-submit',
                     text: '我的提交',
                     readonly: true,
-                    label_right: '<a href="#my_submit"><i class="iconfont">&#xe602;</i></a>'
+                    label_right: '<a href="#my_submit_list/0"><i class="iconfont">&#xe602;</i></a>'
                 });
                 t.my_jifen = new InputBox({
                     el: $(form_id)
@@ -121,7 +121,7 @@ define('js/longyan/view/feature_list', [
             //跳转到我的小区
             _goto_my_community: function() {
                 var t = this;
-                window.location.href = '#my_owner_community_list/';
+                window.location.href = '#my_owner_community_list';
             }
         });
         return LayoutView;

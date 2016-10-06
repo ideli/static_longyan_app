@@ -13,9 +13,9 @@ define('js/longyan/view/my_submit_list', [
         'js/element/view/link-box',
         'js/element/view/tips-bar',
         'js/element/view/list-box',
-        'js/api/report'
+        'js/api/audit'
     ],
-    function(ListContailerTpl, SubmitListItemTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox, ReportApi) {
+    function(ListContailerTpl, SubmitListItemTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox, AuditApi) {
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#my-submit-list-view';
         var form_id = '#my-submit-list-form';
@@ -52,29 +52,31 @@ define('js/longyan/view/my_submit_list', [
                     scroll: false //支持下拉刷新
                 }, {
                     loadData: function(page, handler) {
+                        tipsAlert.openLoading({
+                            content: "加载中"
+                        });
 
-                        var currentPage = 1;
-                        var totalPages = 1;
-                        var currentRecords = [{
-                            id: 1,
-                            name: '李晓明提交了万科十一区的小区变更申请',
-                            dateStr: '2016-09-20',
-                            timeStr: '21:22:14',
-                            status: 0
-                        }, {
-                            id: 2,
-                            name: '李晓明提交了<span>万科十一区</span>的小区变更申请',
-                            dateStr: '2016-09-20',
-                            timeStr: '21:22:14',
-                            status: 0
-                        }, {
-                            id: 3,
-                            name: '李晓明提交了万科十一区的小区变更申请',
-                            dateStr: '2016-09-20',
-                            timeStr: '21:22:14',
-                            status: 0
-                        }];
-                        handler(currentRecords, currentPage, totalPages);
+                        var _request_type=['NEEDACTION','OK','NG'];
+
+                        AuditApi.viewUpdateList({
+                            type:_request_type[t.config.status]},
+                            function(data){
+                                if(data&data.result){
+                                    tipsAlert.close();
+                                    var result=data.result;
+                                    var currentPage = result.currentPage;
+                                    var totalPages = result.totalPages;
+                                    var currentRecords = result.currentRecords;
+                                    if(handler){
+                                        handler(currentRecords, currentPage, totalPages);
+                                    }
+                                }
+                            },function(code,msg){
+                                tipsAlert.close();
+                                tipsAlert.openAlert({
+                                    content: msg
+                                });
+                            });
                     },
                     appendItem: function(data) {
                         console.log(data);
@@ -96,6 +98,27 @@ define('js/longyan/view/my_submit_list', [
                         //     url: '#report_employee_by_id/' + data['id']
                         // };
                         // i++;
+                        var arrDay = data.auditShowDate.substring(0,10);
+                        var arrSec = data.auditShowDate.substring(11);
+                        var str = '提交了<span>'+data.name+'</span>的小区变更申请';
+                        if(t.config.status==0){
+                            var showName = str;
+                        }else if(t.config.status==1){
+                            var showName = str+"通过";
+                        }else if(t.config.status==2){
+                            var showName = str+"未通过";
+                        }
+                        var item = {
+                            id: data.id,
+                            name: showName,
+                            dateStr: arrDay,
+                            timeStr: arrSec,
+                            status: 0
+                        };
+
+                        return tpl(ReviewListItemTpl, {
+                            data: item
+                        });
 
                         return tpl(SubmitListItemTpl, {
                             data: data
