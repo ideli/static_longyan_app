@@ -338,9 +338,6 @@ define('js/longyan/view/my_review_detail', [
                         }
 
                     }
-                    //for(var i=0; i<arr.length; i++){
-                    //
-                    //}
 
                     //城市名称
                     t.community_city_input.setValue(data.city);

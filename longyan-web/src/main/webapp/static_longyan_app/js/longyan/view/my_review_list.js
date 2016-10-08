@@ -80,18 +80,6 @@ define('js/longyan/view/my_review_list', [
 
                     appendItem: function(data) {
                         console.log(data);
-                        //住宅录入率
-                        // var item = {
-                        //     index: i,
-                        //     name: data['xingMing'],
-                        //     inputMemberAmount: data['inputMemberAmount'],
-                        //     inputCommunityAmount: data['inputCommunityAmount'],
-                        //     employeeCount: data['employeeCount'],
-                        //     inputMemberRate: inputMemberRate,
-                        //     url: '#report_employee_by_id/' + data['id']
-                        // };
-                        // i++;
-                        //'李晓明提交了<span>万科十一区</span>的小区变更申请',
                         var arrDay = data.auditShowDate.substring(0,10);
                         var arrSec = data.auditShowDate.substring(11);
                         var name = data.updateEmployeeXingMing||"";
