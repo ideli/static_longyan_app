@@ -60,6 +60,7 @@
             <mvc:mapping path="/**/*"/>
             <mvc:exclude-mapping path="/test/**/*"/>
             <mvc:exclude-mapping path="/common/**/*"/>
+            <mvc:exclude-mapping path="/feedback/**/*"/>
             <!--登出-->
             <!--<mvc:mapping path="/auth/logout"/>-->
             <!--获取用户信息 长传头像-->
