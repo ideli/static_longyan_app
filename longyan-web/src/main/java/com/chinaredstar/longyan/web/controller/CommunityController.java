@@ -427,6 +427,9 @@ public class CommunityController extends BaseController implements CommonBizCons
                     // 2个表更新
                     dispatchDriver.getRedstarCommunityUpdateLogManager().addBean(communityUpdateLog);
                     dispatchDriver.getRedstarCommunityManager().updateBean(community);
+
+                    // 所有更新完成后，设置更新类型
+                    res.addKey("type", 1);
                 } else { // 小区责任人为当前修改员工，无需审核直接更新小区表
                     //详细地址
                     CommunityFormUtil.setAddress(request, community);
@@ -463,6 +466,9 @@ public class CommunityController extends BaseController implements CommonBizCons
                     community.setUpdateDate(new Date());
 
                     dispatchDriver.getRedstarCommunityManager().updateBean(community);
+
+                    // 所有更新完成后，设置更新类型
+                    res.addKey("type", 0);
                 }
                 res.setCode(HTTP_SUCCESS_CODE);
                 res.setMessage("操作成功");
