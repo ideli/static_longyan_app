@@ -13,9 +13,6 @@
 			<#=data.address#>
 		</div>
 	</div>
-	<!-- <div class="item-col-2">
-		剩45天
-	</div> -->
 	<div class="item-col-3">
 		<div class="item-status">			
 			<#=data.haveComplate?'已完善':'待完善'#>
