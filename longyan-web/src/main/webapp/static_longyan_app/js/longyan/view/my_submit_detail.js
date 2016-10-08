@@ -197,18 +197,18 @@ define('js/longyan/view/my_submit_detail', [
 
 
 
-                if (t.config && t.config.action && t.config.action == 'update') {
-                    //填充表单
-                    var community = Cache.get('community-manager-object');
-                    if (community) {
-                        console.log(community);
+                // if (t.config && t.config.action && t.config.action == 'update') {
+                //     //填充表单
+                //     var community = Cache.get('community-manager-object');
+                //     if (community) {
+                //         console.log(community);
 
-                    } else {
-                        tipsAlert.openAlert({
-                            content: '系统异常'
-                        });
-                    }
-                }
+                //     } else {
+                //         tipsAlert.openAlert({
+                //             content: '系统异常'
+                //         });
+                //     }
+                // }
             },
             loadData: function() {
                 var t = this;

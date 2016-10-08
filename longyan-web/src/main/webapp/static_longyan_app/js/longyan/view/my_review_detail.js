@@ -17,14 +17,14 @@ define('js/longyan/view/my_review_detail', [
         'js/element/view/tips-bar',
         'js/api/audit'
     ],
-    function (CommunityListTpl, Cache, AlertUI, HeaderView, LocationView, PickerBox, InputBox, ThinkInputBox, LocationBox, InputPercentageBox, ButtonBox, LinkBox, TipsBar, AuditApi) {
+    function(CommunityListTpl, Cache, AlertUI, HeaderView, LocationView, PickerBox, InputBox, ThinkInputBox, LocationBox, InputPercentageBox, ButtonBox, LinkBox, TipsBar, AuditApi) {
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#my-review-detail-view';
         var form_id = '#my-review-detail-form';
         var LayoutView = Backbone.View.extend({
             events: {},
             // id
-            initialize: function (options, config) {
+            initialize: function(options, config) {
                 var t = this;
                 t.config = config || {};
 
@@ -32,7 +32,7 @@ define('js/longyan/view/my_review_detail', [
                 t.render();
                 t.loadData();
             },
-            render: function () {
+            render: function() {
                 var t = this;
                 $('body').css('background-color', '#efeff4');
                 t.$el.html(tpl(CommunityListTpl, {}));
@@ -200,16 +200,16 @@ define('js/longyan/view/my_review_detail', [
                     fieldName: 'pass-button',
                     text: '通过'
                 }, {
-                    Click: function (e) {
+                    Click: function(e) {
                         var id = $(".button-box.pass-button").attr('data-id');
-                        AuditApi.update(id,"Ok",function(data){
+                        AuditApi.update(id, "Ok", function(data) {
                             $('.basic-gap.owner-gap').hide();
                             console.log("成功");
-                        },function(code, msg) {
-                           tipsAlert.close();
-                           tipsAlert.openAlert({
-                               content: msg
-                           });
+                        }, function(code, msg) {
+                            tipsAlert.close();
+                            tipsAlert.openAlert({
+                                content: msg
+                            });
                         });
                     }
                 });
@@ -220,12 +220,12 @@ define('js/longyan/view/my_review_detail', [
                     fieldName: 'rollback-button',
                     text: '不通过'
                 }, {
-                    Click: function (e) {
+                    Click: function(e) {
                         var id = $(".button-box.pass-button").attr('data-id');
-                        AuditApi.update(id,"nG",function(data){
+                        AuditApi.update(id, "nG", function(data) {
                             $('.basic-gap.owner-gap').hide();
                             console.log("失败");
-                        },function(code, msg) {
+                        }, function(code, msg) {
                             tipsAlert.close();
                             tipsAlert.openAlert({
                                 content: msg
@@ -234,19 +234,19 @@ define('js/longyan/view/my_review_detail', [
                     }
                 });
 
-                if (t.config && t.config.action && t.config.action == 'update') {
-                    //填充表单
-                    var community = Cache.get('community-manager-object');
-                    if (community) {
-                        console.log(community);
-                    } else {
-                        tipsAlert.openAlert({
-                            content: '系统异常'
-                        });
-                    }
-                }
+                // if (t.config && t.config.action && t.config.action == 'update') {
+                //     //填充表单
+                //     var community = Cache.get('community-manager-object');
+                //     if (community) {
+                //         console.log(community);
+                //     } else {
+                //         tipsAlert.openAlert({
+                //             content: '系统异常'
+                //         });
+                //     }
+                // }
             },
-            loadData: function () {
+            loadData: function() {
                 var t = this;
                 if (t.config && t.config.id) {
                     // alert(t.config.id);
@@ -254,7 +254,7 @@ define('js/longyan/view/my_review_detail', [
                         content: '加载中...'
                     });
 
-                    AuditApi.changeId(t.config.id, function (data) {
+                    AuditApi.changeId(t.config.id, function(data) {
                         tipsAlert.close();
                         //返回数据
                         if (data && data.community) {
@@ -264,7 +264,7 @@ define('js/longyan/view/my_review_detail', [
                                 content: '系统异常'
                             });
                         }
-                    }, function (code, msg) {
+                    }, function(code, msg) {
                         tipsAlert.close();
                         //显示异常信息
                         tipsAlert.openAlert({
@@ -274,31 +274,61 @@ define('js/longyan/view/my_review_detail', [
                 }
             },
             //设置表单
-            setFormValue: function (data) {
+            setFormValue: function(data) {
                 var t = this;
-                if(data){
-                    if(data.editColumnName){
+                if (data) {
+                    if (data.editColumnName) {
                         var arr = data.editColumnName.split(",");
-                        if(arr&&arr.length>0){
-                            $.each(arr,function(index,item){
+                        if (arr && arr.length > 0) {
+                            $.each(arr, function(index, item) {
                                 console.log(item);
-                                if(item){
-                                    switch (item){
-                                        case 'city':t.$el.find('.community-city-input').addClass('colorChange'); break;
-                                        case 'name':t.$el.find('.community-name-input').addClass('colorChange') ;break;
-                                        case 'shortName':t.$el.find('.community-short-name-input').addClass('colorChange') ;break;
-                                        case 'address':t.$el.find('.community-address-input').addClass('colorChange') ;break;
-                                        case 'roomMount':t.$el.find('.community-room-amount-input').addClass('colorChange') ;break;
-                                        case 'buildingAmount':t.$el.find('.community-building-amount-input').addClass('colorChange') ;break;
-                                        case 'inputRate':t.$el.find('.community-occupancy-rate-input').addClass('colorChange') ;break;
-                                        case 'priceSection':t.$el.find('.community-price-section-input').addClass('colorChange') ;break;
-                                        case 'constructionTypes':t.$el.find('.community-construction-types-input').addClass('colorChange') ;break;
-                                        case 'renovations':t.$el.find('.community-developer-input').addClass('colorChange') ;break;
-                                        case 'deliveryTime':t.$el.find('.community-renovations-input').addClass('colorChange') ;break;
-                                        case 'developers':t.$el.find('.community-developer-input').addClass('colorChange') ;break;
-                                        case 'propertyName':t.$el.find('.community-property-name-input').addClass('colorChange') ;break;
-                                        case 'hotline':t.$el.find('.community-hotline-input').addClass('colorChange') ;break;
-                                        case 'ownerMallName':t.$el.find('.community-owner-mall-name-input').addClass('colorChange') ;break;
+                                if (item) {
+                                    switch (item) {
+                                        case 'city':
+                                            t.$el.find('.community-city-input').addClass('colorChange');
+                                            break;
+                                        case 'name':
+                                            t.$el.find('.community-name-input').addClass('colorChange');
+                                            break;
+                                        case 'shortName':
+                                            t.$el.find('.community-short-name-input').addClass('colorChange');
+                                            break;
+                                        case 'address':
+                                            t.$el.find('.community-address-input').addClass('colorChange');
+                                            break;
+                                        case 'roomMount':
+                                            t.$el.find('.community-room-amount-input').addClass('colorChange');
+                                            break;
+                                        case 'buildingAmount':
+                                            t.$el.find('.community-building-amount-input').addClass('colorChange');
+                                            break;
+                                        case 'inputRate':
+                                            t.$el.find('.community-occupancy-rate-input').addClass('colorChange');
+                                            break;
+                                        case 'priceSection':
+                                            t.$el.find('.community-price-section-input').addClass('colorChange');
+                                            break;
+                                        case 'constructionTypes':
+                                            t.$el.find('.community-construction-types-input').addClass('colorChange');
+                                            break;
+                                        case 'renovations':
+                                            t.$el.find('.community-developer-input').addClass('colorChange');
+                                            break;
+                                        case 'deliveryTime':
+                                            t.$el.find('.community-renovations-input').addClass('colorChange');
+                                            break;
+                                        case 'developers':
+                                            t.$el.find('.community-developer-input').addClass('colorChange');
+                                            break;
+                                        case 'propertyName':
+                                            t.$el.find('.community-property-name-input').addClass('colorChange');
+                                            break;
+                                        case 'hotline':
+                                            t.$el.find('.community-hotline-input').addClass('colorChange');
+                                            break;
+                                        case 'ownerMallName':
+                                            t.$el.find('.community-owner-mall-name-input').addClass('colorChange');
+                                            break;
                                     }
                                 }
                             });
