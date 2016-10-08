@@ -1,4 +1,4 @@
-<div class="my-owner-community-list-item">
+<div class="my-owner-community-list-item" data-id="<#=data.id#>">
 	<div class="item-col-1">
 		<div class="item-base-info">
 			<div class="item-name">
@@ -13,9 +13,6 @@
 			<#=data.address#>
 		</div>
 	</div>
-	<!-- <div class="item-col-2">
-		剩45天
-	</div> -->
 	<div class="item-col-3">
 		<div class="item-status">			
 			<#=data.haveComplate?'已完善':'待完善'#>

@@ -22,6 +22,7 @@ define('js/longyan/view/my_owner_community_list', [
         var LayoutView = Backbone.View.extend({
             events: {
                 'click .item-box': '_clickItem',
+                'click .my-owner-community-list-item' : '_clickToAnother'
             },
             //相关介绍
             initialize: function(options, config) {
@@ -60,6 +61,13 @@ define('js/longyan/view/my_owner_community_list', [
                         },function(data){
                             if(data&&data.result){
                                 tipsAlert.close();
+                                var result=data.result;
+                                var currentPage = result.currentPage;
+                                var totalPages = result.totalPages;
+                                var currentRecords = result.currentRecords;
+                                if(handler){
+                                    handler(currentRecords, currentPage, totalPages);
+                                }
                             }
                         },function(code, msg){
                             tipsAlert.close();
@@ -70,7 +78,15 @@ define('js/longyan/view/my_owner_community_list', [
                     },
                     appendItem: function(data) {
                         console.log(data);
-
+                        var item = {
+                            id : data.communityId,
+                            name: data.name,
+                            mallName: data.ownerMallName||"暂无商场",
+                            address: data.address,
+                            haveComplate: data.haveComplate,
+                            distance: data.distance,
+                            area : data.area,
+                        };
                         return tpl(OwnerCommunityListItemTpl, {
                             data: item
                         });
@@ -83,9 +99,9 @@ define('js/longyan/view/my_owner_community_list', [
                 var t = this;
             },
 
-            _clickItem : function(e) {
+            _clickItem: function(e) {
                 var t = this;
-                var index = $(e.currentTarget).attr('index');
+                var index = $(e.currentTarget).attr('index')||0;
                 if (index != t.config.status) {
                     window.location.href = '#my_owner_community_list/' + index;
                 } else {
@@ -93,14 +109,12 @@ define('js/longyan/view/my_owner_community_list', [
                 }
             },
 
-            // _clickToAnother : function(e){
-            //     //跳转页面
-            //     var t = this;
-            //     var id = $(e.currentTarget).attr('data-id') || 0;
-            //     Community_myApi.inChargeCommunity({
-            //
-            //     })
-            // },
+            _clickToAnother : function(e){
+                //跳转页面
+                var t = this;
+                var index = $(e.currentTarget).attr('data-id') || 0;
+                window.location.href = "#community_home/" + index;
+            },
 
             destroy: function() {
                 $(window).off('scroll');

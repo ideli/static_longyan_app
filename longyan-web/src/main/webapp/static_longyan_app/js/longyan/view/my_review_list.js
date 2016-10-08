@@ -120,7 +120,7 @@ define('js/longyan/view/my_review_list', [
             //点击跳转小区详情页面
             _clickItem: function(e) {
                 var t = this;
-                var index = $(e.currentTarget).attr('index');
+                var index = $(e.currentTarget).attr('index')||0;
                 if (index != t.config.status) {
                     window.location.href = '#my_review_list/' + index;
                 } else {
