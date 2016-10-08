@@ -126,18 +126,6 @@ define('js/longyan/view/my_review_list', [
             _clickToAnother: function(e) {
                 var t = this;
                 var id = $(e.currentTarget).attr('data-id') || 0;
-                AuditApi.auditDetails(id,function(){
-                    tipsAlert.close();
-                    $(".button-box.pass-button").attr('data-id', id);
-                    if(t.config.status != 0){
-                        $('.basic-gap.owner-gap').hide();
-                    }
-                },function(code, msg) {
-                    tipsAlert.close();
-                    tipsAlert.openAlert({
-                        content: msg
-                    });
-                });
                 window.location.href = "#my_review_detail/"+id;
             },
 
