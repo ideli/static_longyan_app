@@ -110,6 +110,16 @@ public class RedstarCommunity implements Identified {
 
     private Integer reviewStatus=0; //审核状态
 
+    private Integer limitDistance=0; //楼栋信息输入限制距离
+
+    public Integer getLimitDistance() {
+        return limitDistance;
+    }
+
+    public void setLimitDistance(Integer limitDistance) {
+        this.limitDistance = limitDistance;
+    }
+
     public RedstarCommunity() {
 
     }
