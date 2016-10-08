@@ -10,6 +10,7 @@ import com.chinaredstar.longyan.exception.FormException;
 import com.chinaredstar.longyan.exception.constant.CommonExceptionType;
 import com.chinaredstar.longyan.exception.constant.CommunityExceptionType;
 import com.chinaredstar.longyan.util.CommunityFormUtil;
+import com.chinaredstar.longyan.util.CommunityUpdateLogFormUtil;
 import com.chinaredstar.longyan.util.RateUtil;
 import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.chinaredstar.nvwaBiz.bean.NvwaSecurityOperationLog;
@@ -94,8 +95,13 @@ public class CommunityController extends BaseController implements CommonBizCons
                 ownerIdSearch.setSearchValue(String.valueOf(intEmployeeId));
                 PaginationDescribe<RedstarCommunity> inChargeCommunityResult =
                         (PaginationDescribe<RedstarCommunity>) dispatchDriver.getRedstarCommunityManager().searchBeanPage(page, pageSize, ownerIdSearch, "updateDate", Boolean.FALSE);
-                List<RedstarCommunity> redstarCommunityList = inChargeCommunityResult.getCurrentRecords();
-                ((SimplePaginationDescribe) inChargeCommunityResult).setCurrentRecords(redstarCommunityList);
+
+                // 为了传输到前台数据结构统一，设置CommunityId
+                List<RedstarCommunity> inChargeCommunityResultList = inChargeCommunityResult.getCurrentRecords();
+                for (RedstarCommunity inChargeCommunitys : inChargeCommunityResultList) {
+                    inChargeCommunitys.setCommunityId(inChargeCommunitys.getId());
+                }
+                ((SimplePaginationDescribe) inChargeCommunityResult).setCurrentRecords(inChargeCommunityResultList);
 
                 res.addKey("result", inChargeCommunityResult);
             } else if ("updateCommunity".equals(queryType)) {  // 完善的小区（非商场员工只调用这个接口）
@@ -104,8 +110,6 @@ public class CommunityController extends BaseController implements CommonBizCons
 
                 PaginationDescribe<RedstarCommunityUpdateLog> updateCommunityResult =
                         (PaginationDescribe<RedstarCommunityUpdateLog>) dispatchDriver.getRedstarCommunityUpdateLogManager().searchBeanPage(page, pageSize, updateIdSearch, "updateDate", Boolean.FALSE);
-                List<RedstarCommunityUpdateLog> redstarCommunityUpdateLogList = updateCommunityResult.getCurrentRecords();
-                ((SimplePaginationDescribe) updateCommunityResult).setCurrentRecords(redstarCommunityUpdateLogList);
 
                 res.addKey("result", updateCommunityResult);
             }
@@ -119,7 +123,7 @@ public class CommunityController extends BaseController implements CommonBizCons
     /**
      * //查询周边小区列表
      *
-     * @param queryType   allAroundCommunity=全部 occupyCommunity=可抢占 predistributionCommunity=预分配
+     * @param queryType allAroundCommunity=全部 occupyCommunity=可抢占 predistributionCommunity=预分配
      * @param longitude 经度
      * @param latitude  纬度
      * @param cityName
@@ -374,33 +378,33 @@ public class CommunityController extends BaseController implements CommonBizCons
                 if (community.getOwnerId() != intEmployeeId) {
                     RedstarCommunityUpdateLog communityUpdateLog = new RedstarCommunityUpdateLog(community);
                     //详细地址
-                    CommunityFormUtil.setAddress(request, communityUpdateLog);
+                    CommunityUpdateLogFormUtil.setAddress(request, communityUpdateLog);
                     //小区别称
-                    CommunityFormUtil.setShortName(request, communityUpdateLog);
+                    CommunityUpdateLogFormUtil.setShortName(request, communityUpdateLog);
                     //总户数
-                    CommunityFormUtil.setRoomMount(request, communityUpdateLog);
+                    CommunityUpdateLogFormUtil.setRoomMount(request, communityUpdateLog);
                     //总栋数
-                    CommunityFormUtil.setBuildingAmount(request, communityUpdateLog);
+                    CommunityUpdateLogFormUtil.setBuildingAmount(request, communityUpdateLog);
                     //入住率
-                    CommunityFormUtil.setAlreadyCheckAmount(request, communityUpdateLog);
+                    CommunityUpdateLogFormUtil.setAlreadyCheckAmount(request, communityUpdateLog);
                     //房屋均价
-                    CommunityFormUtil.setPriceSection(request, communityUpdateLog);
+                    CommunityUpdateLogFormUtil.setPriceSection(request, communityUpdateLog);
                     //建筑类型
-                    CommunityFormUtil.setConstructionTypes(request, communityUpdateLog);
+                    CommunityUpdateLogFormUtil.setConstructionTypes(request, communityUpdateLog);
                     //交房装修
-                    CommunityFormUtil.setRenovations(request, communityUpdateLog);
+                    CommunityUpdateLogFormUtil.setRenovations(request, communityUpdateLog);
                     //交房时间
-                    CommunityFormUtil.setDeliveryTime(request, communityUpdateLog);
+                    CommunityUpdateLogFormUtil.setDeliveryTime(request, communityUpdateLog);
                     //开发商信息
-                    CommunityFormUtil.setDevelopers(request, communityUpdateLog, redstarCommonManager);
+                    CommunityUpdateLogFormUtil.setDevelopers(request, communityUpdateLog, redstarCommonManager);
                     //物业公司
-                    CommunityFormUtil.setPropertyName(request, communityUpdateLog, redstarCommonManager);
+                    CommunityUpdateLogFormUtil.setPropertyName(request, communityUpdateLog, redstarCommonManager);
                     //物业电话
-                    CommunityFormUtil.setHotline(request, communityUpdateLog);
+                    CommunityUpdateLogFormUtil.setHotline(request, communityUpdateLog);
                     // 经度
-                    CommunityFormUtil.setLongitude(request, communityUpdateLog);
+                    CommunityUpdateLogFormUtil.setLongitude(request, communityUpdateLog);
                     // 纬度
-                    CommunityFormUtil.setLatitude(request, communityUpdateLog);
+                    CommunityUpdateLogFormUtil.setLatitude(request, communityUpdateLog);
 
                     // 更新者信息添加(小区更新履历表数据更新)
                     communityUpdateLog.setUpdateEmployeeId(employee.getId());
