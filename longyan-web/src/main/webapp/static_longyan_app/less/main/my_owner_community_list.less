@@ -43,75 +43,73 @@
 		background-color:@color-white;
 
 		#my-owner-community-list-box{
-
-		
-			#scroller.scroll_box{
+			#scroller{
 				background-color:@color-white;
 				margin-top:0;
-			}
 
-			.my-review-list-item{
-				width:100%;	
-				height:@size-166;
-				border-bottom: 1px solid #e1e1e1;
-				margin-left:@size-30;
-				
-				.item-col-1{
-					padding-top:@size-40;
-					float:left;
-					//margin-left:@size-30;
+				.scrollBox {
+					.my-owner-community-list-item  {
+						width: 100%;
+						height: @size-166;
+						border-bottom: 1px solid #e1e1e1;
+						margin-left: @size-30;
 
-					.item-base-info{
-						.item-name{
-							float:left;
-							font-size:@size-32;
-							line-height:@size-32;
-							color:@color-menu-font;
+						.item-col-1 {
+							padding-top: @size-40;
+							float: left;
+							//margin-left:@size-30;
+
+							.item-base-info {
+								.item-name {
+									float: left;
+									font-size: @size-32;
+									line-height: @size-32;
+									color: @color-menu-font;
+								}
+								.item-mall-name {
+									float: left;
+									font-size: @size-28;
+									line-height: @size-32;
+									color: @color-comment-font;
+									padding-left: @size-20;
+								}
+							}
+							.item-address {
+								padding-top: @size-30;
+								line-height: @size-30;
+								color: @color-comment-font;
+								font-size: @size-24;
+
+							}
 						}
-						.item-mall-name{
-							float:left;
-							font-size:@size-28;
-							line-height:@size-32;
-							color:@color-comment-font;
-							padding-left:@size-20;					
+
+						.item-col-2 {
+							float: right;
+							color: @color-menu-font;
+							font-size: @size-28;
+							line-height: @size-166;
+							margin-right: @size-60;
 						}
-					}
-					.item-address{
-						padding-top:@size-30;
-						line-height:@size-30;
-						color:@color-comment-font;
-						font-size:@size-24;
 
-					}
-				}	
+						.item-col-3 {
+							padding-top: @size-40;
+							float: right;
+							text-align: right;
+							padding-right: @size-60;
+							.item-status {
+								font-size: @size-28;
+								color: @color-main-blue;
 
-				.item-col-2{
-					float:right;
-					color:@color-menu-font;
-					font-size:@size-28;
-					line-height:@size-166;
-					margin-right:@size-60;
-				}
-
-				.item-col-3{
-					padding-top:@size-40;
-					float:right;
-					text-align:right;
-					padding-right:@size-60;
-					.item-status{
-						font-size:@size-28;
-						color:@color-main-blue;
-						
-					}
-					.item-distance{
-						color:@color-comment-font;
-						font-size:@size-24;				
+							}
+							.item-distance {
+								color: @color-comment-font;
+								font-size: @size-24;
+							}
+						}
 					}
 				}
 			}
-			
-
-		}	
+		}
 	}
 
 	

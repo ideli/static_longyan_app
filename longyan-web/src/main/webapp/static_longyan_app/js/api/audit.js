@@ -83,8 +83,8 @@ define('js/api/audit', ['js/util/http', 'js/api/auth_mock'], function(http, Mock
 			var url = _basePath + '/viewUpdateList';
 			var data = id;
 			t._executeRequest(url, data, function(response){
-					t._executeRequest(response, success, error);
-			}, true, 'POST', false, $nvwa.header.getHeader());
+					t._executeResponse(response, success, error);
+			}, false, 'POST', false, $nvwa.header.getHeader());
 		},
 
 		update : function(id, status, success, error){

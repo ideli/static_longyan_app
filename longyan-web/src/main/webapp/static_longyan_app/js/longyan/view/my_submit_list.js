@@ -21,7 +21,8 @@ define('js/longyan/view/my_submit_list', [
         var form_id = '#my-submit-list-form';
         var LayoutView = Backbone.View.extend({
             events: {
-                'click .item-box': '_clickItem'
+                'click .item-box': '_clickItem',
+                'click .my-owner-community-list-item' : '_clickToAnother'
             },
             //
             initialize: function(options, config) {
@@ -61,7 +62,7 @@ define('js/longyan/view/my_submit_list', [
                         AuditApi.viewUpdateList({
                             type:_request_type[t.config.status]},
                             function(data){
-                                if(data&data.result){
+                                if(data&&data.result){
                                     tipsAlert.close();
                                     var result=data.result;
                                     var currentPage = result.currentPage;
@@ -98,9 +99,13 @@ define('js/longyan/view/my_submit_list', [
                         //     url: '#report_employee_by_id/' + data['id']
                         // };
                         // i++;
-                        var arrDay = data.auditShowDate.substring(0,10);
-                        var arrSec = data.auditShowDate.substring(11);
-                        var str = '提交了<span>'+data.name+'</span>的小区变更申请';
+                        var arrDay='';
+                        var arrSec='';
+                        if(data.auditShowDate){
+                            arrDay = data.auditShowDate.substring(0,10);
+                            arrSec = data.auditShowDate.substring(11);
+                        }
+                        var str = '<span>'+data.name+'</span>的小区信息变更申请';
                         if(t.config.status==0){
                             var showName = str;
                         }else if(t.config.status==1){
@@ -108,6 +113,7 @@ define('js/longyan/view/my_submit_list', [
                         }else if(t.config.status==2){
                             var showName = str+"未通过";
                         }
+
                         var item = {
                             id: data.id,
                             name: showName,
@@ -116,12 +122,8 @@ define('js/longyan/view/my_submit_list', [
                             status: 0
                         };
 
-                        return tpl(ReviewListItemTpl, {
-                            data: item
-                        });
-
                         return tpl(SubmitListItemTpl, {
-                            data: data
+                            data: item
                         });
                     }
                 });
@@ -139,6 +141,13 @@ define('js/longyan/view/my_submit_list', [
                 } else {
                     console.log("no action");
                 }
+            },
+
+            _clickToAnother : function(e){
+                var t = this;
+                console.log($(e.currentTarget));
+                var id = $(e.currentTarget).attr("data-id")||0;
+                window.location.href = "#my_submit_detail/"+id;
             },
 
             destroy: function() {

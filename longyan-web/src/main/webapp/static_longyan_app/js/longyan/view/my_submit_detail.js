@@ -194,21 +194,6 @@ define('js/longyan/view/my_submit_detail', [
                     text: '所属商场',
                     readonly: true
                 });
-
-
-
-                // if (t.config && t.config.action && t.config.action == 'update') {
-                //     //填充表单
-                //     var community = Cache.get('community-manager-object');
-                //     if (community) {
-                //         console.log(community);
-
-                //     } else {
-                //         tipsAlert.openAlert({
-                //             content: '系统异常'
-                //         });
-                //     }
-                // }
             },
             loadData: function() {
                 var t = this;
