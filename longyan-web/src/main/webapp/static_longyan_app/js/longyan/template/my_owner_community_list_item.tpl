@@ -1,4 +1,4 @@
-<div class="my-owner-community-list-item">
+<div class="my-owner-community-list-item" data-id="<#=data.id#>">
 	<div class="item-col-1">
 		<div class="item-base-info">
 			<div class="item-name">

@@ -77,30 +77,9 @@ define('js/longyan/view/my_owner_community_list', [
                         });
                     },
                     appendItem: function(data) {
-                        //住宅录入率
-                        // var inputMemberRate = 0;
-                        // if (data && data.inputCommunityRoomAmount) {
-                        //     inputMemberRate = ((data.inputMemberAmount / data.inputCommunityRoomAmount) * 100).toFixed(0);
-                        //     if (inputMemberRate > 100) {
-                        //         inputMemberRate = 100;
-                        //     }
-                        // }
-
-                        // var item = {
-                        //     index: i,
-                        //     name: data['xingMing'],
-                        //     inputMemberAmount: data['inputMemberAmount'],
-                        //     inputCommunityAmount: data['inputCommunityAmount'],
-                        //     employeeCount: data['employeeCount'],
-                        //     inputMemberRate: inputMemberRate,
-                        //     url: '#report_employee_by_id/' + data['id']
-                        // };
-                        // i++;
-
-
-
                         console.log(data);
                         var item = {
+                            id : data.communityId,
                             name: data.name,
                             mallName: data.ownerMallName||"暂无商场",
                             address: data.address,
@@ -120,9 +99,9 @@ define('js/longyan/view/my_owner_community_list', [
                 var t = this;
             },
 
-            _clickItem : function(e) {
+            _clickItem: function(e) {
                 var t = this;
-                var index = $(e.currentTarget).attr('index');
+                var index = $(e.currentTarget).attr('index')||0;
                 if (index != t.config.status) {
                     window.location.href = '#my_owner_community_list/' + index;
                 } else {
@@ -133,12 +112,8 @@ define('js/longyan/view/my_owner_community_list', [
             _clickToAnother : function(e){
                 //跳转页面
                 var t = this;
-                var id = $(e.currentTarget).attr('data-id') || 0;
-                // if (index != t.config.status) {
-                //     window.location.href = '#my_review_list/' + index;
-                // } else {
-                //     console.log('no action');
-                // }
+                var index = $(e.currentTarget).attr('data-id') || 0;
+                window.location.href = "#community_home/" + index;
             },
 
             destroy: function() {
