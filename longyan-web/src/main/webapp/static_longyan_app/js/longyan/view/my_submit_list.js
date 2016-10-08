@@ -145,8 +145,16 @@ define('js/longyan/view/my_submit_list', [
 
             _clickToAnother : function(e){
                 var t = this;
-                console.log($(e.currentTarget));
                 var id = $(e.currentTarget).attr("data-id")||0;
+                AuditApi.auditDetails(id, function(){
+                    tipsAlert.close();
+                    $(".button-box.pass-button").attr('data-id', id);
+                }, function(code, msg){
+                    tipsAlert.close();
+                    tipsAlert.openAlert({
+                        content: msg
+                    });
+                });
                 window.location.href = "#my_submit_detail/"+id;
             },
 
