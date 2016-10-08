@@ -60,9 +60,9 @@ public class CommunityController extends BaseController implements CommonBizCons
     private RedstarCommonManager redstarCommonManager;
 
     //查询我的小区列表
-    @RequestMapping(value = "/myList/{type}", method = RequestMethod.POST)
+    @RequestMapping(value = "/myList", method = RequestMethod.POST)
     @ResponseBody
-    public Response myList(@PathVariable("type") String strType) {
+    public Response myList(String queryType) {
         PipelineContext pipelineContext = this.buildPipelineContent();
         Response res = pipelineContext.getResponse();
 
@@ -89,7 +89,7 @@ public class CommunityController extends BaseController implements CommonBizCons
             }
 
             // 负责的小区
-            if ("inChargeCommunity".equals(strType)) {
+            if ("inChargeCommunity".equals(queryType)) {
                 IntSearch ownerIdSearch = new IntSearch("ownerId");
                 ownerIdSearch.setSearchValue(String.valueOf(intEmployeeId));
                 PaginationDescribe<RedstarCommunity> inChargeCommunityResult =
@@ -98,7 +98,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                 ((SimplePaginationDescribe) inChargeCommunityResult).setCurrentRecords(redstarCommunityList);
 
                 res.addKey("result", inChargeCommunityResult);
-            } else if ("updateCommunity".equals(strType)) {  // 完善的小区（非商场员工只调用这个接口）
+            } else if ("updateCommunity".equals(queryType)) {  // 完善的小区（非商场员工只调用这个接口）
                 IntSearch updateIdSearch = new IntSearch("updateEmployeeId");
                 updateIdSearch.setSearchValue(String.valueOf(intEmployeeId));
 
@@ -182,16 +182,18 @@ public class CommunityController extends BaseController implements CommonBizCons
                 int intLimtM = Integer.parseInt(limitM);
                 StringBuffer sb = new StringBuffer();
 
-                sb.append("Select c.id, c.name,c.address,c.ownerMallName,c.reclaimStatus,c.reclaimCompleteDate,c.ownerId,c.longitude,c.latitude, ");
+                sb.append("Select c.id, c.name,c.address,c.ownerMallName,c.reclaimStatus,c.reclaimCompleteDate,c.ownerId,c.longitude,c.latitude,c.ownerXingMing,c.ownerMallId, ");
+                sb.append("(CASE WHEN c.reclaimStatus = 1 THEN '1' WHEN c.reclaimStatus = 0 AND c.reclaimCompleteDate > ? THEN '0' END）as status， ");
                 sb.append(" round(6378.138 * 2 * asin(  ");
                 sb.append(" sqrt( pow(sin((c.latitude * pi() / 180 - ?*pi() / 180) / 2),2) + cos(c.latitude * pi() / 180) ");
                 sb.append(" * cos(?*pi() / 180) * pow(  ");
                 sb.append(" sin((c.longitude * pi() / 180 - ?*pi()/180) / 2),2))) * 1000) AS distance   ");
-                sb.append(" FROM xiwa_redstar_community c where c.longitude>0 and c.latitude>0 and c.ownerMallId=? AND c.reclaimStatus = 0 AND c.reclaimCompleteDate > ? HAVING distance < ? ORDER BY distance ");
+                sb.append(" FROM xiwa_redstar_community c where c.longitude>0 and c.latitude>0 and c.ownerMallId=? HAVING distance < ? ORDER BY distance ");
 
                 String querySQL = sb.toString();
 
                 List<Object> paramsList = new ArrayList<Object>();
+                paramsList.add(strSysytemDateTime);
                 paramsList.add(Double.parseDouble(latitude));
                 paramsList.add(Double.parseDouble(latitude));
                 paramsList.add(Double.parseDouble(longitude));
@@ -216,8 +218,10 @@ public class CommunityController extends BaseController implements CommonBizCons
                     hmADComObj.put("ownerId", objAd[6]);
                     hmADComObj.put("longitude", objAd[7]);
                     hmADComObj.put("latitude", objAd[8]);
-                    hmADComObj.put("distance", objAd[9]);
-                    hmADComObj.put("status", 1);
+                    hmADComObj.put("ownerXingMing", objAd[9]);
+                    hmADComObj.put("ownerMallId", objAd[10]);
+                    hmADComObj.put("status", objAd[11]);
+                    hmADComObj.put("distance", objAd[12]);
                     lsAroundCommunitys.add(hmADComObj);
                 }
                 res.addKey("result", lsAroundCommunitys);
@@ -227,7 +231,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                 int intLimtM = Integer.parseInt(limitM);
                 StringBuffer sb = new StringBuffer();
 
-                sb.append("Select c.id, c.name,c.address,c.ownerMallName,c.ownerId,c.longitude,c.latitude, ");
+                sb.append("Select c.id, c.name,c.address,c.ownerMallName,c.ownerId,c.longitude,c.latitude,c.ownerXingMing,c.ownerMallId, ");
                 sb.append(" round(6378.138 * 2 * asin(  ");
                 sb.append(" sqrt( pow(sin((c.latitude * pi() / 180 - ?*pi() / 180) / 2),2) + cos(c.latitude * pi() / 180) ");
                 sb.append(" * cos(?*pi() / 180) * pow(  ");
@@ -257,7 +261,9 @@ public class CommunityController extends BaseController implements CommonBizCons
                     hmADComObj.put("ownerId", objAd[4]);
                     hmADComObj.put("longitude", objAd[5]);
                     hmADComObj.put("latitude", objAd[6]);
-                    hmADComObj.put("distance", objAd[7]);
+                    hmADComObj.put("ownerXingMing", objAd[7]);
+                    hmADComObj.put("ownerMallId", objAd[8]);
+                    hmADComObj.put("distance", objAd[9]);
                     hmADComObj.put("status", 2);
                     lsAroundCommunitys.add(hmADComObj);
                 }
@@ -269,7 +275,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                 int intLimtM = Integer.parseInt(limitM);
                 StringBuffer sb = new StringBuffer();
 
-                sb.append("Select c.id, c.name,c.address,c.ownerMallId,c.ownerMallName,c.ownerId,c.reclaimStatus,c.reclaimCompleteDate,c.longitude,c.latitude, ");
+                sb.append("Select c.id, c.name,c.address,c.ownerMallId,c.ownerMallName,c.ownerId,c.reclaimStatus,c.reclaimCompleteDate,c.longitude,c.latitude,c.ownerXingMing,c.ownerMallId, ");
                 sb.append(" round(6378.138 * 2 * asin(  ");
                 sb.append(" sqrt( pow(sin((c.latitude * pi() / 180 - ?*pi() / 180) / 2),2) + cos(c.latitude * pi() / 180) ");
                 sb.append(" * cos(?*pi() / 180) * pow(  ");
@@ -305,7 +311,9 @@ public class CommunityController extends BaseController implements CommonBizCons
                     hmAllComObj.put("ownerId", objAllCommunity[5]);
                     hmAllComObj.put("longitude", objAllCommunity[8]);
                     hmAllComObj.put("latitude", objAllCommunity[9]);
-                    hmAllComObj.put("distance", objAllCommunity[10]);
+                    hmAllComObj.put("ownerXingMing", objAllCommunity[10]);
+                    hmAllComObj.put("ownerMallId", objAllCommunity[11]);
+                    hmAllComObj.put("distance", objAllCommunity[12]);
                     if (intOwnerMallId < 1) {
                         //如果不是商场员工,只能编辑
                         hmAllComObj.put("status", 0);
