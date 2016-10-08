@@ -16,9 +16,10 @@ define('js/longyan/view/community_home', [
         'js/element/view/link-box',
         'js/element/view/tips-bar',
         'js/api/community',
-        'js/api/user'
+        'js/api/user',
+        'js/util/hybrid'
     ],
-    function(CommunityHomeTpl, Cache, AlertUI, HeaderView, LocationView, PickerBox, InputBox, ThinkInputBox, LocationBox, InputPercentageBox, ButtonBox, LinkBox, TipsBar, CommunityApi, UserApi) {
+    function(CommunityHomeTpl, Cache, AlertUI, HeaderView, LocationView, PickerBox, InputBox, ThinkInputBox, LocationBox, InputPercentageBox, ButtonBox, LinkBox, TipsBar, CommunityApi, UserApi, HybridApi) {
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#community-home-view';
         var form_id = '#community-home-form';
@@ -43,11 +44,22 @@ define('js/longyan/view/community_home', [
                 t.$el.find('#community-home-view').addClass('community-home-detail-view');
 
                 //==========heander view==========
-                t.header_view = new HeaderView({
-                    el: $('#header-container')
-                }, {
-                    text: '载入中...'
-                });
+                if (t.config.source && t.config.source == 'near_by_community_map') {
+                    t.header_view = new HeaderView({
+                        el: $('#header-container')
+                    }, {
+                        text: '载入中...',
+                        goBackUrl: function() {
+                            HybridApi.backToHybrid("HomePage");
+                        }
+                    });
+                } else {
+                    t.header_view = new HeaderView({
+                        el: $('#header-container')
+                    }, {
+                        text: '载入中...'
+                    });
+                }
 
                 t.community_owner = new InputBox({
                     el: $(form_id)

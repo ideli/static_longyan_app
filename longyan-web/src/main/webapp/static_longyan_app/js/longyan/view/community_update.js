@@ -46,20 +46,17 @@ define('js/longyan/view/community_update', [
                 t.$el.html(tpl(CommunityListTpl, {}));
                 $('#community-info-view').addClass('community_create');
 
-                var right_button_text = '';
                 var header_view_text = '';
 
                 if (t.config && t.config.action && t.config.action == 'create') {
-                    //创建小区
-                    right_button_text = '保存'
+                    //创建小区                    
                     header_view_text = '创建小区';
                 } else if (t.config && t.config.action && t.config.action == 'update') {
-                    //修改小区
-                    right_button_text = '保存'
+                    //修改小区                    
                     header_view_text = '修改小区';
                     t.config.readonly = true;
                 }
-                if (t.config.update_exist) {
+                if (t.config && t.config.action && t.config.action == 'update' && t.config.source && t.config.source == 'near_by_community_map') {
                     header_view_text = '创建小区';
                 }
                 //==========heander view==========

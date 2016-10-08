@@ -10,9 +10,10 @@ define('js/longyan/view/community_near_by', [
         'js/element/view/header',
         'js/element/view/tips-bar',
         'js/element/view/list-box',
-        'js/api/community'
+        'js/api/community',
+        'js/util/hybrid'
     ],
-    function(ListContailerTpl, CommunityNearByItemTpl, Cache, AlertUI, HeaderView, TipsBar, ListBox, CommunityApi) {
+    function(ListContailerTpl, CommunityNearByItemTpl, Cache, AlertUI, HeaderView, TipsBar, ListBox, CommunityApi, HybridApi) {
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#community-near-by-list-view';
         var form_id = '#community-near-by-list-form';
@@ -127,7 +128,19 @@ define('js/longyan/view/community_near_by', [
                             address: data.address,
                             distance: _distance,
                             lastDays: 0,
-                            status: _data_status
+                            status: _data_status,
+                            city: data.city,
+                            address: data.address,
+
+                            longitude: data.longitude,
+                            latitude: data.latitude,
+
+                            ownerId: data.ownerId,
+                            ownerXingMing: data.ownerXingMing,
+
+                            ownerMallId: data.ownerMallId,
+                            ownerMallName: data.ownerMallName,
+
                         };
                         return tpl(CommunityNearByItemTpl, {
                             data: item
@@ -138,19 +151,66 @@ define('js/longyan/view/community_near_by', [
             //初始化监听器
             initEvents: function() {
                 var t = this;
+                window._getNearByTabIndex = function() {
+                    return t.config.status;
+                };
 
             },
             _clickItem: function(e) {
                 var t = this;
+                // alert(1);
                 var community_id = $(e.currentTarget).attr('data-value') || 0;
                 var community_status = $(e.currentTarget).attr('data-status') || 0;
-                if (community_id > 0 && community_status == 0) {
-                    //跳转到小区首页
-                    window.location.href = "#community_home/" + community_id;
-                } else {
-                    //跳转到抢小区和认领小区的地图界面
-                    //跳转到native
+                var city = $(e.currentTarget).attr('city');
+                var community_name = $(e.currentTarget).find('item-name').html();
+                var address = $(e.currentTarget).attr('address');
+                var longitude = $(e.currentTarget).attr('longitude');
+                var latitude = $(e.currentTarget).attr('latitude');
+
+                var ownerId = $(e.currentTarget).attr('ownerId');
+                var ownerXingMing = $(e.currentTarget).attr('ownerXingMing');
+
+                var ownerMallId = $(e.currentTarget).attr('ownerMallId');
+                var ownerMallName = $(e.currentTarget).attr('ownerMallName');
+                // alert(2);
+                // if (community_id > 0 && community_status == 0) {
+                //     //跳转到小区首页
+                //     window.location.href = "#community_home/" + community_id;
+                // } else {
+                //     //跳转到抢小区和认领小区的地图界面
+                //     //跳转到native
+                // }
+
+
+                var community_object = {
+                    "gotoPage": "community_update", //如果updateType=0，这个值填 community_home
+                    "city": city,
+                    "name": community_name,
+                    "address": address,
+                    "source": "near_by_community_map",
+                    "longitude": longitude,
+                    "latitude": latitude,
+                    "community_id": community_id,
+                    "ownerId": ownerId,
+                    "ownerXingMing": ownerXingMing,
+                    "ownerMallId": ownerMallId,
+                    "ownerMallName": ownerMallName,
+                    "updateType": community_status, // 0=正常更新 1=领小区 2=抢小区
+                    "action": "update"
+                };
+                // alert(3);
+                if (community_status == '0') {
+                    community_object['gotoPage'] = 'community_home';
                 }
+                // alert(4);
+                var community_str = encodeURIComponent($nvwa.string.objectToJsonString(community_object));
+                // alert(community_str);
+                //调用native接口
+                // alert(5);
+                HybridApi.goToHybridPage('community_near_by_detail', {
+                    community_data: community_str
+                });
+
             },
             //点击状态栏
             _clickStatus: function(e) {

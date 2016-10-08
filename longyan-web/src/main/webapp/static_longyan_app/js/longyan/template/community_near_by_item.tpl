@@ -1,4 +1,5 @@
-<div class="community-near-by-list-item" data-value="<#=data.id#>" data-status="<#=data.status#>">
+<div class="community-near-by-list-item" data-value="<#=data.id#>" data-status="<#=data.status#>" city="<#=data.city#>" address="<#=data.address#>"  longitude="<#=data.longitude#>" 
+	latitude="<#=data.latitude#>"  ownerId="<#=data.ownerId#>" ownerXingMing="<#=data.ownerXingMing#>" ownerMallId="<#=data.ownerMallId#>" ownerMallName="<#=data.ownerMallName#>">
 	<div class="item-col-1">
 		<div class="item-base-info">
 			<div class="item-name">

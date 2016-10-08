@@ -84,6 +84,7 @@ define('js/util/hybrid', [], function() {
                 console.log("不是native")
             }
         },
+        //返回到native页面
         //router_to_native
         //pop_to_native
         //dismiss_to_native
@@ -117,6 +118,19 @@ define('js/util/hybrid', [], function() {
                 }
             }
 
+        },
+        //跳转到native新页面
+        goToHybridPage: function(nativeTag, parameter) {
+            //console.log(Backbone.history)
+            var historyLength = Backbone.history.history.length;
+            var uuid = $nvwa.string.randomSN();
+            parameter = parameter || {};
+            parameter['alias'] = nativeTag;
+            if (_isIOS()) {
+                _app_call(uuid, "router_to_native_page", $nvwa.string.objectToJsonString(parameter));
+            } else {
+                window.hybrid._app_call(uuid, "router_to_native_page", $nvwa.string.objectToJsonString(parameter));
+            }
         }
     }
 
