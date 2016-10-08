@@ -1,4 +1,4 @@
-package com.chinaredstar.longyan.task;
+package com.chinaredstar.longyan.task.old;
 
 import com.chinaredstar.commonBiz.bean.RedstarShoppingMall;
 import com.chinaredstar.commonBiz.bean.RedstarShoppingMallDayInput;

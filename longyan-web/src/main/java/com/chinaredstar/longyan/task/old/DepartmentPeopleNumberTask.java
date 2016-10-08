@@ -1,4 +1,4 @@
-package com.chinaredstar.longyan.task;
+package com.chinaredstar.longyan.task.old;
 
 import com.alibaba.dubbo.common.utils.StringUtils;
 import com.chinaredstar.longyan.bean.constant.LanchuiConstant;

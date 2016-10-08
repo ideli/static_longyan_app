@@ -1,4 +1,4 @@
-package com.chinaredstar.longyan.task;
+package com.chinaredstar.longyan.task.old;
 import com.chinaredstar.commonBiz.bean.*;
 import com.chinaredstar.longyan.bean.constant.LanchuiConstant;
 import com.chinaredstar.commonBiz.manager.DispatchDriver;

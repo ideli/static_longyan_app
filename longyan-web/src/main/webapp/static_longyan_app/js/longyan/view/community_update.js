@@ -320,8 +320,13 @@ define('js/longyan/view/community_update', [
 
                 if (t.config && t.config.action && t.config.action == 'update') {
                     //编辑小区模式
-                    //加载数据                    
-                    t.loadData(t.config.id);
+                    //加载数据   
+                    if (t.config.source && t.config.source == 'near_by_community_map') {
+                        t.config.id = t.config.community_id;
+                        t.loadData(t.config.id);
+                    } else {
+                        t.loadData(t.config.id);
+                    }
                     t.community_commit_input.hide();
                     //加载参数
                     // t.loadParameter();
@@ -466,15 +471,26 @@ define('js/longyan/view/community_update', [
                         hotline, longitude, latitude,
                         function(data) {
                             tipsAlert.close();
-                            tipsAlert.openToast({
-                                content: _tipsAlertSuccessText,
-                                closeCallback: function() {
-                                    tipsAlert.close();
-                                    router.navigate('community_home/' + t.config.id, {
-                                        trigger: true
-                                    });
-                                }
-                            });
+                            // tipsAlert.openToast({
+                            //     content: _tipsAlertSuccessText,
+                            //     closeCallback: function() {
+                            //         tipsAlert.close();
+
+                            //     }
+                            // });
+
+                            if (t.config.source && t.config.source == 'near_by_community_map') {
+                                //领小区，抢小区流程
+                                Cache.set('community-data-id', t.config.id);
+                                router.navigate('community_success', {
+                                    trigger: true
+                                });
+                            } else {
+                                //纯更新流程
+                                router.navigate('community_home/' + t.config.id, {
+                                    trigger: true
+                                });
+                            }
                         },
                         function(code, msg) {
                             tipsAlert.close();
@@ -570,7 +586,7 @@ define('js/longyan/view/community_update', [
                 }
                 //入住率
                 if (community.occupanyRate) {
-                    t.community_occupancy_rate_input.setValue(community.occupanyRate + '%');
+                    t.community_occupancy_rate_input.setValue(community.occupanyRate);
                 }
                 //房价区间
                 if (community.priceSection) {
