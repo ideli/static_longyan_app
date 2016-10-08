@@ -281,7 +281,6 @@ define('js/longyan/view/my_review_detail', [
                         var arr = data.editColumnName.split(",");
                         if (arr && arr.length > 0) {
                             $.each(arr, function(index, item) {
-                                console.log(item);
                                 if (item) {
                                     switch (item) {
                                         case 'city':
@@ -332,6 +331,10 @@ define('js/longyan/view/my_review_detail', [
                                     }
                                 }
                             });
+                            $(".button-box.pass-button").attr('data-id', data.id);
+                            if(t.config.status != 0){
+                                $('.basic-gap.owner-gap').hide();
+                            }
                         }
 
                     }
