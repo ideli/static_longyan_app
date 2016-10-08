@@ -13,9 +13,9 @@ define('js/longyan/view/my_owner_community_list', [
         'js/element/view/link-box',
         'js/element/view/tips-bar',
         'js/element/view/list-box',
-        'js/api/community_my'
+        'js/api/community'
     ],
-    function(ListContailerTpl, OwnerCommunityListItemTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox, Community_myApi) {
+    function(ListContailerTpl, OwnerCommunityListItemTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox, CommunityApi) {
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#my-owner-community-list-view';
         var form_id = '#my-owner-community-list-form';
@@ -55,12 +55,11 @@ define('js/longyan/view/my_owner_community_list', [
                         });
 
                         var _request_type=['inChargeCommunity', 'updateCommunity'];
-                        Community_myApi.inChargeCommunity({
+                        CommunityApi.myCommunityList({
                             queryType : _request_type[t.config.status]
                         },function(data){
                             if(data&&data.result){
                                 tipsAlert.close();
-                                console.log("成功");
                             }
                         },function(code, msg){
                             tipsAlert.close();
@@ -73,7 +72,7 @@ define('js/longyan/view/my_owner_community_list', [
                         console.log(data);
 
                         return tpl(OwnerCommunityListItemTpl, {
-                            data: data
+                            data: item
                         });
                     }
                 });

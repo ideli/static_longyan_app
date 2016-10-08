@@ -1,25 +1,23 @@
 package com.chinaredstar.longyan.web.controller;
 
 
-import com.chinaredstar.commonBiz.bean.RedstarCommunityUpdateLog;
 import com.chinaredstar.commonBiz.bean.RedstarMessageCenter;
+import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
+import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.longyan.exception.BasicException;
 import com.chinaredstar.longyan.exception.BusinessException;
 import com.chinaredstar.longyan.exception.FormException;
-import com.chinaredstar.longyan.exception.NoSessionException;
 import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
-import com.chinaredstar.commonBiz.bean.constant.CommonBizConstant;
-import com.chinaredstar.commonBiz.manager.DispatchDriver;
 import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
 import com.redstar.sms.api.AppPushService;
 import com.xiwa.base.bean.PaginationDescribe;
 import com.xiwa.base.bean.Response;
 import com.xiwa.base.bean.search.ext.IntSearch;
+import com.xiwa.base.manager.ManagerException;
 import com.xiwa.base.pipeline.PipelineContext;
 import com.xiwa.base.util.CollectionUtil;
 import com.xiwa.base.util.DataUtil;
 import com.xiwa.base.util.StringUtil;
-import com.xiwa.zeus.trinity.bean.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,9 +37,9 @@ public class MessageController extends BaseController implements CommonBizConsta
 
     @Autowired
     private DispatchDriver dispatchDriver;
+
     @Autowired
     private NvwaDriver nvwaDriver;
-
 
     @Autowired
     private AppPushService appPushService;
@@ -197,7 +195,7 @@ public class MessageController extends BaseController implements CommonBizConsta
      */
     @RequestMapping(value = "/push", method = RequestMethod.POST)
     @ResponseBody
-    public Response pushMessageToClient() {
+    public Response pushMessageToClient() throws ManagerException {
         PipelineContext pipelineContext = buildPipelineContent();
         //员工号
         String empCode = pipelineContext.getRequest().getString("empCode");
@@ -210,7 +208,31 @@ public class MessageController extends BaseController implements CommonBizConsta
         if (StringUtil.isInvalid(extParm)) {
             extParm = null;
         }
+
+        // 由输入的员工部门ID查询员工信息
+        NvwaEmployee extEmployee = nvwaDriver.getNvwaEmployeeManager().getEmployeeByCode(empCode);
+
         //插入数据到message center的表
+        RedstarMessageCenter messageCenter = new RedstarMessageCenter();
+
+        // 消息接收者的员工ID
+        messageCenter.setRecipientID(extEmployee.getId());
+        // 消息接收者的员工姓名
+        messageCenter.setRecipientName(extEmployee.getUserName());
+        // 消息标题
+        messageCenter.setMessageTitle(title);
+        // 消息内容
+        messageCenter.setMessageContent(content);
+        // 消息读取完成标志位（0=未读取，1=读取完成）
+        messageCenter.setReadFlg(0);
+        // 消息类型（push=推送消息）
+        messageCenter.setMessageType("push");
+        // 消息来源（0=龙眼外部消息源，1=龙眼消息源）
+        messageCenter.setMessageSource("1");
+        // 消息创建时间
+        messageCenter.setCreateDate(new Date());
+
+        dispatchDriver.getRedstarMessageCenterManager().addBean(messageCenter);
 
         //调用dubbo接口发送消息
         if (StringUtil.isValid(empCode)) {
