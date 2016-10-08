@@ -14,7 +14,7 @@ public class RedstarCommunity implements Identified {
 
     private String province;//  省
 
-    private int merchantId=0;//  商户ID
+    private int merchantId = 0;//  商户ID
 
     private String name;//  名字
 
@@ -32,7 +32,7 @@ public class RedstarCommunity implements Identified {
 
     private boolean userOpen;//  用户是否开通 (true/false)
 
-    private int currentNo=0;//  /最新No值
+    private int currentNo = 0;//  /最新No值
 
     private String hotline;//  物业电话
 
@@ -60,7 +60,7 @@ public class RedstarCommunity implements Identified {
 
     private Integer createEmployeeId = 0;//  创建员工ID
 
-    private Integer updateEmployeeId=0;//  更新员工ID
+    private Integer updateEmployeeId = 0;//  更新员工ID
 
     private String createXingMing;//  创建人姓名
 
@@ -76,13 +76,13 @@ public class RedstarCommunity implements Identified {
     private Date createDate;//  创建时间
 
 
-    private Integer ownerId=0;//  分配员工id
+    private Integer ownerId = 0;//  分配员工id
 
     private String ownerXingMing;//  分配员工姓名
 
     private String source;//  数据来源
 
-    private Integer alreadyInputAmount=0;//   已录入总数 （户）
+    private Integer alreadyInputAmount = 0;//   已录入总数 （户）
 
     private Double inputRate = 0.0;//  录入率
 
@@ -102,23 +102,17 @@ public class RedstarCommunity implements Identified {
 
     private String propertyName;//  楼盘名称
 
-    private Integer dataBelong=2; //  数据拥有者
+    private Integer dataBelong = 2; //  数据拥有者
 
-    private Integer reclaimStatus=0; //  认领状态
+    private Integer reclaimStatus = 0; //  认领状态
 
-    private Integer completeStatus=0;//  完善状态
+    private Integer completeStatus = 0;//  完善状态
 
-    private Integer reviewStatus=0; //审核状态
+    private Integer reviewStatus = 0; //审核状态
 
-    private Integer limitDistance=0; //楼栋信息输入限制距离
+    private Integer limitDistance = 0; //楼栋信息输入限制距离
 
-    public Integer getLimitDistance() {
-        return limitDistance;
-    }
-
-    public void setLimitDistance(Integer limitDistance) {
-        this.limitDistance = limitDistance;
-    }
+    private Integer communityId; // 小区表中小区ID
 
     public RedstarCommunity() {
 
@@ -126,6 +120,7 @@ public class RedstarCommunity implements Identified {
 
     public RedstarCommunity(RedstarCommunityUpdateLog communityUpdateLog) {
 
+        this.setCommunityId(communityUpdateLog.getCommunityId());
         this.setId(communityUpdateLog.getCommunityId());
         this.setAddress(communityUpdateLog.getAddress());
         this.setAlreadyCheckAmount(communityUpdateLog.getAlreadyCheckAmount());
@@ -175,6 +170,22 @@ public class RedstarCommunity implements Identified {
         this.setUpdateDate(communityUpdateLog.getUpdateDate());
         this.setUpdateEmployeeId(communityUpdateLog.getUpdateEmployeeId());
         this.setUpdateEmployeeXingMing(communityUpdateLog.getUpdateEmployeeXingMing());
+    }
+
+    public Integer getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(Integer communityId) {
+        this.communityId = communityId;
+    }
+
+    public Integer getLimitDistance() {
+        return limitDistance;
+    }
+
+    public void setLimitDistance(Integer limitDistance) {
+        this.limitDistance = limitDistance;
     }
 
     public Integer getReviewStatus() {
