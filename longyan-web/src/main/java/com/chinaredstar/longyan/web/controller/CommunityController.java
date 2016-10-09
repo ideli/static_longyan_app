@@ -625,9 +625,13 @@ public class CommunityController extends BaseController implements CommonBizCons
             sb.append("WHEN c.ownerMallId = ? AND c.ownerId < 1 THEN '1' ");
             sb.append("WHEN c.reclaimStatus = 0 AND c.reclaimCompleteDate < ? THEN '2' ");
             sb.append("ELSE '0' END) AS status ");
-            sb.append("FROM xiwa_redstar_community as c WHERE c.city = '");
-            sb.append(cityName);
-            sb.append("' AND c.name LIKE '");
+            sb.append("FROM xiwa_redstar_community as c WHERE ");
+            if (!StringUtil.isInvalid(cityName)) {
+                sb.append("c.city = '");
+                sb.append(cityName);
+                sb.append("' AND ");
+            }
+            sb.append("c.name LIKE '");
             sb.append(communityName);
             sb.append("%'");
 
