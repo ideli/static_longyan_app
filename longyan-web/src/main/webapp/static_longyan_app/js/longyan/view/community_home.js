@@ -50,7 +50,7 @@ define('js/longyan/view/community_home', [
                     }, {
                         text: '载入中...',
                         goBackUrl: function() {
-                            HybridApi.backToHybrid("HomePage");
+                            HybridApi.backToHybrid("HomePage", 'direct');
                         }
                     });
                 } else {

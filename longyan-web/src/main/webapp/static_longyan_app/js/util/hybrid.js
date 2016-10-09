@@ -92,7 +92,7 @@ define('js/util/hybrid', [], function() {
             //console.log(Backbone.history)
             var historyLength = Backbone.history.history.length;
             var uuid = $nvwa.string.randomSN();
-            if (directGoback == "direct") {
+            if (directGoback && directGoback == "direct") {
                 parameter = {
                     "alias": nativeTag,
                     "parameter": ""

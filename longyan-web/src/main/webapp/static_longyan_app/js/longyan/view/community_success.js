@@ -36,13 +36,8 @@ define('js/longyan/view/community_success', [
                 }, {
                     text: '小区创建成功',
                     goBackUrl: function() {
-                        if (t.config.employee_id) {
-                            //员工小区列表
-                            Backbone.history.history.back();
-                        } else {
-                            //我的小区列表
-                            hybrid.backToHybrid("HomePage", "direct");
-                        }
+                        //我的小区列表
+                        hybrid.backToHybrid("HomePage", "direct");
                     }
                 });
                 t.add_floor_number = new ButtonBox({
