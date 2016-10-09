@@ -22,7 +22,7 @@ define('js/longyan/view/my_owner_community_list', [
         var LayoutView = Backbone.View.extend({
             events: {
                 'click .item-box': '_clickItem',
-                'click .my-owner-community-list-item' : '_clickToAnother'
+                'click .my-owner-community-list-item': '_clickToAnother'
             },
             //相关介绍
             initialize: function(options, config) {
@@ -36,7 +36,9 @@ define('js/longyan/view/my_owner_community_list', [
             render: function() {
                 var t = this;
                 $('body').css('background-color', '#efeff4');
-                t.$el.html(tpl(ListContailerTpl, {config: t.config}));
+                t.$el.html(tpl(ListContailerTpl, {
+                    config: t.config
+                }));
                 t.header_view = new HeaderView({
                     el: $('#header-container')
                 }, {
@@ -52,24 +54,24 @@ define('js/longyan/view/my_owner_community_list', [
                 }, {
                     loadData: function(page, handler) {
                         tipsAlert.openLoading({
-                            content:"加载中"
+                            content: "加载中"
                         });
 
-                        var _request_type=['inChargeCommunity', 'updateCommunity'];
+                        var _request_type = ['inChargeCommunity', 'updateCommunity'];
                         CommunityApi.myCommunityList({
-                            queryType : _request_type[t.config.status]
-                        },function(data){
-                            if(data&&data.result){
+                            queryType: _request_type[t.config.status]
+                        }, function(data) {
+                            if (data && data.result) {
                                 tipsAlert.close();
-                                var result=data.result;
+                                var result = data.result;
                                 var currentPage = result.currentPage;
                                 var totalPages = result.totalPages;
                                 var currentRecords = result.currentRecords;
-                                if(handler){
+                                if (handler) {
                                     handler(currentRecords, currentPage, totalPages);
                                 }
                             }
-                        },function(code, msg){
+                        }, function(code, msg) {
                             tipsAlert.close();
                             tipsAlert.openAlert({
                                 content: msg
@@ -79,13 +81,13 @@ define('js/longyan/view/my_owner_community_list', [
                     appendItem: function(data) {
                         console.log(data);
                         var item = {
-                            id : data.communityId,
+                            id: data.communityId,
                             name: data.name,
-                            mallName: data.ownerMallName||"暂无商场",
+                            mallName: data.ownerMallName || "暂无商场",
                             address: data.address,
                             haveComplate: data.haveComplate,
                             distance: data.distance,
-                            area : data.area,
+                            area: data.area,
                         };
                         return tpl(OwnerCommunityListItemTpl, {
                             data: item
@@ -101,7 +103,7 @@ define('js/longyan/view/my_owner_community_list', [
 
             _clickItem: function(e) {
                 var t = this;
-                var index = $(e.currentTarget).attr('index')||0;
+                var index = $(e.currentTarget).attr('index') || 0;
                 if (index != t.config.status) {
                     window.location.href = '#my_owner_community_list/' + index;
                 } else {
@@ -109,11 +111,11 @@ define('js/longyan/view/my_owner_community_list', [
                 }
             },
 
-            _clickToAnother : function(e){
+            _clickToAnother: function(e) {
                 //跳转页面
                 var t = this;
                 var index = $(e.currentTarget).attr('data-id') || 0;
-                window.location.href = "#community_home/" + index;
+                window.location.href = "#community_home/default/" + index;
             },
 
             destroy: function() {

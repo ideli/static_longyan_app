@@ -34,6 +34,7 @@ define('js/longyan/view/community_update', [
             //
             initialize: function(options, config) {
                 var t = this;
+                console.log(config);
                 t.config = config || {};
                 t.$el.off('click');
                 t.render();
@@ -130,7 +131,7 @@ define('js/longyan/view/community_update', [
                     label_right: '<div class="icon-goto-map"></div>'
                 });
                 t.$el.find('.community-address-input').on('click', function(e) {
-                    alert('location');
+                    // alert('location');
                     //调用native打开地图修改地址
                     hybrid.communityAddressLocation(t.config.id, t.community_name_input.getValue(), t.community_address_input.getValue(), t.community_longitude_input.getValue(), t.community_latitude_input.getValue(), function(resp) {
                         // alert('resp');
@@ -303,12 +304,16 @@ define('js/longyan/view/community_update', [
                     fieldName: 'community-longitude-input',
                     text: '经度'
                 });
+                $('.community-longitude-input').hide();
+
+
                 t.community_latitude_input = new InputBox({
                     el: $(form_id)
                 }, {
                     fieldName: 'community-latitude-input',
                     text: '纬度'
                 });
+                $('.community-latitude-input').hide();
 
 
                 t.community_commit_input = new ButtonBox({
@@ -516,7 +521,7 @@ define('js/longyan/view/community_update', [
                                 });
                             } else {
                                 //纯更新流程
-                                router.navigate('community_home/' + t.config.id, {
+                                router.navigate('community_home/near_by_community_map/' + t.config.id, {
                                     trigger: true
                                 });
                             }

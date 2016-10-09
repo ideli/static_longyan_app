@@ -32,7 +32,7 @@ define('js/longyan/view/community_home', [
             initialize: function(options, config) {
                 var t = this;
                 t.config = config || {};
-
+                // alert('source=' + config.source);
                 t.$el.off('click');
                 t.render();
                 t.loadData();
@@ -43,8 +43,8 @@ define('js/longyan/view/community_home', [
                 t.$el.html(tpl(CommunityHomeTpl, {}));
                 t.$el.find('#community-home-view').addClass('community-home-detail-view');
 
-                //==========heander view==========
-                if (t.config.source && t.config.source == 'near_by_community_map') {
+                //==========heander view==========                
+                if (t.config.source && (t.config.source == 'near_by_community_map' || t.config.source == 'community_success')) {
                     t.header_view = new HeaderView({
                         el: $('#header-container')
                     }, {

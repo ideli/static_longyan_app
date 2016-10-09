@@ -61,7 +61,7 @@ define('js/longyan/view/community_success', [
                 }, {
                     Click: function(e) {
                         var dataId = Cache.get('community-data-id');
-                        router.navigate('community_home/' + dataId, {
+                        router.navigate('community_home/community_success/' + dataId, {
                             trigger: true
                         });
                     }
