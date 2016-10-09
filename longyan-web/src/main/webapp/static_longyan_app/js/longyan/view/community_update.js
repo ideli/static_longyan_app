@@ -57,8 +57,8 @@ define('js/longyan/view/community_update', [
                 } else if (t.config && t.config.action && t.config.action == 'update') {
                     //修改小区                    
                     header_view_text = '修改小区';
-                    t.config.readonly = true;
                 }
+                //从地图进来的
                 if (t.config && t.config.source && (t.config.source == 'create_community_map' || t.config.source == 'near_by_community_map')) {
                     header_view_text = '创建小区';
                 }
@@ -537,7 +537,7 @@ define('js/longyan/view/community_update', [
                             //     }
                             // });
 
-                            if (t.config.source && t.config.source == 'near_by_community_map') {
+                            if (t.config.source && (t.config.source == 'near_by_community_map' || t.config.source == 'create_community_map')) {
                                 //领小区，抢小区流程
                                 Cache.set('community-data-id', t.config.id);
                                 router.navigate('community_success', {
@@ -545,6 +545,7 @@ define('js/longyan/view/community_update', [
                                 });
                             } else {
                                 //纯更新流程
+                                alert(t.config.source);
                                 router.navigate('community_home/near_by_community_map/' + t.config.id, {
                                     trigger: true
                                 });

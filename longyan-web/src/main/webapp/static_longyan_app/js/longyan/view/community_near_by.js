@@ -32,6 +32,17 @@ define('js/longyan/view/community_near_by', [
                 //加载数据       
                 t.initEvents();
             },
+            _get_request_body: function() {
+                var t = this;
+                var request_body = {
+                    queryType: _requestType[t.config.status],
+                    longitude: t.config.longitude || 0,
+                    latitude: t.config.latitude || 0,
+                    cityName: t.config.cityName || '',
+                    limitM: 1000
+                };
+                return request_body;
+            },
             render: function() {
                 var t = this;
                 $('body').css('background-color', '#efeff4');
@@ -47,14 +58,6 @@ define('js/longyan/view/community_near_by', [
                 var i = 1;
                 var mallId = t.config.id;
 
-                var request_body = {
-                    queryType: _requestType[t.config.status],
-                    longitude: t.config.longitude || 121.447682,
-                    latitude: t.config.latitude || 31.337771,
-                    cityName: t.config.cityName || '上海市',
-                    limitM: 2000
-                };
-
                 t.list_box = new ListBox({
                     el: $('#community-near-by-list-box')
                 }, {
@@ -64,6 +67,8 @@ define('js/longyan/view/community_near_by', [
                         tipsAlert.openLoading({
                             content: '加载中...'
                         });
+                        var request_body = t._get_request_body();
+                        // alert(123);
                         CommunityApi.aroundList(request_body, function(data) {
                             tipsAlert.close();
                             console.log(data);
@@ -122,7 +127,7 @@ define('js/longyan/view/community_near_by', [
                             _distance = data.distance + 'm';
                         }
                         var item = {
-                            id: data.communityId,
+                            id: data.id,
                             name: data.name,
                             mallName: data.ownerMallName,
                             address: data.address,
@@ -181,6 +186,7 @@ define('js/longyan/view/community_near_by', [
                 //     //跳转到native
                 // }
 
+                // alert('select_id->' + community_id);
 
                 var community_object = {
                     "gotoPage": "community_update", //如果updateType=0，这个值填 community_home
@@ -217,7 +223,10 @@ define('js/longyan/view/community_near_by', [
                 var t = this;
                 var index = $(e.currentTarget).attr('index');
                 if (index != t.config.status) {
-                    window.location.href = '#community_near_by/' + index;
+                    // window.location.href = '#community_near_by/' + index;
+                    var load_object = t._get_request_body();
+                    load_object['status'] = index;
+                    window.router.changePage('community_near_by', load_object);
                 } else {
                     console.log('no action');
                 }

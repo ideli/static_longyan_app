@@ -30,7 +30,11 @@ define('js/longyan/view/hybrid_landing_page', [
                     //解码
                     var decode = decodeURIComponent(t.config.data);
                     //编码
+
                     var load_object = $nvwa.string.jsonStringToObject(decode);
+                    alert(load_object.updateType);
+                    // alert('id->' + load_object.id);
+                    // alert('community_id->' + load_object.community_id);
                     if (load_object && load_object.gotoPage) {
                         window.router.changePage(load_object.gotoPage, load_object);
                     }
