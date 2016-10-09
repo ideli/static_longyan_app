@@ -38,6 +38,8 @@ define('js/longyan/view/community_update', [
                 t.config = config || {};
                 t.$el.off('click');
                 t.render();
+                // var a = {};
+                // a.a.a = 0;
                 // t.loadData();
             },
             render: function() {
@@ -57,7 +59,7 @@ define('js/longyan/view/community_update', [
                     header_view_text = '修改小区';
                     t.config.readonly = true;
                 }
-                if (t.config && t.config.action && t.config.action == 'update' && t.config.source && t.config.source == 'near_by_community_map') {
+                if (t.config && t.config.source && (t.config.source == 'create_community_map' || t.config.source == 'near_by_community_map')) {
                     header_view_text = '创建小区';
                 }
                 //==========heander view==========
@@ -71,7 +73,11 @@ define('js/longyan/view/community_update', [
                             confirmText: '是',
                             content: '您是否放弃保存',
                             onConfirm: function(e) {
-                                hybrid.backToHybrid("HomePage");
+                                if (t.config.source && t.config.source == 'near_by_community_map') {
+                                    hybrid.backToHybrid(null, 'direct');
+                                } else {
+                                    hybrid.backToHybrid("HomePage", 'direct');
+                                }
                             },
                             onCancel: function(e) {
                                 tipsAlert.close();
@@ -350,11 +356,21 @@ define('js/longyan/view/community_update', [
 
                 //添加遮罩
                 $('<div class="readonly-mask"></div>').appendTo($(form_id));
-                $('.readonly-mask').hide();
+                // $('.readonly-mask').hide();
+
+                //从创建小区进来
+                // alert(t.config.community_id);
+                if (t.config && t.config.source && t.config.source == 'create_community_map' && t.config.community_id && t.config.community_id > 0) {
+                    alert('从创建小区进来');
+                    // alert(t.config.community_id);
+                    t.config.action = 'update';
+                    t.config.id = t.config.community_id;
+                }
 
                 if (t.config && t.config.action && t.config.action == 'update') {
                     //编辑小区模式
                     //加载数据   
+                    // alert(t.config.source);
                     if (t.config.source && t.config.source == 'near_by_community_map') {
                         t.config.id = t.config.community_id;
                         t.loadData(t.config.id);
@@ -371,10 +387,18 @@ define('js/longyan/view/community_update', [
                     //关闭遮罩
                     $('.readonly-mask').hide();
                     //加载参数
-                    t.loadParameter();
+                    // t.loadParameter();
                     if (t.config.source == 'create_community_map') {
                         t.loadParameterV2();
                     }
+                }
+
+
+                if (t.config && t.config.source && (t.config.source == 'create_community_map' || t.config.source == 'near_by_community_map')) {
+                    t.community_commit_input.show();
+                    t.community_edit_input.hide();
+                    //关闭遮罩
+                    $('.readonly-mask').hide();
                 }
 
 
@@ -538,9 +562,11 @@ define('js/longyan/view/community_update', [
             loadData: function(id) {
                 var t = this;
                 //更新已有小区
+                // alert(id);
                 tipsAlert.openLoading({
                     content: '加载中...'
                 });
+
                 CommunityApi.getCommunityById(id, function(data) {
                     tipsAlert.close();
                     //返回数据

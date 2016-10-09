@@ -94,8 +94,11 @@ define('js/util/hybrid', [], function() {
             var uuid = $nvwa.string.randomSN();
             if (directGoback && directGoback == "direct") {
                 parameter = {
-                    "alias": nativeTag,
+                    // "alias": nativeTag,
                     "parameter": ""
+                }
+                if (nativeTag) {
+                    parameter['alias'] = nativeTag;
                 }
                 if (_isIOS()) {
                     _app_call(uuid, "router_to_native", $nvwa.string.objectToJsonString(parameter));
