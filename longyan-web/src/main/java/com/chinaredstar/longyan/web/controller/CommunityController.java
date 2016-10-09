@@ -387,8 +387,8 @@ public class CommunityController extends BaseController implements CommonBizCons
 
             if (intOwnerMallId > 0) {  //商场员工
                 if (community.getOwnerId() != intEmployeeId) { //小区责任人非当前修改员工
-                    if ((community.getReviewStatus() == 0 && community.getOwnerMallId() == intOwnerMallId) ||
-                            (community.getReviewStatus() == 0 && community.getReclaimCompleteDate().getTime() < System.currentTimeMillis())) { //可领或者可抢小区
+                    if ((community.getOwnerId() == 0 && community.getOwnerMallId() == intOwnerMallId) ||
+                            (community.getOwnerId() == 0 && community.getReclaimCompleteDate().getTime() < System.currentTimeMillis())) { //可领或者可抢小区
                         //详细地址
                         CommunityFormUtil.setAddress(request, community);
                         //小区别称
@@ -418,6 +418,9 @@ public class CommunityController extends BaseController implements CommonBizCons
                         // 纬度
                         CommunityFormUtil.setLatitude(request, community);
 
+                        // 小区归属信息
+                        community.setOwnerId(employee.getId());
+                        community.setOwnerXingMing(employee.getXingMing());
                         // 更新者信息添加
                         community.setUpdateEmployeeId(employee.getId());
                         community.setUpdateEmployeeXingMing(employee.getXingMing());
@@ -429,8 +432,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                         res.addKey("type", 0);
                         res.setCode(HTTP_SUCCESS_CODE);
                         res.setMessage("操作成功");
-                    }
-                    if (community.getReviewStatus() != 1) { // 小区并未处于审核中
+                    } else if (community.getReviewStatus() != 1) { // 小区并未处于审核中
                         RedstarCommunityUpdateLog communityUpdateLog = new RedstarCommunityUpdateLog(community);
                         //详细地址
                         CommunityUpdateLogFormUtil.setAddress(request, communityUpdateLog);
