@@ -71,6 +71,8 @@ public class EmployeeUtil {
     public static String getMallDepartment(NvwaDepartment department, NvwaDriver nvwaDriver) throws ManagerException {
         if (department.getName().trim().endsWith("商场")) {
             return department.getDepartmentCode();
+        } else if (department.getParentId() < 0) {
+            return null;
         } else if (department != null) {
             //获取父级数据
             List<NvwaDepartment> departmentList = nvwaDriver.getNvwaDepartmentManager().getBeanListByColumn("id", department.getParentId());
