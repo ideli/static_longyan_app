@@ -138,7 +138,7 @@ public class CommunityController extends BaseController implements CommonBizCons
         Response res = pipelineContext.getResponse();
 
         try {
-            int intOwnerMallId = 0;
+            int intOwnerMallId = -1;
             // 查询参数设定
             // 登陆EmployeeID的商场ID获得（非员工没有商场ID）
             NvwaEmployee loginEmployee = this.getEmployeeromSession();
@@ -318,6 +318,8 @@ public class CommunityController extends BaseController implements CommonBizCons
                     hmAllComObj.put("ownerXingMing", objAllCommunity[10]);
                     hmAllComObj.put("ownerMallId", objAllCommunity[11]);
                     hmAllComObj.put("distance", objAllCommunity[12]);
+
+                    // status分4种状态：0=可编辑，1=可认领，2=可抢，3=已认领
                     if (intOwnerMallId < 1) {
                         //如果不是商场员工,只能编辑
                         hmAllComObj.put("status", 0);
@@ -327,6 +329,9 @@ public class CommunityController extends BaseController implements CommonBizCons
                     } else if (intOwnerMallId == communityOwnerMallId && communityOwnerId < 1) {
                         //所属商场但是没有管理者,可以认领
                         hmAllComObj.put("status", 1);
+                    } else if (communityOwnerId > 1) {
+                        //所属商场已被认领
+                        hmAllComObj.put("status", 3);
                     } else {
                         //其他状态,只能编辑
                         hmAllComObj.put("status", 0);
@@ -501,7 +506,7 @@ public class CommunityController extends BaseController implements CommonBizCons
         Response res = pipelineContext.getResponse();
         RedstarCommunity community = new RedstarCommunity();
         try {
-            int intOwnerMallId = 0;
+            int intOwnerMallId = -1;
             NvwaEmployee employee = getEmployeeromSession();
             if (employee == null) {
                 setErrMsg(res, "用户参数缺失");
@@ -594,24 +599,43 @@ public class CommunityController extends BaseController implements CommonBizCons
         PipelineContext pipelineContext = this.buildPipelineContent();
         Response res = pipelineContext.getResponse();
         String communityName = pipelineContext.getRequest().getString("communityName");
+        String cityName = pipelineContext.getRequest().getString("cityName");
 
         try {
+            int intOwnerMallId = -1;
+            // 查询参数设定
+            // 登陆Employee的商场ID获得（非员工没有商场ID）
+            NvwaEmployee employee = getEmployeeromSession();
+            if (employee == null) {
+                setErrMsg(res, "用户参数缺失");
+                return res;
+            }
+            //查询员工所属商场
+            RedstarShoppingMall shoppingMall = EmployeeUtil.getMall(employee, dispatchDriver, nvwaDriver);
+            if (shoppingMall != null) {
+                intOwnerMallId = shoppingMall.getId();
+            }
+
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String strSysytemDateTime = df.format(System.currentTimeMillis());
 
             StringBuffer sb = new StringBuffer();
 
             sb.append("Select c.id, c.name,c.address,c.ownerMallId,c.ownerMallName,c.reclaimStatus,c.reclaimCompleteDate,c.updateEmployeeId,c.longitude,c.latitude, ");
-            sb.append("(CASE WHEN c.reclaimStatus = 1 THEN '已认领' WHEN c.reclaimStatus = 0 AND c.reclaimCompleteDate > ?");
-            sb.append(" THEN '可认领' " + "END) AS status ");
-//                "WHEN createDate = '2016/9/27 星期二 0:00:00' AND updateEmployeeId = '0' THEN '已创建' END) AS status ");
-            sb.append("FROM xiwa_redstar_community as c WHERE  c.name LIKE '");
+            sb.append("(CASE WHEN c.reclaimStatus = 1 THEN '3' ");
+            sb.append("WHEN c.ownerMallId = ? AND c.ownerId < 1 THEN '1' ");
+            sb.append("WHEN c.reclaimStatus = 0 AND c.reclaimCompleteDate < ? THEN '2' ");
+            sb.append("ELSE '0' END) AS status ");
+            sb.append("FROM xiwa_redstar_community as c WHERE c.city = '");
+            sb.append(cityName);
+            sb.append("' AND c.name LIKE '");
             sb.append(communityName);
             sb.append("%'");
 
             String querySQL = sb.toString();
 
             List<Object> paramsList = new ArrayList<Object>();
+            paramsList.add(intOwnerMallId);
             paramsList.add(strSysytemDateTime);
 
             //按小区名模糊查找结果
