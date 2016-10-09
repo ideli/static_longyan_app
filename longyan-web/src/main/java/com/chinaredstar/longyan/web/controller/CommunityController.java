@@ -387,6 +387,49 @@ public class CommunityController extends BaseController implements CommonBizCons
 
             if (intOwnerMallId > 0) {  //商场员工
                 if (community.getOwnerId() != intEmployeeId) { //小区责任人非当前修改员工
+                    if ((community.getReviewStatus() == 0 && community.getOwnerMallId() == intOwnerMallId) ||
+                            (community.getReviewStatus() == 0 && community.getReclaimCompleteDate().getTime() < System.currentTimeMillis())) { //可领或者可抢小区
+                        //详细地址
+                        CommunityFormUtil.setAddress(request, community);
+                        //小区别称
+                        CommunityFormUtil.setShortName(request, community);
+                        //总户数
+                        CommunityFormUtil.setRoomMount(request, community);
+                        //总栋数
+                        CommunityFormUtil.setBuildingAmount(request, community);
+                        //入住率
+                        CommunityFormUtil.setAlreadyCheckAmount(request, community);
+                        //房屋均价
+                        CommunityFormUtil.setPriceSection(request, community);
+                        //建筑类型
+                        CommunityFormUtil.setConstructionTypes(request, community);
+                        //交房装修
+                        CommunityFormUtil.setRenovations(request, community);
+                        //交房时间
+                        CommunityFormUtil.setDeliveryTime(request, community);
+                        //开发商信息
+                        CommunityFormUtil.setDevelopers(request, community, redstarCommonManager);
+                        //物业公司
+                        CommunityFormUtil.setPropertyName(request, community, redstarCommonManager);
+                        //物业电话
+                        CommunityFormUtil.setHotline(request, community);
+                        // 经度
+                        CommunityFormUtil.setLongitude(request, community);
+                        // 纬度
+                        CommunityFormUtil.setLatitude(request, community);
+
+                        // 更新者信息添加
+                        community.setUpdateEmployeeId(employee.getId());
+                        community.setUpdateEmployeeXingMing(employee.getXingMing());
+                        community.setUpdateDate(new Date());
+
+                        dispatchDriver.getRedstarCommunityManager().updateBean(community);
+
+                        // 所有更新完成后，设置更新类型
+                        res.addKey("type", 0);
+                        res.setCode(HTTP_SUCCESS_CODE);
+                        res.setMessage("操作成功");
+                    }
                     if (community.getReviewStatus() != 1) { // 小区并未处于审核中
                         RedstarCommunityUpdateLog communityUpdateLog = new RedstarCommunityUpdateLog(community);
                         //详细地址
