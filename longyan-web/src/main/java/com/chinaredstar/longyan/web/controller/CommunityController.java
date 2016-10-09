@@ -376,7 +376,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                 intOwnerMallId = shoppingMall.getId();
             }
 
-            Integer dataId = request.getInt("id");
+            Integer dataId =pipelineContext.getRequest().getInt("id",0);
             if (dataId == 0) {
                 throw new FormException("小区id没有填写");
             }
@@ -432,7 +432,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                         res.addKey("type", 0);
                         res.setCode(HTTP_SUCCESS_CODE);
                         res.setMessage("操作成功");
-                    } else if (community.getReviewStatus() != 1) { // 小区并未处于审核中
+                    } else if (community.getReviewStatus()!=null && community.getReviewStatus() != 1) { // 小区并未处于审核中
                         RedstarCommunityUpdateLog communityUpdateLog = new RedstarCommunityUpdateLog(community);
                         //详细地址
                         CommunityUpdateLogFormUtil.setAddress(request, communityUpdateLog);
@@ -542,7 +542,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                 }
 
             } else {  // 非商场员工
-                if (community.getReviewStatus() != 1) { // 小区并未处于审核中
+                if (community.getReviewStatus() != null&&community.getReviewStatus() != 1) { // 小区并未处于审核中
                     RedstarCommunityUpdateLog communityUpdateLog = new RedstarCommunityUpdateLog(community);
                     //详细地址
                     CommunityUpdateLogFormUtil.setAddress(request, communityUpdateLog);
