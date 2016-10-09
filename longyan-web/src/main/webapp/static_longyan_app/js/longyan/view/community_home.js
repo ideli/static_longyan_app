@@ -100,6 +100,9 @@ define('js/longyan/view/community_home', [
             },
             loadData: function() {
                 var t = this;
+                if (t.config.community_id) {
+                    t.config.id = t.config.community_id;
+                }
                 if (t.config && t.config.id && t.config.id > 0) {
                     tipsAlert.openLoading({
                         content: '加载中...'

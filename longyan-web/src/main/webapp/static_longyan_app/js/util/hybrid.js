@@ -131,7 +131,35 @@ define('js/util/hybrid', [], function() {
             } else {
                 window.hybrid._app_call(uuid, "router_to_native_page", $nvwa.string.objectToJsonString(parameter));
             }
-        }
+        },
+        //打开地图定位
+        communityAddressLocation: function(communityId, name, address, longitude, latitude, callback) { //返回我的坐标和目标距离
+            if (window._isNative) {
+                var request_data = {
+                    ID: communityId,
+                    name: name,
+                    address: address,
+                    longitude: longitude,
+                    latitude: latitude
+                };
+                $nvwa.app.request("community_address_location", request_data, function(resp) {
+                    var obj;
+                    if (typeof resp == "object") {
+                        obj = resp;
+                        callback(obj);
+                    } else {
+                        try {
+                            obj = eval("(" + resp + ")");
+                            callback(obj);
+                        } catch (e) {
+                            alert('ajax error url=' + url);
+                        }
+                    }
+                });
+            } else {
+                console.log("不是native")
+            }
+        },
     }
 
     return $nvwa.hybrid;

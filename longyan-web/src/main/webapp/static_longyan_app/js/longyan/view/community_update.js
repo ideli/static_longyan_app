@@ -129,7 +129,38 @@ define('js/longyan/view/community_update', [
                     readonly: true,
                     label_right: '<div class="icon-goto-map"></div>'
                 });
+                t.$el.find('.community-address-input').on('click', function(e) {
+                    alert('location');
+                    //调用native打开地图修改地址
+                    hybrid.communityAddressLocation(t.config.id, t.community_name_input.getValue(), t.community_address_input.getValue(), t.community_longitude_input.getValue(), t.community_latitude_input.getValue(), function(resp) {
+                        // alert('resp');
+                        if (resp && resp.longitude && resp.latitude) {
+                            // alert('resp2');
+                            //经度
+                            var longitude = resp.longitude;
+                            //纬度
+                            var latitude = resp.latitude;
+                            //街道地址
+                            var location = resp.location;
+                            //省份
+                            var province = resp.province;
+                            //城市
+                            var city = resp.city;
+                            //行政区
+                            var district = resp.district;
+                            //设置地址和坐标
+                            //设置城市
+                            t.location_read_input.setValue(city);
+                            //设置经度
+                            t.community_longitude_input.setValue(longitude);
+                            //设置纬度
+                            t.community_latitude_input.setValue(latitude);
+                            //设置地址
+                            t.community_address_input.setValue(location);
+                        }
 
+                    });
+                });
 
                 $('<div class="gap basic-gap owner-gap"></div>').appendTo($(form_id));
                 t.community_room_amount_input = new InputBox({
@@ -314,6 +345,7 @@ define('js/longyan/view/community_update', [
 
                 //添加遮罩
                 $('<div class="readonly-mask"></div>').appendTo($(form_id));
+                $('.readonly-mask').hide();
 
                 if (t.config && t.config.action && t.config.action == 'update') {
                     //编辑小区模式
