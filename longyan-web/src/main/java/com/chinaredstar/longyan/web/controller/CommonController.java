@@ -345,7 +345,7 @@ public class CommonController extends BaseController implements CommonBizConstan
                         PsSyncEmployeesVo ucEmployeesInfo = (PsSyncEmployeesVo) ucEmployeesService.getData();
 
                         if (ucEmployeesInfo == null) {
-                            setErrMsg(res, "登录超时");
+                            setErrMsg(res, "员工信息缺失");
                             return res;
                         }
 
