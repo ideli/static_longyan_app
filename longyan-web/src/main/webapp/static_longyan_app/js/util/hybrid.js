@@ -98,9 +98,9 @@ define('js/util/hybrid', [], function() {
                     "parameter": ""
                 }
                 if (_isIOS()) {
-                    _app_call(uuid, "router_to_native", parameter);
+                    _app_call(uuid, "router_to_native", $nvwa.string.objectToJsonString(parameter));
                 } else {
-                    window.hybrid._app_call(uuid, "router_to_native", parameter);
+                    window.hybrid._app_call(uuid, "router_to_native", $nvwa.string.objectToJsonString(parameter));
                 }
             } else {
                 if (historyLength <= 1) {
@@ -109,9 +109,9 @@ define('js/util/hybrid', [], function() {
                         "parameter": ""
                     }
                     if (_isIOS()) {
-                        _app_call(uuid, "router_to_native", parameter);
+                        _app_call(uuid, "router_to_native", $nvwa.string.objectToJsonString(parameter));
                     } else {
-                        window.hybrid._app_call(uuid, "router_to_native", parameter);
+                        window.hybrid._app_call(uuid, "router_to_native", $nvwa.string.objectToJsonString(parameter));
                     }
                 } else {
                     Backbone.history.history.back();
