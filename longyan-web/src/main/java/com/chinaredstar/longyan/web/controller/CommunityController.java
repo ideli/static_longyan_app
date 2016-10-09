@@ -387,7 +387,7 @@ public class CommunityController extends BaseController implements CommonBizCons
 
             if (intOwnerMallId > 0) {  //商场员工
                 if (community.getOwnerId() != intEmployeeId) { //小区责任人非当前修改员工
-                    if (community.getReclaimStatus() != 1) { // 小区并未处于审核中
+                    if (community.getReviewStatus() != 1) { // 小区并未处于审核中
                         RedstarCommunityUpdateLog communityUpdateLog = new RedstarCommunityUpdateLog(community);
                         //详细地址
                         CommunityUpdateLogFormUtil.setAddress(request, communityUpdateLog);
@@ -497,7 +497,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                 }
 
             } else {  // 非商场员工
-                if (community.getReclaimStatus() != 1) { // 小区并未处于审核中
+                if (community.getReviewStatus() != 1) { // 小区并未处于审核中
                     RedstarCommunityUpdateLog communityUpdateLog = new RedstarCommunityUpdateLog(community);
                     //详细地址
                     CommunityUpdateLogFormUtil.setAddress(request, communityUpdateLog);
