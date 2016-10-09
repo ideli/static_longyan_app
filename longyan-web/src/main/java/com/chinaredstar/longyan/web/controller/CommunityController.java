@@ -187,7 +187,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                 StringBuffer sb = new StringBuffer();
 
                 sb.append("Select c.id, c.name,c.address,c.ownerMallName,c.reclaimStatus,c.reclaimCompleteDate,c.ownerId,c.longitude,c.latitude,c.ownerXingMing,c.ownerMallId, ");
-                sb.append("(CASE WHEN c.reclaimStatus = 1 THEN '1' WHEN c.reclaimStatus = 0 AND c.reclaimCompleteDate > ? THEN '0' END）as status， ");
+                sb.append("(CASE WHEN c.reclaimStatus = 1 THEN '1' WHEN c.reclaimStatus = 0 AND c.reclaimCompleteDate > ? THEN '0' END) as status, ");
                 sb.append(" round(6378.138 * 2 * asin(  ");
                 sb.append(" sqrt( pow(sin((c.latitude * pi() / 180 - ?*pi() / 180) / 2),2) + cos(c.latitude * pi() / 180) ");
                 sb.append(" * cos(?*pi() / 180) * pow(  ");
@@ -202,7 +202,6 @@ public class CommunityController extends BaseController implements CommonBizCons
                 paramsList.add(Double.parseDouble(latitude));
                 paramsList.add(Double.parseDouble(longitude));
                 paramsList.add(intOwnerMallId);
-                paramsList.add(strSysytemDateTime);
                 paramsList.add(intLimtM);
 
                 //搜索结果（以员工GPS位置为圆心半径intLimtM内所有该员工所属商场下小区列表）
@@ -639,9 +638,25 @@ public class CommunityController extends BaseController implements CommonBizCons
             paramsList.add(strSysytemDateTime);
 
             //按小区名模糊查找结果
-            List lsAroundCommunityByName = redstarCommonManager.excuteBySql(querySQL, paramsList);
+            List aroundCommunityByName = redstarCommonManager.excuteBySql(querySQL, paramsList);
+            List<HashMap> lsAroundCommunitysByName = new ArrayList<HashMap>();
 
-            res.addKey("community", lsAroundCommunityByName);
+            for (int i = 0; i < aroundCommunityByName.size(); i++) {
+                Object[] objAd = (Object[]) aroundCommunityByName.get(i);
+                HashMap hmADComObj = new HashMap();
+                hmADComObj.put("id", objAd[0]);
+                hmADComObj.put("name", objAd[1]);
+                hmADComObj.put("address", objAd[2]);
+                hmADComObj.put("ownerMallId", objAd[3]);
+                hmADComObj.put("ownerMallName", objAd[4]);
+                hmADComObj.put("reclaimStatus", objAd[5]);
+                hmADComObj.put("reclaimCompleteDate", objAd[6]);
+                hmADComObj.put("updateEmployeeId", objAd[7]);
+                hmADComObj.put("longitude", objAd[8]);
+                hmADComObj.put("latitude", objAd[9]);
+                lsAroundCommunitysByName.add(hmADComObj);
+            }
+            res.addKey("community", lsAroundCommunitysByName);
             setSuccessMsg(res);
         } catch (Exception e) {
             setErrMsg(res, "没有数据");
