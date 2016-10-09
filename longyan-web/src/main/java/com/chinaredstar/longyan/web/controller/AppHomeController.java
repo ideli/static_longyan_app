@@ -12,6 +12,7 @@ import com.xiwa.base.bean.search.ConditionType;
 import com.xiwa.base.bean.search.ext.IntSearch;
 import com.xiwa.base.bean.search.ext.MultiSearchBean;
 import com.xiwa.base.pipeline.PipelineContext;
+import com.xiwa.base.util.DataUtil;
 import com.xiwa.base.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -148,7 +149,7 @@ public class AppHomeController extends BaseController implements CommonBizConsta
         }
 
         // 最新排名只可能有一个，所以降序查找出数据后取首位
-        return memberRanking.get(0).getScoreRank();
+        return DataUtil.getInt(memberRanking.get(0).getScoreRank(),0);
     }
 
     /**
