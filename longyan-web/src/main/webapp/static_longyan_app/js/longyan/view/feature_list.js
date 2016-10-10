@@ -44,7 +44,7 @@ define('js/longyan/view/feature_list', [
                     fieldName: 'my-community',
                     text: '我的小区',
                     readonly: true,
-                    label_right: '<a href="#my_owner_community_list/0"><i class="iconfont">&#xe602;</i></a>'
+                    label_right: '<a href="#my_owner_community_list/1"><i class="iconfont">&#xe602;</i></a>'
 
                 });
                 t.my_review = new InputBox({
