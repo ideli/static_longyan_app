@@ -223,7 +223,7 @@ define('js/longyan/view/community_update', [
                     el: $(form_id)
                 }, {
                     fieldName: 'community-building-type-input',
-                    text: '建筑类型',
+                    text: '物业类型',
                     multipleSelect: true,
                     selections: [{
                         'value': '0',
@@ -233,7 +233,7 @@ define('js/longyan/view/community_update', [
                         'text': '别墅'
                     }, {
                         'value': '2',
-                        'text': '高层'
+                        'text': '普通住宅'
                     }],
                     // type: "number"
                     data: []
@@ -653,7 +653,7 @@ define('js/longyan/view/community_update', [
                 if (community.priceSection) {
                     t.community_price_section_input.setValue(community.priceSection);
                 }
-                //建筑类型
+                //物业类型
                 if (community.constructionTypes) {
                     t.community_building_type_input.setValue(community.constructionTypes);
                 }
@@ -773,7 +773,7 @@ define('js/longyan/view/community_update', [
                 }
                 if (!t.community_building_type_input.getValue() || !$nvwa.string.isVerify(t.community_building_type_input.getValue())) {
                     tipsAlert.openToast({
-                        content: '请输入建筑类型'
+                        content: '请输入物业类型'
                     });
                     return false;
                 }

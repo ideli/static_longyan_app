@@ -126,7 +126,7 @@ define('js/longyan/view/my_review_detail', [
                     el: $(form_id)
                 }, {
                     fieldName: 'community-construction-types-input',
-                    text: '建筑类型',
+                    text: '物业类型',
                     readonly: true
 
 
@@ -332,7 +332,7 @@ define('js/longyan/view/my_review_detail', [
                                 }
                             });
                             $(".button-box.pass-button").attr('data-id', data.id);
-                            if(t.config.status != 0){
+                            if (t.config.status != 0) {
                                 $('.basic-gap.owner-gap').hide();
                             }
                         }
@@ -355,7 +355,7 @@ define('js/longyan/view/my_review_detail', [
                     t.community_occupancy_rate_input.setValue(data.inputRate);
                     //房屋均价
                     t.community_price_section_input.setValue(data.priceSection);
-                    //建筑类型
+                    //物业类型
                     t.community_construction_types_input.setValue(data.constructionTypes);
                     //交房装修
                     t.community_renovations_input.setValue(data.renovations);

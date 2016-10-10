@@ -128,7 +128,7 @@ define('js/longyan/view/my_submit_detail', [
                     el: $(form_id)
                 }, {
                     fieldName: 'community-construction-types-input',
-                    text: '建筑类型',
+                    text: '物业类型',
                     readonly: true
 
 
@@ -281,7 +281,7 @@ define('js/longyan/view/my_submit_detail', [
                                 }
                             });
                             $(".button-box.pass-button").attr('data-id', data.id);
-                            if(t.config.status != 0){
+                            if (t.config.status != 0) {
                                 $('.basic-gap.owner-gap').hide();
                             }
                         }
@@ -307,26 +307,26 @@ define('js/longyan/view/my_submit_detail', [
                     t.community_occupancy_rate_input.setValue(data.inputRate);
                     //房屋均价
                     t.community_price_section_input.setValue(data.priceSection);
-                    //建筑类型
+                    //物业类型
                     var type = null;
-                    if(data.constructionTypes){
+                    if (data.constructionTypes) {
                         var type = data.constructionTypes.split(",").join(",");
-                    }else{
+                    } else {
                         type = data.constructionTypes
                     }
                     t.community_construction_types_input.setValue(type);
                     //交房装修
                     var renovations = null;
-                    if(data.renovations){
+                    if (data.renovations) {
                         var renovations = data.renovations.split(",").join(",");
-                    }else{
+                    } else {
                         renovations = data.renovations
                     }
                     t.community_renovations_input.setValue(renovations);
                     //交房时间
                     var time = null;
-                    if(data.deliveryTime){
-                        var time = data.deliveryTime+"年";
+                    if (data.deliveryTime) {
+                        var time = data.deliveryTime + "年";
                     }
                     t.community_delivery_time_input.setValue(time);
                     //开发商
