@@ -429,6 +429,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                         // 小区归属信息
                         community.setOwnerId(employee.getId());
                         community.setOwnerXingMing(employee.getXingMing());
+                        community.setReclaimStatus(reclaimStatus_OK);
                         // 更新者信息添加
                         community.setUpdateEmployeeId(employee.getId());
                         community.setUpdateEmployeeXingMing(employee.getXingMing());
