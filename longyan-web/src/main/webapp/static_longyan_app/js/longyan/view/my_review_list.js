@@ -69,6 +69,8 @@ define('js/longyan/view/my_review_list', [
                                 if(handler){
                                     handler(currentRecords, currentPage, totalPages);
                                 }
+                            }else{
+                                $(".page-end").hide();
                             }
                         },function(code, msg) {
                             tipsAlert.close();
