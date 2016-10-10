@@ -78,6 +78,7 @@ define('js/longyan/view/my_review_list', [
                                 content: msg
                             });
                         });
+                        tipsAlert.close();
                     },
 
                     appendItem: function(data) {
