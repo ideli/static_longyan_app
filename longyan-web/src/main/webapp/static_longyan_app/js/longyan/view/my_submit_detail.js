@@ -308,11 +308,27 @@ define('js/longyan/view/my_submit_detail', [
                     //房屋均价
                     t.community_price_section_input.setValue(data.priceSection);
                     //建筑类型
-                    t.community_construction_types_input.setValue(data.constructionTypes);
+                    var type = null;
+                    if(data.constructionTypes){
+                        var type = data.constructionTypes.split(",").join(",");
+                    }else{
+                        type = data.constructionTypes
+                    }
+                    t.community_construction_types_input.setValue(type);
                     //交房装修
-                    t.community_renovations_input.setValue(data.renovations);
+                    var renovations = null;
+                    if(data.renovations){
+                        var renovations = data.renovations.split(",").join(",");
+                    }else{
+                        renovations = data.renovations
+                    }
+                    t.community_renovations_input.setValue(renovations);
                     //交房时间
-                    t.community_delivery_time_input.setValue(data.deliveryTime);
+                    var time = null;
+                    if(data.deliveryTime){
+                        var time = data.deliveryTime+"年";
+                    }
+                    t.community_delivery_time_input.setValue(time);
                     //开发商
                     t.community_developer_input.setValue(data.developers);
                     //物业公司
