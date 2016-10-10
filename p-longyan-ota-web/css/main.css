@@ -1,0 +1,67 @@
+﻿@charset "UTF-8";
+body {
+  background: #fff;
+  margin: 0 auto;
+  min-width: 320px;
+  max-width: 768px;
+  font-family: Microsoft YaHei, Helvetica, STHeiti STXihei, Microsoft JhengHei,Arial; }
+
+/* public 样式 */
+a {
+  color: #fff; }
+
+a, a:hover, a:active{
+  text-decoration: none;
+}
+
+/*  正文*/
+  .appWechat-client {
+    height: 100%;
+    overflow: hidden;
+    background: #FFF;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    word-wrap: break-word;
+    text-rendering: optimizeLegibility;
+    -webkit-backface-visibility: hidden;
+  }
+  .appStoreBack {
+    width: 100%;
+    height: 100%;
+  }
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .appStore {
+    width: 100%;
+    }
+
+/*  弹窗*/
+.ui-alert {
+  display:  none;
+}
+.ui-alert.mask {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(0, 0, 0, .7);
+    left: 0;
+    top: 0;
+    z-index: 5000;
+}
+.ui-alert.content {
+    position: absolute;
+     left: 0; 
+    top: 0;
+    z-index: 5001;
+    width: 100%;
+}

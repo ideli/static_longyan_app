@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="description" content="">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+      <title>龙眼App下载</title>
+      <meta name="HandheldFriendly" content="True">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="stylesheet" href="css/main.css" />
+
+    <!-- endbuild -->
+    <!-- endbuild -->
+    <style type="text/css">
+        @font-face {
+            font-family: 'FontAwesome';
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: "Ionicons";
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .fa {
+            display: inline-block;
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: inherit;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }       
+    </style>
+</head>
+
+<body class=" pageContainer">
+    <div class="appWechat-client">
+        <div class="appStoreBack"><img src='img/startUp-back.png'></div>
+        <div class="appStore">
+           <div id="IPhoneApp" class="appBtn"><img src="img/startUp-iphone.png"></div>
+           <div ><img src="img/startUp-empty.png"></div>
+           <div id="androidApp" class="appBtn"><img src="img/startUp-android.png"></div>
+           <div ><img src="img/startUp-footer.png"></div>
+        </div>
+    </div>
+    <!-- 弹窗背景提示 -->
+    <div class="ui-alert mask"></div>
+    <div class="ui-alert content">
+        <img src="img/startUp-warninginfo.png">
+    </div>
+
+    <script type="text/javascript" src="js/zepto.js"></script>
+<script type="text/javascript">
+          var browser = {
+              versions: function() {
+                  var u = navigator.userAgent,
+                          app = navigator.appVersion;
+                  return { //移动终端浏览器版本信息
+                      trident: u.indexOf('Trident') > -1, //IE内核
+                      presto: u.indexOf('Presto') > -1, //opera内核
+                      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+                      mobile: !!u.match(/AppleWebKit.*Mobile.*/) || !!u.match(/AppleWebKit/), //是否为移动终端
+                      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+                      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
+                      iPad: u.indexOf('iPad') > -1, //是否iPad
+                      webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+                  };
+              }(),
+              language: (navigator.browserLanguage || navigator.language).toLowerCase()
+          }
+
+          if (browser.versions.ios || browser.versions.iPhone || browser.versions.iPad) {
+              //'ios';
+              document.getElementById("IPhoneApp").innerHTML="<a href='itms-services://?action=download-manifest&url=https://passport.mmall.com/longyan/longyan.plist'><img src='img/startUp-iphone.png'></a>";
+          } else if (browser.versions.android) {
+              //'android';
+              document.getElementById("androidApp").innerHTML="<a href='RSShell_101.apk'><img src='img/startUp-android.png'></a>";
+          }
+          //微信提示在浏览器中打开;
+          function is_weixn() {
+              var ua = navigator.userAgent.toLowerCase();
+              if (ua.match(/MicroMessenger/i) == "micromessenger") {
+                  return true;
+              } else {
+                  return false;
+              }
+          }
+          //微信提示在浏览器中打开;
+          if (is_weixn()) {
+            $('.appBtn').on('click', function(e){ 
+               $('.ui-alert').css('display','block');
+             })
+          }
+              //微信关闭“在浏览器中打开”的提示;
+          $('.ui-alert').on('click', function(e){ 
+             $('.ui-alert').css('display','none');
+           })
+      </script>
+  </body>
+
+</body>
+
+</html>
