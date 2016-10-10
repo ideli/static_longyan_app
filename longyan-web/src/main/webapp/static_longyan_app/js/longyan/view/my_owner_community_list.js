@@ -63,7 +63,7 @@ define('js/longyan/view/my_owner_community_list', [
                             queryType : _request_type[t.config.status]
                         },function(data) {
                             if (data && data.result) {
-                                if (data.result.mallId == 0) {
+                                if (data.mallId == 0) {
                                     $('#my-owner-community-list-bar').hide();
                                     $('#my-owner-community-list-view').css("margin-top", '5.43rem');
                                     $(".page-end").hide();
