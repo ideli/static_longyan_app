@@ -80,7 +80,7 @@ define('js/longyan/view/my_owner_community_list', [
                                 var currentRecords = result.currentRecords;
                                 currentRecords = [];
                                 var flag = true;
-                                var item_index = window._index || 1;
+                                var item_index=window._index||1;
                                 console.log(item_index);
                                 if (currentRecords.length == 0) {
                                     flag = false;
