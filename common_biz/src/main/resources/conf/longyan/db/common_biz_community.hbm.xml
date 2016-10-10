@@ -26,7 +26,6 @@
         <property name="freeDistribution" type="string"/>
         <property name="shortName" type="string"/>
         <property name="developers" type="string"/>
-        <property name="programFeatures" type="string"/>
         <property name="areaMonut" type="int"/>
         <property name="roomMount" type="int"/>
         <property name="priceSection" type="int"/>
@@ -141,7 +140,6 @@
         <property name="freeDistribution" type="string"/>
         <property name="shortName" type="string"/>
         <property name="developers" type="string"/>
-        <property name="programFeatures" type="string"/>
         <property name="areaMonut" type="int"/>
         <property name="roomMount" type="int"/>
         <property name="priceSection" type="int"/>

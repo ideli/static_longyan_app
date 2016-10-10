@@ -42,8 +42,6 @@ public class RedstarCommunity implements Identified {
 
     private String freeDistribution;//配送费满减规则
 
-    private String programFeatures;//  项目特性
-
     private Integer areaMonut = 0;//  占地面积 （㎡）
 
     private Integer roomMount = 0;//  总户数 （户 ）
@@ -158,7 +156,6 @@ public class RedstarCommunity implements Identified {
         this.setOwnerXingMing(communityUpdateLog.getOwnerXingMing());
         this.setPickupAddress(communityUpdateLog.getPickupAddress());
         this.setPriceSection(communityUpdateLog.getPriceSection());
-        this.setProgramFeatures(communityUpdateLog.getProgramFeatures());
         this.setPropertyName(communityUpdateLog.getPropertyName());
         this.setProvince(communityUpdateLog.getProvince());
         this.setProvinceCode(communityUpdateLog.getProvinceCode());
@@ -302,14 +299,6 @@ public class RedstarCommunity implements Identified {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
-    }
-
-    public String getProgramFeatures() {
-        return programFeatures;
-    }
-
-    public void setProgramFeatures(String programFeatures) {
-        this.programFeatures = programFeatures;
     }
 
     public Integer getAreaMonut() {
