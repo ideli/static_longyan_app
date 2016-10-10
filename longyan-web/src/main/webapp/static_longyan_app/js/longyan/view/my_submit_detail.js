@@ -308,19 +308,39 @@ define('js/longyan/view/my_submit_detail', [
                     //房屋均价
                     t.community_price_section_input.setValue(data.priceSection);
                     //建筑类型
-                    var type = null;
+                    var type_Con = null;
                     if(data.constructionTypes){
-                        var type = data.constructionTypes.split(",").join(",");
+                        var dataCon = data.constructionTypes.split(",");
+                        var type_Con;
+                        for(var i=0; i<dataCon.length; i++){
+                            if(dataCon[i]==0){
+                                type.push("高层");
+                            }else if(dataCon[i]==1){
+                                type.push("别墅");
+                            }else if(dataCon[i]==2){
+                                type.push("商住");
+                            }
+                        }
+                        var type_Con = type.join(",");
                     }else{
-                        type = data.constructionTypes
+                        type_Con = data.constructionTypes;
                     }
-                    t.community_construction_types_input.setValue(type);
+                    t.community_construction_types_input.setValue(type_Con);
                     //交房装修
                     var renovations = null;
                     if(data.renovations){
-                        var renovations = data.renovations.split(",").join(",");
+                        var type_Con;
+                        var dataCon = data.renovations.split(",");
+                        for(var i=0; i<dataCon.length; i++){
+                            if(dataCon[i]==0){
+                                type_Con.push("毛坯");
+                            }else if(dataCon[i]==1){
+                                type_Con.push("精装");
+                            }
+                        }
+                        var renovations = type_Con.join(",");
                     }else{
-                        renovations = data.renovations
+                        renovations = data.renovations;
                     }
                     t.community_renovations_input.setValue(renovations);
                     //交房时间
