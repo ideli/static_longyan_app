@@ -13,9 +13,10 @@ define('js/longyan/view/my_review_list', [
         'js/element/view/link-box',
         'js/element/view/tips-bar',
         'js/element/view/list-box',
-        'js/api/audit'
+        'js/api/audit',
+        'js/util/hybrid'
     ],
-    function(ListContailerTpl, ReviewListItemTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox, AuditApi) {
+    function(ListContailerTpl, ReviewListItemTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox, AuditApi, HybridApi) {
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#my-review-list-view';
         var form_id = '#my-review-list-form';
@@ -36,11 +37,17 @@ define('js/longyan/view/my_review_list', [
             render: function() {
                 var t = this;
                 $('body').css('background-color', '#efeff4');
-                t.$el.html(tpl(ListContailerTpl, {config: t.config}));
+                t.$el.html(tpl(ListContailerTpl, {
+                    config: t.config
+                }));
                 t.header_view = new HeaderView({
                     el: $('#header-container')
                 }, {
-                    text: '我的审核'
+                    text: '我的审核',
+                    goBackUrl: function() {
+                        //返回 我的
+                        HybridApi.backToHybrid("Mine", "direct");
+                    }
                 });
 
                 var i = 1;
@@ -55,24 +62,24 @@ define('js/longyan/view/my_review_list', [
                             content: '加载中...'
                         });
 
-                        var _request_type=['NEEDACTION','OK','NG'];
+                        var _request_type = ['NEEDACTION', 'OK', 'NG'];
 
                         AuditApi.myReviewList({
-                            type:_request_type[t.config.status]
-                        },function(data){
-                            if(data&&data.result){
+                            type: _request_type[t.config.status]
+                        }, function(data) {
+                            if (data && data.result) {
                                 tipsAlert.close();
-                                var result=data.result;
+                                var result = data.result;
                                 var currentPage = result.currentPage;
                                 var totalPages = result.totalPages;
                                 var currentRecords = result.currentRecords;
-                                if(handler){
+                                if (handler) {
                                     handler(currentRecords, currentPage, totalPages);
                                 }
                             }else{
                                 $(".page-end").hide();
                             }
-                        },function(code, msg) {
+                        }, function(code, msg) {
                             tipsAlert.close();
                             tipsAlert.openAlert({
                                 content: msg
@@ -83,16 +90,16 @@ define('js/longyan/view/my_review_list', [
 
                     appendItem: function(data) {
                         console.log(data);
-                        var arrDay = data.auditShowDate.substring(0,10);
+                        var arrDay = data.auditShowDate.substring(0, 10);
                         var arrSec = data.auditShowDate.substring(11);
-                        var name = data.updateEmployeeXingMing||"";
-                        var str = name+'提交了<span>'+data.name+'</span>的小区变更申请';
-                        if(t.config.status==0){
+                        var name = data.updateEmployeeXingMing || "";
+                        var str = name + '提交了<span>' + data.name + '</span>的小区变更申请';
+                        if (t.config.status == 0) {
                             var showName = str;
-                        }else if(t.config.status==1){
-                            var showName = str+"通过";
-                        }else if(t.config.status==2){
-                            var showName = str+"未通过";
+                        } else if (t.config.status == 1) {
+                            var showName = str + "通过";
+                        } else if (t.config.status == 2) {
+                            var showName = str + "未通过";
                         }
                         var item = {
                             id: data.id,
@@ -117,13 +124,13 @@ define('js/longyan/view/my_review_list', [
             _clickToAnother: function(e) {
                 var t = this;
                 var id = $(e.currentTarget).attr('data-id') || 0;
-                window.location.href = "#my_review_detail/"+id;
+                window.location.href = "#my_review_detail/" + id;
             },
 
             //点击跳转小区详情页面
             _clickItem: function(e) {
                 var t = this;
-                var index = $(e.currentTarget).attr('index')||0;
+                var index = $(e.currentTarget).attr('index') || 0;
                 if (index != t.config.status) {
                     window.location.href = '#my_review_list/' + index;
                 } else {
