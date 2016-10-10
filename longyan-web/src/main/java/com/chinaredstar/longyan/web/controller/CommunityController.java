@@ -314,7 +314,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                     HashMap hmAllComObj = new HashMap();
                     int communityOwnerMallId = DataUtil.getInt(objAllCommunity[3], 0);
                     int communityOwnerId = DataUtil.getInt(objAllCommunity[5], 0);
-                    Date reclaimCompleteDate = DataUtil.getDate(DataUtil.getDate(objAllCommunity[7]), new Date(System.currentTimeMillis() + 1000000));
+                    Date reclaimCompleteDate = DataUtil.getDate(objAllCommunity[7], new Date(0001,01,01));
                     hmAllComObj.put("id", objAllCommunity[0]);
                     hmAllComObj.put("name", objAllCommunity[1]);
                     hmAllComObj.put("address", objAllCommunity[2]);
@@ -393,10 +393,12 @@ public class CommunityController extends BaseController implements CommonBizCons
                 throw new FormException("没有找到小区");
             }
 
+            Date reclaimCompleteDate = DataUtil.getDate(community.getOwnerMallId(), new Date(0001,01,01));
+
             if (intOwnerMallId > 0) {  //商场员工
                 if (community.getOwnerId() != intEmployeeId) { //小区责任人非当前修改员工
                     if ((community.getOwnerId() == 0 && community.getOwnerMallId() == intOwnerMallId) ||
-                            (community.getOwnerId() == 0 && community.getReclaimCompleteDate().getTime() < System.currentTimeMillis())) { //可领或者可抢小区
+                            (community.getOwnerId() == 0 && reclaimCompleteDate.getTime() < System.currentTimeMillis())) { //可领或者可抢小区
                         //详细地址
                         CommunityFormUtil.setAddress(request, community);
                         //小区别称
