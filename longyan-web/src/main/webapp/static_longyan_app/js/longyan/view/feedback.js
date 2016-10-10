@@ -60,7 +60,7 @@ define('js/longyan/view/feedback', [
                 t.header_view = new HeaderView({
                     el: $('#header-container')
                 }, {
-                    text: '吐槽',
+                    text: '意见反馈',
                     goBackUrl: function() { //未保存直接返回提示
                         tipsAlert.open({
                             closeable: false,
