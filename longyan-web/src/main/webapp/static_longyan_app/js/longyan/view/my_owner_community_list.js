@@ -72,25 +72,23 @@ define('js/longyan/view/my_owner_community_list', [
                                 var result = data.result;
                                 var currentPage = result.currentPage;
                                 var totalPages = result.totalPages;
-                                var currentRecords = [];
+                                var currentRecords = result.currentRecords;
                                 var flag = true;
                                 if (currentRecords.length == 0) {
                                     flag = false;
                                 }
+                                console.log(handler && flag);
                                 if (handler && flag) {
                                     $("#my-owner-community-list-view").show();
                                     $("#my-owner-community-list-view-sec").hide();
-                                    var currentRecords = result.currentRecords;
-                                    if (handler) {
-                                        handler(currentRecords, currentPage, totalPages);
-                                    } else if (window.index == 0) {
-                                        $("#my-owner-community-list-view").hide();
-                                        $("#my-owner-community-list-view-sec").show();
-                                    } else if (window.index == 1) {
-                                        $("#my-owner-community-list-box").css("margin-top", "1rem");
-                                        $(".page-end").css("background-color", "#fff");
-                                        $(".page-end").html("暂未完善小区");
-                                    }
+                                    handler(currentRecords, currentPage, totalPages);
+                                }else if (window.index == 0) {
+                                    $("#my-owner-community-list-view").hide();
+                                    $("#my-owner-community-list-view-sec").show();
+                                } else if (window.index == 1) {
+                                    $("#my-owner-community-list-box").css("margin-top", "1rem");
+                                    $(".page-end").css("background-color", "#fff");
+                                    $(".page-end").html("暂未完善小区");
                                 }
                             }
                         },function(code, msg) {
