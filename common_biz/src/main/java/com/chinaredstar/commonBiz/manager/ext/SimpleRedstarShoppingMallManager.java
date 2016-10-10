@@ -7,15 +7,14 @@ import com.xiwa.base.manager.ManagerException;
 import com.xiwa.base.util.CollectionUtil;
 import com.xiwa.base.util.StringUtil;
 import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -79,6 +78,43 @@ public class SimpleRedstarShoppingMallManager extends AbstractBasicManager imple
         List<RedstarShoppingMall> list = this.getBeanListByColumn("mallCode", code);
         if (CollectionUtil.isValid(list)) {
             return list.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public int excuteBySql(String sql) throws ManagerException {
+        int result;
+        Session session = getSession();
+        try {
+            SQLQuery query = session.createSQLQuery(sql);
+            result = query.executeUpdate();
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ManagerException("execute sql error", e);
+        } finally {
+            releaseSession(session);
+        }
+    }
+
+    @Override
+    public List excuteBySql(String sql, List<Object> paramList) throws ManagerException {
+        Session session = getSession();
+        try {
+            SQLQuery sqlQuery = session.createSQLQuery(sql);
+            if (paramList != null && paramList.size() > 0) {
+                for (int index = 0; index < paramList.size(); index++) {
+                    sqlQuery.setParameter(index, paramList.get(index));
+                }
+            }
+            List list = sqlQuery.list();
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            //throw new ManagerException("query error", e);
+        } finally {
+            releaseSession(session);
         }
         return null;
     }
