@@ -13,17 +13,18 @@ define('js/longyan/view/my_owner_community_list', [
         'js/element/view/link-box',
         'js/element/view/tips-bar',
         'js/element/view/list-box',
-        'js/api/community'
+        'js/api/community',
+        'js/util/hybrid'
     ],
-    function(ListContailerTpl, OwnerCommunityListItemTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox, CommunityApi) {
+    function(ListContailerTpl, OwnerCommunityListItemTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox, CommunityApi, HybridApi) {
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#my-owner-community-list-view';
         var form_id = '#my-owner-community-list-form';
         var LayoutView = Backbone.View.extend({
             events: {
                 'click .item-box': '_clickItem',
-                'click .my-owner-community-list-item' : '_clickToAnother',
-                'click .createNewArea' : '_clickToCreateNewBuilding'
+                'click .my-owner-community-list-item': '_clickToAnother',
+                'click .createNewArea': '_clickToCreateNewBuilding'
             },
             //相关介绍
             initialize: function(options, config) {
@@ -43,7 +44,11 @@ define('js/longyan/view/my_owner_community_list', [
                 t.header_view = new HeaderView({
                     el: $('#header-container')
                 }, {
-                    text: '我的小区'
+                    text: '我的小区',
+                    goBackUrl: function() {
+                        //返回 我的
+                        HybridApi.backToHybrid("Mine", "direct");
+                    }
                 });
 
                 var i = 1;
@@ -60,8 +65,8 @@ define('js/longyan/view/my_owner_community_list', [
 
                         var _request_type = ['inChargeCommunity', 'updateCommunity'];
                         CommunityApi.myCommunityList({
-                            queryType : _request_type[t.config.status]
-                        },function(data) {
+                            queryType: _request_type[t.config.status]
+                        }, function(data) {
                             if (data && data.result) {
                                 if (data.mallId == 0) {
                                     $('#my-owner-community-list-bar').hide();
@@ -82,7 +87,7 @@ define('js/longyan/view/my_owner_community_list', [
                                     $("#my-owner-community-list-view").show();
                                     $("#my-owner-community-list-view-sec").hide();
                                     handler(currentRecords, currentPage, totalPages);
-                                }else if (window.index == 0) {
+                                } else if (window.index == 0) {
                                     $("#my-owner-community-list-view").hide();
                                     $("#my-owner-community-list-view-sec").show();
                                 } else if (window.index == 1) {
@@ -91,7 +96,7 @@ define('js/longyan/view/my_owner_community_list', [
                                     $(".page-end").html("暂未完善小区");
                                 }
                             }
-                        },function(code, msg) {
+                        }, function(code, msg) {
                             tipsAlert.close();
                             tipsAlert.openAlert({
                                 content: msg
@@ -123,7 +128,7 @@ define('js/longyan/view/my_owner_community_list', [
 
             _clickItem: function(e) {
                 var t = this;
-                var index = $(e.currentTarget).attr('index')||0;
+                var index = $(e.currentTarget).attr('index') || 0;
                 window.index = index;
 
                 if (index != t.config.status) {
@@ -140,7 +145,7 @@ define('js/longyan/view/my_owner_community_list', [
                 window.location.href = "#community_home/default/" + index;
             },
 
-            _clickToCreateNewBuilding : function(e){
+            _clickToCreateNewBuilding: function(e) {
                 //跳转页面
             },
 

@@ -13,16 +13,17 @@ define('js/longyan/view/my_submit_list', [
         'js/element/view/link-box',
         'js/element/view/tips-bar',
         'js/element/view/list-box',
-        'js/api/audit'
+        'js/api/audit',
+        'js/util/hybrid'
     ],
-    function(ListContailerTpl, SubmitListItemTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox, AuditApi) {
+    function(ListContailerTpl, SubmitListItemTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox, AuditApi, HybridApi) {
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#my-submit-list-view';
         var form_id = '#my-submit-list-form';
         var LayoutView = Backbone.View.extend({
             events: {
                 'click .item-box': '_clickItem',
-                'click .my-owner-community-list-item' : '_clickToAnother'
+                'click .my-owner-community-list-item': '_clickToAnother'
             },
             //
             initialize: function(options, config) {
@@ -42,7 +43,11 @@ define('js/longyan/view/my_submit_list', [
                 t.header_view = new HeaderView({
                     el: $('#header-container')
                 }, {
-                    text: '我的提交'
+                    text: '我的提交',
+                    goBackUrl: function() {
+                        //返回 我的
+                        HybridApi.backToHybrid("Mine", "direct");
+                    }
                 });
 
                 var i = 1;
@@ -57,22 +62,24 @@ define('js/longyan/view/my_submit_list', [
                             content: "加载中"
                         });
 
-                        var _request_type=['NEEDACTION','OK','NG'];
+                        var _request_type = ['NEEDACTION', 'OK', 'NG'];
 
                         AuditApi.viewUpdateList({
-                            type:_request_type[t.config.status]},
-                            function(data){
-                                if(data&&data.result){
+                                type: _request_type[t.config.status]
+                            },
+                            function(data) {
+                                if (data && data.result) {
                                     tipsAlert.close();
-                                    var result=data.result;
+                                    var result = data.result;
                                     var currentPage = result.currentPage;
                                     var totalPages = result.totalPages;
                                     var currentRecords = result.currentRecords;
-                                    if(handler){
+                                    if (handler) {
                                         handler(currentRecords, currentPage, totalPages);
                                     }
                                 }
-                            },function(code,msg){
+                            },
+                            function(code, msg) {
                                 tipsAlert.close();
                                 tipsAlert.openAlert({
                                     content: msg
@@ -99,19 +106,19 @@ define('js/longyan/view/my_submit_list', [
                         //     url: '#report_employee_by_id/' + data['id']
                         // };
                         // i++;
-                        var arrDay='';
-                        var arrSec='';
-                        if(data.auditShowDate){
-                            arrDay = data.auditShowDate.substring(0,10);
+                        var arrDay = '';
+                        var arrSec = '';
+                        if (data.auditShowDate) {
+                            arrDay = data.auditShowDate.substring(0, 10);
                             arrSec = data.auditShowDate.substring(11);
                         }
-                        var str = '<span>'+data.name+'</span>的小区信息变更申请';
-                        if(t.config.status==0){
+                        var str = '<span>' + data.name + '</span>的小区信息变更申请';
+                        if (t.config.status == 0) {
                             var showName = str;
-                        }else if(t.config.status==1){
-                            var showName = str+"通过";
-                        }else if(t.config.status==2){
-                            var showName = str+"未通过";
+                        } else if (t.config.status == 1) {
+                            var showName = str + "通过";
+                        } else if (t.config.status == 2) {
+                            var showName = str + "未通过";
                         }
 
                         var item = {
@@ -143,19 +150,19 @@ define('js/longyan/view/my_submit_list', [
                 }
             },
 
-            _clickToAnother : function(e){
+            _clickToAnother: function(e) {
                 var t = this;
-                var id = $(e.currentTarget).attr("data-id")||0;
-                AuditApi.auditDetails(id, function(){
+                var id = $(e.currentTarget).attr("data-id") || 0;
+                AuditApi.auditDetails(id, function() {
                     tipsAlert.close();
                     $(".button-box.pass-button").attr('data-id', id);
-                }, function(code, msg){
+                }, function(code, msg) {
                     tipsAlert.close();
                     tipsAlert.openAlert({
                         content: msg
                     });
                 });
-                window.location.href = "#my_submit_detail/"+id;
+                window.location.href = "#my_submit_detail/" + id;
             },
 
             destroy: function() {
