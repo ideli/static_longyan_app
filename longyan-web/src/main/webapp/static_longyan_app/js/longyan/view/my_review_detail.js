@@ -297,6 +297,7 @@ define('js/longyan/view/my_review_detail', [
                                             break;
                                         case 'roomMount':
                                             t.$el.find('.community-room-amount-input').addClass('colorChange');
+                                            t.$el.find('.label-right').addClass('colorChange');
                                             break;
                                         case 'buildingAmount':
                                             t.$el.find('.community-building-amount-input').addClass('colorChange');
@@ -406,6 +407,7 @@ define('js/longyan/view/my_review_detail', [
                     //所属商场
                     t.community_owner_mall_name_input.setValue(data.ownerMallName);
                 }
+
             }
         });
         return LayoutView;
