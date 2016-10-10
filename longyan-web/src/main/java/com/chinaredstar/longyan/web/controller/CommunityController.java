@@ -825,7 +825,6 @@ public class CommunityController extends BaseController implements CommonBizCons
             } else {
                 community.setInputRate(0.0);
             }
-            community.setProgramFeatures("");
             res.setCode(HTTP_SUCCESS_CODE);
             res.addKey("community", community);
         } catch (Exception e) {
