@@ -16,4 +16,10 @@ public interface RedstarShoppingMallManager extends BasicManager {
     public List getBeanList(Collection operationBeanIds, String queryColumn, String orderColumn, Boolean desc,Map<String,Object> eqMapParams) throws ManagerException;
 
     public RedstarShoppingMall getShoppingMallByCode(String code) throws ManagerException;
+
+    //执行sql
+    public int excuteBySql(String sql) throws ManagerException;
+
+    //查询sql
+    public List excuteBySql(String sql,List<Object> paramList) throws ManagerException;
 }
