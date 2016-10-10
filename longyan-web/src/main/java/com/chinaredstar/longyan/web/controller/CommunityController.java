@@ -68,6 +68,7 @@ public class CommunityController extends BaseController implements CommonBizCons
         Response res = pipelineContext.getResponse();
 
         try {
+            int intOwnerMallId = -1;
             // 查询参数设定
             // 登陆EmployeeID获得
             NvwaEmployee loginEmployee = this.getEmployeeromSession();
@@ -76,6 +77,12 @@ public class CommunityController extends BaseController implements CommonBizCons
                 return res;
             }
             int intEmployeeId = loginEmployee.getId();
+
+            //查询员工所属商场
+            RedstarShoppingMall shoppingMall = EmployeeUtil.getMall(loginEmployee, dispatchDriver, nvwaDriver);
+            if (shoppingMall != null) {
+                intOwnerMallId = shoppingMall.getId();
+            }
 
             //页数
             Integer page = pipelineContext.getRequest().getInt("page");
@@ -104,6 +111,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                 ((SimplePaginationDescribe) inChargeCommunityResult).setCurrentRecords(inChargeCommunityResultList);
 
                 res.addKey("result", inChargeCommunityResult);
+                res.addKey("mallId", intOwnerMallId); // 页面判断员工属于商场用
             } else if ("updateCommunity".equals(queryType)) {  // 完善的小区（非商场员工只调用这个接口）
                 IntSearch updateIdSearch = new IntSearch("updateEmployeeId");
                 updateIdSearch.setSearchValue(String.valueOf(intEmployeeId));
@@ -112,6 +120,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                         (PaginationDescribe<RedstarCommunityUpdateLog>) dispatchDriver.getRedstarCommunityUpdateLogManager().searchBeanPage(page, pageSize, updateIdSearch, "updateDate", Boolean.FALSE);
 
                 res.addKey("result", updateCommunityResult);
+                res.addKey("mallId", intOwnerMallId); // 页面判断员工属于商场用
             }
             setSuccessMsg(res);
         } catch (Exception e) {
@@ -187,7 +196,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                 StringBuffer sb = new StringBuffer();
 
                 sb.append("Select c.id, c.name,c.address,c.ownerMallName,c.reclaimStatus,c.reclaimCompleteDate,c.ownerId,c.longitude,c.latitude,c.ownerXingMing,c.ownerMallId, ");
-                sb.append("(CASE WHEN c.reclaimStatus = 1 THEN '1' WHEN c.reclaimStatus = 0 AND c.reclaimCompleteDate > ? THEN '0' END) as status, ");
+                sb.append("(CASE WHEN c.ownerId != 0 THEN '3' WHEN c.ownerId = 0 AND c.reclaimCompleteDate > ? THEN '1' END) as status, ");
                 sb.append(" round(6378.138 * 2 * asin(  ");
                 sb.append(" sqrt( pow(sin((c.latitude * pi() / 180 - ?*pi() / 180) / 2),2) + cos(c.latitude * pi() / 180) ");
                 sb.append(" * cos(?*pi() / 180) * pow(  ");
@@ -239,7 +248,7 @@ public class CommunityController extends BaseController implements CommonBizCons
                 sb.append(" sqrt( pow(sin((c.latitude * pi() / 180 - ?*pi() / 180) / 2),2) + cos(c.latitude * pi() / 180) ");
                 sb.append(" * cos(?*pi() / 180) * pow(  ");
                 sb.append(" sin((c.longitude * pi() / 180 - ?*pi()/180) / 2),2))) * 1000) AS distance   ");
-                sb.append(" FROM xiwa_redstar_community c WHERE c.longitude>0 AND c.latitude>0 AND c.reclaimStatus = 0 AND c.reclaimCompleteDate < ? HAVING distance < ? ORDER BY distance ");
+                sb.append(" FROM xiwa_redstar_community c WHERE c.longitude>0 AND c.latitude>0 AND c.ownerId = 0 AND c.reclaimCompleteDate < ? HAVING distance < ? ORDER BY distance ");
 
                 String querySQL = sb.toString();
                 List<Object> paramsList = new ArrayList<Object>();
@@ -305,7 +314,6 @@ public class CommunityController extends BaseController implements CommonBizCons
                     HashMap hmAllComObj = new HashMap();
                     int communityOwnerMallId = DataUtil.getInt(objAllCommunity[3], 0);
                     int communityOwnerId = DataUtil.getInt(objAllCommunity[5], 0);
-                    int reclaimStatus = DataUtil.getInt(objAllCommunity[6], 0);
                     Date reclaimCompleteDate = DataUtil.getDate(DataUtil.getDate(objAllCommunity[7]), new Date(System.currentTimeMillis() + 1000000));
                     hmAllComObj.put("id", objAllCommunity[0]);
                     hmAllComObj.put("name", objAllCommunity[1]);
@@ -322,11 +330,11 @@ public class CommunityController extends BaseController implements CommonBizCons
                     if (intOwnerMallId < 1) {
                         //如果不是商场员工,只能编辑
                         hmAllComObj.put("status", 0);
-                    } else if (reclaimStatus == 0 && reclaimCompleteDate.getTime() < System.currentTimeMillis()) {
+                    } else if (communityOwnerId == 0 && reclaimCompleteDate.getTime() < System.currentTimeMillis()) {
                         //没有认领但是已经过了认领期限了
                         hmAllComObj.put("status", 2);
-                    } else if (intOwnerMallId == communityOwnerMallId && communityOwnerId < 1) {
-                        //所属商场但是没有管理者,可以认领
+                    } else if (intOwnerMallId == communityOwnerMallId && communityOwnerId < 1 && reclaimCompleteDate.getTime() > System.currentTimeMillis()) {
+                        //所属商场但是没有管理者且商场,可以认领
                         hmAllComObj.put("status", 1);
                     } else if (communityOwnerId > 1) {
                         //所属商场已被认领
