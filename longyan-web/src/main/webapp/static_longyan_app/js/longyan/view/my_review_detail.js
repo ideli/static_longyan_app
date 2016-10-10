@@ -126,7 +126,7 @@ define('js/longyan/view/my_review_detail', [
                     el: $(form_id)
                 }, {
                     fieldName: 'community-construction-types-input',
-                    text: '建筑类型',
+                    text: '物业类型',
                     readonly: true
 
 
@@ -332,7 +332,7 @@ define('js/longyan/view/my_review_detail', [
                                 }
                             });
                             $(".button-box.pass-button").attr('data-id', data.id);
-                            if(t.config.status != 0){
+                            if (t.config.status != 0) {
                                 $('.basic-gap.owner-gap').hide();
                             }
                         }
@@ -355,12 +355,48 @@ define('js/longyan/view/my_review_detail', [
                     t.community_occupancy_rate_input.setValue(data.inputRate);
                     //房屋均价
                     t.community_price_section_input.setValue(data.priceSection);
-                    //建筑类型
-                    t.community_construction_types_input.setValue(data.constructionTypes);
+                    //物业类型
+                    var type_Con = null;
+                    if(data.constructionTypes){
+                        var dataCon = data.constructionTypes.split(",");
+                        var type=[];
+                        for(var i=0; i<dataCon.length; i++){
+                            if(dataCon[i]==0){
+                                type.push("普通住宅");
+                            }else if(dataCon[i]==1){
+                                type.push("别墅");
+                            }else if(dataCon[i]==2){
+                                type.push("商住");
+                            }
+                        }
+                        var type_Con = type.join(",");
+                    }else{
+                        type_Con = data.constructionTypes;
+                    }
+                    t.community_construction_types_input.setValue(data.type_Con);
                     //交房装修
-                    t.community_renovations_input.setValue(data.renovations);
+                    var renovations = null;
+                    if(data.renovations){
+                        var type_Con = [];
+                        var dataCon = data.renovations.split(",");
+                        for(var i=0; i<dataCon.length; i++){
+                            if(dataCon[i]==0){
+                                type_Con.push("毛坯");
+                            }else if(dataCon[i]==1){
+                                type_Con.push("精装");
+                            }
+                        }
+                        var renovations = type_Con.join(",");
+                    }else{
+                        renovations = data.renovations;
+                    }
+                    t.community_renovations_input.setValue(renovations);
                     //交房时间
-                    t.community_delivery_time_input.setValue(data.deliveryTime);
+                    var time = null;
+                    if (data.deliveryTime) {
+                        var time = data.deliveryTime + "年";
+                    }
+                    t.community_delivery_time_input.setValue(time);
                     //开发商
                     t.community_developer_input.setValue(data.developers);
                     //物业公司
