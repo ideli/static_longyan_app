@@ -142,6 +142,7 @@ define('js/longyan/view/my_submit_list', [
 
             _clickItem: function(e) {
                 var t = this;
+                // alert(123);
                 var index = $(e.currentTarget).attr('index');
                 if (index != t.config.status) {
                     window.location.href = '#my_submit_list/' + index;

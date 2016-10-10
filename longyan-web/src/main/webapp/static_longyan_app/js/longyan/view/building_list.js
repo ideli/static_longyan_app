@@ -160,6 +160,7 @@ define('js/longyan/view/building_list', [
                     });
                 } else {
                     //不用计算经纬度
+                    $('#building-distance-view').hide();
                 }
             },
             //初始化监听器
