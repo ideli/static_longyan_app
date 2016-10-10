@@ -18,6 +18,11 @@ define('index', [
     //    'text!lib/jQuery-File-Upload/css/jquery.fileupload.css'
 ], function(Router, attachFastClick) {
     return {
+        // window.onerror = function(sMessage, sURL, sLine) {
+        //     alert(sMessage);
+        //     alert(sURL);
+        //     alert(sLine);
+        // };
         init: function() {
 
             //静态资源使用序列化的图片

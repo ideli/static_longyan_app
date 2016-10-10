@@ -70,6 +70,7 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 
 			};
 			//发送http psot请求
+			// alert(url);
 			t._executeRequest(url, data, function(response) {
 				//返回的http请求数据
 				t._executeResponse(response, success, error);
@@ -287,10 +288,10 @@ define('js/api/community', ['js/util/http', 'js/api/community_mock'], function(h
 			}, false, 'POST', false, $nvwa.header.getHeaders());
 		},
 		//我的小区列表
-		myCommunityList:function(data, success, error){
+		myCommunityList: function(data, success, error) {
 			var t = this;
-			var url = _basePath+'/myList';
-			var data = data||{};
+			var url = _basePath + '/myList';
+			var data = data || {};
 			//发送http post请求
 			t._executeRequest(url, data, function(response) {
 				//返回的http请求数据

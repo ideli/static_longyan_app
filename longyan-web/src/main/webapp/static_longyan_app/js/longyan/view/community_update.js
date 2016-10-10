@@ -34,9 +34,12 @@ define('js/longyan/view/community_update', [
             //
             initialize: function(options, config) {
                 var t = this;
+                console.log(config);
                 t.config = config || {};
                 t.$el.off('click');
                 t.render();
+                // var a = {};
+                // a.a.a = 0;
                 // t.loadData();
             },
             render: function() {
@@ -54,9 +57,9 @@ define('js/longyan/view/community_update', [
                 } else if (t.config && t.config.action && t.config.action == 'update') {
                     //修改小区                    
                     header_view_text = '修改小区';
-                    t.config.readonly = true;
                 }
-                if (t.config && t.config.action && t.config.action == 'update' && t.config.source && t.config.source == 'near_by_community_map') {
+                //从地图进来的
+                if (t.config && t.config.source && (t.config.source == 'create_community_map' || t.config.source == 'near_by_community_map')) {
                     header_view_text = '创建小区';
                 }
                 //==========heander view==========
@@ -70,7 +73,11 @@ define('js/longyan/view/community_update', [
                             confirmText: '是',
                             content: '您是否放弃保存',
                             onConfirm: function(e) {
-                                hybrid.backToHybrid("HomePage");
+                                if (t.config.source && t.config.source == 'near_by_community_map') {
+                                    hybrid.backToHybrid(null, 'direct');
+                                } else {
+                                    hybrid.backToHybrid("HomePage", 'direct');
+                                }
                             },
                             onCancel: function(e) {
                                 tipsAlert.close();
@@ -130,7 +137,7 @@ define('js/longyan/view/community_update', [
                     label_right: '<div class="icon-goto-map"></div>'
                 });
                 t.$el.find('.community-address-input').on('click', function(e) {
-                    alert('location');
+                    // alert('location');
                     //调用native打开地图修改地址
                     hybrid.communityAddressLocation(t.config.id, t.community_name_input.getValue(), t.community_address_input.getValue(), t.community_longitude_input.getValue(), t.community_latitude_input.getValue(), function(resp) {
                         // alert('resp');
@@ -303,12 +310,16 @@ define('js/longyan/view/community_update', [
                     fieldName: 'community-longitude-input',
                     text: '经度'
                 });
+                $('.community-longitude-input').hide();
+
+
                 t.community_latitude_input = new InputBox({
                     el: $(form_id)
                 }, {
                     fieldName: 'community-latitude-input',
                     text: '纬度'
                 });
+                $('.community-latitude-input').hide();
 
 
                 t.community_commit_input = new ButtonBox({
@@ -345,11 +356,21 @@ define('js/longyan/view/community_update', [
 
                 //添加遮罩
                 $('<div class="readonly-mask"></div>').appendTo($(form_id));
-                $('.readonly-mask').hide();
+                // $('.readonly-mask').hide();
+
+                //从创建小区进来
+                // alert(t.config.community_id);
+                if (t.config && t.config.source && t.config.source == 'create_community_map' && t.config.community_id && t.config.community_id > 0) {
+                    alert('从创建小区进来');
+                    // alert(t.config.community_id);
+                    t.config.action = 'update';
+                    t.config.id = t.config.community_id;
+                }
 
                 if (t.config && t.config.action && t.config.action == 'update') {
                     //编辑小区模式
                     //加载数据   
+                    // alert(t.config.source);
                     if (t.config.source && t.config.source == 'near_by_community_map') {
                         t.config.id = t.config.community_id;
                         t.loadData(t.config.id);
@@ -366,10 +387,18 @@ define('js/longyan/view/community_update', [
                     //关闭遮罩
                     $('.readonly-mask').hide();
                     //加载参数
-                    t.loadParameter();
+                    // t.loadParameter();
                     if (t.config.source == 'create_community_map') {
                         t.loadParameterV2();
                     }
+                }
+
+
+                if (t.config && t.config.source && (t.config.source == 'create_community_map' || t.config.source == 'near_by_community_map')) {
+                    t.community_commit_input.show();
+                    t.community_edit_input.hide();
+                    //关闭遮罩
+                    $('.readonly-mask').hide();
                 }
 
 
@@ -508,7 +537,7 @@ define('js/longyan/view/community_update', [
                             //     }
                             // });
 
-                            if (t.config.source && t.config.source == 'near_by_community_map') {
+                            if (t.config.source && (t.config.source == 'near_by_community_map' || t.config.source == 'create_community_map')) {
                                 //领小区，抢小区流程
                                 Cache.set('community-data-id', t.config.id);
                                 router.navigate('community_success', {
@@ -516,7 +545,8 @@ define('js/longyan/view/community_update', [
                                 });
                             } else {
                                 //纯更新流程
-                                router.navigate('community_home/' + t.config.id, {
+                                alert(t.config.source);
+                                router.navigate('community_home/near_by_community_map/' + t.config.id, {
                                     trigger: true
                                 });
                             }
@@ -533,9 +563,11 @@ define('js/longyan/view/community_update', [
             loadData: function(id) {
                 var t = this;
                 //更新已有小区
+                // alert(id);
                 tipsAlert.openLoading({
                     content: '加载中...'
                 });
+
                 CommunityApi.getCommunityById(id, function(data) {
                     tipsAlert.close();
                     //返回数据

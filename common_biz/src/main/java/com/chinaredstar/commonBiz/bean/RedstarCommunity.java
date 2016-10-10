@@ -75,7 +75,6 @@ public class RedstarCommunity implements Identified {
 
     private Date createDate;//  创建时间
 
-
     private Integer ownerId = 0;//  分配员工id
 
     private String ownerXingMing;//  分配员工姓名
@@ -113,6 +112,8 @@ public class RedstarCommunity implements Identified {
     private Integer limitDistance = 0; //楼栋信息输入限制距离
 
     private Integer communityId; // 小区表中小区ID
+
+    private Date reclaimCompleteDate; // 完善时限
 
     public RedstarCommunity() {
 
@@ -170,6 +171,14 @@ public class RedstarCommunity implements Identified {
         this.setUpdateDate(communityUpdateLog.getUpdateDate());
         this.setUpdateEmployeeId(communityUpdateLog.getUpdateEmployeeId());
         this.setUpdateEmployeeXingMing(communityUpdateLog.getUpdateEmployeeXingMing());
+    }
+
+    public Date getReclaimCompleteDate() {
+        return reclaimCompleteDate;
+    }
+
+    public void setReclaimCompleteDate(Date reclaimCompleteDate) {
+        this.reclaimCompleteDate = reclaimCompleteDate;
     }
 
     public Integer getCommunityId() {

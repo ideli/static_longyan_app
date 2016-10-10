@@ -15,6 +15,7 @@ import com.chinaredstar.nvwaBiz.bean.NvwaEmployee;
 import com.chinaredstar.nvwaBiz.bean.NvwaRole;
 import com.chinaredstar.nvwaBiz.manager.NvwaDriver;
 import com.chinaredstar.nvwaBiz.manager.NvwaSecurityAuthorizedManager;
+import com.chinaredstar.nvwaBiz.util.EmployeeUtil;
 import com.xiwa.base.bean.Identified;
 import com.xiwa.base.bean.Request;
 import com.xiwa.base.bean.Response;
@@ -387,7 +388,9 @@ public class AdUserController extends BaseController implements CommonBizConstan
 //                employee.setRole(redstarRole.get(0).getName());
 //            }
 //            ExtCountryData countryData = ReportUtil.getAllDataBySum(redstarCommonManager, res);
+            RedstarShoppingMall mall = EmployeeUtil.getMall(employee, dispatchDriver, nvwaDriver);
             res.addKey("userInfo", employee);
+            res.addKey("mall", mall);
 //            res.addKey("roleInfo", redstarRole);
 //            res.addKey("dashboard", countryData);
         } catch (Exception e) {
@@ -448,17 +451,17 @@ public class AdUserController extends BaseController implements CommonBizConstan
             }
             String employeeCode = redstarEmployee.getEmployeeCode();
             //调用ps系统的头像接口
-            String psServiceUrl=StringUtil.getString(systemConfig.get("psServiceUrl"));
-            String psResponse=HttpClientUtil.sendPostBody(psServiceUrl+"/EmployeePhoto","{\"EmployeeId\":\""+employeeCode+"\",\"IP\":\"127.0.0.1\"}");
-            if(StringUtil.isInvalid(psResponse)){
+            String psServiceUrl = StringUtil.getString(systemConfig.get("psServiceUrl"));
+            String psResponse = HttpClientUtil.sendPostBody(psServiceUrl + "/EmployeePhoto", "{\"EmployeeId\":\"" + employeeCode + "\",\"IP\":\"127.0.0.1\"}");
+            if (StringUtil.isInvalid(psResponse)) {
                 throw new BusinessException("PS接口调用失败");
             }
-            JSONObject jsonObject=JSONObject.fromObject(psResponse);
+            JSONObject jsonObject = JSONObject.fromObject(psResponse);
 
-            res.addKey("employeeCode",employeeCode);
-            if(jsonObject.containsKey("photo")){
-                res.addKey("photo",jsonObject.getString("photo"));
-            }else{
+            res.addKey("employeeCode", employeeCode);
+            if (jsonObject.containsKey("photo")) {
+                res.addKey("photo", jsonObject.getString("photo"));
+            } else {
                 throw new BusinessException("无图片信息");
             }
         } catch (Exception e) {

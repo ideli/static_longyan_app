@@ -21,6 +21,7 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
             "community_update_exist/:id": "community_update_exist",
             "community_success": "community_success",
             "community_home/:id": "community_home",
+            "community_home/:source/:id": "community_home",
             "building_list/:id": "building_list",
             "building_detail/:id": "building_detail",
             "building_create": "building_create",
@@ -131,11 +132,18 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
         },
 
 
-        community_home: function(id) {
+        community_home: function(source, id) {
             var t = this;
-            t.changePage('community_home', {
-                id: id
-            });
+            if (source) {
+                t.changePage('community_home', {
+                    id: id,
+                    source: source
+                });
+            } else {
+                t.changePage('community_home', {
+                    id: id
+                });
+            }
         },
         //附近的小区(0=全部，1=可认领，2=可抢)
         community_near_by: function(status) {
@@ -215,7 +223,7 @@ define('router', ['js/longyan/view/layout'], function(LayoutView) {
         my_owner_community_list: function(status) {
             var t = this;
             t.changePage('my_owner_community_list', {
-                status:status
+                status: status
             });
         },
         search_view: function(alias) {
