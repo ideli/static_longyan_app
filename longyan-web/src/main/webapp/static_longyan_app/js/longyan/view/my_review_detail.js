@@ -297,7 +297,6 @@ define('js/longyan/view/my_review_detail', [
                                             break;
                                         case 'roomMount':
                                             t.$el.find('.community-room-amount-input').addClass('colorChange');
-                                            t.$el.find('.label-right').addClass('colorChange');
                                             break;
                                         case 'buildingAmount':
                                             t.$el.find('.community-building-amount-input').addClass('colorChange');
@@ -370,7 +369,7 @@ define('js/longyan/view/my_review_detail', [
                                 type.push("商住");
                             }
                         }
-                        var type_Con = type.join(",");
+                        var type_Con = type.join(" ");
                     }else{
                         type_Con = data.constructionTypes;
                     }
@@ -387,7 +386,7 @@ define('js/longyan/view/my_review_detail', [
                                 type_Con.push("精装");
                             }
                         }
-                        var renovations = type_Con.join(",");
+                        var renovations = type_Con.join(" ");
                     }else{
                         renovations = data.renovations;
                     }
