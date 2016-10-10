@@ -1,5 +1,45 @@
 @import "../public/variables";
 
+#building-header-gap-view{
+	margin-top:@size-128;	
+}
+
+#building-distance-view{
+	font-size:@size-28;
+	padding-left:@size-20;
+	line-height:@size-100;
+	color:@color-text-font;
+
+	.item-col{
+		float:left;
+	}
+	.item-button{
+		
+		position: fixed;
+    	right:@size-20;
+    	margin-top:@size-20;
+    	.button{
+    		font-size:@size-32;
+    		line-height:@size-60;
+    		padding-left:@size-20;
+    		padding-right:@size-20;
+    		border: 0.1rem solid #e1e1e1;	
+    		color:@color-text-font;
+    	}
+	}
+}
+#building-distance-view.yellow{
+	background-color:#FFFAF1;
+	border-bottom: 0.1rem solid @color-tips-yellow;	
+	color:@color-tips-yellow;
+
+}
+#building-distance-view.blue{
+	background-color:#F0FCFF;
+	border-bottom: 0.1rem solid @color-main-blue;	
+	color:@color-main-blue;
+}
+
 #building-view{
 	#building-form{
 		margin-top:0;
@@ -33,7 +73,7 @@
 
 #building-info-view{
 	background-color:@color-white;	
-	margin-top:@size-128;	
+	//margin-top:@size-128;	
 
 	.item-col{
 		float:left;

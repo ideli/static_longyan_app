@@ -121,7 +121,7 @@ define('js/longyan/view/community_home', [
                         if (data && data.community) {
                             var data = data.community;
                             t.$el.find('#header-container').find('.title').html(data.name);
-
+                            Cache.set('community-cache', data);
                             if (data && data.ownerId && data.ownerId > 0) {
                                 t.$el.find('#community-home-form .owner-name').html(data.ownerXingMing);
                                 t.laodPhoto(data.ownerId);

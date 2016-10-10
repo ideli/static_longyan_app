@@ -1,6 +1,15 @@
 <div id="header-container" class="hidden">
 	
 </div>
+<div id="building-header-gap-view"></div>
+<div id="building-distance-view" class="yellow">
+	<div class="item-col item-label">
+		【当前位置】距离小区<span>300</span>m
+	</div>
+	<div class="item-col item-button">
+		<div class="button">刷新位置</div>
+	</div>
+</div>
 <div id="building-info-view">
 	<div class="item-col">
 		<div class="value building-amount">0</div>

@@ -13,9 +13,10 @@ define('js/longyan/view/building_list', [
         'js/element/view/link-box',
         'js/element/view/tips-bar',
         'js/element/view/list-box',
-        'js/api/community'
+        'js/api/community',
+        'js/util/hybrid'
     ],
-    function(ListContailerTpl, BuildingListItemTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox, CommunityApi) {
+    function(ListContailerTpl, BuildingListItemTpl, Cache, AlertUI, HeaderView, InputBox, ButtonBox, LinkBox, TipsBar, ListBox, CommunityApi, HybridApi) {
         var tipsAlert = tipsAlert || new AlertUI();
         var view_id = '#building-list-view';
         var form_id = '#building-list-form';
@@ -96,6 +97,70 @@ define('js/longyan/view/building_list', [
                         });
                     }
                 });
+
+                t.$el.find('#building-distance-view').find('.button').on('click', function() {
+                    //点击刷新位置
+                    t.getCommunityBuildingDistance();
+                });
+
+                //判断是否是商场员工
+
+                t.getCommunityBuildingDistance();
+
+            },
+            getCommunityBuildingDistance: function() {
+                //判断是否在录入范围之内
+                var community = Cache.get('community-cache');
+                if (community && community.longitude && community.latitude && community.limitDistance && community.limitDistance > 0) {
+                    //有经纬度
+                    //录入距离大于0
+                    //开始计算距离
+                    // tipsAlert.openAlert({
+                    //     content: '开始计算'
+                    // });
+                    tipsAlert.openLoading({
+                        content: '加载中...'
+                    });
+                    HybridApi.locationDistance({
+                        "latitude": community.latitude,
+                        "longitude": community.longitude
+                    }, function(resp) {
+                        tipsAlert.close();
+                        // alert($nvwa.string.objectToJsonString(resp));
+                        if (resp && resp.longitude && resp.latitude) {
+                            // //经度
+                            // var longitude = resp.longitude;
+                            // //纬度
+                            // var latitude = resp.latitude;
+                            //城市
+                            // var city = resp.city;
+                            var distance = resp.distance || 0;
+                            $('#building-distance-view .item-label').html('【当前位置】距离小区' + parseInt(distance) + 'm');
+                            // t.$el.find('#building-distance-view').show();
+                            if (resp && resp.distance && resp.distance > 0 && resp.distance < community.limitDistance) {
+                                //可以录入
+                                t.$el.find('#building-info-view').show();
+
+                                t.$el.find('#building-distance-view').addClass('yellow');
+                                t.$el.find('#building-distance-view').removeClass('blue');
+
+                            } else {
+                                //不给录
+                                t.$el.find('#building-info-view').hide();
+
+                                t.$el.find('#building-distance-view').addClass('blue');
+                                t.$el.find('#building-distance-view').removeClass('yellow');
+
+                            }
+
+                            // alert($nvwa.string.objectToJsonString(resp));
+
+                        }
+
+                    });
+                } else {
+                    //不用计算经纬度
+                }
             },
             //初始化监听器
             initEvents: function() {
