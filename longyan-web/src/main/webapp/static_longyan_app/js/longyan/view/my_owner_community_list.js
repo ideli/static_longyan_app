@@ -22,7 +22,8 @@ define('js/longyan/view/my_owner_community_list', [
         var LayoutView = Backbone.View.extend({
             events: {
                 'click .item-box': '_clickItem',
-                'click .my-owner-community-list-item' : '_clickToAnother'
+                'click .my-owner-community-list-item' : '_clickToAnother',
+                'click .createNewArea' : '_clickToCreateNewBuilding'
             },
             //相关介绍
             initialize: function(options, config) {
@@ -60,13 +61,29 @@ define('js/longyan/view/my_owner_community_list', [
                             queryType : _request_type[t.config.status]
                         },function(data){
                             if(data&&data.result){
+                                if(data.result.mallId==0){
+                                    $('#my-owner-community-list-bar').hide();
+                                    $('#my-owner-community-list-view').css("margin-top", '5.43rem');
+                                    $(".page-end").hide();
+                                }
                                 tipsAlert.close();
                                 var result=data.result;
                                 var currentPage = result.currentPage;
                                 var totalPages = result.totalPages;
-                                var currentRecords = result.currentRecords;
-                                if(handler){
+                                var currentRecords = [];
+                                var flag=true;
+                                if(currentRecords.length==0){flag=false;}
+                                if(handler&&flag){
+                                    $("#my-owner-community-list-view").show();
+                                    $("#my-owner-community-list-view-sec").hide();
                                     handler(currentRecords, currentPage, totalPages);
+                                }else if(window.index==0){
+                                    $("#my-owner-community-list-view").hide();
+                                    $("#my-owner-community-list-view-sec").show();
+                                }else if(window.index==1){
+                                    $("#my-owner-community-list-box").css("margin-top", "1rem");
+                                    $(".page-end").css("background-color","#fff");
+                                    $(".page-end").html("暂未完善小区");
                                 }
                             }
                         },function(code, msg){
@@ -102,6 +119,7 @@ define('js/longyan/view/my_owner_community_list', [
             _clickItem: function(e) {
                 var t = this;
                 var index = $(e.currentTarget).attr('index')||0;
+                window.index = index;
                 if (index != t.config.status) {
                     window.location.href = '#my_owner_community_list/' + index;
                 } else {
@@ -114,6 +132,10 @@ define('js/longyan/view/my_owner_community_list', [
                 var t = this;
                 var index = $(e.currentTarget).attr('data-id') || 0;
                 window.location.href = "#community_home/" + index;
+            },
+
+            _clickToCreateNewBuilding : function(e){
+                //跳转页面
             },
 
             destroy: function() {
