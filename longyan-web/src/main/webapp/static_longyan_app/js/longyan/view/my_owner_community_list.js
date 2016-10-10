@@ -62,8 +62,8 @@ define('js/longyan/view/my_owner_community_list', [
                         CommunityApi.myCommunityList({
                             queryType : _request_type[t.config.status]
                         },function(data) {
-                            if(data&&data.result){
-                                if(data.result.mallId==0){
+                            if (data && data.result) {
+                                if (data.result.mallId == 0) {
                                     $('#my-owner-community-list-bar').hide();
                                     $('#my-owner-community-list-view').css("margin-top", '5.43rem');
                                     $(".page-end").hide();
@@ -73,24 +73,27 @@ define('js/longyan/view/my_owner_community_list', [
                                 var currentPage = result.currentPage;
                                 var totalPages = result.totalPages;
                                 var currentRecords = [];
-                                var flag=true;
-                                if(currentRecords.length==0){flag=false;}
-                                if(handler&&flag){
+                                var flag = true;
+                                if (currentRecords.length == 0) {
+                                    flag = false;
+                                }
+                                if (handler && flag) {
                                     $("#my-owner-community-list-view").show();
                                     $("#my-owner-community-list-view-sec").hide();
-                                var currentRecords = result.currentRecords;
-                                if (handler) {
-                                    handler(currentRecords, currentPage, totalPages);
-                                }else if(window.index==0){
-                                    $("#my-owner-community-list-view").hide();
-                                    $("#my-owner-community-list-view-sec").show();
-                                }else if(window.index==1){
-                                    $("#my-owner-community-list-box").css("margin-top", "1rem");
-                                    $(".page-end").css("background-color","#fff");
-                                    $(".page-end").html("暂未完善小区");
+                                    var currentRecords = result.currentRecords;
+                                    if (handler) {
+                                        handler(currentRecords, currentPage, totalPages);
+                                    } else if (window.index == 0) {
+                                        $("#my-owner-community-list-view").hide();
+                                        $("#my-owner-community-list-view-sec").show();
+                                    } else if (window.index == 1) {
+                                        $("#my-owner-community-list-box").css("margin-top", "1rem");
+                                        $(".page-end").css("background-color", "#fff");
+                                        $(".page-end").html("暂未完善小区");
+                                    }
                                 }
                             }
-                        }, function(code, msg) {
+                        },function(code, msg) {
                             tipsAlert.close();
                             tipsAlert.openAlert({
                                 content: msg
