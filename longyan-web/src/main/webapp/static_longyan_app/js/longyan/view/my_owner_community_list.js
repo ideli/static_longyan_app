@@ -73,19 +73,21 @@ define('js/longyan/view/my_owner_community_list', [
                                 var currentPage = result.currentPage;
                                 var totalPages = result.totalPages;
                                 var currentRecords = result.currentRecords;
+                                currentRecords = [];
                                 var flag = true;
+                                var item_index=window._index||1;
+                                console.log(item_index);
                                 if (currentRecords.length == 0) {
                                     flag = false;
                                 }
-                                console.log(handler && flag);
                                 if (handler && flag) {
                                     $("#my-owner-community-list-view").show();
                                     $("#my-owner-community-list-view-sec").hide();
                                     handler(currentRecords, currentPage, totalPages);
-                                }else if (window.index == 0) {
+                                }else if (item_index== 0) {
                                     $("#my-owner-community-list-view").hide();
                                     $("#my-owner-community-list-view-sec").show();
-                                } else if (window.index == 1) {
+                                } else if (item_index== 1) {
                                     $("#my-owner-community-list-box").css("margin-top", "1rem");
                                     $(".page-end").css("background-color", "#fff");
                                     $(".page-end").html("暂未完善小区");
@@ -96,6 +98,7 @@ define('js/longyan/view/my_owner_community_list', [
                             tipsAlert.openAlert({
                                 content: msg
                             });
+                            $(".page-end").html("");
                         });
                     },
                     appendItem: function(data) {
@@ -124,7 +127,7 @@ define('js/longyan/view/my_owner_community_list', [
             _clickItem: function(e) {
                 var t = this;
                 var index = $(e.currentTarget).attr('index')||0;
-                window.index = index;
+                window._index = index;
 
                 if (index != t.config.status) {
                     window.location.href = '#my_owner_community_list/' + index;
