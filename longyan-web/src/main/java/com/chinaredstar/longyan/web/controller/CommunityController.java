@@ -171,7 +171,7 @@ public class CommunityController extends BaseController implements CommonBizCons
 
             // 查询小区范围如果缺失，设定默认查询范围为5公里
             if (StringUtil.isInvalid(limitM)) {
-                limitM = "5000";
+                limitM = "1000";
             }
 
             //页数
