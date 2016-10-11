@@ -20,7 +20,7 @@ define('js/util/http', [], function() {
             headerValue = headerValue || {};
             //测试用的token
             headerValue = {
-                'x-auth-token': 'f7a84104-6da7-4762-9a14-bebcd002edf5'
+                'x-auth-token': '8ced9a7f-b273-4428-b141-7aa9c1855e7e'
             };
             //http request exception function
             var __errorException = function(responseObject) {
@@ -34,21 +34,7 @@ define('js/util/http', [], function() {
                     exception['message'] = responseObject.message;
                 }
                 _log(exception);
-
-                var exception = {
-                    url : url,
-                    data : data
-                }
-                _log('request exception!');
             };
-
-            var _errorException = function(responseObject){
-                var exception = {
-                    url : url,
-                    data : data
-                }
-                _log('request exception!');
-            }
 
             var nvwaAPI = window._nvwaAPI;
             if (nvwaAPI) {
