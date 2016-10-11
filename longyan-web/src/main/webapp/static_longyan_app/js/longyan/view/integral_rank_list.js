@@ -75,10 +75,11 @@ define('js/longyan/view/integral_rank_list', [
                             function(data) {
                                 tipsAlert.close();
                                 if (data && data.rank) {
-                                    var totalRecords = data.rank.length;
+                                    var totalRecords = data.rank.length;//!totalRecords
                                     if (!totalRecords) {
                                         $('#integral-list-box #scroller').hide();
                                         $('#integral-list-box').after(tpl(CommonTipTpl, {}));
+                                        $('#integral_rank_error').css("background-color", "#fff");
                                         $("#integral-list-bottom").hide();
                                     } else {
                                         $('.error-view').remove();

@@ -71,10 +71,11 @@ define('js/longyan/view/integral_explain_list', [
                                         function(data) {           
                                             tipsAlert.close();
                                             if (data) {
-                                                var totalRecords = data.page_data.totalRecords;
-                                                if (!totalRecords) {
-                                                   
+                                                var totalRecords = data.page_data.totalRecords;//!totalRecords
+                                                if (!totalRecords){
                                                     $('#scroller').hide();
+                                                    $(".top-bar").hide();
+                                                    $("#integralDetail-title").hide();
                                                     $('#scroller').after(tpl(NoScoreTpl, {}));
                                                 } else {
                                                     $('.error-view').remove();

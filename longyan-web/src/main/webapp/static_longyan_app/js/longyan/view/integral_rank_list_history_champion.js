@@ -71,31 +71,30 @@ define('js/longyan/view/integral_rank_list_history_champion', [
                                     if (handler) {
                                         handler(currentRecords, 1, 1);
                                     }
-
                                 }
                             },
-                                function(code, msg) {
-                                    tipsAlert.close();
-                                    if (code && code == 408) {
-                                        //请求超时
-                                        $('#scroller').hide();
-                                        var tmp = $('.error-view');
-                                        if (tmp && tmp.length > 0) {
+                            function(code, msg) {
+                                tipsAlert.close();
+                                if (code && code == 408) {
+                                    //请求超时
+                                    $('#scroller').hide();
+                                    var tmp = $('.error-view');
+                                    if (tmp && tmp.length > 0) {
 
-                                        } else {
-                                            $('#scroller').after(tpl(NoNetworkTpl, {}));
-                                            t.$el.find('.error-no-network').off('click');
-                                            t.$el.find('.error-no-network').on('click', function() {
-                                                //重新刷新 reload
-                                                t.list_box.loadData();
-                                            });
-                                        }
-                                        return;
+                                    } else {
+                                        $('#scroller').after(tpl(NoNetworkTpl, {}));
+                                        t.$el.find('.error-no-network').off('click');
+                                        t.$el.find('.error-no-network').on('click', function() {
+                                            //重新刷新 reload
+                                            t.list_box.loadData();
+                                        });
                                     }
-                                    tipsAlert.openAlert({
-                                        content: msg
-                                    });
+                                    return;
+                                }
+                                tipsAlert.openAlert({
+                                    content: msg
                                 });
+                            });
                     },
                     appendItem: function(data) {
                         var _data = data;
