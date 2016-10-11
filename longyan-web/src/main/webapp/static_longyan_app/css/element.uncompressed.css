@@ -1100,7 +1100,7 @@ input {
 #header-container {
   position: fixed;
   /*position: absolute;*/
-  z-index: 999;
+  z-index: 999999;
   width: 100%;
   left: 0;
   right: 0;

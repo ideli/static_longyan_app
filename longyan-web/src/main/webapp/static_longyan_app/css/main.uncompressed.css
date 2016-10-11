@@ -1,3 +1,38 @@
+#building-header-gap-view {
+  margin-top: 5.44680851rem;
+}
+#building-distance-view {
+  font-size: 1.19148936rem;
+  padding-left: 0.85106383rem;
+  line-height: 4.25531915rem;
+  color: #666666;
+}
+#building-distance-view .item-col {
+  float: left;
+}
+#building-distance-view .item-button {
+  float: right;
+  margin-right: 0.85106383rem;
+  margin-top: 0.85106383rem;
+}
+#building-distance-view .item-button .button {
+  font-size: 1.36170213rem;
+  line-height: 2.55319149rem;
+  padding-left: 0.85106383rem;
+  padding-right: 0.85106383rem;
+  border: 0.1rem solid #e1e1e1;
+  color: #666666;
+}
+#building-distance-view.yellow {
+  background-color: #FFFAF1;
+  border-bottom: 0.1rem solid #ff9966;
+  color: #ff9966;
+}
+#building-distance-view.blue {
+  background-color: #F0FCFF;
+  border-bottom: 0.1rem solid #0091ea;
+  color: #0091ea;
+}
 #building-view #building-form {
   margin-top: 0;
   height: 100%;
@@ -25,7 +60,6 @@
 }
 #building-info-view {
   background-color: #ffffff;
-  margin-top: 5.44680851rem;
 }
 #building-info-view .item-col {
   float: left;
@@ -129,6 +163,13 @@
   z-index: 999;
   top: 5.44680851rem;
   opacity: 0;
+}
+#community-info-form .icon-goto-map {
+  margin-top: 1.27659574rem;
+  background: url('../img/longyan_chuanjianmap_3x.png');
+  background-size: 1.27659574rem 1.70212766rem;
+  width: 1.27659574rem;
+  height: 1.70212766rem;
 }
 #community-home-view {
   padding-top: 13.61702128rem;
@@ -2127,59 +2168,91 @@ body {
   flex: 1;
   background-color: #ffffff;
 }
-.pageContainer #my-owner-community-list-view #my-owner-community-list-box #scroller.scroll_box {
+.pageContainer #my-owner-community-list-view #my-owner-community-list-box #scroller {
   background-color: #ffffff;
   margin-top: 0;
 }
-.pageContainer #my-owner-community-list-view #my-owner-community-list-box .my-review-list-item {
+.pageContainer #my-owner-community-list-view #my-owner-community-list-box #scroller .scrollBox .my-owner-community-list-item {
   width: 100%;
   height: 7.06382979rem;
   border-bottom: 1px solid #e1e1e1;
   margin-left: 1.27659574rem;
 }
-.pageContainer #my-owner-community-list-view #my-owner-community-list-box .my-review-list-item .item-col-1 {
+.pageContainer #my-owner-community-list-view #my-owner-community-list-box #scroller .scrollBox .my-owner-community-list-item .item-col-1 {
   padding-top: 1.70212766rem;
   float: left;
 }
-.pageContainer #my-owner-community-list-view #my-owner-community-list-box .my-review-list-item .item-col-1 .item-base-info .item-name {
+.pageContainer #my-owner-community-list-view #my-owner-community-list-box #scroller .scrollBox .my-owner-community-list-item .item-col-1 .item-base-info .item-name {
   float: left;
   font-size: 1.36170213rem;
   line-height: 1.36170213rem;
   color: #333333;
 }
-.pageContainer #my-owner-community-list-view #my-owner-community-list-box .my-review-list-item .item-col-1 .item-base-info .item-mall-name {
+.pageContainer #my-owner-community-list-view #my-owner-community-list-box #scroller .scrollBox .my-owner-community-list-item .item-col-1 .item-base-info .item-mall-name {
   float: left;
   font-size: 1.19148936rem;
   line-height: 1.36170213rem;
   color: #999999;
-  padding-left: 0.85106383rem;
+  margin-left: 0.85106383rem;
+  border: 1px solid #999999;
 }
-.pageContainer #my-owner-community-list-view #my-owner-community-list-box .my-review-list-item .item-col-1 .item-address {
+.pageContainer #my-owner-community-list-view #my-owner-community-list-box #scroller .scrollBox .my-owner-community-list-item .item-col-1 .item-address {
   padding-top: 1.27659574rem;
   line-height: 1.27659574rem;
   color: #999999;
   font-size: 1.0212766rem;
 }
-.pageContainer #my-owner-community-list-view #my-owner-community-list-box .my-review-list-item .item-col-2 {
+.pageContainer #my-owner-community-list-view #my-owner-community-list-box #scroller .scrollBox .my-owner-community-list-item .item-col-2 {
   float: right;
   color: #333333;
   font-size: 1.19148936rem;
   line-height: 7.06382979rem;
   margin-right: 2.55319149rem;
 }
-.pageContainer #my-owner-community-list-view #my-owner-community-list-box .my-review-list-item .item-col-3 {
+.pageContainer #my-owner-community-list-view #my-owner-community-list-box #scroller .scrollBox .my-owner-community-list-item .item-col-3 {
   padding-top: 1.70212766rem;
   float: right;
   text-align: right;
   padding-right: 2.55319149rem;
 }
-.pageContainer #my-owner-community-list-view #my-owner-community-list-box .my-review-list-item .item-col-3 .item-status {
+.pageContainer #my-owner-community-list-view #my-owner-community-list-box #scroller .scrollBox .my-owner-community-list-item .item-col-3 .item-status {
   font-size: 1.19148936rem;
   color: #0091ea;
 }
-.pageContainer #my-owner-community-list-view #my-owner-community-list-box .my-review-list-item .item-col-3 .item-distance {
+.pageContainer #my-owner-community-list-view #my-owner-community-list-box #scroller .scrollBox .my-owner-community-list-item .item-col-3 .item-distance {
   color: #999999;
   font-size: 1.0212766rem;
+}
+.pageContainer #my-owner-community-list-view-sec {
+  display: none;
+  background-color: #ffffff;
+  height: 100%;
+  position: relative;
+}
+.pageContainer #my-owner-community-list-view-sec #my-owner-community-list-box {
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -6.80851064rem;
+  margin-top: -8.5106383rem;
+}
+.pageContainer #my-owner-community-list-view-sec #my-owner-community-list-box span {
+  display: block;
+  color: #999999;
+  font-size: 1.19148936rem;
+}
+.pageContainer #my-owner-community-list-view-sec #my-owner-community-list-box i {
+  display: block;
+  background-color: #0091ea;
+  width: 13.61702128rem;
+  height: 3.40425532rem;
+  border-radius: 0.17021277rem;
+  color: #ffffff;
+  font-size: 1.36170213rem;
+  line-height: 3.40425532rem;
+  margin-top: 2.55319149rem;
+  font-style: normal;
 }
 
 .pageContainer {
@@ -2270,9 +2343,18 @@ body {
 .pageContainer #my-review-detail-form .label-right {
   color: #666666;
 }
+.pageContainer #my-review-detail-form .label-left {
+  color: #ff9966;
+}
 .pageContainer #my-review-detail-form .button-container {
   height: 11.91489362rem;
   padding-top: 3.40425532rem;
+}
+.pageContainer #my-review-detail-form .colorChange {
+  border-bottom: 1px solid #ff9966;
+}
+.pageContainer #my-review-detail-form .colorChange input {
+  color: #ff9966;
 }
 .pageContainer #my-review-detail-form .button-box.rollback-button {
   background-color: #ffffff;
@@ -2285,5 +2367,104 @@ body {
   margin-top: 2.55319149rem;
 }
 .pageContainer #my-review-detail-form .button-box.rollback-button .text {
+  color: #0091ea;
+}
+
+.pageContainer #my-submit-list-bar {
+  margin-top: 5.44680851rem;
+  height: 3.91489362rem;
+  line-height: 3.74468085rem;
+  font-size: 1.36170213rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e4e4e4;
+}
+.pageContainer #my-submit-list-bar .item-box {
+  float: left;
+  text-align: center;
+  width: 33%;
+}
+.pageContainer #my-submit-list-bar .item-box .bar-item {
+  color: #666666;
+  display: inline-block;
+}
+.pageContainer #my-submit-list-bar .item-box .bar-item[selected] {
+  color: #0091ea;
+  border-bottom: 0.17021277rem solid #0091ea;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  /* Firefox */
+  -webkit-box-sizing: border-box;
+  /* Safari */
+}
+.pageContainer #my-submit-list-view {
+  flex: 1;
+  background-color: #ffffff;
+}
+.pageContainer #my-submit-list-view #my-submit-list-box #scroller.scroll_box {
+  background-color: #ffffff;
+  margin-top: 0;
+}
+.pageContainer #my-submit-list-view #my-submit-list-box .my-owner-community-list-item {
+  width: 100%;
+  height: 7.06382979rem;
+  border-bottom: 1px solid #e1e1e1;
+  margin-left: 1.27659574rem;
+}
+.pageContainer #my-submit-list-view #my-submit-list-box .my-owner-community-list-item .title {
+  padding-top: 1.70212766rem;
+  font-size: 1.36170213rem;
+  line-height: 1.36170213rem;
+  color: #333333;
+}
+.pageContainer #my-submit-list-view #my-submit-list-box .my-owner-community-list-item .title span {
+  color: #0091ea;
+}
+.pageContainer #my-submit-list-view #my-submit-list-box .my-owner-community-list-item .date {
+  padding-top: 1.27659574rem;
+  font-size: 1.0212766rem;
+  line-height: 1.0212766rem;
+  color: #999999;
+}
+.pageContainer #my-submit-list-view #my-submit-list-box .my-owner-community-list-item .date span {
+  padding-right: 0.85106383rem;
+}
+.pageContainer #my-submit-detail-view {
+  padding-top: 5.44680851rem;
+}
+.pageContainer #my-submit-detail-form {
+  margin-top: 0;
+}
+.pageContainer #my-submit-detail-form .top-tips {
+  height: 4.25531915rem;
+  padding-left: 1.36170213rem;
+  font-size: 1.19148936rem;
+  line-height: 4.25531915rem;
+  border-bottom: 1px solid #ff9966;
+  background-color: #fffaf1;
+  color: #ff9966;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  /* Firefox */
+  -webkit-box-sizing: border-box;
+  /* Safari */
+}
+.pageContainer #my-submit-detail-form .label-right {
+  color: #666666;
+}
+.pageContainer #my-submit-detail-form .button-container {
+  height: 11.91489362rem;
+  padding-top: 3.40425532rem;
+}
+.pageContainer #my-submit-detail-form .button-box.rollback-button {
+  background-color: #ffffff;
+  border: 1px solid #0091ea;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  /* Firefox */
+  -webkit-box-sizing: border-box;
+  /* Safari */
+  margin-top: 2.55319149rem;
+}
+.pageContainer #my-submit-detail-form .button-box.rollback-button .text {
   color: #0091ea;
 }

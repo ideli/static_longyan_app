@@ -23,7 +23,6 @@ define('js/longyan/view/integral_rank_list', [
         var form_id = '#integral-list-form';
         var LayoutView = Backbone.View.extend({
             events: {
-
             },
             //
             initialize: function(options, config) {

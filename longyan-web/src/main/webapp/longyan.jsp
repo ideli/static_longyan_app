@@ -27,19 +27,19 @@
     <!-- <link href="static_longyan_app/css/app.uncompressed.css" rel="stylesheet">-->
 
     <!-- build:css static_longyan_app/build/css/longyan-1.0.0.min-->
-		<link rel="stylesheet" href="<%=systemConfig.get("staticLongyanUrl")%>/build/release-23a96b/css/longyan-1.0.0.min.6c8cb0.css">
+		<link rel="stylesheet" href="<%=systemConfig.get("staticLongyanUrl")%>/build/release-24821e/css/longyan-1.0.0.min.ef4092.css">
  <!-- endbuild -->
         <script src="<%=systemConfig.get("staticLongyanUrl")%>/bridge.js" > </script>
     <!-- build:js static_longyan_app/build/js/longyan-1.0.0.min -->
 		<script src="<%=systemConfig.get("staticLongyanUrl")%>/nvwa-loader-1.7.0.js"
 		api = ""
-		baseUrl = "build/release-23a96b/js"
+		baseUrl = "build/release-24821e/js"
 		skin = ""
 		debug = "true"
 		lang = "zh_CN"
 		jsonp = "true"
 		staticDomain = "<%=systemConfig.get("staticDomain")%>"
-		preload = "<%=systemConfig.get("staticLongyanUrl")%>/build/release-23a96b/js/longyan-1.0.0.min.3bcf2d.js,bootstrap.min,jquery.ui.widget,fileUpload" > </script>
+		preload = "<%=systemConfig.get("staticLongyanUrl")%>/build/release-24821e/js/longyan-1.0.0.min.0fb452.js,bootstrap.min,jquery.ui.widget,fileUpload" > </script>
  <!-- endbuild -->
     <style type="text/css">
         @font-face {font-family: "iconfont";

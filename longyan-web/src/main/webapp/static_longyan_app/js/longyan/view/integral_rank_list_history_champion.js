@@ -22,7 +22,6 @@ define('js/longyan/view/integral_rank_list_history_champion', [
         var form_id = '#integralchampion-list-form';
         var LayoutView = Backbone.View.extend({
             events: {
-
             },
             //
             initialize: function(options, config) {
@@ -97,7 +96,6 @@ define('js/longyan/view/integral_rank_list_history_champion', [
                                         content: msg
                                     });
                                 });
-
                     },
                     appendItem: function(data) {
                         var _data = data;

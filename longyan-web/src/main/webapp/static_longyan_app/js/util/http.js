@@ -5,7 +5,6 @@
 define('js/util/http', [], function() {
     $nvwa.http = {
         initialize: function() {
-
         },
         /**
          * ajax 请求封装
@@ -21,21 +20,36 @@ define('js/util/http', [], function() {
             headerValue = headerValue || {};
             //测试用的token
             headerValue = {
-                'x-auth-token': 'a07cc44e-5ce8-4a05-9172-99ede124bb16'
+                'x-auth-token': 'f7a84104-6da7-4762-9a14-bebcd002edf5'
             };
             //http request exception function
-            var __errorException = function(responsoObject) {
+            var __errorException = function(responseObject) {
                 //exception object
                 var exception = {
                     url: url,
                     data: data
                 }
                 _log('request exception!');
-                if (responsoObject && responsoObject.message && responsoObject.message.length > 0) {
-                    exception['message'] = responsoObject.message;
+                if (responseObject && responseObject.message && responseObject.message.length > 0) {
+                    exception['message'] = responseObject.message;
                 }
                 _log(exception);
+
+                var exception = {
+                    url : url,
+                    data : data
+                }
+                _log('request exception!');
             };
+
+            var _errorException = function(responseObject){
+                var exception = {
+                    url : url,
+                    data : data
+                }
+                _log('request exception!');
+            }
+
             var nvwaAPI = window._nvwaAPI;
             if (nvwaAPI) {
                 url = nvwaAPI + url;
