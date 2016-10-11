@@ -69,7 +69,7 @@
       </bean>-->
 
 
-    <!--<task:scheduled-tasks>-->
+    <task:scheduled-tasks>
         <!--&lt;!&ndash;列出商场周边小区Task&ndash;&gt;-->
         <!--<task:scheduled ref="shopCommunityTask" method="getCommunity" cron="${mall_community_report}"/>-->
 
@@ -119,7 +119,8 @@
 
         <!--<task:scheduled ref="departmentPeopleNumberTask" method="execute" cron="${people_number}"/>-->
 
+        <task:scheduled ref="predistributionCommunityTask" method="execute" cron="${task_predistributionCommunity_timer}"/>
 
-    <!--</task:scheduled-tasks>-->
+    </task:scheduled-tasks>
 
 </beans>
